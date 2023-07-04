@@ -993,10 +993,12 @@ return [
             'brand_helper'          => ' ',
             'model'                 => 'Modelo da viatura',
             'model_helper'          => ' ',
-            'citizen_card'          => 'Cartão de cidadão',
+            'citizen_card'          => 'Cartão de Cidadão',
             'citizen_card_helper'   => ' ',
             'notes'                 => 'Notas',
             'notes_helper'          => ' ',
+            'company'               => 'Company',
+            'company_helper'        => ' ',
         ],
     ],
     'card' => [

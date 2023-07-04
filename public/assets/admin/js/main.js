@@ -2,7 +2,7 @@ $(document).ready(function () {
   window._token = $('meta[name="csrf-token"]').attr('content')
 
   moment.updateLocale('en', {
-    week: {dow: 1} // Monday is the first day of the week
+    week: { dow: 1 } // Monday is the first day of the week
   })
 
   $('.date').datetimepicker({
@@ -46,8 +46,15 @@ $(document).ready(function () {
   })
 
   $('a[data-toggle^="push-menu"]').click(function () {
-    setTimeout(function() {
+    setTimeout(function () {
       $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
     }, 350);
   })
 })
+
+
+selectCompany = (company_id) => {
+  $.get('/admin/select-company/' + company_id).then(() => {
+    location.reload();
+  });
+}

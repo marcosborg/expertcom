@@ -235,6 +235,14 @@
                                         {{ $driver->notes }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.driver.fields.company') }}
+                                    </th>
+                                    <td>
+                                        {{ $driver->company->name ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

@@ -46,6 +46,9 @@
                                     {{ trans('cruds.driver.fields.tvde_operator') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.driver.fields.company') }}
+                                </th>
+                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -110,6 +113,7 @@
 { data: 'code', name: 'code' },
 { data: 'name', name: 'name' },
 { data: 'tvde_operator', name: 'tvde_operators.name' },
+{ data: 'company_name', name: 'company.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

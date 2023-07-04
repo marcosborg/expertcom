@@ -11,8 +11,6 @@ class HomeController
     public function index()
     {
 
-        /*
-
         $driver = Driver::where('user_id', auth()->user()->id)->first();
 
         abort_if(!$driver, Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -48,10 +46,13 @@ class HomeController
             $activityLaunch->sub = $sub;
         }
 
-        */
-
         return view('home')->with([
-            //'activityLaunches' => $activityLaunches
+            'activityLaunches' => $activityLaunches
         ]);
+    }
+
+    public function selectCompany($company_id)
+    {
+        session()->put('company_id', $company_id);
     }
 }

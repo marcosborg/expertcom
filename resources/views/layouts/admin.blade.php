@@ -67,6 +67,17 @@
 
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                        <li class="nav-item" style="padding-top: 8px;">
+                            <select class="form-control select2" style="min-width: 200px;"
+                                onchange="selectCompany(this.value)" autocomplete="off">
+                                <option {{ !session()->get('company_id') || session()->get('company_id') == 0 ?
+                                    'selected' : '' }} value="0">Todas as empresas</option>
+                                @foreach (\App\Models\Company::all() as $company)
+                                <option {{ session()->get('company_id') && session()->get('company_id') == $company->id
+                                    ? 'selected' : '' }} value="{{ $company->id }}">{{ $company->name }}</option>
+                                @endforeach
+                            </select>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/" target="_new">Website</a>
                         </li>
@@ -83,9 +94,10 @@
                         @endcan
                         @endif
                         <li>
-                            <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                            <a href="#"
+                                onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                                 <i class="fas fa-fw fa-sign-out-alt">
-        
+
                                 </i>
                                 {{ trans('global.logout') }}
                             </a>

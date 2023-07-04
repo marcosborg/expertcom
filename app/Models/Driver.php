@@ -48,6 +48,7 @@ class Driver extends Model
         'brand',
         'model',
         'notes',
+        'company_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -126,5 +127,10 @@ class Driver extends Model
     public function driverReceipts()
     {
         return $this->hasMany(Receipt::class, 'driver_id', 'id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyDriverRequest;
 use App\Http\Requests\StoreDriverRequest;
 use App\Http\Requests\UpdateDriverRequest;
 use App\Models\Card;
+use App\Models\Company;
 use App\Models\Driver;
 use App\Models\Local;
 use App\Models\Operation;
@@ -28,25 +29,33 @@ class DriverController extends Controller
         abort_if(Gate::denies('driver_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Driver::with(['user', 'tvde_operators', 'card', 'operation', 'local', 'state'])->select(sprintf('%s.*', (new Driver)->table));
+            if (!session()->get('company_id') || session()->get('company_id == 0')) {
+                $query = Driver::with(['user', 'tvde_operators', 'card', 'operation', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
+            } else {
+                $query = Driver::where('company_id', session()->get('company_id'))->with(['user', 'tvde_operators', 'card', 'operation', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
+            }
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'driver_show';
-                $editGate      = 'driver_edit';
-                $deleteGate    = 'driver_delete';
+                $viewGate = 'driver_show';
+                $editGate = 'driver_edit';
+                $deleteGate = 'driver_delete';
                 $crudRoutePart = 'drivers';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
+                return view(
+                    'partials.datatablesActions',
+                    compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    )
+                );
             });
 
             $table->editColumn('id', function ($row) {
@@ -74,7 +83,11 @@ class DriverController extends Controller
                 return implode(' ', $labels);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'tvde_operator', 'card', 'operation', 'local', 'state']);
+            $table->addColumn('company_name', function ($row) {
+                return $row->company ? $row->company->name : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'user', 'tvde_operator', 'card', 'operation', 'local', 'state', 'company']);
 
             return $table->make(true);
         }
@@ -98,7 +111,9 @@ class DriverController extends Controller
 
         $states = State::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.drivers.create', compact('cards', 'locals', 'operations', 'states', 'tvde_operators', 'users'));
+        $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.drivers.create', compact('cards', 'companies', 'locals', 'operations', 'states', 'tvde_operators', 'users'));
     }
 
     public function store(StoreDriverRequest $request)
@@ -125,9 +140,11 @@ class DriverController extends Controller
 
         $states = State::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $driver->load('user', 'tvde_operators', 'card', 'operation', 'local', 'state');
+        $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.drivers.edit', compact('cards', 'driver', 'locals', 'operations', 'states', 'tvde_operators', 'users'));
+        $driver->load('user', 'tvde_operators', 'card', 'operation', 'local', 'state', 'company');
+
+        return view('admin.drivers.edit', compact('cards', 'companies', 'driver', 'locals', 'operations', 'states', 'tvde_operators', 'users'));
     }
 
     public function update(UpdateDriverRequest $request, Driver $driver)
@@ -142,7 +159,7 @@ class DriverController extends Controller
     {
         abort_if(Gate::denies('driver_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $driver->load('user', 'tvde_operators', 'card', 'operation', 'local', 'state', 'driverDocuments');
+        $driver->load('user', 'tvde_operators', 'card', 'operation', 'local', 'state', 'company', 'driverDocuments', 'driverReceipts');
 
         return view('admin.drivers.show', compact('driver'));
     }

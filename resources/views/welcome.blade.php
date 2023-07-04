@@ -10,6 +10,7 @@
     <style>
         body {
             background: #000000;
+            text-align: center;
         }
 
         .bg {
@@ -31,8 +32,6 @@
     width: 100%;
     max-width: 500px;
     position: absolute;
-    left: 50%;
-    margin-left: -250px;
     top: 40%;
 ">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

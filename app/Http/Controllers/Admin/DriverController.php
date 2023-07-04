@@ -73,67 +73,6 @@ class DriverController extends Controller
 
                 return implode(' ', $labels);
             });
-            $table->addColumn('card_code', function ($row) {
-                return $row->card ? $row->card->code : '';
-            });
-
-            $table->addColumn('operation_name', function ($row) {
-                return $row->operation ? $row->operation->name : '';
-            });
-
-            $table->addColumn('local_name', function ($row) {
-                return $row->local ? $row->local->name : '';
-            });
-
-            $table->editColumn('reason', function ($row) {
-                return $row->reason ? $row->reason : '';
-            });
-            $table->editColumn('phone', function ($row) {
-                return $row->phone ? $row->phone : '';
-            });
-            $table->editColumn('payment_vat', function ($row) {
-                return $row->payment_vat ? $row->payment_vat : '';
-            });
-            $table->editColumn('citizen_card', function ($row) {
-                return $row->citizen_card ? $row->citizen_card : '';
-            });
-            $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
-            });
-            $table->editColumn('iban', function ($row) {
-                return $row->iban ? $row->iban : '';
-            });
-            $table->editColumn('address', function ($row) {
-                return $row->address ? $row->address : '';
-            });
-            $table->editColumn('zip', function ($row) {
-                return $row->zip ? $row->zip : '';
-            });
-            $table->editColumn('city', function ($row) {
-                return $row->city ? $row->city : '';
-            });
-            $table->addColumn('state_name', function ($row) {
-                return $row->state ? $row->state->name : '';
-            });
-
-            $table->editColumn('driver_license', function ($row) {
-                return $row->driver_license ? $row->driver_license : '';
-            });
-            $table->editColumn('driver_vat', function ($row) {
-                return $row->driver_vat ? $row->driver_vat : '';
-            });
-            $table->editColumn('uber_uuid', function ($row) {
-                return $row->uber_uuid ? $row->uber_uuid : '';
-            });
-            $table->editColumn('license_plate', function ($row) {
-                return $row->license_plate ? $row->license_plate : '';
-            });
-            $table->editColumn('brand', function ($row) {
-                return $row->brand ? $row->brand : '';
-            });
-            $table->editColumn('model', function ($row) {
-                return $row->model ? $row->model : '';
-            });
 
             $table->rawColumns(['actions', 'placeholder', 'user', 'tvde_operator', 'card', 'operation', 'local', 'state']);
 

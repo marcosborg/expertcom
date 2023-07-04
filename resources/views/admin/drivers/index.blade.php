@@ -46,72 +46,6 @@
                                     {{ trans('cruds.driver.fields.tvde_operator') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.driver.fields.card') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.operation') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.local') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.start_date') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.end_date') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.reason') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.phone') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.payment_vat') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.citizen_card') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.email') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.iban') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.address') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.zip') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.city') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.state') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.driver_license') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.driver_vat') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.uber_uuid') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.license_plate') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.brand') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.model') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.notes') }}
-                                </th>
-                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -176,28 +110,6 @@
 { data: 'code', name: 'code' },
 { data: 'name', name: 'name' },
 { data: 'tvde_operator', name: 'tvde_operators.name' },
-{ data: 'card_code', name: 'card.code' },
-{ data: 'operation_name', name: 'operation.name' },
-{ data: 'local_name', name: 'local.name' },
-{ data: 'start_date', name: 'start_date' },
-{ data: 'end_date', name: 'end_date' },
-{ data: 'reason', name: 'reason' },
-{ data: 'phone', name: 'phone' },
-{ data: 'payment_vat', name: 'payment_vat' },
-{ data: 'citizen_card', name: 'citizen_card' },
-{ data: 'email', name: 'email' },
-{ data: 'iban', name: 'iban' },
-{ data: 'address', name: 'address' },
-{ data: 'zip', name: 'zip' },
-{ data: 'city', name: 'city' },
-{ data: 'state_name', name: 'state.name' },
-{ data: 'driver_license', name: 'driver_license' },
-{ data: 'driver_vat', name: 'driver_vat' },
-{ data: 'uber_uuid', name: 'uber_uuid' },
-{ data: 'license_plate', name: 'license_plate' },
-{ data: 'brand', name: 'brand' },
-{ data: 'model', name: 'model' },
-{ data: 'notes', name: 'notes' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

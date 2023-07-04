@@ -251,7 +251,7 @@
                             <label for="company_id">{{ trans('cruds.driver.fields.company') }}</label>
                             <select class="form-control select2" name="company_id" id="company_id">
                                 @foreach($companies as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                    <option value="{{ $id }}" {{ old('company_id') == $id || session()->get('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('company'))
@@ -267,9 +267,6 @@
                     </form>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </div>

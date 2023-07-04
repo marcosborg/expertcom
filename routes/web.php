@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function(){
-
+    return view('welcome');
 });
 //Route::get('/', 'Website\HomePageController@index');
 Route::prefix('tvde')->group(function () {

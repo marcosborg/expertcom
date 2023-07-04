@@ -68,14 +68,14 @@ class ActivityLaunchesSend extends Notification
         $html .= '</table>';
 
         return (new MailMessage)
-                    ->subject('Extrato ExpertCom TVDE')
+                    ->subject('Extrato ExpertCom')
                     ->greeting('Olá!')
-                    ->line('O ExpertCom TVDE o extrato abaixo.')
+                    ->line('O ExpertCom o extrato abaixo.')
                     ->line($html)
                     ->line('Visite a sua área pessoal para verificar os detalhes e fazer upload do recibo.')
-                    ->action('Área pessoal', url('https://mundotvde.pt/login'))
+                    ->action('Área pessoal', url('https://expertcom.pt/login'))
                     ->line('Obrigado pela preferência')
-                    ->salutation('Equipa ExpertCom TVDE');
+                    ->salutation('Equipa ExpertCom');
     }
 
     /**

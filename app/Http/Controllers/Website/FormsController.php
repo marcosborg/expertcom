@@ -31,7 +31,7 @@ class FormsController extends Controller
         $newsletter->email = $request->email;
         $newsletter->save();
 
-        Notification::route('mail', 'info@mundotvde.pt')
+        Notification::route('mail', 'info@expertcom.pt')
             ->notify(new \App\Notifications\Newsletter($newsletter));
 
     }
@@ -66,7 +66,7 @@ class FormsController extends Controller
         $CarRentalContactRequest->rgpd = 1;
         $CarRentalContactRequest->save();
 
-        Notification::route('mail', 'info@mundotvde.pt')
+        Notification::route('mail', 'info@expertcom.pt')
             ->notify(new \App\Notifications\carRentalContact($CarRentalContactRequest));
 
     }
@@ -100,7 +100,7 @@ class FormsController extends Controller
         $OwnCarForm->rgpd = 1;
         $OwnCarForm->save();
 
-        Notification::route('mail', 'info@mundotvde.pt')
+        Notification::route('mail', 'info@expertcom.pt')
             ->notify(new \App\Notifications\ownCarContact($OwnCarForm));
     }
 
@@ -132,7 +132,7 @@ class FormsController extends Controller
         $CourierForm->rgpd = 1;
         $CourierForm->save();
 
-        Notification::route('mail', 'info@mundotvde.pt')
+        Notification::route('mail', 'info@expertcom.pt')
             ->notify(new \App\Notifications\courierContact($CourierForm));
     }
 
@@ -160,7 +160,7 @@ class FormsController extends Controller
         $trainingForm->rgpd = 1;
         $trainingForm->save();
 
-        Notification::route('mail', 'info@mundotvde.pt')
+        Notification::route('mail', 'info@expertcom.pt')
             ->notify(new \App\Notifications\trainingContact($trainingForm));
     }
 
@@ -185,7 +185,7 @@ class FormsController extends Controller
         $PageForm->rgpd = 1;
         $PageForm->save();
 
-        Notification::route('mail', 'info@mundotvde.pt')
+        Notification::route('mail', 'info@expertcom.pt')
             ->notify(new \App\Notifications\pageContact($PageForm));
     }
     public function consultingContact(Request $request)
@@ -213,7 +213,7 @@ class FormsController extends Controller
         $ConsultingForm->rgpd = 1;
         $ConsultingForm->save();
 
-        Notification::route('mail', 'info@mundotvde.pt')
+        Notification::route('mail', 'info@expertcom.pt')
             ->notify(new \App\Notifications\consultingContact($ConsultingForm));
     }
 
@@ -243,7 +243,7 @@ class FormsController extends Controller
         $TransferForm->rgpd = 1;
         $TransferForm->save();
 
-        Notification::route('mail', 'info@mundotvde.pt')
+        Notification::route('mail', 'info@expertcom.pt')
             ->notify(new \App\Notifications\transferTourContact($TransferForm));
     }
 
@@ -270,7 +270,7 @@ class FormsController extends Controller
         $StandCarForm->rgpd = 1;
         $StandCarForm->save();
 
-        Notification::route('mail', 'info@mundotvde.pt')
+        Notification::route('mail', 'info@expertcom.pt')
             ->notify(new \App\Notifications\standCarContact($StandCarForm));
     }
 }

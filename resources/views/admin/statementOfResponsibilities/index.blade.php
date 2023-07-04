@@ -40,7 +40,7 @@
                     <p>A declaração de responsabilidade encontra-se devidamente assinada digitalmente e possui
                         validade jurídica. Qualquer solicitação de rescisão ou alteração da declaração deve ser
                         realizada
-                        por meio de contato com a Opinião e Consenso Unipessoal Lda.</p>
+                        por meio de contato com a NOME DA EMPRESA Lda.</p>
                     @endif
                     @endif
                 </div>

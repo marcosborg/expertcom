@@ -52,8 +52,8 @@
             $adminStatementResponsibility->contract_number }}/ {{
             \Carbon\Carbon::parse($adminStatementResponsibility->driver->start_date)->year }})</strong></p>
     <br>
-    <p>Opinião e Consenso Unipessoal Lda, com sede Largo do Rossio, nº16 Loja A, 3515-138 Viseu, NIF: 515544930, neste
-        ato representada pelo seu Gerente com poderes para o ato, Sr. Orlando Rodrigo Castro Saraiva, declara para os
+    <p>NOME DA EMPRESA Lda, com sede MORADA DA EMPRESA, NIF: NIF DA EMPRESA, neste
+        ato representada pelo seu Gerente com poderes para o ato, GERENTE DA EMPRESA, declara para os
         devidos efeitos que autoriza, {{ $adminStatementResponsibility->driver->name }},
         com morada em {{ $adminStatementResponsibility->driver->address }}, {{
         $adminStatementResponsibility->driver->zip }},

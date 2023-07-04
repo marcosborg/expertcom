@@ -40,10 +40,10 @@
 </footer>
 
 <div id="social-floating-button">
-    <a target="_blank" href="https://www.facebook.com/mundotvde">
+    <a target="_blank" href="https://www.facebook.com/expertcom">
         <i class="fa-brands fa-facebook-f"></i>
     </a>
-    <a target="_blank" href="https://www.instagram.com/mundotvde/">
+    <a target="_blank" href="https://www.instagram.com/expertcom/">
         <i class="fa-brands fa-instagram"></i>
     </a>
 </div>

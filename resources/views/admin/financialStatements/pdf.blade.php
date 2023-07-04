@@ -59,9 +59,9 @@
                         [de] YYYY') }}</strong>
                 </td>
                 <td width="50%" style="text-align: right; vertical-align: top;">
-                    <img src="https://mundotvde.pt/assets/website/img/logo.png" width="250">
+                    <img src="https://expertcom.pt/assets/website/img/logo.png" width="250">
                     <p>Praceta da Tabaqueira 2A 1950-256 Lisboa<br>
-                        geral@mundotvde.pt - www.mundotvde.pt</p>
+                        geral@expertcom.pt - www.expertcom.pt</p>
                 </td>
             </tr>
         </tbody>

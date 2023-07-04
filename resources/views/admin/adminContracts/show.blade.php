@@ -50,8 +50,8 @@
     <br>
     <p>O presente documento regula as relações de serviços profissionais entre:</p>
     <br>
-    <p>1.º: Opinião e Consenso Unipessoal Lda, com sede Largo do Rossio, nº16 Loja A, 3515-138 Viseu, NIF: 515544930,
-        neste ato representada pelo seu gerente com poderes para o ato, Orlando Rodrigo Castro Saraiva, doravante
+    <p>1.º: NOME DA EMPRESA, com sede MORADA DA EMPRESA, NIF: NIF DA EMPRESA,
+        neste ato representada pelo seu gerente com poderes para o ato, NOME DO GERENTE, doravante
         designado por 1.º Outorgante,</p>
     <p>2.º: Outorgante: {{ $adminContract->driver->name }},
         morador em {{ $adminContract->driver->address }}, {{ $adminContract->driver->zip }}, {{
@@ -74,10 +74,10 @@
     <ol>
         <li>Como contrapartida dos serviços contratados, o 2.º Outorgante, após a dedução das comissões pagas às
             plataformas, bem como dos impostos resultantes pelo trabalho por si efetuado (iva 6%) e a comissão de gestão
-            de 25€ semanais. Este valor será recebido mensalmente, no máximo de cinco dias úteis, após a
+            de ___€ semanais. Este valor será recebido mensalmente, no máximo de cinco dias úteis, após a
             disponibilização das verbas por parte da plataforma, contra a entrega da respetiva fatura ou documento
             equivalente.</li>
-        <li>O segundo outorgante obriga-se a emitir as competentes faturas ou recibo Verde à Opinião e Consenso Lda.,
+        <li>O segundo outorgante obriga-se a emitir as competentes faturas ou recibo Verde à NOME DA EMPRESA Lda.,
             respeitante às comissões que lhe serão devidas.</li>
     </ol>
     <br>

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'ExpertCom TVDE',
+    'site_title' => 'ExpertCom',
 ];

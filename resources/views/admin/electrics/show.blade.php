@@ -6,12 +6,12 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('global.show') }} {{ trans('cruds.card.title') }}
+                    {{ trans('global.show') }} {{ trans('cruds.electric.title') }}
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('admin.cards.index') }}">
+                            <a class="btn btn-default" href="{{ route('admin.electrics.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
                         </div>
@@ -19,32 +19,32 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.card.fields.id') }}
+                                        {{ trans('cruds.electric.fields.id') }}
                                     </th>
                                     <td>
-                                        {{ $card->id }}
+                                        {{ $electric->id }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.card.fields.code') }}
+                                        {{ trans('cruds.electric.fields.code') }}
                                     </th>
                                     <td>
-                                        {{ $card->code }}
+                                        {{ $electric->code }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.card.fields.company') }}
+                                        {{ trans('cruds.electric.fields.company') }}
                                     </th>
                                     <td>
-                                        {{ $card->company->name ?? '' }}
+                                        {{ $electric->company->name ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('admin.cards.index') }}">
+                            <a class="btn btn-default" href="{{ route('admin.electrics.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
                         </div>

@@ -111,6 +111,16 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('electric_access')
+                            <li class="{{ request()->is("admin/electrics") || request()->is("admin/electrics/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.electrics.index") }}">
+                                    <i class="fa-fw fas fa-bolt">
+
+                                    </i>
+                                    <span>{{ trans('cruds.electric.title') }}</span>
+                                </a>
+                            </li>
+                            @endcan
                             @can('operation_access')
                             <li class="{{ request()->is("admin/operations") || request()->is("admin/operations/*") ?
                                 "active" : "" }}">

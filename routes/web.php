@@ -417,6 +417,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('companies/ckmedia', 'CompanyController@storeCKEditorImages')->name('companies.storeCKEditorImages');
     Route::resource('companies', 'CompanyController');
 
+    // Electric
+    Route::delete('electrics/destroy', 'ElectricController@massDestroy')->name('electrics.massDestroy');
+    Route::resource('electrics', 'ElectricController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

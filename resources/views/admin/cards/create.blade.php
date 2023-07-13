@@ -19,6 +19,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.card.fields.code_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('company') ? 'has-error' : '' }}">
+                            <label for="company_id">{{ trans('cruds.card.fields.company') }}</label>
+                            <select class="form-control select2" name="company_id" id="company_id">
+                                @foreach($companies as $id => $entry)
+                                    <option value="{{ $id }}" {{ session()->get('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('company'))
+                                <span class="help-block" role="alert">{{ $errors->first('company') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.card.fields.company_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

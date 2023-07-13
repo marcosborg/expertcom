@@ -1019,22 +1019,6 @@ return [
             'company_helper'    => ' ',
         ],
     ],
-    'operation' => [
-        'title'          => 'Operações',
-        'title_singular' => 'Operaçõe',
-        'fields'         => [
-            'id'                => 'ID',
-            'id_helper'         => ' ',
-            'name'              => 'Nome',
-            'name_helper'       => ' ',
-            'created_at'        => 'Created at',
-            'created_at_helper' => ' ',
-            'updated_at'        => 'Updated at',
-            'updated_at_helper' => ' ',
-            'deleted_at'        => 'Deleted at',
-            'deleted_at_helper' => ' ',
-        ],
-    ],
     'local' => [
         'title'          => 'Local',
         'title_singular' => 'Local',

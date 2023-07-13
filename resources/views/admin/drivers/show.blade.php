@@ -69,14 +69,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.driver.fields.operation') }}
-                                    </th>
-                                    <td>
-                                        {{ $driver->operation->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.driver.fields.local') }}
                                     </th>
                                     <td>

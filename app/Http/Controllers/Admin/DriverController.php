@@ -11,7 +11,6 @@ use App\Models\Card;
 use App\Models\Company;
 use App\Models\Driver;
 use App\Models\Local;
-use App\Models\Operation;
 use App\Models\State;
 use App\Models\TvdeOperator;
 use App\Models\User;
@@ -30,9 +29,9 @@ class DriverController extends Controller
 
         if ($request->ajax()) {
             if (!session()->get('company_id') || session()->get('company_id == 0')) {
-                $query = Driver::with(['user', 'tvde_operators', 'card', 'operation', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
+                $query = Driver::with(['user', 'tvde_operators', 'card', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
             } else {
-                $query = Driver::where('company_id', session()->get('company_id'))->with(['user', 'tvde_operators', 'card', 'operation', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
+                $query = Driver::where('company_id', session()->get('company_id'))->with(['user', 'tvde_operators', 'card', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
             }
 
             $table = Datatables::of($query);
@@ -87,7 +86,7 @@ class DriverController extends Controller
                 return $row->company ? $row->company->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'tvde_operator', 'card', 'operation', 'local', 'state', 'company']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'tvde_operator', 'card', 'local', 'state', 'company']);
 
             return $table->make(true);
         }
@@ -105,15 +104,13 @@ class DriverController extends Controller
 
         $cards = Card::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $operations = Operation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $locals = Local::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $states = State::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.drivers.create', compact('cards', 'companies', 'locals', 'operations', 'states', 'tvde_operators', 'users'));
+        return view('admin.drivers.create', compact('cards', 'companies', 'locals', 'states', 'tvde_operators', 'users'));
     }
 
     public function store(StoreDriverRequest $request)
@@ -134,17 +131,15 @@ class DriverController extends Controller
 
         $cards = Card::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $operations = Operation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $locals = Local::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $states = State::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $driver->load('user', 'tvde_operators', 'card', 'operation', 'local', 'state', 'company');
+        $driver->load('user', 'tvde_operators', 'card', 'local', 'state', 'company');
 
-        return view('admin.drivers.edit', compact('cards', 'companies', 'driver', 'locals', 'operations', 'states', 'tvde_operators', 'users'));
+        return view('admin.drivers.edit', compact('cards', 'companies', 'driver', 'locals', 'states', 'tvde_operators', 'users'));
     }
 
     public function update(UpdateDriverRequest $request, Driver $driver)
@@ -159,7 +154,7 @@ class DriverController extends Controller
     {
         abort_if(Gate::denies('driver_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $driver->load('user', 'tvde_operators', 'card', 'operation', 'local', 'state', 'company', 'driverDocuments', 'driverReceipts');
+        $driver->load('user', 'tvde_operators', 'card', 'local', 'state', 'company', 'driverDocuments', 'driverReceipts');
 
         return view('admin.drivers.show', compact('driver'));
     }

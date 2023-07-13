@@ -27,7 +27,6 @@ class Driver extends Model
         'code',
         'name',
         'card_id',
-        'operation_id',
         'local_id',
         'start_date',
         'end_date',
@@ -72,11 +71,6 @@ class Driver extends Model
     public function card()
     {
         return $this->belongsTo(Card::class, 'card_id');
-    }
-
-    public function operation()
-    {
-        return $this->belongsTo(Operation::class, 'operation_id');
     }
 
     public function local()

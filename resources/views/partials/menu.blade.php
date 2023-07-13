@@ -121,18 +121,6 @@
                                 </a>
                             </li>
                             @endcan
-                            @can('operation_access')
-                            <li class="{{ request()->is("admin/operations") || request()->is("admin/operations/*") ?
-                                "active" : "" }}">
-                                <a href="{{ route("admin.operations.index") }}">
-                                    <i class="fa-fw fas fa-list">
-
-                                    </i>
-                                    <span>{{ trans('cruds.operation.title') }}</span>
-
-                                </a>
-                            </li>
-                            @endcan
                             @can('local_access')
                             <li class="{{ request()->is("admin/locals") || request()->is("admin/locals/*") ? "active" :
                                 "" }}">

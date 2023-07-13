@@ -254,10 +254,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('cards/destroy', 'CardController@massDestroy')->name('cards.massDestroy');
     Route::resource('cards', 'CardController');
 
-    // Operation
-    Route::delete('operations/destroy', 'OperationController@massDestroy')->name('operations.massDestroy');
-    Route::resource('operations', 'OperationController');
-
     // Local
     Route::delete('locals/destroy', 'LocalController@massDestroy')->name('locals.massDestroy');
     Route::resource('locals', 'LocalController');

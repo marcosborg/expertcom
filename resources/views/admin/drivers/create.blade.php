@@ -67,18 +67,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.driver.fields.card_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('operation') ? 'has-error' : '' }}">
-                            <label for="operation_id">{{ trans('cruds.driver.fields.operation') }}</label>
-                            <select class="form-control select2" name="operation_id" id="operation_id">
-                                @foreach($operations as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('operation_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('operation'))
-                                <span class="help-block" role="alert">{{ $errors->first('operation') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.driver.fields.operation_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('local') ? 'has-error' : '' }}">
                             <label for="local_id">{{ trans('cruds.driver.fields.local') }}</label>
                             <select class="form-control select2" name="local_id" id="local_id">

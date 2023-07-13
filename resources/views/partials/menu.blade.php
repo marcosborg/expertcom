@@ -206,67 +206,7 @@
                                 </a>
                             </li>
                             @endcan
-                            @can('activity_launch_access')
-                            <li class="{{ request()->is("admin/activity-launches") || request()->
-                                is("admin/activity-launches/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.activity-launches.index") }}">
-                                    <i class="fa-fw fas fa-check">
-
-                                    </i>
-                                    <span>{{ trans('cruds.activityLaunch.title') }}</span>
-
-                                </a>
-                            </li>
-                            @endcan
-                            @can('activity_per_operator_access')
-                            <li class="{{ request()->is("admin/activity-per-operators") || request()->
-                                is("admin/activity-per-operators/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.activity-per-operators.index") }}">
-                                    <i class="fa-fw fas fa-tasks">
-
-                                    </i>
-                                    <span>{{ trans('cruds.activityPerOperator.title') }}</span>
-
-                                </a>
-                            </li>
-                            @endcan
                         </ul>
-                    </li>
-                    @endcan
-                    @can('tvde_driver_management_access')
-                    <li class="{{ request()->is("admin/tvde-driver-managements") || request()->
-                        is("admin/tvde-driver-managements/*") ? "active" : "" }}">
-                        <a href="{{ route("admin.tvde-driver-managements.index") }}">
-                            <i class="fa-fw fas fa-users">
-
-                            </i>
-                            <span>{{ trans('cruds.tvdeDriverManagement.title') }}</span>
-
-                        </a>
-                    </li>
-                    @endcan
-                    @can('payouts_to_driver_access')
-                    <li class="{{ request()->is("admin/payouts-to-drivers") || request()->
-                        is("admin/payouts-to-drivers/*") ? "active" : "" }}">
-                        <a href="{{ route("admin.payouts-to-drivers.index") }}">
-                            <i class="fa-fw fas fa-tasks">
-
-                            </i>
-                            <span>{{ trans('cruds.payoutsToDriver.title') }}</span>
-
-                        </a>
-                    </li>
-                    @endcan
-                    @can('drivers_balance_access')
-                    <li class="{{ request()->is("admin/drivers-balances") || request()->is("admin/drivers-balances/*")
-                        ? "active" : "" }}">
-                        <a href="{{ route("admin.drivers-balances.index") }}">
-                            <i class="fa-fw fas fa-euro-sign">
-
-                            </i>
-                            <span>{{ trans('cruds.driversBalance.title') }}</span>
-
-                        </a>
                     </li>
                     @endcan
                     @can('document_access')

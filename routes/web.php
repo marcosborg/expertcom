@@ -278,14 +278,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('tvde-operators/destroy', 'TvdeOperatorController@massDestroy')->name('tvde-operators.massDestroy');
     Route::resource('tvde-operators', 'TvdeOperatorController');
 
-    // Activity Launch
-    Route::delete('activity-launches/destroy', 'ActivityLaunchController@massDestroy')->name('activity-launches.massDestroy');
-    Route::resource('activity-launches', 'ActivityLaunchController');
-
-    // Activity Per Operator
-    Route::delete('activity-per-operators/destroy', 'ActivityPerOperatorController@massDestroy')->name('activity-per-operators.massDestroy');
-    Route::resource('activity-per-operators', 'ActivityPerOperatorController');
-
     // Receipt
     Route::delete('receipts/destroy', 'ReceiptController@massDestroy')->name('receipts.massDestroy');
     Route::post('receipts/media', 'ReceiptController@storeMedia')->name('receipts.storeMedia');
@@ -298,34 +290,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('/', 'MyReceiptsController@index')->name('my-receipts.index');
         Route::post('create', 'MyReceiptsController@create');
     });
-
-    // Tvde Driver Management
-    Route::prefix('tvde-driver-managements')->group(
-        function () {
-            Route::get('/', 'TvdeDriverManagementController@index')->name('tvde-driver-managements.index');
-            Route::get('ajax', 'TvdeDriverManagementController@ajax');
-            Route::get('drivers', 'TvdeDriverManagementController@drivers');
-            Route::get('operators/{driver_id}', 'TvdeDriverManagementController@operators');
-            Route::get('activity-launch/{activity_launch_id}', 'TvdeDriverManagementController@activityLaunch');
-            Route::post('update-activity', 'TvdeDriverManagementController@updateActivity');
-            Route::get('driver/{driver_id}', 'TvdeDriverManagementController@driver');
-            Route::post('create-activity', 'TvdeDriverManagementController@createActivity');
-            Route::get('delete-activity-launch/{activity_louch_id}', 'TvdeDriverManagementController@deleteActivityLaunch');
-        }
-    );
-
-    // Payouts To Drivers
-    Route::prefix('payouts-to-drivers')->group(
-        function () {
-            Route::get('ajax', 'PayoutsToDriversController@ajax');
-            Route::get('/', 'PayoutsToDriversController@index')->name('payouts-to-drivers.index');
-            Route::post('confirm-send', 'PayoutsToDriversController@confirmSend');
-            Route::get('pay/{id}', 'PayoutsToDriversController@pay');
-        }
-    );
-
-    // Drivers Balance
-    Route::get('drivers-balances', 'DriversBalanceController@index')->name('drivers-balances.index');
 
     // Document
     Route::delete('documents/destroy', 'DocumentController@massDestroy')->name('documents.massDestroy');

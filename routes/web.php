@@ -387,6 +387,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('tvde-activities/process-csv-import', 'TvdeActivityController@processCsvImport')->name('tvde-activities.processCsvImport');
     Route::resource('tvde-activities', 'TvdeActivityController');
 
+    // Contract Type
+    Route::delete('contract-types/destroy', 'ContractTypeController@massDestroy')->name('contract-types.massDestroy');
+    Route::resource('contract-types', 'ContractTypeController');
+
+    // Contract Type Rank
+    Route::delete('contract-type-ranks/destroy', 'ContractTypeRankController@massDestroy')->name('contract-type-ranks.massDestroy');
+    Route::resource('contract-type-ranks', 'ContractTypeRankController');
+
+    // Contract Vat
+    Route::delete('contract-vats/destroy', 'ContractVatController@massDestroy')->name('contract-vats.massDestroy');
+    Route::resource('contract-vats', 'ContractVatController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

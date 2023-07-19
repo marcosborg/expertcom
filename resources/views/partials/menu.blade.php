@@ -157,6 +157,39 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('contract_type_access')
+                                        <li class="{{ request()->is("admin/contract-types") || request()->is("admin/contract-types/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.contract-types.index") }}">
+                                                <i class="fa-fw fas fa-file-signature">
+
+                                                </i>
+                                                <span>{{ trans('cruds.contractType.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('contract_type_rank_access')
+                                        <li class="{{ request()->is("admin/contract-type-ranks") || request()->is("admin/contract-type-ranks/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.contract-type-ranks.index") }}">
+                                                <i class="fa-fw fas fa-file-signature">
+
+                                                </i>
+                                                <span>{{ trans('cruds.contractTypeRank.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('contract_vat_access')
+                                        <li class="{{ request()->is("admin/contract-vats") || request()->is("admin/contract-vats/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.contract-vats.index") }}">
+                                                <i class="fa-fw fas fa-file-signature">
+
+                                                </i>
+                                                <span>{{ trans('cruds.contractVat.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
                         </ul>
                     </li>
                     @endcan

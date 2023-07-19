@@ -381,6 +381,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('electrics/destroy', 'ElectricController@massDestroy')->name('electrics.massDestroy');
     Route::resource('electrics', 'ElectricController');
 
+    // Tvde Activity
+    Route::delete('tvde-activities/destroy', 'TvdeActivityController@massDestroy')->name('tvde-activities.massDestroy');
+    Route::post('tvde-activities/parse-csv-import', 'TvdeActivityController@parseCsvImport')->name('tvde-activities.parseCsvImport');
+    Route::post('tvde-activities/process-csv-import', 'TvdeActivityController@processCsvImport')->name('tvde-activities.processCsvImport');
+    Route::resource('tvde-activities', 'TvdeActivityController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

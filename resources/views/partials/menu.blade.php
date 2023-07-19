@@ -233,6 +233,17 @@
                         </a>
                     </li>
                     @endcan
+                    @can('tvde_activity_access')
+                            <li class="{{ request()->is("admin/tvde-activities") || request()->is("admin/tvde-activities/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.tvde-activities.index") }}">
+                                    <i class="fa-fw fas fa-table">
+
+                                    </i>
+                                    <span>{{ trans('cruds.tvdeActivity.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                 </ul>
             </li>
             @endcan

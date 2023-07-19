@@ -25,25 +25,33 @@ class TvdeActivityController extends Controller
         abort_if(Gate::denies('tvde_activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = TvdeActivity::with(['tvde_week', 'tvde_operator', 'company'])->select(sprintf('%s.*', (new TvdeActivity)->table));
+            if (session()->get('company_id')) {
+                $query = TvdeActivity::where('company_id', session()->get('company_id'))->with(['tvde_week', 'tvde_operator', 'company'])->select(sprintf('%s.*', (new TvdeActivity)->table));
+            } else {
+                $query = TvdeActivity::with(['tvde_week', 'tvde_operator', 'company'])->select(sprintf('%s.*', (new TvdeActivity)->table));
+            }
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'tvde_activity_show';
-                $editGate      = 'tvde_activity_edit';
-                $deleteGate    = 'tvde_activity_delete';
+                $viewGate = 'tvde_activity_show';
+                $editGate = 'tvde_activity_edit';
+                $deleteGate = 'tvde_activity_delete';
                 $crudRoutePart = 'tvde-activities';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
+                return view(
+                    'partials.datatablesActions',
+                    compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    )
+                );
             });
 
             $table->editColumn('id', function ($row) {

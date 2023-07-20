@@ -1,4 +1,27 @@
 @extends('layouts.admin')
+@section('styles')
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #ffffff;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+@endsection
 @section('content')
 <div class="content">
     <div class="panel panel-default">
@@ -63,7 +86,8 @@
                                                                             </td>
                                                                             <td>55%</td>
                                                                             <td>{{
-                                                                                round(($uber_tvde_activities->sum('earnings_one') * (100 - 55))/100, 2)
+                                                                                round(($uber_tvde_activities->sum('earnings_one')
+                                                                                * (100 - 55))/100, 2)
                                                                                 }}€</td>
                                                                         </tr>
                                                                         <tr>
@@ -75,7 +99,8 @@
                                                                             </td>
                                                                             <td>55%</td>
                                                                             <td>{{
-                                                                                round(($bolt_tvde_activities->sum('earnings_one') * (100 - 55))/100, 2)
+                                                                                round(($bolt_tvde_activities->sum('earnings_one')
+                                                                                * (100 - 55))/100, 2)
                                                                                 }}€</td>
                                                                         </tr>
                                                                         <tr>

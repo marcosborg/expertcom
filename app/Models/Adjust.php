@@ -23,6 +23,7 @@ class Adjust extends Model
         'value',
         'tvde_week_id',
         'driver_id',
+        'adjustment_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -41,5 +42,10 @@ class Adjust extends Model
     public function driver()
     {
         return $this->belongsTo(Driver::class, 'driver_id');
+    }
+
+    public function adjustment()
+    {
+        return $this->belongsTo(Adjustment::class, 'adjustment_id');
     }
 }

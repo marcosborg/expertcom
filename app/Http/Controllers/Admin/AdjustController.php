@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyAdjustRequest;
 use App\Http\Requests\StoreAdjustRequest;
 use App\Http\Requests\UpdateAdjustRequest;
 use App\Models\Adjust;
+use App\Models\Adjustment;
 use App\Models\Driver;
 use App\Models\TvdeWeek;
 use Gate;
@@ -19,7 +20,7 @@ class AdjustController extends Controller
     {
         abort_if(Gate::denies('adjust_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $adjusts = Adjust::with(['tvde_week', 'driver'])->get();
+        $adjusts = Adjust::with(['tvde_week', 'driver', 'adjustment'])->get();
 
         return view('admin.adjusts.index', compact('adjusts'));
     }
@@ -32,7 +33,9 @@ class AdjustController extends Controller
 
         $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.adjusts.create', compact('drivers', 'tvde_weeks'));
+        $adjustments = Adjustment::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.adjusts.create', compact('adjustments', 'drivers', 'tvde_weeks'));
     }
 
     public function store(StoreAdjustRequest $request)
@@ -50,9 +53,11 @@ class AdjustController extends Controller
 
         $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $adjust->load('tvde_week', 'driver');
+        $adjustments = Adjustment::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.adjusts.edit', compact('adjust', 'drivers', 'tvde_weeks'));
+        $adjust->load('tvde_week', 'driver', 'adjustment');
+
+        return view('admin.adjusts.edit', compact('adjust', 'adjustments', 'drivers', 'tvde_weeks'));
     }
 
     public function update(UpdateAdjustRequest $request, Adjust $adjust)
@@ -66,7 +71,7 @@ class AdjustController extends Controller
     {
         abort_if(Gate::denies('adjust_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $adjust->load('tvde_week', 'driver');
+        $adjust->load('tvde_week', 'driver', 'adjustment');
 
         return view('admin.adjusts.show', compact('adjust'));
     }

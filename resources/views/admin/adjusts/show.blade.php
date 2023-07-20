@@ -49,6 +49,14 @@
                                         {{ $adjust->driver->name ?? '' }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.adjust.fields.adjustment') }}
+                                    </th>
+                                    <td>
+                                        {{ $adjust->adjustment->name ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

@@ -37,6 +37,9 @@
                                         {{ trans('cruds.adjust.fields.driver') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.adjust.fields.adjustment') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -58,6 +61,9 @@
                                         </td>
                                         <td>
                                             {{ $adjust->driver->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $adjust->adjustment->name ?? '' }}
                                         </td>
                                         <td>
                                             @can('adjust_show')

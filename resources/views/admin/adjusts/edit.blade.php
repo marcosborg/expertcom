@@ -44,6 +44,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.adjust.fields.driver_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('adjustment') ? 'has-error' : '' }}">
+                            <label class="required" for="adjustment_id">{{ trans('cruds.adjust.fields.adjustment') }}</label>
+                            <select class="form-control select2" name="adjustment_id" id="adjustment_id" required>
+                                @foreach($adjustments as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('adjustment_id') ? old('adjustment_id') : $adjust->adjustment->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('adjustment'))
+                                <span class="help-block" role="alert">{{ $errors->first('adjustment') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.adjust.fields.adjustment_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

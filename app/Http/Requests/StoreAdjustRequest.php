@@ -28,6 +28,10 @@ class StoreAdjustRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'adjustment_id' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }

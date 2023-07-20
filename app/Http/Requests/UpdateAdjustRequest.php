@@ -28,6 +28,10 @@ class UpdateAdjustRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'adjustment_id' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }

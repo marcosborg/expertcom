@@ -399,6 +399,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('contract-vats/destroy', 'ContractVatController@massDestroy')->name('contract-vats.massDestroy');
     Route::resource('contract-vats', 'ContractVatController');
 
+    // Adjustment
+    Route::delete('adjustments/destroy', 'AdjustmentController@massDestroy')->name('adjustments.massDestroy');
+    Route::resource('adjustments', 'AdjustmentController');
+
+    // Adjust
+    Route::delete('adjusts/destroy', 'AdjustController@massDestroy')->name('adjusts.massDestroy');
+    Route::resource('adjusts', 'AdjustController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

@@ -54,7 +54,8 @@
                     </li>
                     @endcan
                     @can('company_access')
-                    <li class="{{ request()->is("admin/companies") || request()->is("admin/companies/*") ? "active" : "" }}">
+                    <li class="{{ request()->is("admin/companies") || request()->is("admin/companies/*") ? "active" :
+                        "" }}">
                         <a href="{{ route("admin.companies.index") }}">
                             <i class="fa-fw fas fa-building">
 
@@ -112,7 +113,8 @@
                             </li>
                             @endcan
                             @can('electric_access')
-                            <li class="{{ request()->is("admin/electrics") || request()->is("admin/electrics/*") ? "active" : "" }}">
+                            <li class="{{ request()->is("admin/electrics") || request()->is("admin/electrics/*") ?
+                                "active" : "" }}">
                                 <a href="{{ route("admin.electrics.index") }}">
                                     <i class="fa-fw fas fa-bolt">
 
@@ -158,38 +160,53 @@
                             </li>
                             @endcan
                             @can('contract_type_access')
-                                        <li class="{{ request()->is("admin/contract-types") || request()->is("admin/contract-types/*") ? "active" : "" }}">
-                                            <a href="{{ route("admin.contract-types.index") }}">
-                                                <i class="fa-fw fas fa-file-signature">
+                            <li class="{{ request()->is("admin/contract-types") || request()->
+                                is("admin/contract-types/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.contract-types.index") }}">
+                                    <i class="fa-fw fas fa-file-signature">
 
-                                                </i>
-                                                <span>{{ trans('cruds.contractType.title') }}</span>
+                                    </i>
+                                    <span>{{ trans('cruds.contractType.title') }}</span>
 
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('contract_type_rank_access')
-                                        <li class="{{ request()->is("admin/contract-type-ranks") || request()->is("admin/contract-type-ranks/*") ? "active" : "" }}">
-                                            <a href="{{ route("admin.contract-type-ranks.index") }}">
-                                                <i class="fa-fw fas fa-file-signature">
+                                </a>
+                            </li>
+                            @endcan
+                            @can('contract_type_rank_access')
+                            <li class="{{ request()->is("admin/contract-type-ranks") || request()->
+                                is("admin/contract-type-ranks/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.contract-type-ranks.index") }}">
+                                    <i class="fa-fw fas fa-file-signature">
 
-                                                </i>
-                                                <span>{{ trans('cruds.contractTypeRank.title') }}</span>
+                                    </i>
+                                    <span>{{ trans('cruds.contractTypeRank.title') }}</span>
 
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('contract_vat_access')
-                                        <li class="{{ request()->is("admin/contract-vats") || request()->is("admin/contract-vats/*") ? "active" : "" }}">
-                                            <a href="{{ route("admin.contract-vats.index") }}">
-                                                <i class="fa-fw fas fa-file-signature">
+                                </a>
+                            </li>
+                            @endcan
+                            @can('contract_vat_access')
+                            <li class="{{ request()->is("admin/contract-vats") || request()->
+                                is("admin/contract-vats/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.contract-vats.index") }}">
+                                    <i class="fa-fw fas fa-file-signature">
 
-                                                </i>
-                                                <span>{{ trans('cruds.contractVat.title') }}</span>
+                                    </i>
+                                    <span>{{ trans('cruds.contractVat.title') }}</span>
 
-                                            </a>
-                                        </li>
-                                    @endcan
+                                </a>
+                            </li>
+                            @endcan
+                            @can('adjustment_access')
+                            <li class="{{ request()->is("admin/adjustments") || request()->is("admin/adjustments/*") ?
+                                "active" : "" }}">
+                                <a href="{{ route("admin.adjustments.index") }}">
+                                    <i class="fa-fw fas fa-coins">
+
+                                    </i>
+                                    <span>{{ trans('cruds.adjustment.title') }}</span>
+
+                                </a>
+                            </li>
+                            @endcan
                         </ul>
                     </li>
                     @endcan
@@ -239,6 +256,18 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('adjust_access')
+                            <li class="{{ request()->is("admin/adjusts") || request()->is("admin/adjusts/*") ? "active"
+                                : "" }}">
+                                <a href="{{ route("admin.adjusts.index") }}">
+                                    <i class="fa-fw fas fa-coins">
+
+                                    </i>
+                                    <span>{{ trans('cruds.adjust.title') }}</span>
+
+                                </a>
+                            </li>
+                            @endcan
                         </ul>
                     </li>
                     @endcan
@@ -267,16 +296,17 @@
                     </li>
                     @endcan
                     @can('tvde_activity_access')
-                            <li class="{{ request()->is("admin/tvde-activities") || request()->is("admin/tvde-activities/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.tvde-activities.index") }}">
-                                    <i class="fa-fw fas fa-table">
+                    <li class="{{ request()->is("admin/tvde-activities") || request()->is("admin/tvde-activities/*") ?
+                        "active" : "" }}">
+                        <a href="{{ route("admin.tvde-activities.index") }}">
+                            <i class="fa-fw fas fa-table">
 
-                                    </i>
-                                    <span>{{ trans('cruds.tvdeActivity.title') }}</span>
+                            </i>
+                            <span>{{ trans('cruds.tvdeActivity.title') }}</span>
 
-                                </a>
-                            </li>
-                        @endcan
+                        </a>
+                    </li>
+                    @endcan
                 </ul>
             </li>
             @endcan
@@ -942,162 +972,173 @@
             </li>
             @endcan
             @can('contracts_menu_access')
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa-fw fas fa-file-signature">
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa-fw fas fa-file-signature">
 
-                        </i>
-                        <span>{{ trans('cruds.contractsMenu.title') }}</span>
-                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-                        @can('statement_of_responsibility_access')
-                            <li class="{{ request()->is("admin/statement-of-responsibilities") || request()->is("admin/statement-of-responsibilities/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.statement-of-responsibilities.index") }}">
-                                    <i class="fa-fw fas fa-signature">
+                    </i>
+                    <span>{{ trans('cruds.contractsMenu.title') }}</span>
+                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    @can('statement_of_responsibility_access')
+                    <li class="{{ request()->is("admin/statement-of-responsibilities") || request()->
+                        is("admin/statement-of-responsibilities/*") ? "active" : "" }}">
+                        <a href="{{ route("admin.statement-of-responsibilities.index") }}">
+                            <i class="fa-fw fas fa-signature">
 
-                                    </i>
-                                    <span>{{ trans('cruds.statementOfResponsibility.title') }}</span>
+                            </i>
+                            <span>{{ trans('cruds.statementOfResponsibility.title') }}</span>
 
-                                </a>
-                            </li>
-                        @endcan
-                        @can('contract_access')
-                            <li class="{{ request()->is("admin/contracts") || request()->is("admin/contracts/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.contracts.index") }}">
-                                    <i class="fa-fw fas fa-signature">
+                        </a>
+                    </li>
+                    @endcan
+                    @can('contract_access')
+                    <li class="{{ request()->is("admin/contracts") || request()->is("admin/contracts/*") ? "active" :
+                        "" }}">
+                        <a href="{{ route("admin.contracts.index") }}">
+                            <i class="fa-fw fas fa-signature">
 
-                                    </i>
-                                    <span>{{ trans('cruds.contract.title') }}</span>
+                            </i>
+                            <span>{{ trans('cruds.contract.title') }}</span>
 
-                                </a>
-                            </li>
-                        @endcan
-                    </ul>
-                </li>
+                        </a>
+                    </li>
+                    @endcan
+                </ul>
+            </li>
             @endcan
             @can('admin_statement_responsibility_access')
-                <li class="{{ request()->is("admin/admin-statement-responsibilities") || request()->is("admin/admin-statement-responsibilities/*") ? "active" : "" }}">
-                    <a href="{{ route("admin.admin-statement-responsibilities.index") }}">
-                        <i class="fa-fw fas fa-signature">
+            <li class="{{ request()->is("admin/admin-statement-responsibilities") || request()->
+                is("admin/admin-statement-responsibilities/*") ? "active" : "" }}">
+                <a href="{{ route("admin.admin-statement-responsibilities.index") }}">
+                    <i class="fa-fw fas fa-signature">
 
-                        </i>
-                        <span>{{ trans('cruds.adminStatementResponsibility.title') }}</span>
+                    </i>
+                    <span>{{ trans('cruds.adminStatementResponsibility.title') }}</span>
 
-                    </a>
-                </li>
+                </a>
+            </li>
             @endcan
             @can('admin_contract_access')
-                <li class="{{ request()->is("admin/admin-contracts") || request()->is("admin/admin-contracts/*") ? "active" : "" }}">
-                    <a href="{{ route("admin.admin-contracts.index") }}">
-                        <i class="fa-fw fas fa-signature">
+            <li class="{{ request()->is("admin/admin-contracts") || request()->is("admin/admin-contracts/*") ? "active"
+                : "" }}">
+                <a href="{{ route("admin.admin-contracts.index") }}">
+                    <i class="fa-fw fas fa-signature">
 
-                        </i>
-                        <span>{{ trans('cruds.adminContract.title') }}</span>
+                    </i>
+                    <span>{{ trans('cruds.adminContract.title') }}</span>
 
-                    </a>
-                </li>
+                </a>
+            </li>
             @endcan
             @can('vehicle_access')
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa-fw fas fa-car">
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa-fw fas fa-car">
 
-                        </i>
-                        <span>{{ trans('cruds.vehicle.title') }}</span>
-                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-                        @can('vehicle_setting_access')
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa-fw fas fa-cogs">
+                    </i>
+                    <span>{{ trans('cruds.vehicle.title') }}</span>
+                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    @can('vehicle_setting_access')
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa-fw fas fa-cogs">
 
-                                    </i>
-                                    <span>{{ trans('cruds.vehicleSetting.title') }}</span>
-                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    @can('vehicle_brand_access')
-                                        <li class="{{ request()->is("admin/vehicle-brands") || request()->is("admin/vehicle-brands/*") ? "active" : "" }}">
-                                            <a href="{{ route("admin.vehicle-brands.index") }}">
-                                                <i class="fa-fw fas fa-car">
-
-                                                </i>
-                                                <span>{{ trans('cruds.vehicleBrand.title') }}</span>
-
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('vehicle_model_access')
-                                        <li class="{{ request()->is("admin/vehicle-models") || request()->is("admin/vehicle-models/*") ? "active" : "" }}">
-                                            <a href="{{ route("admin.vehicle-models.index") }}">
-                                                <i class="fa-fw fas fa-car">
-
-                                                </i>
-                                                <span>{{ trans('cruds.vehicleModel.title') }}</span>
-
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('vehicle_event_type_access')
-                                        <li class="{{ request()->is("admin/vehicle-event-types") || request()->is("admin/vehicle-event-types/*") ? "active" : "" }}">
-                                            <a href="{{ route("admin.vehicle-event-types.index") }}">
-                                                <i class="fa-fw fas fa-calendar">
-
-                                                </i>
-                                                <span>{{ trans('cruds.vehicleEventType.title') }}</span>
-
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('vehicle_event_warning_time_access')
-                                        <li class="{{ request()->is("admin/vehicle-event-warning-times") || request()->is("admin/vehicle-event-warning-times/*") ? "active" : "" }}">
-                                            <a href="{{ route("admin.vehicle-event-warning-times.index") }}">
-                                                <i class="fa-fw fas fa-stopwatch">
-
-                                                </i>
-                                                <span>{{ trans('cruds.vehicleEventWarningTime.title') }}</span>
-
-                                            </a>
-                                        </li>
-                                    @endcan
-                                </ul>
-                            </li>
-                        @endcan
-                        @can('vehicle_event_access')
-                            <li class="{{ request()->is("admin/vehicle-events") || request()->is("admin/vehicle-events/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.vehicle-events.index") }}">
-                                    <i class="fa-fw fas fa-calendar">
-
-                                    </i>
-                                    <span>{{ trans('cruds.vehicleEvent.title') }}</span>
-
-                                </a>
-                            </li>
-                        @endcan
-                        @can('vehicle_item_access')
-                            <li class="{{ request()->is("admin/vehicle-items") || request()->is("admin/vehicle-items/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.vehicle-items.index") }}">
+                            </i>
+                            <span>{{ trans('cruds.vehicleSetting.title') }}</span>
+                            <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            @can('vehicle_brand_access')
+                            <li class="{{ request()->is("admin/vehicle-brands") || request()->
+                                is("admin/vehicle-brands/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.vehicle-brands.index") }}">
                                     <i class="fa-fw fas fa-car">
 
                                     </i>
-                                    <span>{{ trans('cruds.vehicleItem.title') }}</span>
+                                    <span>{{ trans('cruds.vehicleBrand.title') }}</span>
 
                                 </a>
                             </li>
-                        @endcan
-                        <li class="{{ request()->is("admin/system-calendar") || request()->is("admin/system-calendar/*") ? "active"
-                            : "" }}">
-                            <a href="{{ route("admin.systemCalendar") }}">
-                                <i class="fas fa-fw fa-calendar">
-            
-                                </i>
-                                <span>{{ trans('global.systemCalendar') }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                            @endcan
+                            @can('vehicle_model_access')
+                            <li class="{{ request()->is("admin/vehicle-models") || request()->
+                                is("admin/vehicle-models/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.vehicle-models.index") }}">
+                                    <i class="fa-fw fas fa-car">
+
+                                    </i>
+                                    <span>{{ trans('cruds.vehicleModel.title') }}</span>
+
+                                </a>
+                            </li>
+                            @endcan
+                            @can('vehicle_event_type_access')
+                            <li class="{{ request()->is("admin/vehicle-event-types") || request()->
+                                is("admin/vehicle-event-types/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.vehicle-event-types.index") }}">
+                                    <i class="fa-fw fas fa-calendar">
+
+                                    </i>
+                                    <span>{{ trans('cruds.vehicleEventType.title') }}</span>
+
+                                </a>
+                            </li>
+                            @endcan
+                            @can('vehicle_event_warning_time_access')
+                            <li class="{{ request()->is("admin/vehicle-event-warning-times") || request()->
+                                is("admin/vehicle-event-warning-times/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.vehicle-event-warning-times.index") }}">
+                                    <i class="fa-fw fas fa-stopwatch">
+
+                                    </i>
+                                    <span>{{ trans('cruds.vehicleEventWarningTime.title') }}</span>
+
+                                </a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcan
+                    @can('vehicle_event_access')
+                    <li class="{{ request()->is("admin/vehicle-events") || request()->is("admin/vehicle-events/*") ?
+                        "active" : "" }}">
+                        <a href="{{ route("admin.vehicle-events.index") }}">
+                            <i class="fa-fw fas fa-calendar">
+
+                            </i>
+                            <span>{{ trans('cruds.vehicleEvent.title') }}</span>
+
+                        </a>
+                    </li>
+                    @endcan
+                    @can('vehicle_item_access')
+                    <li class="{{ request()->is("admin/vehicle-items") || request()->is("admin/vehicle-items/*") ?
+                        "active" : "" }}">
+                        <a href="{{ route("admin.vehicle-items.index") }}">
+                            <i class="fa-fw fas fa-car">
+
+                            </i>
+                            <span>{{ trans('cruds.vehicleItem.title') }}</span>
+
+                        </a>
+                    </li>
+                    @endcan
+                    <li class="{{ request()->is("admin/system-calendar") || request()->is("admin/system-calendar/*") ?
+                        "active"
+                        : "" }}">
+                        <a href="{{ route("admin.systemCalendar") }}">
+                            <i class="fas fa-fw fa-calendar">
+
+                            </i>
+                            <span>{{ trans('global.systemCalendar') }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             @endcan
             @php($unread = \App\Models\QaTopic::unreadCount())
             <li class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "active" : "" }}">

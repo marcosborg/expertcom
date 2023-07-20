@@ -94,9 +94,6 @@
                                     {{ trans('cruds.driver.fields.uber_uuid') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.driver.fields.bolt') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.driver.fields.bolt_name') }}
                                 </th>
                                 <th>
@@ -113,6 +110,9 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.driver.fields.company') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.driver.fields.adjustment') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -195,13 +195,13 @@
 { data: 'driver_license', name: 'driver_license' },
 { data: 'driver_vat', name: 'driver_vat' },
 { data: 'uber_uuid', name: 'uber_uuid' },
-{ data: 'bolt', name: 'bolt' },
 { data: 'bolt_name', name: 'bolt_name' },
 { data: 'license_plate', name: 'license_plate' },
 { data: 'brand', name: 'brand' },
 { data: 'model', name: 'model' },
 { data: 'notes', name: 'notes' },
 { data: 'company_name', name: 'company.name' },
+{ data: 'adjustment', name: 'adjustments.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

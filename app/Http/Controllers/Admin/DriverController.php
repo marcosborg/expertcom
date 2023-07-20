@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyDriverRequest;
 use App\Http\Requests\StoreDriverRequest;
 use App\Http\Requests\UpdateDriverRequest;
+use App\Models\Adjustment;
 use App\Models\Card;
 use App\Models\Company;
 use App\Models\Driver;
@@ -27,34 +28,25 @@ class DriverController extends Controller
         abort_if(Gate::denies('driver_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            if (session()->get('company_id')) {
-                $query = Driver::where('company_id', session()->get('company_id'))->with(['user', 'card', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
-            } else {
-                $query = Driver::with(['user', 'card', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
-            }
-
-
+            $query = Driver::with(['user', 'card', 'local', 'state', 'company', 'adjustments'])->select(sprintf('%s.*', (new Driver)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'driver_show';
-                $editGate = 'driver_edit';
-                $deleteGate = 'driver_delete';
+                $viewGate      = 'driver_show';
+                $editGate      = 'driver_edit';
+                $deleteGate    = 'driver_delete';
                 $crudRoutePart = 'drivers';
 
-                return view(
-                    'partials.datatablesActions',
-                    compact(
-                        'viewGate',
-                        'editGate',
-                        'deleteGate',
-                        'crudRoutePart',
-                        'row'
-                    )
-                );
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->editColumn('id', function ($row) {
@@ -121,9 +113,6 @@ class DriverController extends Controller
             $table->editColumn('uber_uuid', function ($row) {
                 return $row->uber_uuid ? $row->uber_uuid : '';
             });
-            $table->editColumn('bolt', function ($row) {
-                return $row->bolt ? $row->bolt : '';
-            });
             $table->editColumn('bolt_name', function ($row) {
                 return $row->bolt_name ? $row->bolt_name : '';
             });
@@ -143,7 +132,16 @@ class DriverController extends Controller
                 return $row->company ? $row->company->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'card', 'local', 'state', 'company']);
+            $table->editColumn('adjustment', function ($row) {
+                $labels = [];
+                foreach ($row->adjustments as $adjustment) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $adjustment->name);
+                }
+
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'user', 'card', 'local', 'state', 'company', 'adjustment']);
 
             return $table->make(true);
         }
@@ -165,12 +163,15 @@ class DriverController extends Controller
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.drivers.create', compact('cards', 'companies', 'locals', 'states', 'users'));
+        $adjustments = Adjustment::pluck('name', 'id');
+
+        return view('admin.drivers.create', compact('adjustments', 'cards', 'companies', 'locals', 'states', 'users'));
     }
 
     public function store(StoreDriverRequest $request)
     {
         $driver = Driver::create($request->all());
+        $driver->adjustments()->sync($request->input('adjustments', []));
 
         return redirect()->route('admin.drivers.index');
     }
@@ -189,14 +190,17 @@ class DriverController extends Controller
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $driver->load('user', 'card', 'local', 'state', 'company');
+        $adjustments = Adjustment::pluck('name', 'id');
 
-        return view('admin.drivers.edit', compact('cards', 'companies', 'driver', 'locals', 'states', 'users'));
+        $driver->load('user', 'card', 'local', 'state', 'company', 'adjustments');
+
+        return view('admin.drivers.edit', compact('adjustments', 'cards', 'companies', 'driver', 'locals', 'states', 'users'));
     }
 
     public function update(UpdateDriverRequest $request, Driver $driver)
     {
         $driver->update($request->all());
+        $driver->adjustments()->sync($request->input('adjustments', []));
 
         return redirect()->route('admin.drivers.index');
     }
@@ -205,7 +209,7 @@ class DriverController extends Controller
     {
         abort_if(Gate::denies('driver_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $driver->load('user', 'card', 'local', 'state', 'company', 'driverDocuments', 'driverReceipts');
+        $driver->load('user', 'card', 'local', 'state', 'company', 'adjustments', 'driverDocuments', 'driverReceipts');
 
         return view('admin.drivers.show', compact('driver'));
     }

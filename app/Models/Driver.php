@@ -43,7 +43,6 @@ class Driver extends Model
         'driver_license',
         'driver_vat',
         'uber_uuid',
-        'bolt',
         'bolt_name',
         'license_plate',
         'brand',
@@ -113,5 +112,10 @@ class Driver extends Model
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function adjustments()
+    {
+        return $this->belongsToMany(Adjustment::class);
     }
 }

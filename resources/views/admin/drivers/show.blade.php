@@ -187,14 +187,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.driver.fields.bolt') }}
-                                    </th>
-                                    <td>
-                                        {{ $driver->bolt }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.driver.fields.bolt_name') }}
                                     </th>
                                     <td>
@@ -239,6 +231,16 @@
                                     </th>
                                     <td>
                                         {{ $driver->company->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.driver.fields.adjustment') }}
+                                    </th>
+                                    <td>
+                                        @foreach($driver->adjustments as $key => $adjustment)
+                                            <span class="label label-info">{{ $adjustment->name }}</span>
+                                        @endforeach
                                     </td>
                                 </tr>
                             </tbody>

@@ -81,6 +81,10 @@ class UpdateDriverRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'bolt_name' => [
+                'string',
+                'nullable',
+            ],
             'license_plate' => [
                 'string',
                 'nullable',
@@ -92,6 +96,12 @@ class UpdateDriverRequest extends FormRequest
             'model' => [
                 'string',
                 'nullable',
+            ],
+            'adjustments.*' => [
+                'integer',
+            ],
+            'adjustments' => [
+                'array',
             ],
         ];
     }

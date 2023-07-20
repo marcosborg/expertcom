@@ -51,16 +51,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.driver.fields.tvde_operator') }}
-                                    </th>
-                                    <td>
-                                        @foreach($driver->tvde_operators as $key => $tvde_operator)
-                                            <span class="label label-info">{{ $tvde_operator->name }}</span>
-                                        @endforeach
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.driver.fields.card') }}
                                     </th>
                                     <td>
@@ -193,6 +183,22 @@
                                     </th>
                                     <td>
                                         {{ $driver->uber_uuid }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.driver.fields.bolt') }}
+                                    </th>
+                                    <td>
+                                        {{ $driver->bolt }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.driver.fields.bolt_name') }}
+                                    </th>
+                                    <td>
+                                        {{ $driver->bolt_name }}
                                     </td>
                                 </tr>
                                 <tr>

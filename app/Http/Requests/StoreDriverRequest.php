@@ -25,12 +25,6 @@ class StoreDriverRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'tvde_operators.*' => [
-                'integer',
-            ],
-            'tvde_operators' => [
-                'array',
-            ],
             'start_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',

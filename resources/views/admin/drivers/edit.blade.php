@@ -40,22 +40,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.driver.fields.name_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('tvde_operators') ? 'has-error' : '' }}">
-                            <label for="tvde_operators">{{ trans('cruds.driver.fields.tvde_operator') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
-                            <select class="form-control select2" name="tvde_operators[]" id="tvde_operators" multiple>
-                                @foreach($tvde_operators as $id => $tvde_operator)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('tvde_operators', [])) || $driver->tvde_operators->contains($id)) ? 'selected' : '' }}>{{ $tvde_operator }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('tvde_operators'))
-                                <span class="help-block" role="alert">{{ $errors->first('tvde_operators') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.driver.fields.tvde_operator_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('card') ? 'has-error' : '' }}">
                             <label for="card_id">{{ trans('cruds.driver.fields.card') }}</label>
                             <select class="form-control select2" name="card_id" id="card_id">
@@ -203,6 +187,22 @@
                                 <span class="help-block" role="alert">{{ $errors->first('uber_uuid') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.driver.fields.uber_uuid_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('bolt') ? 'has-error' : '' }}">
+                            <label for="bolt">{{ trans('cruds.driver.fields.bolt') }}</label>
+                            <input class="form-control" type="text" name="bolt" id="bolt" value="{{ old('bolt', $driver->bolt) }}">
+                            @if($errors->has('bolt'))
+                                <span class="help-block" role="alert">{{ $errors->first('bolt') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.driver.fields.bolt_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('bolt_name') ? 'has-error' : '' }}">
+                            <label for="bolt_name">{{ trans('cruds.driver.fields.bolt_name') }}</label>
+                            <input class="form-control" type="text" name="bolt_name" id="bolt_name" value="{{ old('bolt_name', $driver->bolt_name) }}">
+                            @if($errors->has('bolt_name'))
+                                <span class="help-block" role="alert">{{ $errors->first('bolt_name') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.driver.fields.bolt_name_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('license_plate') ? 'has-error' : '' }}">
                             <label for="license_plate">{{ trans('cruds.driver.fields.license_plate') }}</label>

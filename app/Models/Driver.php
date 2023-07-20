@@ -43,6 +43,8 @@ class Driver extends Model
         'driver_license',
         'driver_vat',
         'uber_uuid',
+        'bolt',
+        'bolt_name',
         'license_plate',
         'brand',
         'model',
@@ -58,14 +60,19 @@ class Driver extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function driverDocuments()
+    {
+        return $this->hasMany(Document::class, 'driver_id', 'id');
+    }
+
+    public function driverReceipts()
+    {
+        return $this->hasMany(Receipt::class, 'driver_id', 'id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function tvde_operators()
-    {
-        return $this->belongsToMany(TvdeOperator::class);
     }
 
     public function card()
@@ -101,26 +108,6 @@ class Driver extends Model
     public function state()
     {
         return $this->belongsTo(State::class, 'state_id');
-    }
-
-    public function activity_launches()
-    {
-        return $this->hasMany(ActivityLaunch::class);
-    }
-
-    public function admin_contract()
-    {
-        return $this->hasOne(AdminContract::class);
-    }
-
-    public function driverDocuments()
-    {
-        return $this->hasMany(Document::class, 'driver_id', 'id');
-    }
-
-    public function driverReceipts()
-    {
-        return $this->hasMany(Receipt::class, 'driver_id', 'id');
     }
 
     public function company()

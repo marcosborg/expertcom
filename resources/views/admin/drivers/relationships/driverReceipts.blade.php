@@ -40,6 +40,9 @@
                                         {{ trans('cruds.receipt.fields.file') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.receipt.fields.paid') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.receipt.fields.created_at') }}
                                     </th>
                                     <th>
@@ -71,6 +74,10 @@
                                                     {{ trans('global.view_file') }}
                                                 </a>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $receipt->paid ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $receipt->paid ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $receipt->created_at ?? '' }}

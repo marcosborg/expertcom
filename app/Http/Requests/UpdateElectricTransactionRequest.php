@@ -2,35 +2,35 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Adjust;
+use App\Models\ElectricTransaction;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 
-class StoreAdjustRequest extends FormRequest
+class UpdateElectricTransactionRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('adjust_create');
+        return Gate::allows('electric_transaction_edit');
     }
 
     public function rules()
     {
         return [
-            'value' => [
-                'required',
-            ],
             'tvde_week_id' => [
                 'required',
                 'integer',
             ],
-            'driver_id' => [
+            'card' => [
+                'string',
                 'required',
-                'integer',
             ],
-            'adjustment_id' => [
+            'amount' => [
+                'numeric',
                 'required',
-                'integer',
+            ],
+            'total' => [
+                'required',
             ],
         ];
     }

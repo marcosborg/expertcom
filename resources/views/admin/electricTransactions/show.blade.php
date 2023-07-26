@@ -6,12 +6,12 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('global.show') }} {{ trans('cruds.adjust.title') }}
+                    {{ trans('global.show') }} {{ trans('cruds.electricTransaction.title') }}
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('admin.adjusts.index') }}">
+                            <a class="btn btn-default" href="{{ route('admin.electric-transactions.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
                         </div>
@@ -19,48 +19,48 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.adjust.fields.id') }}
+                                        {{ trans('cruds.electricTransaction.fields.id') }}
                                     </th>
                                     <td>
-                                        {{ $adjust->id }}
+                                        {{ $electricTransaction->id }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.adjust.fields.value') }}
+                                        {{ trans('cruds.electricTransaction.fields.tvde_week') }}
                                     </th>
                                     <td>
-                                        {{ $adjust->value }}
+                                        {{ $electricTransaction->tvde_week->start_date ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.adjust.fields.tvde_week') }}
+                                        {{ trans('cruds.electricTransaction.fields.card') }}
                                     </th>
                                     <td>
-                                        {{ $adjust->tvde_week->start_date ?? '' }}
+                                        {{ $electricTransaction->card }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.adjust.fields.driver') }}
+                                        {{ trans('cruds.electricTransaction.fields.amount') }}
                                     </th>
                                     <td>
-                                        {{ $adjust->driver->name ?? '' }}
+                                        {{ $electricTransaction->amount }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.adjust.fields.adjustment') }}
+                                        {{ trans('cruds.electricTransaction.fields.total') }}
                                     </th>
                                     <td>
-                                        {{ $adjust->adjustment->name ?? '' }}
+                                        {{ $electricTransaction->total }}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('admin.adjusts.index') }}">
+                            <a class="btn btn-default" href="{{ route('admin.electric-transactions.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
                         </div>

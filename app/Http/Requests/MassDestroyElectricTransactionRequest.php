@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Adjust;
+use App\Models\ElectricTransaction;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class MassDestroyAdjustRequest extends FormRequest
+class MassDestroyElectricTransactionRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('adjust_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('electric_transaction_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -20,7 +20,7 @@ class MassDestroyAdjustRequest extends FormRequest
     {
         return [
             'ids'   => 'required|array',
-            'ids.*' => 'exists:adjusts,id',
+            'ids.*' => 'exists:electric_transactions,id',
         ];
     }
 }

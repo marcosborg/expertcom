@@ -1,12 +1,16 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content">
-    @can('company_create')
+    @can('electric_transaction_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route('admin.companies.create') }}">
-                    {{ trans('global.add') }} {{ trans('cruds.company.title_singular') }}
+                <a class="btn btn-success" href="{{ route('admin.electric-transactions.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.electricTransaction.title_singular') }}
                 </a>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                    {{ trans('global.app_csvImport') }}
+                </button>
+                @include('csvImport.modal', ['model' => 'ElectricTransaction', 'route' => 'admin.electric-transactions.parseCsvImport'])
             </div>
         </div>
     @endcan
@@ -14,41 +18,29 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('cruds.company.title_singular') }} {{ trans('global.list') }}
+                    {{ trans('cruds.electricTransaction.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Company">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-ElectricTransaction">
                         <thead>
                             <tr>
                                 <th width="10">
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.id') }}
+                                    {{ trans('cruds.electricTransaction.fields.id') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.name') }}
+                                    {{ trans('cruds.electricTransaction.fields.tvde_week') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.name') }}
+                                    {{ trans('cruds.electricTransaction.fields.card') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.vat') }}
+                                    {{ trans('cruds.electricTransaction.fields.amount') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.address') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.zip') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.location') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.email') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.logo') }}
+                                    {{ trans('cruds.electricTransaction.fields.total') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -70,11 +62,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('company_delete')
+@can('electric_transaction_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.companies.massDestroy') }}",
+    url: "{{ route('admin.electric-transactions.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -106,25 +98,21 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.companies.index') }}",
+    ajax: "{{ route('admin.electric-transactions.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
-{ data: 'name', name: 'name' },
-{ data: 'vat', name: 'vat' },
-{ data: 'address', name: 'address' },
-{ data: 'zip', name: 'zip' },
-{ data: 'location', name: 'location' },
-{ data: 'email', name: 'email' },
-{ data: 'logo', name: 'logo', sortable: false, searchable: false },
+{ data: 'tvde_week_start_date', name: 'tvde_week.start_date' },
+{ data: 'card', name: 'card' },
+{ data: 'amount', name: 'amount' },
+{ data: 'total', name: 'total' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   };
-  let table = $('.datatable-Company').DataTable(dtOverrideGlobals);
+  let table = $('.datatable-ElectricTransaction').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

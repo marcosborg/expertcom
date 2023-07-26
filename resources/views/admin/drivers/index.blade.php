@@ -112,9 +112,6 @@
                                     {{ trans('cruds.driver.fields.company') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.driver.fields.adjustment') }}
-                                </th>
-                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -201,7 +198,6 @@
 { data: 'model', name: 'model' },
 { data: 'notes', name: 'notes' },
 { data: 'company_name', name: 'company.name' },
-{ data: 'adjustment', name: 'adjustments.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

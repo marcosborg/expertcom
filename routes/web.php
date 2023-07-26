@@ -399,19 +399,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('contract-vats/destroy', 'ContractVatController@massDestroy')->name('contract-vats.massDestroy');
     Route::resource('contract-vats', 'ContractVatController');
 
-    // Adjustment
-    Route::delete('adjustments/destroy', 'AdjustmentController@massDestroy')->name('adjustments.massDestroy');
-    Route::resource('adjustments', 'AdjustmentController');
-
-    // Adjust
-    Route::delete('adjusts/destroy', 'AdjustController@massDestroy')->name('adjusts.massDestroy');
-    Route::resource('adjusts', 'AdjustController');
-
     // Combustion Transaction
     Route::delete('combustion-transactions/destroy', 'CombustionTransactionController@massDestroy')->name('combustion-transactions.massDestroy');
     Route::post('combustion-transactions/parse-csv-import', 'CombustionTransactionController@parseCsvImport')->name('combustion-transactions.parseCsvImport');
     Route::post('combustion-transactions/process-csv-import', 'CombustionTransactionController@processCsvImport')->name('combustion-transactions.processCsvImport');
     Route::resource('combustion-transactions', 'CombustionTransactionController');
+
+    // Electric Transaction
+    Route::delete('electric-transactions/destroy', 'ElectricTransactionController@massDestroy')->name('electric-transactions.massDestroy');
+    Route::post('electric-transactions/parse-csv-import', 'ElectricTransactionController@parseCsvImport')->name('electric-transactions.parseCsvImport');
+    Route::post('electric-transactions/process-csv-import', 'ElectricTransactionController@processCsvImport')->name('electric-transactions.processCsvImport');
+    Route::resource('electric-transactions', 'ElectricTransactionController');
 
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

@@ -195,18 +195,6 @@
                                 </a>
                             </li>
                             @endcan
-                            @can('adjustment_access')
-                            <li class="{{ request()->is("admin/adjustments") || request()->is("admin/adjustments/*") ?
-                                "active" : "" }}">
-                                <a href="{{ route("admin.adjustments.index") }}">
-                                    <i class="fa-fw fas fa-coins">
-
-                                    </i>
-                                    <span>{{ trans('cruds.adjustment.title') }}</span>
-
-                                </a>
-                            </li>
-                            @endcan
                         </ul>
                     </li>
                     @endcan
@@ -252,18 +240,6 @@
 
                                     </i>
                                     <span>{{ trans('cruds.tvdeWeek.title') }}</span>
-
-                                </a>
-                            </li>
-                            @endcan
-                            @can('adjust_access')
-                            <li class="{{ request()->is("admin/adjusts") || request()->is("admin/adjusts/*") ? "active"
-                                : "" }}">
-                                <a href="{{ route("admin.adjusts.index") }}">
-                                    <i class="fa-fw fas fa-coins">
-
-                                    </i>
-                                    <span>{{ trans('cruds.adjust.title') }}</span>
 
                                 </a>
                             </li>
@@ -315,6 +291,18 @@
 
                             </i>
                             <span>{{ trans('cruds.combustionTransaction.title') }}</span>
+
+                        </a>
+                    </li>
+                    @endcan
+                    @can('electric_transaction_access')
+                    <li class="{{ request()->is("admin/electric-transactions") || request()->
+                        is("admin/electric-transactions/*") ? "active" : "" }}">
+                        <a href="{{ route("admin.electric-transactions.index") }}">
+                            <i class="fa-fw fas fa-bolt">
+
+                            </i>
+                            <span>{{ trans('cruds.electricTransaction.title') }}</span>
 
                         </a>
                     </li>

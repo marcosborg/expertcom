@@ -233,16 +233,6 @@
                                         {{ $driver->company->name ?? '' }}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.driver.fields.adjustment') }}
-                                    </th>
-                                    <td>
-                                        @foreach($driver->adjustments as $key => $adjustment)
-                                            <span class="label label-info">{{ $adjustment->name }}</span>
-                                        @endforeach
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

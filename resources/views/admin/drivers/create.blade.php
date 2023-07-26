@@ -239,22 +239,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.driver.fields.company_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('adjustments') ? 'has-error' : '' }}">
-                            <label for="adjustments">{{ trans('cruds.driver.fields.adjustment') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
-                            <select class="form-control select2" name="adjustments[]" id="adjustments" multiple>
-                                @foreach($adjustments as $id => $adjustment)
-                                    <option value="{{ $id }}" {{ in_array($id, old('adjustments', [])) ? 'selected' : '' }}>{{ $adjustment }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('adjustments'))
-                                <span class="help-block" role="alert">{{ $errors->first('adjustments') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.driver.fields.adjustment_helper') }}</span>
-                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

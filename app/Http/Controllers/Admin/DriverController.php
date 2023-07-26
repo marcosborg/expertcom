@@ -7,7 +7,6 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyDriverRequest;
 use App\Http\Requests\StoreDriverRequest;
 use App\Http\Requests\UpdateDriverRequest;
-use App\Models\Adjustment;
 use App\Models\Card;
 use App\Models\Company;
 use App\Models\Driver;
@@ -28,7 +27,7 @@ class DriverController extends Controller
         abort_if(Gate::denies('driver_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Driver::with(['user', 'card', 'local', 'state', 'company', 'adjustments'])->select(sprintf('%s.*', (new Driver)->table));
+            $query = Driver::with(['user', 'card', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -132,16 +131,7 @@ class DriverController extends Controller
                 return $row->company ? $row->company->name : '';
             });
 
-            $table->editColumn('adjustment', function ($row) {
-                $labels = [];
-                foreach ($row->adjustments as $adjustment) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $adjustment->name);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user', 'card', 'local', 'state', 'company', 'adjustment']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'card', 'local', 'state', 'company']);
 
             return $table->make(true);
         }
@@ -163,15 +153,12 @@ class DriverController extends Controller
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $adjustments = Adjustment::pluck('name', 'id');
-
-        return view('admin.drivers.create', compact('adjustments', 'cards', 'companies', 'locals', 'states', 'users'));
+        return view('admin.drivers.create', compact('cards', 'companies', 'locals', 'states', 'users'));
     }
 
     public function store(StoreDriverRequest $request)
     {
         $driver = Driver::create($request->all());
-        $driver->adjustments()->sync($request->input('adjustments', []));
 
         return redirect()->route('admin.drivers.index');
     }
@@ -190,17 +177,14 @@ class DriverController extends Controller
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $adjustments = Adjustment::pluck('name', 'id');
+        $driver->load('user', 'card', 'local', 'state', 'company');
 
-        $driver->load('user', 'card', 'local', 'state', 'company', 'adjustments');
-
-        return view('admin.drivers.edit', compact('adjustments', 'cards', 'companies', 'driver', 'locals', 'states', 'users'));
+        return view('admin.drivers.edit', compact('cards', 'companies', 'driver', 'locals', 'states', 'users'));
     }
 
     public function update(UpdateDriverRequest $request, Driver $driver)
     {
         $driver->update($request->all());
-        $driver->adjustments()->sync($request->input('adjustments', []));
 
         return redirect()->route('admin.drivers.index');
     }
@@ -209,7 +193,7 @@ class DriverController extends Controller
     {
         abort_if(Gate::denies('driver_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $driver->load('user', 'card', 'local', 'state', 'company', 'adjustments', 'driverDocuments', 'driverReceipts');
+        $driver->load('user', 'card', 'local', 'state', 'company', 'driverDocuments', 'driverReceipts');
 
         return view('admin.drivers.show', compact('driver'));
     }

@@ -1581,5 +1581,27 @@ return [
             'adjustment_helper' => ' ',
         ],
     ],
+    'combustionTransaction' => [
+        'title'          => 'Combustion Transaction',
+        'title_singular' => 'Combustion Transaction',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'card'              => 'Card',
+            'card_helper'       => ' ',
+            'amount'            => 'Amount',
+            'amount_helper'     => ' ',
+            'total'             => 'Total',
+            'total_helper'      => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+            'tvde_week'         => 'Tvde Week',
+            'tvde_week_helper'  => ' ',
+        ],
+    ],
 
 ];

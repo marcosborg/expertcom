@@ -407,6 +407,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('adjusts/destroy', 'AdjustController@massDestroy')->name('adjusts.massDestroy');
     Route::resource('adjusts', 'AdjustController');
 
+    // Combustion Transaction
+    Route::delete('combustion-transactions/destroy', 'CombustionTransactionController@massDestroy')->name('combustion-transactions.massDestroy');
+    Route::post('combustion-transactions/parse-csv-import', 'CombustionTransactionController@parseCsvImport')->name('combustion-transactions.parseCsvImport');
+    Route::post('combustion-transactions/process-csv-import', 'CombustionTransactionController@processCsvImport')->name('combustion-transactions.processCsvImport');
+    Route::resource('combustion-transactions', 'CombustionTransactionController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

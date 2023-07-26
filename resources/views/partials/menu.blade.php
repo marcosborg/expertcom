@@ -307,6 +307,18 @@
                         </a>
                     </li>
                     @endcan
+                    @can('combustion_transaction_access')
+                    <li class="{{ request()->is("admin/combustion-transactions") || request()->
+                        is("admin/combustion-transactions/*") ? "active" : "" }}">
+                        <a href="{{ route("admin.combustion-transactions.index") }}">
+                            <i class="fa-fw fas fa-gas-pump">
+
+                            </i>
+                            <span>{{ trans('cruds.combustionTransaction.title') }}</span>
+
+                        </a>
+                    </li>
+                    @endcan
                 </ul>
             </li>
             @endcan

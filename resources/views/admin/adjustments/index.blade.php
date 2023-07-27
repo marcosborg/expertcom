@@ -34,6 +34,9 @@
                                     {{ trans('cruds.adjustment.fields.name') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.adjustment.fields.type') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.adjustment.fields.amount') }}
                                 </th>
                                 <th>
@@ -109,6 +112,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
+{ data: 'type', name: 'type' },
 { data: 'amount', name: 'amount' },
 { data: 'percent', name: 'percent' },
 { data: 'start_date', name: 'start_date' },

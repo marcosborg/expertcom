@@ -20,6 +20,19 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.adjustment.fields.name_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
+                            <label class="required">{{ trans('cruds.adjustment.fields.type') }}</label>
+                            @foreach(App\Models\Adjustment::TYPE_RADIO as $key => $label)
+                                <div>
+                                    <input type="radio" id="type_{{ $key }}" name="type" value="{{ $key }}" {{ old('type', $adjustment->type) === (string) $key ? 'checked' : '' }} required>
+                                    <label for="type_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                </div>
+                            @endforeach
+                            @if($errors->has('type'))
+                                <span class="help-block" role="alert">{{ $errors->first('type') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.adjustment.fields.type_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
                             <label for="amount">{{ trans('cruds.adjustment.fields.amount') }}</label>
                             <input class="form-control" type="number" name="amount" id="amount" value="{{ old('amount', $adjustment->amount) }}" step="0.01">

@@ -21,6 +21,9 @@ class UpdateAdjustmentRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'type' => [
+                'required',
+            ],
             'percent' => [
                 'string',
                 'nullable',

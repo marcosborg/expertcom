@@ -35,6 +35,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.adjustment.fields.type') }}
+                                    </th>
+                                    <td>
+                                        {{ App\Models\Adjustment::TYPE_RADIO[$adjustment->type] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.adjustment.fields.amount') }}
                                     </th>
                                     <td>
@@ -71,7 +79,7 @@
                                     </th>
                                     <td>
                                         @foreach($adjustment->drivers as $key => $drivers)
-                                            <span class="label label-info">{{ $drivers->code }}</span>
+                                            <span class="label label-info">{{ $drivers->name }}</span>
                                         @endforeach
                                     </td>
                                 </tr>

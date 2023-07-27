@@ -14,6 +14,11 @@ class Adjustment extends Model
 
     public $table = 'adjustments';
 
+    public const TYPE_RADIO = [
+        'deduct' => 'Deduct',
+        'refund' => 'Refund',
+    ];
+
     protected $dates = [
         'start_date',
         'end_date',
@@ -24,6 +29,7 @@ class Adjustment extends Model
 
     protected $fillable = [
         'name',
+        'type',
         'amount',
         'percent',
         'start_date',

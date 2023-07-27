@@ -23,5 +23,7 @@
     console.log({
     bolt_activities: {!! $bolt_activities !!},
     uber_activities: {!! $uber_activities !!},
+    adjustments: {!! $adjustments !!},
+    tvde_week: {!! $tvde_week !!}
 })
 </script>

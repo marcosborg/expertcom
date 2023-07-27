@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
+
 class AdjustmentController extends Controller
 {
     use CsvImportTrait;
@@ -50,6 +51,9 @@ class AdjustmentController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
+            $table->editColumn('type', function ($row) {
+                return $row->type ? Adjustment::TYPE_RADIO[$row->type] : '';
+            });
             $table->editColumn('amount', function ($row) {
                 return $row->amount ? $row->amount : '';
             });
@@ -60,7 +64,7 @@ class AdjustmentController extends Controller
             $table->editColumn('drivers', function ($row) {
                 $labels = [];
                 foreach ($row->drivers as $driver) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $driver->code);
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $driver->name);
                 }
 
                 return implode(' ', $labels);
@@ -78,7 +82,7 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('adjustment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $drivers = Driver::pluck('code', 'id');
+        $drivers = Driver::pluck('name', 'id');
 
         return view('admin.adjustments.create', compact('drivers'));
     }
@@ -95,7 +99,7 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('adjustment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $drivers = Driver::pluck('code', 'id');
+        $drivers = Driver::pluck('name', 'id');
 
         $adjustment->load('drivers');
 

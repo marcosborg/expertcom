@@ -411,6 +411,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('electric-transactions/process-csv-import', 'ElectricTransactionController@processCsvImport')->name('electric-transactions.processCsvImport');
     Route::resource('electric-transactions', 'ElectricTransactionController');
 
+    // Adjustment
+    Route::delete('adjustments/destroy', 'AdjustmentController@massDestroy')->name('adjustments.massDestroy');
+    Route::post('adjustments/parse-csv-import', 'AdjustmentController@parseCsvImport')->name('adjustments.parseCsvImport');
+    Route::post('adjustments/process-csv-import', 'AdjustmentController@processCsvImport')->name('adjustments.processCsvImport');
+    Route::resource('adjustments', 'AdjustmentController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

@@ -307,6 +307,18 @@
                         </a>
                     </li>
                     @endcan
+                    @can('adjustment_access')
+                    <li class="{{ request()->is("admin/adjustments") || request()->is("admin/adjustments/*") ? "active"
+                        : "" }}">
+                        <a href="{{ route("admin.adjustments.index") }}">
+                            <i class="fa-fw fas fa-coins">
+
+                            </i>
+                            <span>{{ trans('cruds.adjustment.title') }}</span>
+
+                        </a>
+                    </li>
+                    @endcan
                 </ul>
             </li>
             @endcan

@@ -72,6 +72,7 @@
                                         {{ $adjustment->percent ? $adjustment->percent . '%' : '' }}
                                     </td>
                                     <td></td>
+                                    <td></td>
                                 </tr>
                             @endforeach
                         </tbody>

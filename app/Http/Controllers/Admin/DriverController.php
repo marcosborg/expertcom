@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateDriverRequest;
 use App\Models\Card;
 use App\Models\Company;
 use App\Models\Driver;
+use App\Models\Electric;
 use App\Models\Local;
 use App\Models\State;
 use App\Models\User;
@@ -27,7 +28,7 @@ class DriverController extends Controller
         abort_if(Gate::denies('driver_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Driver::with(['user', 'card', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
+            $query = Driver::with(['user', 'card', 'electric', 'local', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -66,6 +67,10 @@ class DriverController extends Controller
             });
             $table->addColumn('card_code', function ($row) {
                 return $row->card ? $row->card->code : '';
+            });
+
+            $table->addColumn('electric_code', function ($row) {
+                return $row->electric ? $row->electric->code : '';
             });
 
             $table->addColumn('local_name', function ($row) {
@@ -131,7 +136,7 @@ class DriverController extends Controller
                 return $row->company ? $row->company->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'card', 'local', 'state', 'company']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'card', 'electric', 'local', 'state', 'company']);
 
             return $table->make(true);
         }
@@ -147,13 +152,15 @@ class DriverController extends Controller
 
         $cards = Card::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $electrics = Electric::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $locals = Local::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $states = State::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.drivers.create', compact('cards', 'companies', 'locals', 'states', 'users'));
+        return view('admin.drivers.create', compact('cards', 'companies', 'electrics', 'locals', 'states', 'users'));
     }
 
     public function store(StoreDriverRequest $request)
@@ -171,15 +178,17 @@ class DriverController extends Controller
 
         $cards = Card::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $electrics = Electric::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $locals = Local::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $states = State::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $driver->load('user', 'card', 'local', 'state', 'company');
+        $driver->load('user', 'card', 'electric', 'local', 'state', 'company');
 
-        return view('admin.drivers.edit', compact('cards', 'companies', 'driver', 'locals', 'states', 'users'));
+        return view('admin.drivers.edit', compact('cards', 'companies', 'driver', 'electrics', 'locals', 'states', 'users'));
     }
 
     public function update(UpdateDriverRequest $request, Driver $driver)
@@ -193,7 +202,7 @@ class DriverController extends Controller
     {
         abort_if(Gate::denies('driver_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $driver->load('user', 'card', 'local', 'state', 'company', 'driverDocuments', 'driverReceipts');
+        $driver->load('user', 'card', 'electric', 'local', 'state', 'company', 'driverDocuments', 'driverReceipts');
 
         return view('admin.drivers.show', compact('driver'));
     }

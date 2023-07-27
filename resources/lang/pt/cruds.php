@@ -999,6 +999,8 @@ return [
             'bolt_name_helper'      => ' ',
             'bolt'                  => 'Bolt id',
             'bolt_helper'           => ' ',
+            'electric'              => 'Electric',
+            'electric_helper'       => ' ',
         ],
     ],
     'card' => [

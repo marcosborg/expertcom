@@ -59,6 +59,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.driver.fields.electric') }}
+                                    </th>
+                                    <td>
+                                        {{ $driver->electric->code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.driver.fields.local') }}
                                     </th>
                                     <td>

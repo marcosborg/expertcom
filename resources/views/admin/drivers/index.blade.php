@@ -46,6 +46,9 @@
                                     {{ trans('cruds.driver.fields.card') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.driver.fields.electric') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.driver.fields.local') }}
                                 </th>
                                 <th>
@@ -176,6 +179,7 @@
 { data: 'code', name: 'code' },
 { data: 'name', name: 'name' },
 { data: 'card_code', name: 'card.code' },
+{ data: 'electric_code', name: 'electric.code' },
 { data: 'local_name', name: 'local.name' },
 { data: 'start_date', name: 'start_date' },
 { data: 'end_date', name: 'end_date' },

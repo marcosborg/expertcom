@@ -30,4 +30,9 @@ class ContractType extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function contract_type_ranks()
+    {
+        return $this->hasMany(ContractTypeRank::class);
+    }
 }

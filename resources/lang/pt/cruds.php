@@ -1001,6 +1001,10 @@ return [
             'bolt_helper'           => ' ',
             'electric'              => 'Electric',
             'electric_helper'       => ' ',
+            'contract_type'         => 'Contract Type',
+            'contract_type_helper'  => ' ',
+            'contract_vat'              => 'Contract Vat',
+            'contract_vat_helper'       => ' ',
         ],
     ],
     'card' => [

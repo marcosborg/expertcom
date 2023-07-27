@@ -52,6 +52,18 @@
                                     {{ trans('cruds.driver.fields.local') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.driver.fields.contract_type') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.driver.fields.contract_vat') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.contractVat.fields.percent') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.contractVat.fields.tips') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.driver.fields.start_date') }}
                                 </th>
                                 <th>
@@ -181,6 +193,10 @@
 { data: 'card_code', name: 'card.code' },
 { data: 'electric_code', name: 'electric.code' },
 { data: 'local_name', name: 'local.name' },
+{ data: 'contract_type_name', name: 'contract_type.name' },
+{ data: 'contract_vat_name', name: 'contract_vat.name' },
+{ data: 'contract_vat.percent', name: 'contract_vat.percent' },
+{ data: 'contract_vat.tips', name: 'contract_vat.tips' },
 { data: 'start_date', name: 'start_date' },
 { data: 'end_date', name: 'end_date' },
 { data: 'reason', name: 'reason' },

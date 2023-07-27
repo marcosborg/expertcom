@@ -25,6 +25,14 @@ class UpdateDriverRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'contract_type_id' => [
+                'required',
+                'integer',
+            ],
+            'contract_vat_id' => [
+                'required',
+                'integer',
+            ],
             'start_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
@@ -96,12 +104,6 @@ class UpdateDriverRequest extends FormRequest
             'model' => [
                 'string',
                 'nullable',
-            ],
-            'adjustments.*' => [
-                'integer',
-            ],
-            'adjustments' => [
-                'array',
             ],
         ];
     }

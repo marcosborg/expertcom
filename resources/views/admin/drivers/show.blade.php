@@ -75,6 +75,22 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.driver.fields.contract_type') }}
+                                    </th>
+                                    <td>
+                                        {{ $driver->contract_type->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.driver.fields.contract_vat') }}
+                                    </th>
+                                    <td>
+                                        {{ $driver->contract_vat->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.driver.fields.start_date') }}
                                     </th>
                                     <td>

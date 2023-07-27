@@ -75,6 +75,30 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.driver.fields.local_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('contract_type') ? 'has-error' : '' }}">
+                            <label class="required" for="contract_type_id">{{ trans('cruds.driver.fields.contract_type') }}</label>
+                            <select class="form-control select2" name="contract_type_id" id="contract_type_id" required>
+                                @foreach($contract_types as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('contract_type_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('contract_type'))
+                                <span class="help-block" role="alert">{{ $errors->first('contract_type') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.driver.fields.contract_type_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('contract_vat') ? 'has-error' : '' }}">
+                            <label class="required" for="contract_vat_id">{{ trans('cruds.driver.fields.contract_vat') }}</label>
+                            <select class="form-control select2" name="contract_vat_id" id="contract_vat_id" required>
+                                @foreach($contract_vats as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('contract_vat_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('contract_vat'))
+                                <span class="help-block" role="alert">{{ $errors->first('contract_vat') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.driver.fields.contract_vat_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('start_date') ? 'has-error' : '' }}">
                             <label for="start_date">{{ trans('cruds.driver.fields.start_date') }}</label>
                             <input class="form-control date" type="text" name="start_date" id="start_date" value="{{ old('start_date') }}">

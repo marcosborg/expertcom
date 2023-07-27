@@ -29,6 +29,8 @@ class Driver extends Model
         'card_id',
         'electric_id',
         'local_id',
+        'contract_type_id',
+        'contract_vat_id',
         'start_date',
         'end_date',
         'reason',
@@ -88,6 +90,16 @@ class Driver extends Model
     public function local()
     {
         return $this->belongsTo(Local::class, 'local_id');
+    }
+
+    public function contract_type()
+    {
+        return $this->belongsTo(ContractType::class, 'contract_type_id');
+    }
+
+    public function contract_vat()
+    {
+        return $this->belongsTo(ContractVat::class, 'contract_vat_id');
     }
 
     public function getStartDateAttribute($value)

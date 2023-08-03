@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/', function(){
+Route::get('/', function () {
     return view('welcome');
 });
 //Route::get('/', 'Website\HomePageController@index');
@@ -303,8 +303,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('my-documents/update/{id}', 'MyDocumentController@update')->name('my-documents.update');
 
     // Financial Statement
-    Route::get('financial-statements', 'FinancialStatementController@index')->name('financial-statements.index');
-    Route::get('financial-statements/pdf/{id}/{stream?}', 'FinancialStatementController@pdf');
+    Route::prefix('financial-statements')->group(function () {
+        Route::get('/', 'FinancialStatementController@index')->name('financial-statements.index');
+        Route::get('pdf/{id}/{stream?}', 'FinancialStatementController@pdf');
+        Route::get('year/{tvde_year_id}', 'FinancialStatementController@year');
+        Route::get('month/{tvde_month_id}', 'FinancialStatementController@month');
+        Route::get('week/{tvde_week_id}', 'FinancialStatementController@week');
+        Route::get('driver/{driver_id}', 'FinancialStatementController@driver');
+    });
 
     // Company Document
     Route::delete('company-documents/destroy', 'CompanyDocumentController@massDestroy')->name('company-documents.massDestroy');

@@ -67,3 +67,7 @@ table.dataTable thead .sorting_desc {
     content: " *";
     color: red;
 }
+
+.selected {
+    background-color: #e7e7e7;
+}

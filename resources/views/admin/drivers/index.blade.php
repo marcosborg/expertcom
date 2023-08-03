@@ -40,16 +40,10 @@
                                     {{ trans('cruds.driver.fields.code') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.driver.fields.name') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.driver.fields.card') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.driver.fields.electric') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.local') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.driver.fields.contract_type') }}
@@ -58,70 +52,13 @@
                                     {{ trans('cruds.driver.fields.contract_vat') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.contractVat.fields.percent') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.contractVat.fields.tips') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.start_date') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.end_date') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.reason') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.phone') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.payment_vat') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.citizen_card') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.email') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.iban') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.address') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.zip') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.city') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.driver.fields.state') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.driver_license') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.driver_vat') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.driver.fields.uber_uuid') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.driver.fields.bolt_name') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.license_plate') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.brand') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.model') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.driver.fields.notes') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.driver.fields.company') }}
@@ -189,34 +126,13 @@
 { data: 'user_name', name: 'user.name' },
 { data: 'user.email', name: 'user.email' },
 { data: 'code', name: 'code' },
-{ data: 'name', name: 'name' },
 { data: 'card_code', name: 'card.code' },
 { data: 'electric_code', name: 'electric.code' },
-{ data: 'local_name', name: 'local.name' },
 { data: 'contract_type_name', name: 'contract_type.name' },
 { data: 'contract_vat_name', name: 'contract_vat.name' },
-{ data: 'contract_vat.percent', name: 'contract_vat.percent' },
-{ data: 'contract_vat.tips', name: 'contract_vat.tips' },
-{ data: 'start_date', name: 'start_date' },
-{ data: 'end_date', name: 'end_date' },
-{ data: 'reason', name: 'reason' },
-{ data: 'phone', name: 'phone' },
-{ data: 'payment_vat', name: 'payment_vat' },
-{ data: 'citizen_card', name: 'citizen_card' },
-{ data: 'email', name: 'email' },
-{ data: 'iban', name: 'iban' },
-{ data: 'address', name: 'address' },
-{ data: 'zip', name: 'zip' },
-{ data: 'city', name: 'city' },
 { data: 'state_name', name: 'state.name' },
-{ data: 'driver_license', name: 'driver_license' },
-{ data: 'driver_vat', name: 'driver_vat' },
 { data: 'uber_uuid', name: 'uber_uuid' },
 { data: 'bolt_name', name: 'bolt_name' },
-{ data: 'license_plate', name: 'license_plate' },
-{ data: 'brand', name: 'brand' },
-{ data: 'model', name: 'model' },
-{ data: 'notes', name: 'notes' },
 { data: 'company_name', name: 'company.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

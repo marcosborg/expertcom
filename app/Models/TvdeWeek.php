@@ -42,11 +42,6 @@ class TvdeWeek extends Model
         return $this->belongsTo(TvdeMonth::class, 'tvde_month_id');
     }
 
-    public function activityLaunches()
-    {
-        return $this->hasMany(ActivityLaunch::class, 'week_id');
-    }
-
     public function getStartDateAttribute($value)
     {
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;

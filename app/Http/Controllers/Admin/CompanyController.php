@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyCompanyRequest;
 use App\Http\Requests\StoreCompanyRequest;
@@ -17,7 +18,8 @@ use Yajra\DataTables\Facades\DataTables;
 class CompanyController extends Controller
 {
     use MediaUploadingTrait;
-
+    use CsvImportTrait;
+    
     public function index(Request $request)
     {
         abort_if(Gate::denies('company_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

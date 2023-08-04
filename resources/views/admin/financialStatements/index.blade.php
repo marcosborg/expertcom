@@ -146,7 +146,17 @@
     </div>
     @endif
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Origem dos ganhos
+                </div>
+                <div class="panel-body">
+                    <canvas id="driver_earnings" style="height: 400px"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Ranking de faturação semanal por motoristas
@@ -181,8 +191,8 @@
         labels.push(element.driver);
         data.push(element.earnings);
     });
-    const ctx = document.getElementById('team_earnings');
-    new Chart(ctx, {
+    const ctx1 = document.getElementById('team_earnings');
+    new Chart(ctx1, {
       type: 'bar',
       data: {
         labels: labels,
@@ -202,7 +212,25 @@
         },
       }
     });
-  </script>
+</script>
+<script>
+    const ctx2 = document.getElementById('driver_earnings');
+    new Chart(ctx2, {
+      type: 'doughnut',
+      data: {
+        labels: ['UBER', 'BOLT', 'GORJETAS'],
+        datasets: [{
+          label: 'Valor faturado',
+          data: [{!! $total_earnings_uber !!}, {!! $total_earnings_bolt !!}, {!! $total_tips !!}],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      }
+    });
+</script>
 @endsection
 <script>
     console.log({

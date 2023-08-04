@@ -14,6 +14,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class FinancialStatementController extends Controller
 {
@@ -124,11 +125,11 @@ class FinancialStatementController extends Controller
         $total_earnings_uber = number_format($uber_activities->sum('earnings_two'), 2);
         $total_tips_uber = number_format($uber_activities->sum('earnings_one'), 2);
         $total_tips = $total_tips_uber + $total_tips_bolt;
-        $total_earnings = $total_earnings_bolt + $total_earnings_uber;
+        $total_earnings = $bolt_activities->sum('earnings_two') + $uber_activities->sum('earnings_two');
 
         //CHECK PERCENT
-        $contract_type_ranks = ContractTypeRank::where('contract_type_id', $driver->contract_type_id)->get();
-        $contract_type_rank = $contract_type_ranks[0];
+        $contract_type_ranks = $driver ? ContractTypeRank::where('contract_type_id', $driver->contract_type_id)->get() : [];
+        $contract_type_rank = count($contract_type_ranks) > 0 ? $contract_type_ranks[0] : null;
         foreach ($contract_type_ranks as $value) {
             if ($value->from <= $total_earnings && $value->to >= $total_earnings) {
                 $contract_type_rank = $value;
@@ -136,13 +137,13 @@ class FinancialStatementController extends Controller
         }
         //
 
-        $total_bolt = number_format($total_earnings_bolt * ($contract_type_rank->percent / 100), 2);
-        $total_uber = number_format($total_earnings_uber * ($contract_type_rank->percent / 100), 2);
+        $total_bolt = number_format($bolt_activities->sum('earnings_two') * ($contract_type_rank ? $contract_type_rank->percent / 100 : 0), 2);
+        $total_uber = number_format($uber_activities->sum('earnings_two') * ($contract_type_rank ? $contract_type_rank->percent / 100 : 0), 2);
 
         $total_earnings_after_vat = $total_bolt + $total_uber;
 
-        $bolt_tip_percent = 100 - $driver->contract_vat->tips;
-        $uber_tip_percent = 100 - $driver->contract_vat->tips;
+        $bolt_tip_percent = $driver ? 100 - $driver->contract_vat->tips : 100;
+        $uber_tip_percent = $driver ? 100 - $driver->contract_vat->tips : 100;
 
         $bolt_tip_after_vat = number_format($total_tips_bolt * ($bolt_tip_percent / 100), 2);
         $uber_tip_after_vat = number_format($total_tips_uber * ($uber_tip_percent / 100), 2);
@@ -155,6 +156,33 @@ class FinancialStatementController extends Controller
         $gross_credits = $total + $refund;
         $gross_debts = ($total_earnings - $total_after_vat) + ($total_tips - $total_tip_after_vat) + $deduct;
         $final_total = $gross_credits - $gross_debts;
+
+        //GRAFICOS
+
+        $team_earnings = collect();
+
+        foreach ($drivers as $d) {
+            $team_driver_bolt_earnings = TvdeActivity::where([
+                'tvde_week_id' => $tvde_week_id,
+                'tvde_operator_id' => 1,
+                'driver_code' => $d->bolt_name
+            ])
+                ->get()->sum('earnings_two');
+
+            $team_driver_uber_earnings = TvdeActivity::where([
+                'tvde_week_id' => $tvde_week_id,
+                'tvde_operator_id' => 2,
+                'driver_code' => $d->uber_uuid
+            ])
+                ->get()->sum('earnings_two');
+
+            $team_driver_earnings = $team_driver_bolt_earnings + $team_driver_uber_earnings;
+            $entry = collect([
+                'driver' => $d->name,
+                'earnings' => sprintf("%.2f", $team_driver_earnings)
+            ]);
+            $team_earnings->add($entry);
+        }
 
         return view('admin.financialStatements.index', compact([
             'company_id',
@@ -187,7 +215,9 @@ class FinancialStatementController extends Controller
             'total_after_vat',
             'gross_credits',
             'gross_debts',
-            'final_total'
+            'final_total',
+            'driver',
+            'team_earnings'
         ]));
     }
 

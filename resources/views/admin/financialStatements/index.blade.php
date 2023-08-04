@@ -31,10 +31,10 @@
     </div>
     <a href="/admin/financial-statements/driver/0"
         class="btn btn-default {{ $driver_id == null ? 'disabled selected' : '' }}" style="margin-top: 5px;">Todos</a>
-    @foreach ($drivers as $driver)
-    <a href="/admin/financial-statements/driver/{{ $driver->id }}"
-        class="btn btn-default {{ $driver_id == $driver->id ? 'disabled selected' : '' }}" style="margin-top: 5px;">{{
-        $driver->name }}</a>
+    @foreach ($drivers as $d)
+    <a href="/admin/financial-statements/driver/{{ $d->id }}"
+        class="btn btn-default {{ $driver_id == $d->id ? 'disabled selected' : '' }}" style="margin-top: 5px;">{{
+        $d->name }}</a>
     @endforeach
     <div class="row" style="margin-top: 5px;">
         <div class="col-md-6">
@@ -48,32 +48,42 @@
                             <tr>
                                 <th>UBER</th>
                                 <td>{{ $total_earnings_uber }}€</td>
-                                <td>{{ $contract_type_rank->percent }}%</td>
+                                @if ($driver)
+                                <td>{{ $contract_type_rank ? $contract_type_rank->percent : '' }}%</td>
                                 <td>{{ $total_uber }}€</td>
+                                @endif
                             </tr>
                             <tr>
                                 <th>BOLT</th>
                                 <td>{{ $total_earnings_bolt }}€</td>
-                                <td>{{ $contract_type_rank->percent }}%</td>
+                                @if ($driver)
+                                <td>{{ $contract_type_rank ? $contract_type_rank->percent : '' }}%</td>
                                 <td>{{ $total_bolt }}€</td>
+                                @endif
                             </tr>
                             <tr>
                                 <th>Gorjeta UBER</th>
                                 <td>{{ $total_tips_uber }}€</td>
+                                @if ($driver)
                                 <td>{{ $uber_tip_percent }}%</td>
                                 <td>{{ $uber_tip_after_vat }}€</td>
+                                @endif
                             </tr>
                             <tr>
                                 <th>Gorjeta BOLT</th>
                                 <td>{{ $total_tips_bolt }}€</td>
+                                @if ($driver)
                                 <td>{{ $bolt_tip_percent }}%</td>
                                 <td>{{ $bolt_tip_after_vat }}€</td>
+                                @endif
                             </tr>
                             <tr>
                                 <th>Totais</th>
                                 <td>{{ $total }}€</td>
+                                @if ($driver)
                                 <td></td>
                                 <td>{{ $total_after_vat }}€</td>
+                                @endif
                             </tr>
                         </tbody>
                     </table>
@@ -91,20 +101,26 @@
                             <tr>
                                 <th></th>
                                 <th style="text-align: right;">Créditos</th>
+                                @if ($driver)
                                 <th style="text-align: right;">Débitos</th>
                                 <th style="text-align: right;">Totais</th>
+                                @endif
                             </tr>
                             <tr>
                                 <th>Ganhos</th>
                                 <td>{{ $total_earnings }}€</td>
+                                @if ($driver)
                                 <td>- {{ $total_earnings - $total_after_vat }}€</td>
                                 <td>{{ $total_after_vat }}€</td>
+                                @endif
                             </tr>
                             <tr>
                                 <th>Gorjetas</th>
                                 <td>{{ $total_tips }}€</td>
+                                @if ($driver)
                                 <td>- {{ $total_tips - $total_tip_after_vat }}€</td>
                                 <td>{{ $total_tip_after_vat }}€</td>
+                                @endif
                             </tr>
                             @foreach ($adjustments as $adjustment)
                             <tr>
@@ -117,8 +133,10 @@
                             <tr>
                                 <th>Totais</th>
                                 <th style="text-align: right;">{{ $gross_credits }}€</th>
+                                @if ($driver)
                                 <th style="text-align: right;">- {{ $gross_debts }}€</th>
                                 <th style="text-align: right;">{{ $final_total }}€</th>
+                                @endif
                             </tr>
                         </tbody>
                     </table>
@@ -127,6 +145,18 @@
         </div>
     </div>
     @endif
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Ranking de faturação semanal por motoristas
+                </div>
+                <div class="panel-body">
+                    <canvas id="team_earnings" style="height: 400px"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @section('styles')
@@ -140,9 +170,44 @@
     }
 </style>
 @endsection
+@section('scripts')
+@parent
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const team_earnings = {!! $team_earnings !!};
+    const labels = [];
+    const data = [];
+    team_earnings.forEach(element => {
+        labels.push(element.driver);
+        data.push(element.earnings);
+    });
+    const ctx = document.getElementById('team_earnings');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Valor faturado',
+          data: data,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+      }
+    });
+  </script>
+@endsection
 <script>
     console.log({
         bolt_activities: {!! $bolt_activities !!},
-        uber_activities: {!! $uber_activities !!}
+        uber_activities: {!! $uber_activities !!},
+        driver: {!! $driver !!}
     });
 </script>

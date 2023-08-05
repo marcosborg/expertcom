@@ -89,6 +89,46 @@
                     </table>
                 </div>
             </div>
+            @if ($electric_expenses || $combustion_expenses)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Abastecimento
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th></th>
+                                        <th style="text-align: right;">Quantidade</th>
+                                        <th style="text-align: right;">Custo</th>
+                                    </tr>
+                                    @if ($electric_expenses)
+                                    <tr>
+                                        <th>Gastos</th>
+                                        <td>{{ $electric_expenses['amount'] }}</td>
+                                        <td>{{ $electric_expenses['total'] }}</td>
+                                    </tr>
+                                    @endif
+                                    @if ($combustion_expenses)
+                                    <tr>
+                                        <th>Gastos</th>
+                                        <td>{{ $combustion_expenses['amount'] }}</td>
+                                        <td>{{ $combustion_expenses['total'] }}</td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            {{ $combustion_racio }}
+                            {{ $electric_racio }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
         <div class="col-md-6">
             <div class="panel panel-default">
@@ -122,6 +162,26 @@
                                 <td>{{ $total_tip_after_vat }}€</td>
                                 @endif
                             </tr>
+                            @if ($electric_expenses)
+                            <tr>
+                                <th>Abastecimento elétrico</th>
+                                <td></td>
+                                @if ($driver)
+                                <td>- {{ $electric_expenses['total'] }}</td>
+                                <td></td>
+                                @endif
+                            </tr>
+                            @endif
+                            @if ($combustion_expenses)
+                            <tr>
+                                <th>Abastecimento combustivel</th>
+                                <td></td>
+                                @if ($driver)
+                                <td>- {{ $combustion_expenses['total'] }}</td>
+                                <td></td>
+                                @endif
+                            </tr>
+                            @endif
                             @foreach ($adjustments as $adjustment)
                             <tr>
                                 <th>{{ $adjustment->name }}</th>
@@ -232,10 +292,3 @@
     });
 </script>
 @endsection
-<script>
-    console.log({
-        bolt_activities: {!! $bolt_activities !!},
-        uber_activities: {!! $uber_activities !!},
-        driver: {!! $driver !!}
-    });
-</script>

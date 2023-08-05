@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Adjustment;
+use App\Models\Card;
+use App\Models\CombustionTransaction;
 use App\Models\ContractTypeRank;
 use App\Models\Driver;
+use App\Models\Electric;
+use App\Models\ElectricTransaction;
 use App\Models\TvdeActivity;
 use App\Models\TvdeMonth;
 use App\Models\TvdeWeek;
@@ -109,6 +113,7 @@ class FinancialStatementController extends Controller
 
         $refund = 0;
         $deduct = 0;
+
         foreach ($adjustments as $adjustment) {
             switch ($adjustment->type) {
                 case 'refund':
@@ -118,6 +123,35 @@ class FinancialStatementController extends Controller
                     $deduct = $deduct + $adjustment->amount;
                     break;
             }
+        }
+
+        // FUEL EXPENSES
+
+        $electric_expenses = null;
+        if ($driver->electric_id) {
+            $electric = Electric::find($driver->electric_id);
+            $electric_transactions = ElectricTransaction::where([
+                'card' => $electric->code,
+                'tvde_week_id' => $tvde_week_id
+            ])->get();
+            $electric_expenses = collect([
+                'amount' => number_format($electric_transactions->sum('amount'), 2, '.', '') . ' kWh',
+                'total' => number_format($electric_transactions->sum('total'), 2, '.', '') . ' €',
+                'value' => $electric_transactions->sum('total')
+            ]);
+        }
+        $combustion_expenses = null;
+        if ($driver->card_id) {
+            $card = Card::find($driver->card_id);
+            $combustion_transactions = CombustionTransaction::where([
+                'card' => $card->code,
+                'tvde_week_id' => $tvde_week_id
+            ])->get();
+            $combustion_expenses = collect([
+                'amount' => number_format($combustion_transactions->sum('amount'), 2, '.', '') . ' L',
+                'total' => number_format($combustion_transactions->sum('total'), 2, '.', '') . ' €',
+                'value' => $combustion_transactions->sum('total')
+            ]);
         }
 
         $total_earnings_bolt = number_format($bolt_activities->sum('earnings_two'), 2);
@@ -155,7 +189,22 @@ class FinancialStatementController extends Controller
 
         $gross_credits = $total + $refund;
         $gross_debts = ($total_earnings - $total_after_vat) + ($total_tips - $total_tip_after_vat) + $deduct;
+
         $final_total = $gross_credits - $gross_debts;
+
+        $electric_racio = null;
+        $combustion_racio = null;
+
+        if ($electric_expenses) {
+            $final_total = $final_total - $electric_expenses['value'];
+            $gross_debts = $gross_debts + $electric_expenses['value'];
+            $electric_racio = number_format(($electric_expenses['value'] / $total_earnings) * 100, 2, '.', '') . '%';
+        }
+        if ($combustion_expenses) {
+            $final_total = $final_total - $combustion_expenses['value'];
+            $gross_debts = $gross_debts + $combustion_expenses['value'];
+            $combustion_racio = number_format(($combustion_expenses['value'] / $total_earnings) * 100, 2, '.', '') . '%';
+        }
 
         //GRAFICOS
 
@@ -217,7 +266,11 @@ class FinancialStatementController extends Controller
             'gross_debts',
             'final_total',
             'driver',
-            'team_earnings'
+            'team_earnings',
+            'electric_expenses',
+            'combustion_expenses',
+            'combustion_racio',
+            'electric_racio'
         ]));
     }
 

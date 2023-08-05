@@ -128,7 +128,7 @@ class FinancialStatementController extends Controller
         // FUEL EXPENSES
 
         $electric_expenses = null;
-        if ($driver->electric_id) {
+        if ($driver && $driver->electric_id) {
             $electric = Electric::find($driver->electric_id);
             $electric_transactions = ElectricTransaction::where([
                 'card' => $electric->code,
@@ -141,7 +141,7 @@ class FinancialStatementController extends Controller
             ]);
         }
         $combustion_expenses = null;
-        if ($driver->card_id) {
+        if ($driver && $driver->card_id) {
             $card = Card::find($driver->card_id);
             $combustion_transactions = CombustionTransaction::where([
                 'card' => $card->code,
@@ -154,9 +154,9 @@ class FinancialStatementController extends Controller
             ]);
         }
 
-        $total_earnings_bolt = number_format($bolt_activities->sum('earnings_two'), 2);
+        $total_earnings_bolt = number_format($bolt_activities->sum('earnings_two') - $bolt_activities->sum('earnings_one'), 2);
         $total_tips_bolt = number_format($bolt_activities->sum('earnings_one'), 2);
-        $total_earnings_uber = number_format($uber_activities->sum('earnings_two'), 2);
+        $total_earnings_uber = number_format($uber_activities->sum('earnings_two') - $uber_activities->sum('earnings_one'), 2);
         $total_tips_uber = number_format($uber_activities->sum('earnings_one'), 2);
         $total_tips = $total_tips_uber + $total_tips_bolt;
         $total_earnings = $bolt_activities->sum('earnings_two') + $uber_activities->sum('earnings_two');
@@ -171,8 +171,8 @@ class FinancialStatementController extends Controller
         }
         //
 
-        $total_bolt = number_format($bolt_activities->sum('earnings_two') * ($contract_type_rank ? $contract_type_rank->percent / 100 : 0), 2);
-        $total_uber = number_format($uber_activities->sum('earnings_two') * ($contract_type_rank ? $contract_type_rank->percent / 100 : 0), 2);
+        $total_bolt = number_format(($bolt_activities->sum('earnings_two') - $bolt_activities->sum('earnings_one')) * ($contract_type_rank ? $contract_type_rank->percent / 100 : 0), 2);
+        $total_uber = number_format(($uber_activities->sum('earnings_two') - $uber_activities->sum('earnings_one')) * ($contract_type_rank ? $contract_type_rank->percent / 100 : 0), 2);
 
         $total_earnings_after_vat = $total_bolt + $total_uber;
 
@@ -210,7 +210,7 @@ class FinancialStatementController extends Controller
 
         $team_earnings = collect();
 
-        foreach ($drivers as $d) {
+        foreach ($drivers as $key => $d) {
             $team_driver_bolt_earnings = TvdeActivity::where([
                 'tvde_week_id' => $tvde_week_id,
                 'tvde_operator_id' => 1,
@@ -227,7 +227,7 @@ class FinancialStatementController extends Controller
 
             $team_driver_earnings = $team_driver_bolt_earnings + $team_driver_uber_earnings;
             $entry = collect([
-                'driver' => $d->name,
+                'driver' => 'Motorista ' . $key+1,
                 'earnings' => sprintf("%.2f", $team_driver_earnings)
             ]);
             $team_earnings->add($entry);

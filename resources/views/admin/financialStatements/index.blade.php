@@ -191,7 +191,7 @@
                             </tr>
                             @endforeach
                             <tr>
-                                <th>Totais</th>
+                                <th>Totais<br><small>Valor a emitir recibo</small></th>
                                 <th style="text-align: right;">{{ $gross_credits }}€</th>
                                 @if ($driver)
                                 <th style="text-align: right;">- {{ $gross_debts }}€</th>

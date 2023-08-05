@@ -79,7 +79,7 @@
                             </tr>
                             <tr>
                                 <th>Totais</th>
-                                <td>{{ $total }}€</td>
+                                <td>{{ $total_earnings }}€</td>
                                 @if ($driver)
                                 <td></td>
                                 <td>{{ $total_after_vat }}€</td>

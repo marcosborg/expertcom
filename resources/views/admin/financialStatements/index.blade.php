@@ -148,17 +148,17 @@
                             </tr>
                             <tr>
                                 <th>Ganhos</th>
-                                <td>{{ $total_earnings }}€</td>
+                                <td>{{ $total_earnings_no_tip }}€</td>
                                 @if ($driver)
-                                <td>- {{ $total_earnings - $total_after_vat }}€</td>
-                                <td>{{ $total_after_vat }}€</td>
+                                <td>- {{ $total_earnings_no_tip - $total_earnings_after_vat }}€</td>
+                                <td>{{ number_format($total_earnings_after_vat, 2) }}€</td>
                                 @endif
                             </tr>
                             <tr>
                                 <th>Gorjetas</th>
-                                <td>{{ $total_tips }}€</td>
+                                <td>{{ number_format($total_tips, 2) }}€</td>
                                 @if ($driver)
-                                <td>- {{ $total_tips - $total_tip_after_vat }}€</td>
+                                <td>- {{ number_format($total_tips - $total_tip_after_vat, 2) }}€</td>
                                 <td>{{ $total_tip_after_vat }}€</td>
                                 @endif
                             </tr>

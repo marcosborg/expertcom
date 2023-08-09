@@ -30,7 +30,7 @@ class FinancialStatementController extends Controller
 
         $company_id = session()->get('company_id') ?? $company_id = session()->get('company_id');
         $tvde_year_id = session()->get('tvde_year_id') ? session()->get('tvde_year_id') : $tvde_year_id = TvdeYear::orderBy('name')->first()->id;
-        $tvde_month_id = session()->get('tvde_month_id') ? session()->get('tvde_month_id') : $tvde_month_id = TvdeMonth::orderBy('number', 'desc')->where('year_id', $tvde_year_id)->first()->id;
+        $tvde_month_id = session()->get('tvde_month_id') ? session()->get('tvde_month_id') : $tvde_month_id = TvdeMonth::orderBy('number', 'desc')->whereHas('weeks')->where('year_id', $tvde_year_id)->first()->id;
         $tvde_week_id = session()->get('tvde_week_id') ? session()->get('tvde_week_id') : $tvde_week_id = TvdeWeek::orderBy('number', 'desc')->where('tvde_month_id', $tvde_month_id)->first()->id;
         $driver_id = session()->get('driver_id') ? session()->get('driver_id') : $driver_id = 0;
 
@@ -160,6 +160,7 @@ class FinancialStatementController extends Controller
         $total_tips_uber = number_format($uber_activities->sum('earnings_one'), 2);
         $total_tips = $total_tips_uber + $total_tips_bolt;
         $total_earnings = $bolt_activities->sum('earnings_two') + $uber_activities->sum('earnings_two');
+        $total_earnings_no_tip = ($bolt_activities->sum('earnings_two') - $bolt_activities->sum('earnings_one')) + ($uber_activities->sum('earnings_two') - $uber_activities->sum('earnings_one'));
 
         //CHECK PERCENT
         $contract_type_ranks = $driver ? ContractTypeRank::where('contract_type_id', $driver->contract_type_id)->get() : [];
@@ -187,8 +188,8 @@ class FinancialStatementController extends Controller
         $total = $total_earnings + $total_tips;
         $total_after_vat = $total_earnings_after_vat + $total_tip_after_vat;
 
-        $gross_credits = $total + $refund;
-        $gross_debts = ($total_earnings - $total_after_vat) + ($total_tips - $total_tip_after_vat) + $deduct;
+        $gross_credits = $total_earnings_no_tip + $total_tips + $refund;
+        $gross_debts = ($total_earnings_no_tip - $total_earnings_after_vat) + ($total_tips - $total_tip_after_vat) + $deduct;
 
         $final_total = $gross_credits - $gross_debts;
 
@@ -260,6 +261,7 @@ class FinancialStatementController extends Controller
             'total_tip_after_vat',
             'adjustments',
             'total_earnings',
+            'total_earnings_no_tip',
             'total',
             'total_after_vat',
             'gross_credits',
@@ -270,7 +272,8 @@ class FinancialStatementController extends Controller
             'electric_expenses',
             'combustion_expenses',
             'combustion_racio',
-            'electric_racio'
+            'electric_racio',
+            'total_earnings_after_vat'
         ]));
     }
 

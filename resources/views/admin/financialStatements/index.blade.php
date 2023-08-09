@@ -212,6 +212,11 @@
                     </table>
                 </div>
             </div>
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <h3>Valor a emitir recibo: <span style="font-weight: 800;">{{ $final_total }}</span>€</h3>
+                </div>
+            </div>
         </div>
     </div>
     @endif

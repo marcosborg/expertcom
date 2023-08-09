@@ -278,7 +278,8 @@
         datasets: [{
           label: 'Valor faturado',
           data: data,
-          borderWidth: 1
+          borderWidth: 1,
+          backgroundColor: '#00a65a94'
         }]
       },
       options: {

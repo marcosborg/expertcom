@@ -96,7 +96,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
@@ -120,10 +120,20 @@
                                     @endif
                                 </tbody>
                             </table>
+                            @if ($electric_expenses)
+                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ $electric_racio }}</h1>
+                            @endif
+                            @if ($combustion_expenses)
+                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ $combustion_racio }}</h1>
+                            @endif
                         </div>
-                        <div class="col-md-6">
-                            {{ $combustion_racio }}
-                            {{ $electric_racio }}
+                        <div class="col-md-7">
+                            @if ($electric_expenses)
+                            <canvas id="electric_racio" style="height: 200px;"></canvas>
+                            @endif
+                            @if ($combustion_expenses)
+                            <canvas id="combustion_racio" style="height: 200px;"></canvas>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -238,6 +248,10 @@
     table {
         font-size: 13px;
     }
+
+    canvas#electric_racio {
+        pointer-events: none;
+    }
 </style>
 @endsection
 @section('scripts')
@@ -288,6 +302,82 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
+      }
+    });
+</script>
+<script>
+    const ctx3 = document.getElementById('electric_racio');
+    new Chart(ctx3, {
+      type: 'bar',
+      data: {
+        labels: ['Rácio'],
+        datasets: [
+            {
+            label: 'Rácio',
+            data: [10],
+            backgroundColor: 'lightblue',
+            },
+            {
+            label: '',
+            data: [90],
+            backgroundColor: 'transparent',
+            },
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Rácio de rentabilidade'
+            },
+        },
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            }
+        }
+      }
+    });
+</script>
+<script>
+    const ctx4 = document.getElementById('combustion_racio');
+    new Chart(ctx4, {
+      type: 'bar',
+      data: {
+        labels: ['Rácio'],
+        datasets: [
+            {
+            label: 'Rácio',
+            data: [10],
+            backgroundColor: 'lightblue',
+            },
+            {
+            label: '',
+            data: [90],
+            backgroundColor: 'transparent',
+            },
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Rácio de rentabilidade'
+            },
+        },
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            }
+        }
       }
     });
 </script>

@@ -11,6 +11,24 @@
                     {{ trans('global.app_csvImport') }}
                 </button>
                 @include('csvImport.modal', ['model' => 'TvdeActivity', 'route' => 'admin.tvde-activities.parseCsvImport'])
+                <form action="/admin/tvde-activities/delete-filter" method="post" style="margin-top: 10px;">
+                @csrf
+                <select name="week_filter" class="select2" style="max-width: 200px;">
+                    <option selected disabled>Semana</option>
+                    @foreach ($tvde_weeks as $tvde_week)
+                    <option value="{{ $tvde_week->id }}">{{ $tvde_week->start_date }}</option>
+                    @endforeach
+                </select>
+                <select name="company_filter" class="select2" style="max-width: 200px;">
+                    <option selected disabled>Empresa</option>
+                    @foreach ($companies as $company)
+                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                    @endforeach
+                </select>
+                <button onclick="return confirm('Tem certeza que deseja eliminar os dados do filtro?')" class="btn btn-danger" data-toggle="modal" type="submit">
+                    Eliminar seleção de filtro
+                </button>
+                </form>
             </div>
         </div>
     @endcan

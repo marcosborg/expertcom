@@ -396,6 +396,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('tvde-activities/parse-csv-import', 'TvdeActivityController@parseCsvImport')->name('tvde-activities.parseCsvImport');
     Route::post('tvde-activities/process-csv-import', 'TvdeActivityController@processCsvImport')->name('tvde-activities.processCsvImport');
     Route::resource('tvde-activities', 'TvdeActivityController');
+    Route::post('tvde-activities/delete-filter', 'TvdeActivityController@deleteFilter');
 
     // Contract Type
     Route::delete('contract-types/destroy', 'ContractTypeController@massDestroy')->name('contract-types.massDestroy');

@@ -71,28 +71,28 @@ class FinancialStatementController extends Controller
         if ($driver_id == 0) {
             $bolt_activities = TvdeActivity::where([
                 'tvde_week_id' => $tvde_week_id,
-                'tvde_operator_id' => 1,
+                'tvde_operator_id' => 2,
                 'company_id' => $company_id,
             ])
                 ->get();
 
             $uber_activities = TvdeActivity::where([
                 'tvde_week_id' => $tvde_week_id,
-                'tvde_operator_id' => 2,
+                'tvde_operator_id' => 1,
                 'company_id' => $company_id,
             ])
                 ->get();
         } else {
             $bolt_activities = TvdeActivity::where([
                 'tvde_week_id' => $tvde_week_id,
-                'tvde_operator_id' => 1,
+                'tvde_operator_id' => 2,
                 'driver_code' => $driver->bolt_name
             ])
                 ->get();
 
             $uber_activities = TvdeActivity::where([
                 'tvde_week_id' => $tvde_week_id,
-                'tvde_operator_id' => 2,
+                'tvde_operator_id' => 1,
                 'driver_code' => $driver->uber_uuid
             ])
                 ->get();
@@ -199,11 +199,7 @@ class FinancialStatementController extends Controller
         if ($electric_expenses) {
             $final_total = $final_total - $electric_expenses['value'];
             $gross_debts = $gross_debts + $electric_expenses['value'];
-            if ($electric_expenses['value'] > 0) {
-                $electric_racio = number_format(($electric_expenses['value'] / $total_earnings) * 100, 2, '.', '') . '%';
-            } else {
-                $electric_racio = '0%';
-            }
+            $electric_racio = number_format(($electric_expenses['value'] / $total_earnings) * 100, 2, '.', '') . '%';
         }
         if ($combustion_expenses) {
             $final_total = $final_total - $combustion_expenses['value'];

@@ -84,7 +84,10 @@ class TvdeActivityController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.tvdeActivities.index');
+        $tvde_weeks = TvdeWeek::all();
+        $companies = Company::all();
+
+        return view('admin.tvdeActivities.index', compact('tvde_weeks', 'companies'));
     }
 
     public function create()
@@ -156,5 +159,27 @@ class TvdeActivityController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function deleteFilter(Request $request)
+    {
+        $request->validate([
+            'week_filter' => 'required'
+        ]);
+
+        if($request->company_filter){
+            $tvde_activities = TvdeActivity::where([
+                'tvde_week_id' => $request->week_filter,
+                'company_id' => $request->company_filter
+            ]);
+        } else {
+            $tvde_activities = TvdeActivity::where([
+                'tvde_week_id' => $request->week_filter
+            ]);
+        }
+
+        $tvde_activities->delete();
+
+        return redirect()->back()->with('message', 'Eliminado com sucesso');
     }
 }

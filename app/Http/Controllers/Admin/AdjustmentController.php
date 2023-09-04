@@ -31,18 +31,21 @@ class AdjustmentController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'adjustment_show';
-                $editGate      = 'adjustment_edit';
-                $deleteGate    = 'adjustment_delete';
+                $viewGate = 'adjustment_show';
+                $editGate = 'adjustment_edit';
+                $deleteGate = 'adjustment_delete';
                 $crudRoutePart = 'adjustments';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
+                return view(
+                    'partials.datatablesActions',
+                    compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    )
+                );
             });
 
             $table->editColumn('id', function ($row) {
@@ -82,7 +85,11 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('adjustment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $drivers = Driver::pluck('name', 'id');
+        if (session('company_id')) {
+            $drivers = Driver::where('company_id', session('company_id'))->pluck('name', 'id');
+        } else {
+            $drivers = Driver::pluck('name', 'id');
+        }
 
         return view('admin.adjustments.create', compact('drivers'));
     }
@@ -99,7 +106,11 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('adjustment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $drivers = Driver::pluck('name', 'id');
+        if (session('company_id')) {
+            $drivers = Driver::where('company_id', session('company_id'))->pluck('name', 'id');
+        } else {
+            $drivers = Driver::pluck('name', 'id');
+        }
 
         $adjustment->load('drivers');
 

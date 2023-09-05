@@ -29,6 +29,7 @@ class HomeController
 
     public function selectCompany($company_id)
     {
+        session()->forget('driver_id');
         session()->put('company_id', $company_id);
     }
 }

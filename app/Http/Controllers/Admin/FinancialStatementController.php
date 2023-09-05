@@ -199,7 +199,11 @@ class FinancialStatementController extends Controller
         if ($electric_expenses) {
             $final_total = $final_total - $electric_expenses['value'];
             $gross_debts = $gross_debts + $electric_expenses['value'];
-            $electric_racio = number_format(($electric_expenses['value'] / $total_earnings) * 100, 2, '.', '') . '%';
+            if ($electric_expenses['value'] > 0) {
+                $electric_racio = number_format(($electric_expenses['value'] / $total_earnings) * 100, 2, '.', '') . '%';
+            } else {
+                $electric_racio = '0%';
+            }
         }
         if ($combustion_expenses) {
             $final_total = $final_total - $combustion_expenses['value'];

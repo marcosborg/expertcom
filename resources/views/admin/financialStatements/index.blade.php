@@ -123,11 +123,13 @@
                                 </tbody>
                             </table>
                             @if ($electric_expenses)
-                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ number_format($electric_racio, 2) }}%
+                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{
+                                number_format($electric_racio, 2) }}%
                             </h1>
                             @endif
                             @if ($combustion_expenses)
-                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ number_format($combustion_racio, 2) }}%
+                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{
+                                number_format($combustion_racio, 2) }}%
                             </h1>
                             @endif
                         </div>
@@ -217,8 +219,10 @@
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-body text-center">
-                    <h3>Valor a emitir recibo: <span style="font-weight: 800;">{{ number_format($final_total, 2) }}</span>€</h3>
+                <div class="panel-body">
+                    <h3 class="pull-left">Valor a emitir recibo: <span style="font-weight: 800;">{{
+                            number_format($final_total, 2) }}</span>€</h3>
+                            <h3><a href="/admin/financial-statements/pdf" class="btn btn-primary pull-right"><i class="fa fa-file-pdf-o"></i></a></h3>
                 </div>
             </div>
         </div>

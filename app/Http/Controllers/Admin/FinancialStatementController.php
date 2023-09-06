@@ -18,7 +18,6 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
-use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class FinancialStatementController extends Controller
 {
@@ -330,11 +329,8 @@ class FinancialStatementController extends Controller
                     'isRemoteEnabled' => true,
                 ]);
 
-        if ($request->stream) {
-            return $pdf->stream();
-        } else {
-            return $pdf->download('name_of_file' . '.pdf');
-        }
+        return $pdf->stream();
+        return $pdf->download('name_of_file' . '.pdf');
 
     }
 

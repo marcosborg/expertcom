@@ -143,7 +143,7 @@ class FinancialStatementController extends Controller
         $combustion_expenses = null;
         if ($driver && $driver->card_id) {
             $card = Card::find($driver->card_id);
-            if(!$card){
+            if (!$card) {
                 $code = 0;
             } else {
                 $code = $card->code;
@@ -205,18 +205,18 @@ class FinancialStatementController extends Controller
             $final_total = $final_total - $electric_expenses['value'];
             $gross_debts = $gross_debts + $electric_expenses['value'];
             if ($electric_expenses['value'] > 0) {
-                $electric_racio = number_format(($electric_expenses['value'] / $total_earnings) * 100, 2, '.', '') . '%';
+                $electric_racio = ($electric_expenses['value'] / $total_earnings) * 100;
             } else {
-                $electric_racio = '0%';
+                $electric_racio = 0;
             }
         }
         if ($combustion_expenses) {
             $final_total = $final_total - $combustion_expenses['value'];
             $gross_debts = $gross_debts + $combustion_expenses['value'];
             if ($combustion_expenses['value'] > 0) {
-                $combustion_racio = number_format(($combustion_expenses['value'] / $total_earnings) * 100, 2, '.', '') . '%';
+                $combustion_racio = ($combustion_expenses['value'] / $total_earnings) * 100;
             } else {
-                $combustion_racio = '0%';
+                $combustion_racio = 0;
             }
         }
 
@@ -240,12 +240,14 @@ class FinancialStatementController extends Controller
                 ->get()->sum('earnings_two');
 
             $team_driver_earnings = $team_driver_bolt_earnings + $team_driver_uber_earnings;
-            $entry = collect([
-                'driver' => $driver->uber_uuid == $d->uber_uuid || $driver->bolt_name == $d->bolt_name ? $driver->name : 'Motorista ' . $key + 1,
-                'earnings' => sprintf("%.2f", $team_driver_earnings),
-                'own' => $driver->uber_uuid == $d->uber_uuid || $driver->bolt_name == $d->bolt_name
-            ]);
-            $team_earnings->add($entry);
+            if ($driver) {
+                $entry = collect([
+                    'driver' => $driver->uber_uuid == $d->uber_uuid || $driver->bolt_name == $d->bolt_name ? $driver->name : 'Motorista ' . $key + 1,
+                    'earnings' => sprintf("%.2f", $team_driver_earnings),
+                    'own' => $driver->uber_uuid == $d->uber_uuid || $driver->bolt_name == $d->bolt_name
+                ]);
+                $team_earnings->add($entry);
+            }
         }
 
         return view('admin.financialStatements.index', compact([

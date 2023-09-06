@@ -123,11 +123,11 @@
                                 </tbody>
                             </table>
                             @if ($electric_expenses)
-                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ $electric_racio }}
+                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ number_format($electric_racio, 2) }}%
                             </h1>
                             @endif
                             @if ($combustion_expenses)
-                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ $combustion_racio }}
+                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ number_format($combustion_racio, 2) }}%
                             </h1>
                             @endif
                         </div>
@@ -328,6 +328,10 @@
 </script>
 <script>
     const ctx3 = document.getElementById('electric_racio');
+    const combustion_racio = {{ $combustion_racio ? $combustion_racio : 0 }};
+    const combustion_racio_difference = 100 - combustion_racio;
+    const electric_racio = {{ $electric_racio ? $electric_racio : 0 }};
+    const electric_racio_difference = 100 - electric_racio;
     new Chart(ctx3, {
       type: 'bar',
       data: {
@@ -335,12 +339,12 @@
         datasets: [
             {
             label: 'Rácio',
-            data: [10],
+            data: [electric_racio],
             backgroundColor: 'lightblue',
             },
             {
             label: '',
-            data: [90],
+            data: [electric_racio_difference],
             backgroundColor: 'transparent',
             },
         ]
@@ -373,12 +377,12 @@
         datasets: [
             {
             label: 'Rácio',
-            data: [10],
+            data: [combustion_racio],
             backgroundColor: 'lightblue',
             },
             {
             label: '',
-            data: [90],
+            data: [combustion_racio_difference],
             backgroundColor: 'transparent',
             },
         ]

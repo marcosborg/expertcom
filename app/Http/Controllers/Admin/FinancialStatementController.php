@@ -143,8 +143,13 @@ class FinancialStatementController extends Controller
         $combustion_expenses = null;
         if ($driver && $driver->card_id) {
             $card = Card::find($driver->card_id);
+            if(!$card){
+                $code = 0;
+            } else {
+                $code = $card->code;
+            }
             $combustion_transactions = CombustionTransaction::where([
-                'card' => $card->code,
+                'card' => $code,
                 'tvde_week_id' => $tvde_week_id
             ])->get();
             $combustion_expenses = collect([

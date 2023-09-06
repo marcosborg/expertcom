@@ -36,6 +36,7 @@
         class="btn btn-default {{ $driver_id == $d->id ? 'disabled selected' : '' }}" style="margin-top: 5px;">{{
         $d->name }}</a>
     @endforeach
+    @if ($total_earnings_after_vat > 0)
     <div class="row" style="margin-top: 5px;">
         <div class="col-md-6">
             <div class="panel panel-default">
@@ -89,7 +90,8 @@
                     </table>
                 </div>
             </div>
-            @if ($electric_expenses || $combustion_expenses)
+            @if (($electric_expenses && $electric_expenses['value'] > 0) || ($combustion_expenses &&
+            $combustion_expenses['value'] > 0))
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Abastecimento
@@ -121,10 +123,12 @@
                                 </tbody>
                             </table>
                             @if ($electric_expenses)
-                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ $electric_racio }}</h1>
+                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ $electric_racio }}
+                            </h1>
                             @endif
                             @if ($combustion_expenses)
-                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ $combustion_racio }}</h1>
+                            <h1 class="text-center" style="font-size: 40px; font-weight: 800;">{{ $combustion_racio }}
+                            </h1>
                             @endif
                         </div>
                         <div class="col-md-7">
@@ -172,7 +176,7 @@
                                 <td>{{ $total_tip_after_vat }}€</td>
                                 @endif
                             </tr>
-                            @if ($electric_expenses)
+                            @if ($electric_expenses && $electric_expenses['value'] > 0)
                             <tr>
                                 <th>Abastecimento elétrico</th>
                                 <td></td>
@@ -182,7 +186,7 @@
                                 @endif
                             </tr>
                             @endif
-                            @if ($combustion_expenses)
+                            @if ($combustion_expenses && $combustion_expenses['value'] > 0)
                             <tr>
                                 <th>Abastecimento combustivel</th>
                                 <td></td>
@@ -201,11 +205,11 @@
                             </tr>
                             @endforeach
                             <tr>
-                                <th>Totais<br><small>Valor a emitir recibo</small></th>
-                                <th style="text-align: right;">{{ $gross_credits }}€</th>
+                                <th>Totais</th>
+                                <th style="text-align: right;">{{ number_format($gross_credits, 2) }}€</th>
                                 @if ($driver)
-                                <th style="text-align: right;">- {{ $gross_debts }}€</th>
-                                <th style="text-align: right;">{{ $final_total }}€</th>
+                                <th style="text-align: right;">- {{ number_format($gross_debts, 2) }}€</th>
+                                <th style="text-align: right;">{{ number_format($final_total, 2) }}€</th>
                                 @endif
                             </tr>
                         </tbody>
@@ -214,12 +218,11 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <h3>Valor a emitir recibo: <span style="font-weight: 800;">{{ $final_total }}</span>€</h3>
+                    <h3>Valor a emitir recibo: <span style="font-weight: 800;">{{ number_format($final_total, 2) }}</span>€</h3>
                 </div>
             </div>
         </div>
     </div>
-    @endif
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">
@@ -242,6 +245,12 @@
             </div>
         </div>
     </div>
+    @else
+    <div class="alert alert-info" style="margin-top: 20px;" role="alert">
+        Não temos registo de viagens para este motorista nesta semana.
+    </div>
+    @endif
+    @endif
 </div>
 @endsection
 @section('styles')

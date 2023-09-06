@@ -275,9 +275,15 @@
     const team_earnings = {!! $team_earnings !!};
     const labels = [];
     const data = [];
+    const backgrounds = [];
     team_earnings.forEach(element => {
         labels.push(element.driver);
         data.push(element.earnings);
+        if(element.own){
+            backgrounds.push('#605ca8');
+        } else {
+            backgrounds.push('#00a65a94');
+        }
     });
     const ctx1 = document.getElementById('team_earnings');
     new Chart(ctx1, {
@@ -288,7 +294,7 @@
           label: 'Valor faturado',
           data: data,
           borderWidth: 1,
-          backgroundColor: '#00a65a94'
+          backgroundColor: backgrounds
         }]
       },
       options: {

@@ -85,14 +85,16 @@ class FinancialStatementController extends Controller
             $bolt_activities = TvdeActivity::where([
                 'tvde_week_id' => $tvde_week_id,
                 'tvde_operator_id' => 2,
-                'driver_code' => $driver->bolt_name
+                'driver_code' => $driver->bolt_name,
+                'company_id' => $company_id,
             ])
                 ->get();
 
             $uber_activities = TvdeActivity::where([
                 'tvde_week_id' => $tvde_week_id,
                 'tvde_operator_id' => 1,
-                'driver_code' => $driver->uber_uuid
+                'driver_code' => $driver->uber_uuid,
+                'company_id' => $company_id,
             ])
                 ->get();
         }

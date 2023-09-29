@@ -131,15 +131,17 @@ class FinancialStatementController extends Controller
         $electric_expenses = null;
         if ($driver && $driver->electric_id) {
             $electric = Electric::find($driver->electric_id);
-            $electric_transactions = ElectricTransaction::where([
-                'card' => $electric->code,
-                'tvde_week_id' => $tvde_week_id
-            ])->get();
-            $electric_expenses = collect([
-                'amount' => number_format($electric_transactions->sum('amount'), 2, '.', '') . ' kWh',
-                'total' => number_format($electric_transactions->sum('total'), 2, '.', '') . ' €',
-                'value' => $electric_transactions->sum('total')
-            ]);
+            if ($electric) {
+                $electric_transactions = ElectricTransaction::where([
+                    'card' => $electric->code,
+                    'tvde_week_id' => $tvde_week_id
+                ])->get();
+                $electric_expenses = collect([
+                    'amount' => number_format($electric_transactions->sum('amount'), 2, '.', '') . ' kWh',
+                    'total' => number_format($electric_transactions->sum('total'), 2, '.', '') . ' €',
+                    'value' => $electric_transactions->sum('total')
+                ]);
+            }
         }
         $combustion_expenses = null;
         if ($driver && $driver->card_id) {

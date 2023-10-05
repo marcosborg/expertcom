@@ -428,6 +428,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('adjustments/process-csv-import', 'AdjustmentController@processCsvImport')->name('adjustments.processCsvImport');
     Route::resource('adjustments', 'AdjustmentController');
 
+    // Company Expense
+    Route::delete('company-expenses/destroy', 'CompanyExpenseController@massDestroy')->name('company-expenses.massDestroy');
+    Route::post('company-expenses/parse-csv-import', 'CompanyExpenseController@parseCsvImport')->name('company-expenses.parseCsvImport');
+    Route::post('company-expenses/process-csv-import', 'CompanyExpenseController@processCsvImport')->name('company-expenses.processCsvImport');
+    Route::resource('company-expenses', 'CompanyExpenseController');
+
+    // Weekly Expense
+    Route::delete('weekly-expenses/destroy', 'WeeklyExpenseController@massDestroy')->name('weekly-expenses.massDestroy');
+    Route::post('weekly-expenses/parse-csv-import', 'WeeklyExpenseController@parseCsvImport')->name('weekly-expenses.parseCsvImport');
+    Route::post('weekly-expenses/process-csv-import', 'WeeklyExpenseController@processCsvImport')->name('weekly-expenses.processCsvImport');
+    Route::resource('weekly-expenses', 'WeeklyExpenseController');
+
+    // Weekly Expense Input
+    Route::prefix('weekly-expense-inputs')->group(function(){
+        Route::get('/', 'WeeklyExpenseInputController@index');
+    });
+
+    // Weekly Expense Report
+    Route::prefix('weekly-expense-reports')->group(function(){
+        Route::get('/', 'WeeklyExpenseReportController@index');
+    });
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

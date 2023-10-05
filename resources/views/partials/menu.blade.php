@@ -1152,6 +1152,63 @@
                 </ul>
             </li>
             @endcan
+            @can('company_expenses_menu_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-building">
+
+                        </i>
+                        <span>{{ trans('cruds.companyExpensesMenu.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('company_expense_access')
+                            <li class="{{ request()->is("admin/company-expenses") || request()->is("admin/company-expenses/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.company-expenses.index") }}">
+                                    <i class="fa-fw fas fa-euro-sign">
+
+                                    </i>
+                                    <span>{{ trans('cruds.companyExpense.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('weekly_expense_access')
+                            <li class="{{ request()->is("admin/weekly-expenses") || request()->is("admin/weekly-expenses/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.weekly-expenses.index") }}">
+                                    <i class="fa-fw fas fa-calendar">
+
+                                    </i>
+                                    <span>{{ trans('cruds.weeklyExpense.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('weekly_expense_input_access')
+                            <li class="{{ request()->is("admin/weekly-expense-inputs") || request()->is("admin/weekly-expense-inputs/*") ? "active" : "" }}">
+                                <a href="/admin/weekly-expense-inputs">
+                                    <i class="fa-fw fas fa-euro-sign">
+
+                                    </i>
+                                    <span>{{ trans('cruds.weeklyExpenseInput.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('weekly_expense_report_access')
+                            <li class="{{ request()->is("admin/weekly-expense-reports") || request()->is("admin/weekly-expense-reports/*") ? "active" : "" }}">
+                                <a href="/admin/weekly-expense-reports">
+                                    <i class="fa-fw fas fa-file-pdf">
+
+                                    </i>
+                                    <span>{{ trans('cruds.weeklyExpenseReport.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
             @php($unread = \App\Models\QaTopic::unreadCount())
             <li class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "active" : "" }}">
                 <a href="{{ route("admin.messenger.index") }}">

@@ -307,7 +307,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Financial Statement
     Route::prefix('financial-statements')->group(function () {
         Route::get('/', 'FinancialStatementController@index')->name('financial-statements.index');
-        Route::get('pdf', 'FinancialStatementController@pdf');
+        Route::get('pdf/{download?}', 'FinancialStatementController@pdf');
         Route::get('year/{tvde_year_id}', 'FinancialStatementController@year');
         Route::get('month/{tvde_month_id}', 'FinancialStatementController@month');
         Route::get('week/{tvde_week_id}', 'FinancialStatementController@week');

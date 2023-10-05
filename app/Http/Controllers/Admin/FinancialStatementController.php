@@ -30,8 +30,20 @@ class FinancialStatementController extends Controller
 
         $company_id = session()->get('company_id') ?? $company_id = session()->get('company_id');
         $tvde_year_id = session()->get('tvde_year_id') ? session()->get('tvde_year_id') : $tvde_year_id = TvdeYear::orderBy('name')->first()->id;
-        $tvde_month_id = session()->get('tvde_month_id') ? session()->get('tvde_month_id') : $tvde_month_id = TvdeMonth::orderBy('number', 'desc')->whereHas('weeks')->where('year_id', $tvde_year_id)->first()->id;
-        $tvde_week_id = session()->get('tvde_week_id') ? session()->get('tvde_week_id') : $tvde_week_id = TvdeWeek::orderBy('number', 'desc')->where('tvde_month_id', $tvde_month_id)->first()->id;
+        $tvde_month_id = session()->get('tvde_month_id') ? session()->get('tvde_month_id') : $tvde_month_id = TvdeMonth::orderBy('number', 'desc')
+            ->whereHas('weeks', function ($week) use ($company_id) {
+                $week->whereHas('tvdeActivities', function ($tvdeActivity) use ($company_id) {
+                    $tvdeActivity->where('company_id', $company_id);
+                });
+            })
+            ->where('year_id', $tvde_year_id)
+            ->first()->id;
+        if (session()->has('tvde_week_id')) {
+            $tvde_week_id = session()->get('tvde_week_id');
+        } else {
+            $tvde_week_id = TvdeWeek::orderBy('number', 'desc')->where('tvde_month_id', $tvde_month_id)->first()->id;
+            session()->put('tvde_week_id', $tvde_week_id);
+        }
         $driver_id = session()->get('driver_id') ? session()->get('driver_id') : $driver_id = 0;
 
         $tvde_years = TvdeYear::orderBy('name')
@@ -557,8 +569,15 @@ class FinancialStatementController extends Controller
                     'isRemoteEnabled' => true,
                 ]);
 
-        return $pdf->stream();
-        return $pdf->download('name_of_file' . '.pdf');
+
+        if ($request->download) {
+
+            $filename = strtolower(str_replace(' ', '_', preg_replace('/[^A-Za-z0-9\-]/', '', $driver->name . '-' . $tvde_week->start_date))) . '.pdf';
+
+            return $pdf->download($filename);
+        } else {
+            return $pdf->stream();
+        }
 
     }
 

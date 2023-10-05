@@ -55,7 +55,7 @@ class FinancialStatementController extends Controller
                 $tvde_week_id = $tvde_week->id;
                 session()->put('tvde_week_id', $tvde_week->id);
             } else {
-                $tvde_week_id = 0;
+                $tvde_week_id = 1;
             }
         }
         $driver_id = session()->get('driver_id') ? session()->get('driver_id') : $driver_id = 0;

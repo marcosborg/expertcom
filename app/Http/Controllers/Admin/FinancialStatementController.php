@@ -68,7 +68,9 @@ class FinancialStatementController extends Controller
             })
             ->where('tvde_month_id', $tvde_month_id)->get();
 
-        $drivers = Driver::where('company_id', $company_id)->get();
+        $drivers = Driver::where('company_id', $company_id)
+            ->where('state_id', 1)
+            ->get();
         if ($driver_id != 0) {
             $driver = Driver::find($driver_id)->load([
                 'contract_type',

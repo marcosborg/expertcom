@@ -7,7 +7,7 @@
     <style>
         html {
             font-family: sans-serif;
-            font-size: 11px;
+            font-size: 10px;
         }
 
         table {
@@ -139,6 +139,43 @@
                             </tr>
                         </tbody>
                     </table>
+                    @if (($electric_expenses && $electric_expenses['value'] > 0) || ($combustion_expenses &&
+                    $combustion_expenses['value'] > 0))
+                    <table class="bordered" style="margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th style="text-transform: uppercase; text-align: left" colspan="3">
+                                    Abastecimento
+                                    <small style="float: right">
+                                    {{ $electric_expenses ? 'Rentabilidade: ' . number_format($electric_racio, 2) . '%' : '' }}
+                                    {{ $combustion_expenses ? 'Rentabilidade: ' . number_format($combustion_racio, 2) . '%' : '' }}
+                                    </small>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th style="text-align: right;">Quantidade</th>
+                                <th style="text-align: right;">Custo</th>
+                            </tr>
+                            @if ($electric_expenses)
+                            <tr>
+                                <th style="text-align: left;">Gastos</th>
+                                <td style="text-align: right;">{{ $electric_expenses['amount'] }}</td>
+                                <td style="text-align: right;">{{ $electric_expenses['total'] }}</td>
+                            </tr>
+                            @endif
+                            @if ($combustion_expenses)
+                            <tr>
+                                <th style="text-align: left;">Gastos</th>
+                                <td style="text-align: right;">{{ $combustion_expenses['amount'] }}</td>
+                                <td style="text-align: right;">{{ $combustion_expenses['total'] }}</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                    @endif
                 </td>
                 <td style="vertical-align: top; width: 50%;">
                     <table class="bordered">
@@ -223,17 +260,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table>
-        <tbody>
-            <tr>
-                <td style="width: 50%;">
-                    <canvas id="driver_earnings"></canvas>
-                </td>
-                <td style="width: 50%;">
                 </td>
             </tr>
         </tbody>

@@ -163,6 +163,7 @@ class TvdeActivityController extends Controller
 
     public function deleteFilter(Request $request)
     {
+
         $request->validate([
             'week_filter' => 'required'
         ]);

@@ -164,9 +164,9 @@
                             </tr>
                             <tr>
                                 <th>Ganhos</th>
-                                <td>{{ $total_earnings_no_tip }}€</td>
+                                <td>{{ number_format($total_earnings_no_tip, 2) }}€</td>
                                 @if ($driver)
-                                <td>- {{ $total_earnings_no_tip - $total_earnings_after_vat }}€</td>
+                                <td>- {{ number_format($total_earnings_no_tip - $total_earnings_after_vat, 2) }}€</td>
                                 <td>{{ number_format($total_earnings_after_vat, 2) }}€</td>
                                 @endif
                             </tr>
@@ -175,7 +175,7 @@
                                 <td>{{ number_format($total_tips, 2) }}€</td>
                                 @if ($driver)
                                 <td>- {{ number_format($total_tips - $total_tip_after_vat, 2) }}€</td>
-                                <td>{{ $total_tip_after_vat }}€</td>
+                                <td>{{ number_format($total_tip_after_vat, 2) }}€</td>
                                 @endif
                             </tr>
                             @if ($electric_expenses && $electric_expenses['value'] > 0)

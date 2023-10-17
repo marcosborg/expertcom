@@ -28,6 +28,7 @@ class CompanyExpense extends Model
         'weekly_value',
         'start_date',
         'end_date',
+        'qty',
         'created_at',
         'updated_at',
         'deleted_at',

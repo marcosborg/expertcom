@@ -55,6 +55,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.companyExpense.fields.end_date_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('qty') ? 'has-error' : '' }}">
+                            <label class="required" for="qty">{{ trans('cruds.companyExpense.fields.qty') }}</label>
+                            <input class="form-control" type="number" name="qty" id="qty" value="{{ old('qty', '0') }}" step="1" required>
+                            @if($errors->has('qty'))
+                                <span class="help-block" role="alert">{{ $errors->first('qty') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.companyExpense.fields.qty_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

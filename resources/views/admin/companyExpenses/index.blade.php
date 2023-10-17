@@ -7,10 +7,6 @@
                 <a class="btn btn-success" href="{{ route('admin.company-expenses.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.companyExpense.title_singular') }}
                 </a>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                    {{ trans('global.app_csvImport') }}
-                </button>
-                @include('csvImport.modal', ['model' => 'CompanyExpense', 'route' => 'admin.company-expenses.parseCsvImport'])
             </div>
         </div>
     @endcan
@@ -44,6 +40,9 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.companyExpense.fields.end_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.companyExpense.fields.qty') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -110,6 +109,7 @@
 { data: 'weekly_value', name: 'weekly_value' },
 { data: 'start_date', name: 'start_date' },
 { data: 'end_date', name: 'end_date' },
+{ data: 'qty', name: 'qty' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

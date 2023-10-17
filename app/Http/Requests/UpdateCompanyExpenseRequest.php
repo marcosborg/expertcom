@@ -36,6 +36,12 @@ class UpdateCompanyExpenseRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
+            'qty' => [
+                'required',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
         ];
     }
 }

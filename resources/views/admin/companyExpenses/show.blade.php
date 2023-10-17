@@ -65,6 +65,14 @@
                                         {{ $companyExpense->end_date }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.companyExpense.fields.qty') }}
+                                    </th>
+                                    <td>
+                                        {{ $companyExpense->qty }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

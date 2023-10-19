@@ -1613,6 +1613,8 @@ return [
             'deleted_at_helper' => ' ',
             'type'              => 'Type',
             'type_helper'       => ' ',
+            'company'           => 'Company',
+            'company_helper'    => ' ',
         ],
     ],
     'companyExpensesMenu' => [

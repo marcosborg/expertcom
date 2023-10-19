@@ -34,6 +34,7 @@ class Adjustment extends Model
         'percent',
         'start_date',
         'end_date',
+        'company_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -67,5 +68,10 @@ class Adjustment extends Model
     public function drivers()
     {
         return $this->belongsToMany(Driver::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
     }
 }

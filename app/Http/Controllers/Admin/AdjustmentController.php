@@ -8,12 +8,12 @@ use App\Http\Requests\MassDestroyAdjustmentRequest;
 use App\Http\Requests\StoreAdjustmentRequest;
 use App\Http\Requests\UpdateAdjustmentRequest;
 use App\Models\Adjustment;
+use App\Models\Company;
 use App\Models\Driver;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-
 
 class AdjustmentController extends Controller
 {
@@ -24,28 +24,25 @@ class AdjustmentController extends Controller
         abort_if(Gate::denies('adjustment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Adjustment::with(['drivers'])->select(sprintf('%s.*', (new Adjustment)->table));
+            $query = Adjustment::with(['drivers', 'company'])->select(sprintf('%s.*', (new Adjustment)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'adjustment_show';
-                $editGate = 'adjustment_edit';
-                $deleteGate = 'adjustment_delete';
+                $viewGate      = 'adjustment_show';
+                $editGate      = 'adjustment_edit';
+                $deleteGate    = 'adjustment_delete';
                 $crudRoutePart = 'adjustments';
 
-                return view(
-                    'partials.datatablesActions',
-                    compact(
-                        'viewGate',
-                        'editGate',
-                        'deleteGate',
-                        'crudRoutePart',
-                        'row'
-                    )
-                );
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->editColumn('id', function ($row) {
@@ -72,8 +69,11 @@ class AdjustmentController extends Controller
 
                 return implode(' ', $labels);
             });
+            $table->addColumn('company_name', function ($row) {
+                return $row->company ? $row->company->name : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'drivers']);
+            $table->rawColumns(['actions', 'placeholder', 'drivers', 'company']);
 
             return $table->make(true);
         }
@@ -85,13 +85,11 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('adjustment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if (session('company_id')) {
-            $drivers = Driver::where('company_id', session('company_id'))->pluck('name', 'id');
-        } else {
-            $drivers = Driver::pluck('name', 'id');
-        }
+        $drivers = Driver::pluck('code', 'id');
 
-        return view('admin.adjustments.create', compact('drivers'));
+        $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.adjustments.create', compact('companies', 'drivers'));
     }
 
     public function store(StoreAdjustmentRequest $request)
@@ -106,15 +104,13 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('adjustment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if (session('company_id')) {
-            $drivers = Driver::where('company_id', session('company_id'))->pluck('name', 'id');
-        } else {
-            $drivers = Driver::pluck('name', 'id');
-        }
+        $drivers = Driver::pluck('name', 'id');
 
-        $adjustment->load('drivers');
+        $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.adjustments.edit', compact('adjustment', 'drivers'));
+        $adjustment->load('drivers', 'company');
+
+        return view('admin.adjustments.edit', compact('adjustment', 'companies', 'drivers'));
     }
 
     public function update(UpdateAdjustmentRequest $request, Adjustment $adjustment)
@@ -129,7 +125,7 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('adjustment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $adjustment->load('drivers');
+        $adjustment->load('drivers', 'company');
 
         return view('admin.adjustments.show', compact('adjustment'));
     }

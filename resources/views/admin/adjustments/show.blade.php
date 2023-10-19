@@ -79,8 +79,16 @@
                                     </th>
                                     <td>
                                         @foreach($adjustment->drivers as $key => $drivers)
-                                            <span class="label label-info">{{ $drivers->name }}</span>
+                                            <span class="label label-info">{{ $drivers->code }}</span>
                                         @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.adjustment.fields.company') }}
+                                    </th>
+                                    <td>
+                                        {{ $adjustment->company->name ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

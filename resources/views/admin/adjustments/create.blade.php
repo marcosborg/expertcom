@@ -92,6 +92,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.adjustment.fields.company_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('company_expense') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="company_expense" value="0">
+                                <input type="checkbox" name="company_expense" id="company_expense" value="1" {{ old('company_expense', 0) == 1 ? 'checked' : '' }}>
+                                <label for="company_expense" style="font-weight: 400">{{ trans('cruds.adjustment.fields.company_expense') }}</label>
+                            </div>
+                            @if($errors->has('company_expense'))
+                                <span class="help-block" role="alert">{{ $errors->first('company_expense') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.adjustment.fields.company_expense_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

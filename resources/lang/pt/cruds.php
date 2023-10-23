@@ -1615,6 +1615,8 @@ return [
             'type_helper'       => ' ',
             'company'           => 'Company',
             'company_helper'    => ' ',
+            'company_expense'        => 'Company Expense',
+            'company_expense_helper' => ' ',
         ],
     ],
     'companyExpensesMenu' => [

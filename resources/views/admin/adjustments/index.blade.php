@@ -55,6 +55,9 @@
                                     {{ trans('cruds.adjustment.fields.company') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.adjustment.fields.company_expense') }}
+                                </th>
+                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -122,6 +125,7 @@
 { data: 'end_date', name: 'end_date' },
 { data: 'drivers', name: 'drivers.code' },
 { data: 'company_name', name: 'company.name' },
+{ data: 'company_expense', name: 'company_expense' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

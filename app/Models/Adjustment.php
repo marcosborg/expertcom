@@ -35,6 +35,7 @@ class Adjustment extends Model
         'start_date',
         'end_date',
         'company_id',
+        'company_expense',
         'created_at',
         'updated_at',
         'deleted_at',

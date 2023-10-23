@@ -91,6 +91,14 @@
                                         {{ $adjustment->company->name ?? '' }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.adjustment.fields.company_expense') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $adjustment->company_expense ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

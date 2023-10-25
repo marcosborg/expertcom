@@ -23,25 +23,33 @@ class CompanyExpenseController extends Controller
         abort_if(Gate::denies('company_expense_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = CompanyExpense::with(['company'])->select(sprintf('%s.*', (new CompanyExpense)->table));
+            if (session()->has('company_id') && session()->get('company_id') !== '0') {
+                $query = CompanyExpense::where('company_id', session()->get('company_id'))->with(['company'])->select(sprintf('%s.*', (new CompanyExpense)->table));
+            } else {
+                $query = CompanyExpense::with(['company'])->select(sprintf('%s.*', (new CompanyExpense)->table));
+            }
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'company_expense_show';
-                $editGate      = 'company_expense_edit';
-                $deleteGate    = 'company_expense_delete';
+                $viewGate = 'company_expense_show';
+                $editGate = 'company_expense_edit';
+                $deleteGate = 'company_expense_delete';
                 $crudRoutePart = 'company-expenses';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
+                return view(
+                    'partials.datatablesActions',
+                    compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    )
+                );
             });
 
             $table->editColumn('id', function ($row) {

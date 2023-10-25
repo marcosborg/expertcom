@@ -1173,28 +1173,6 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('weekly_expense_access')
-                            <li class="{{ request()->is("admin/weekly-expenses") || request()->is("admin/weekly-expenses/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.weekly-expenses.index") }}">
-                                    <i class="fa-fw fas fa-calendar">
-
-                                    </i>
-                                    <span>{{ trans('cruds.weeklyExpense.title') }}</span>
-
-                                </a>
-                            </li>
-                        @endcan
-                        @can('weekly_expense_input_access')
-                            <li class="{{ request()->is("admin/weekly-expense-inputs") || request()->is("admin/weekly-expense-inputs/*") ? "active" : "" }}">
-                                <a href="/admin/weekly-expense-inputs">
-                                    <i class="fa-fw fas fa-euro-sign">
-
-                                    </i>
-                                    <span>{{ trans('cruds.weeklyExpenseInput.title') }}</span>
-
-                                </a>
-                            </li>
-                        @endcan
                         @can('weekly_expense_report_access')
                             <li class="{{ request()->is("admin/weekly-expense-reports") || request()->is("admin/weekly-expense-reports/*") ? "active" : "" }}">
                                 <a href="/admin/weekly-expense-reports">

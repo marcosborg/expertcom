@@ -24,25 +24,32 @@ class AdjustmentController extends Controller
         abort_if(Gate::denies('adjustment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Adjustment::with(['drivers', 'company'])->select(sprintf('%s.*', (new Adjustment)->table));
+            if (session()->has('company_id') && session()->get('company_id') !== '0') {
+                $query = Adjustment::where('company_id', session()->get('company_id'))->with(['drivers', 'company'])->select(sprintf('%s.*', (new Adjustment)->table));
+            } else {
+                $query = Adjustment::with(['drivers', 'company'])->select(sprintf('%s.*', (new Adjustment)->table));
+            }
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'adjustment_show';
-                $editGate      = 'adjustment_edit';
-                $deleteGate    = 'adjustment_delete';
+                $viewGate = 'adjustment_show';
+                $editGate = 'adjustment_edit';
+                $deleteGate = 'adjustment_delete';
                 $crudRoutePart = 'adjustments';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
+                return view(
+                    'partials.datatablesActions',
+                    compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    )
+                );
             });
 
             $table->editColumn('id', function ($row) {
@@ -108,7 +115,11 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('adjustment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $drivers = Driver::pluck('name', 'id');
+        if (session()->has('company_id') && session()->get('company_id') !== '0') {
+            $drivers = Driver::where('company_id', session()->get('company_id'))->pluck('name', 'id');
+        } else {
+            $drivers = Driver::pluck('name', 'id');
+        }
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

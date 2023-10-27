@@ -28,12 +28,6 @@
 
 <body>
     <div class="bg"></div>
-    <img src="/assets/website/img/logo300-white.png" alt="" style="
-    width: 100%;
-    max-width: 500px;
-    margin-top: 300px;
-    padding: 20px;
-">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
     </script>

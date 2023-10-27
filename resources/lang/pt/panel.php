@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'ExpertCom',
+    'site_title' => config('app.name'),
 ];

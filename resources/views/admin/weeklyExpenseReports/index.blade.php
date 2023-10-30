@@ -70,16 +70,22 @@
                     <tr>
                         <td>{{ $adjustment->name }}</td>
                         <td style="text-align: right;">{{ $adjustment->drivers->count() }}</td>
-                        <td style="text-align: right;">{{ number_format($adjustment->amount, 2) }} <small>€</small></td>
-                        <td style="text-align: right;">{{ number_format($adjustment->amount *
+                        <td style="text-align: right;">{{ $adjustment->type == 'refund' ? '' : '-' }}{{
+                            number_format($adjustment->amount, 2) }} <small>€</small></td>
+                        <td style="text-align: right;">{{ $adjustment->type == 'refund' ? '' : '-' }}{{
+                            number_format($adjustment->amount *
                             $adjustment->drivers->count(), 2) }} <small>€</small></td>
-                        <td style="text-align: right;">{{ number_format($adjustment->amount *
+                        <td style="text-align: right;">{{ $adjustment->type == 'refund' ? '' : '-' }}{{
+                            number_format($adjustment->amount *
                             $adjustment->drivers->count() * 4, 2) }} <small>€</small></td>
                     </tr>
                     @php
-                    $total_adjustments_unit[] = $adjustment->amount;
-                    $total_adjustments_weekly[] = $adjustment->amount * $adjustment->drivers->count();
-                    $total_adjustments_monthly[] = $adjustment->amount * $adjustment->drivers->count() * 4;
+                    $total_adjustments_unit[] = $adjustment->type == 'refund' ? $adjustment->amount : -
+                    $adjustment->amount;
+                    $total_adjustments_weekly[] = $adjustment->type == 'refund' ? $adjustment->amount : -
+                    $adjustment->amount * $adjustment->drivers->count();
+                    $total_adjustments_monthly[] = $adjustment->type == 'refund' ? $adjustment->amount : -
+                    $adjustment->amount * $adjustment->drivers->count() * 4;
                     @endphp
                     @endforeach
                     @php
@@ -122,6 +128,16 @@
                         <td style="text-align: right;">{{ number_format($drivers_payment, 2) }} <small>€</small></td>
                         <td></td>
                     </tr>
+                    @if ($company_electricity)
+                    <tr>
+                        <td>Eletricidade</td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: right;">{{ number_format($company_electricity, 2) }} <small>€</small>
+                        </td>
+                        <td></td>
+                    </tr>
+                    @endif
                 </tbody>
                 <tfoot>
                     <tr>
@@ -129,7 +145,8 @@
                         <th></th>
                         <th></th>
                         <th style="text-align: right;">{{ number_format(array_sum($total_adjustments_weekly) +
-                            array_sum($total_company_expenses_weekly) + $drivers_payment, 2) }} <small>€</small></th>
+                            array_sum($total_company_expenses_weekly) + $drivers_payment + $company_electricity, 2) }}
+                            <small>€</small></th>
                         <th></th>
                     </tr>
                 </tfoot>

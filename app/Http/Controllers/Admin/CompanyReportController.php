@@ -212,7 +212,12 @@ class CompanyReportController extends Controller
         $company_expenses = array_sum($company_adjustment) + array_sum($total_company_expenses);
         $payments = $payments_no_tips + $tips - $fuel_transactions + $total_adjustments;
         $profit = $total_operators - $payments - $company_expenses;
-        $roi = (($total_operators - ($payments + $company_expenses)) / ($payments + $company_expenses)) * 100;
+        if ($company_id != 0) {
+            $roi = (($total_operators - ($payments + $company_expenses)) / ($payments + $company_expenses)) * 100;
+        } else {
+            $roi = 0;
+        }
+
 
         return view('admin.companyReports.index', compact([
             'company_id',

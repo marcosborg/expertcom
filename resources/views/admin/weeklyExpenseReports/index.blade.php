@@ -156,6 +156,3 @@
     @endif
 </div>
 @endsection
-<script>
-    console.log({!! $company_expenses !!})
-</script>

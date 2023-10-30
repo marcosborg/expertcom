@@ -1184,6 +1184,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('company_report_access')
+                            <li class="{{ request()->is("admin/company-reports") || request()->is("admin/company-reports/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.company-reports.index") }}">
+                                    <i class="fa-fw fas fa-file-contract">
+
+                                    </i>
+                                    <span>{{ trans('cruds.companyReport.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

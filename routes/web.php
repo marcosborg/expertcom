@@ -439,6 +439,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('/', 'WeeklyExpenseReportController@index');
     });
 
+    // Company Report
+    Route::prefix('company-reports')->group(function(){
+        Route::get('/', 'CompanyReportController@index')->name('company-reports.index');
+    });
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

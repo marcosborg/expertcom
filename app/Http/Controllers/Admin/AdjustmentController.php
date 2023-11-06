@@ -96,7 +96,7 @@ class AdjustmentController extends Controller
     {
         abort_if(Gate::denies('adjustment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $drivers = Driver::pluck('code', 'id');
+        $drivers = Driver::pluck('name', 'id');
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

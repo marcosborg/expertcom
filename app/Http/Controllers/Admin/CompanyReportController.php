@@ -88,6 +88,8 @@ class CompanyReportController extends Controller
         $tvde_week = TvdeWeek::find($tvde_week_id);
 
         $drivers = Driver::where('company_id', $company_id)
+            ->where('state_id', 1)
+            ->where('id', 15)
             ->get()
             ->load([
                 'contract_vat',
@@ -116,15 +118,15 @@ class CompanyReportController extends Controller
                 ->where('driver_code', $bolt_name)
                 ->get();
             $driver->total_uber = $uber_activities ? $uber_activities->sum('earnings_two') : 0;
-            $driver->total_tips_uber = $uber_activities ? $uber_activities->sum('earnings_one') : 0;
+            $driver->total_uber_tips = $uber_activities ? $uber_activities->sum('earnings_one') : 0;
             $driver->total_bolt = $bolt_activities ? $bolt_activities->sum('earnings_two') : 0;
-            $driver->total_tips_bolt = $bolt_activities ? $bolt_activities->sum('earnings_one') : 0;
-            $total_uber[] = $driver->total_uber + $driver->total_tips_uber;
-            $total_bolt[] = $driver->total_bolt + $driver->total_tips_bolt;
-            $driver->total_operators = ($driver->total_uber + $driver->total_tips_uber) + ($driver->total_bolt + $driver->total_tips_bolt);
+            $driver->total_bolt_tips = $uber_activities ? $bolt_activities->sum('earnings_one') : 0;
+            $total_uber[] = $driver->total_uber;
+            $total_bolt[] = $driver->total_bolt;
+            $driver->total_operators = $driver->total_uber + $driver->total_bolt;
 
             // contract_type_ranks
-            $total_no_tips = $driver->total_uber + $driver->total_bolt;
+            $total_no_tips = ($driver->total_uber - $driver->total_uber_tips) + ($driver->total_bolt - $driver->total_bolt_tips);
 
             $contract_type_rank = ContractTypeRank::where('contract_type_id', $driver->contract_type_id)
                 ->where('from', '<=', $total_no_tips > 0 ? $total_no_tips : 0)
@@ -237,6 +239,7 @@ class CompanyReportController extends Controller
             'profit',
             'roi'
         ]));
+
     }
 
 }

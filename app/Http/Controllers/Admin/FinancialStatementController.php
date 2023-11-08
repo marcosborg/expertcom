@@ -500,7 +500,7 @@ class FinancialStatementController extends Controller
         $electric_racio = null;
         $combustion_racio = null;
 
-        if ($electric_expenses) {
+        if ($electric_expenses && $total_earnings > 0) {
             $final_total = $final_total - $electric_expenses['value'];
             $gross_debts = $gross_debts + $electric_expenses['value'];
             if ($electric_expenses['value'] > 0) {
@@ -509,7 +509,7 @@ class FinancialStatementController extends Controller
                 $electric_racio = 0;
             }
         }
-        if ($combustion_expenses) {
+        if ($combustion_expenses && $total_earnings > 0) {
             $final_total = $final_total - $combustion_expenses['value'];
             $gross_debts = $gross_debts + $combustion_expenses['value'];
             if ($combustion_expenses['value'] > 0) {
@@ -517,6 +517,14 @@ class FinancialStatementController extends Controller
             } else {
                 $combustion_racio = 0;
             }
+        }
+
+        if ($driver->contract_vat->percent > 0) {
+            $txt_admin = ($final_total * $driver->contract_vat->percent)/100;
+            $gross_debts = $gross_debts + $txt_admin;
+            $final_total = $final_total - $txt_admin;
+        } else {
+            $txt_admin = 0;
         }
 
         /*
@@ -595,6 +603,7 @@ class FinancialStatementController extends Controller
             'combustion_racio' => $combustion_racio,
             'electric_racio' => $electric_racio,
             'total_earnings_after_vat' => $total_earnings_after_vat,
+            'txt_admin' => $txt_admin,
         ])->setOption([
                     'isRemoteEnabled' => true,
                 ]);

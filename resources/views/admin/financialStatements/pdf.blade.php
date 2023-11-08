@@ -241,6 +241,14 @@
                                 <td></td>
                             </tr>
                             @endforeach
+                            @if ($txt_admin > 0)
+                                <tr>
+                                    <th style="text-align: left;">Taxa administrativa</th>
+                                    <td></td>
+                                    <td style="text-align: right;">- {{ number_format($txt_admin, 2) }}€</td>
+                                    <td></td>
+                                </tr>
+                            @endif
                             <tr>
                                 <th style="text-align: left;">Totais</th>
                                 <th style="text-align: right;">{{ number_format($gross_credits, 2) }}€</th>
@@ -255,7 +263,7 @@
                         <tbody>
                             <tr>
                                 <td style="text-align: center; background: #eeeeee;">
-                                    <h2>Valor a emitir recibo: {{ number_format($final_total, 2) }}€</h2>
+                                    <h2>Valor a pagar: {{ number_format($final_total, 2) }}€</h2>
                                 </td>
                             </tr>
                         </tbody>

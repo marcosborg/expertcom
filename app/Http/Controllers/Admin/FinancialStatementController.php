@@ -213,7 +213,7 @@ class FinancialStatementController extends Controller
 
         $total_bolt = ($bolt_activities->sum('earnings_two') - $bolt_activities->sum('earnings_one')) * ($contract_type_rank ? $contract_type_rank->percent / 100 : 0);
         $total_uber = ($uber_activities->sum('earnings_two') - $uber_activities->sum('earnings_one')) * ($contract_type_rank ? $contract_type_rank->percent / 100 : 0);
-        
+
         $total_earnings_after_vat = $total_bolt + $total_uber;
 
         $total_bolt = number_format(($bolt_activities->sum('earnings_two') - $bolt_activities->sum('earnings_one')) * ($contract_type_rank ? $contract_type_rank->percent / 100 : 0), 2);
@@ -255,6 +255,14 @@ class FinancialStatementController extends Controller
             } else {
                 $combustion_racio = 0;
             }
+        }
+
+        if ($driver->contract_vat->percent > 0) {
+            $txt_admin = ($final_total * $driver->contract_vat->percent)/100;
+            $gross_debts = $gross_debts + $txt_admin;
+            $final_total = $final_total - $txt_admin;
+        } else {
+            $txt_admin = 0;
         }
 
         //GRAFICOS
@@ -326,7 +334,8 @@ class FinancialStatementController extends Controller
             'combustion_expenses',
             'combustion_racio',
             'electric_racio',
-            'total_earnings_after_vat'
+            'total_earnings_after_vat',
+            'txt_admin'
         ]));
     }
 

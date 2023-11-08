@@ -206,6 +206,14 @@
                                 <td></td>
                             </tr>
                             @endforeach
+                            @if ($txt_admin > 0)
+                                <tr>
+                                    <th>Taxa administrativa</th>
+                                    <td></td>
+                                    <td>- {{ number_format($txt_admin, 2) }}€</td>
+                                    <td></td>
+                                </tr>
+                            @endif
                             <tr>
                                 <th>Totais</th>
                                 <th style="text-align: right;">{{ number_format($gross_credits, 2) }}€</th>
@@ -220,7 +228,7 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h3 class="pull-left">Valor a emitir recibo: <span style="font-weight: 800;">{{
+                    <h3 class="pull-left">Valor a pagar: <span style="font-weight: 800;">{{
                             number_format($final_total, 2) }}</span>€</h3>
                             <div class="pull-right">
                                 <a target="_new" href="/admin/financial-statements/pdf" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i></a>

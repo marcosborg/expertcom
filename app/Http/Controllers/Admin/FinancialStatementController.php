@@ -208,6 +208,7 @@ class FinancialStatementController extends Controller
                 $contract_type_rank = $value;
             }
         }
+
         //
 
         $total_bolt = ($bolt_activities->sum('earnings_two') - $bolt_activities->sum('earnings_one')) * ($contract_type_rank ? $contract_type_rank->percent / 100 : 0);
@@ -237,7 +238,7 @@ class FinancialStatementController extends Controller
         $electric_racio = null;
         $combustion_racio = null;
 
-        if ($electric_expenses) {
+        if ($electric_expenses && $total_earnings > 0) {
             $final_total = $final_total - $electric_expenses['value'];
             $gross_debts = $gross_debts + $electric_expenses['value'];
             if ($electric_expenses['value'] > 0) {
@@ -246,7 +247,7 @@ class FinancialStatementController extends Controller
                 $electric_racio = 0;
             }
         }
-        if ($combustion_expenses) {
+        if ($combustion_expenses && $total_earnings > 0) {
             $final_total = $final_total - $combustion_expenses['value'];
             $gross_debts = $gross_debts + $combustion_expenses['value'];
             if ($combustion_expenses['value'] > 0) {

@@ -135,12 +135,12 @@ class CompanyReportController extends Controller
 
             // taxação de ganhos e gorjetas
 
-            if($contract_type_rank) {
+            if ($contract_type_rank) {
                 $total_no_tips = ($total_no_tips * $contract_type_rank->percent) / 100;
             }
 
             $payments_no_tips[] = $total_no_tips;
-            
+
             if ($driver->contract_vat->tips !== 0) {
                 $tips[] = $driver->total_uber_tips + $driver->total_bolt_tips - (($driver->total_uber_tips + $driver->total_bolt_tips) * ($driver->contract_vat->tips / 100));
             } else {

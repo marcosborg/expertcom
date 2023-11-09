@@ -132,6 +132,7 @@ class FinancialStatementController extends Controller
         $adjustments = Adjustment::whereHas('drivers', function ($query) use ($driver_id) {
             $query->where('id', $driver_id);
         })
+            ->where('company_id', $company_id)
             ->where(function ($query) use ($tvde_week) {
                 $query->where('start_date', '<=', $tvde_week->start_date)
                     ->orWhereNull('start_date');
@@ -258,7 +259,7 @@ class FinancialStatementController extends Controller
         }
 
         if ($driver && $driver->contract_vat->percent && $driver->contract_vat->percent > 0) {
-            $txt_admin = ($final_total * $driver->contract_vat->percent)/100;
+            $txt_admin = ($final_total * $driver->contract_vat->percent) / 100;
             $gross_debts = $gross_debts + $txt_admin;
             $final_total = $final_total - $txt_admin;
         } else {
@@ -520,7 +521,7 @@ class FinancialStatementController extends Controller
         }
 
         if ($driver->contract_vat->percent && $driver->contract_vat->percent > 0) {
-            $txt_admin = ($final_total * $driver->contract_vat->percent)/100;
+            $txt_admin = ($final_total * $driver->contract_vat->percent) / 100;
             $gross_debts = $gross_debts + $txt_admin;
             $final_total = $final_total - $txt_admin;
         } else {

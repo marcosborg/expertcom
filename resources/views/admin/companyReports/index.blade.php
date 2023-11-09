@@ -106,11 +106,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Pagamentos</th>
+                                <th>Pagamentos a motoristas</th>
                                 <td style="text-align: right;">{{ number_format($payments, 2) }} <small>€</small></td>
                             </tr>
                             <tr>
-                                <th>Despesas</th>
+                                <th>Despesas da empresa</th>
                                 <td style="text-align: right;">{{ number_format($company_expenses, 2) }}
                                     <small>€</small></td>
                             </tr>

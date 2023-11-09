@@ -101,7 +101,7 @@ class CompanyReportController extends Controller
         $payments_no_tips = [];
         $tips = [];
         $fuel_transactions = [];
-        $total_adjustments = 0;
+        $total_adjustments = [];
         $company_adjustment = [];
         $total_company_expenses = [];
 
@@ -116,6 +116,7 @@ class CompanyReportController extends Controller
                 ->where('tvde_operator_id', 2)
                 ->where('driver_code', $bolt_name)
                 ->get();
+
             $driver->total_uber = $uber_activities ? $uber_activities->sum('earnings_two') : 0;
             $driver->total_uber_tips = $uber_activities ? $uber_activities->sum('earnings_one') : 0;
             $driver->total_bolt = $bolt_activities ? $bolt_activities->sum('earnings_two') : 0;
@@ -134,16 +135,16 @@ class CompanyReportController extends Controller
 
             // taxação de ganhos e gorjetas
 
-            if ($driver->contract_vat->percent !== 0) {
-                $payments_no_tips[] = $total_no_tips * ($contract_type_rank->percent / 100) - ($total_no_tips * ($contract_type_rank->percent / 100)) * ($driver->contract_vat->percent / 100);
-            } else {
-                $payments_no_tips[] = $total_no_tips * ($contract_type_rank->percent / 100);
+            if($contract_type_rank) {
+                $total_no_tips = ($total_no_tips * $contract_type_rank->percent) / 100;
             }
 
+            $payments_no_tips[] = $total_no_tips;
+            
             if ($driver->contract_vat->tips !== 0) {
-                $tips[] = $driver->total_tips_uber + $driver->total_tips_bolt - (($driver->total_tips_uber + $driver->total_tips_bolt) * ($driver->contract_vat->tips / 100));
+                $tips[] = $driver->total_uber_tips + $driver->total_bolt_tips - (($driver->total_uber_tips + $driver->total_bolt_tips) * ($driver->contract_vat->tips / 100));
             } else {
-                $tips[] = $driver->total_tips_uber + $driver->total_tips_bolt;
+                $tips[] = $driver->total_uber_tips + $driver->total_bolt_tips;
             }
 
             // abastecimentos
@@ -180,9 +181,9 @@ class CompanyReportController extends Controller
 
             foreach ($adjustments as $adjustment) {
                 if ($adjustment->type == 'refund') {
-                    $total_adjustments = $total_adjustments - $adjustment->amount;
+                    $total_adjustments[] = (-$adjustment->amount);
                 } else {
-                    $total_adjustments = $total_adjustments + $adjustment->amount;
+                    $total_adjustments[] = $adjustment->amount;
                 }
                 if ($adjustment->company_expense == true) {
                     if ($adjustment->type == 'refund') {
@@ -210,15 +211,15 @@ class CompanyReportController extends Controller
         $payments_no_tips = array_sum($payments_no_tips);
         $tips = array_sum($tips);
         $fuel_transactions = array_sum($fuel_transactions);
+        $total_adjustments = array_sum($total_adjustments);
         $company_expenses = array_sum($company_adjustment) + array_sum($total_company_expenses);
-        $payments = $payments_no_tips + $tips - $fuel_transactions + $total_adjustments;
+        $payments = $payments_no_tips + $tips - $fuel_transactions - $total_adjustments;
         $profit = $total_operators - $payments - $company_expenses;
         if ($company_id != 0) {
             $roi = (($total_operators - ($payments + $company_expenses)) / ($payments + $company_expenses)) * 100;
         } else {
             $roi = 0;
         }
-
 
         return view('admin.companyReports.index', compact([
             'company_id',

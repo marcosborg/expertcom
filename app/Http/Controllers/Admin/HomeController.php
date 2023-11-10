@@ -18,7 +18,8 @@ class HomeController
 {
     public function index()
     {
-        if (auth()->user()->hasRole('Driver')) {
+
+        if (auth()->user()->hasRole('Driver') && auth()->user()->driver->count() > 0) {
             $user = auth()->user()->load('driver');
             session()->put('driver_id', $user->driver[0]->id);
             session()->put('company_id', $user->driver[0]->company_id);

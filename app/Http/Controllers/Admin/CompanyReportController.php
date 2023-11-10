@@ -89,6 +89,8 @@ class CompanyReportController extends Controller
 
         $drivers = Driver::where('company_id', $company_id)
             ->where('state_id', 1)
+            //->where('id', 334)
+            ->orderBy('name')
             ->get()
             ->load([
                 'contract_vat',
@@ -111,10 +113,12 @@ class CompanyReportController extends Controller
             $uber_activities = TvdeActivity::where('tvde_week_id', $tvde_week_id)
                 ->where('tvde_operator_id', 1)
                 ->where('driver_code', $uber_uuid)
+                ->where('company_id', $driver->company_id)
                 ->get();
             $bolt_activities = TvdeActivity::where('tvde_week_id', $tvde_week_id)
                 ->where('tvde_operator_id', 2)
                 ->where('driver_code', $bolt_name)
+                ->where('company_id', $driver->company_id)
                 ->get();
 
             $driver->total_uber = $uber_activities ? $uber_activities->sum('earnings_two') : 0;
@@ -172,8 +176,14 @@ class CompanyReportController extends Controller
             // adjustments
 
             $adjustments = Adjustment::where('company_id', $company_id)
-                ->where('start_date', '<=', $tvde_week->start_date)
-                ->where('end_date', '>=', $tvde_week->end_date)
+                ->where(function ($query) use ($tvde_week) {
+                    $query->where('start_date', '<=', $tvde_week->start_date)
+                        ->orWhereNull('start_date');
+                })
+                ->where(function ($query) use ($tvde_week) {
+                    $query->where('end_date', '>=', $tvde_week->end_date)
+                        ->orWhereNull('end_date');
+                })
                 ->whereHas('drivers', function ($adjustment) use ($driver) {
                     $adjustment->where('driver_id', $driver->id);
                 })

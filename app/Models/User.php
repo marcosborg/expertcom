@@ -126,8 +126,18 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function hasRole($role)
+    {
+        return $this->roles()->where('title', $role)->exists();
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function driver()
+    {
+        return $this->hasMany(Driver::class);
     }
 }

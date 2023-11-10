@@ -67,6 +67,7 @@
 
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                        @if (auth()->user()->hasRole('Admin'))
                         <li class="nav-item" style="padding-top: 8px;">
                             <select class="form-control select2" style="min-width: 200px;"
                                 onchange="selectCompany(this.value)" autocomplete="off">
@@ -78,6 +79,7 @@
                                 @endforeach
                             </select>
                         </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/" target="_new">Website</a>
                         </li>

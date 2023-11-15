@@ -38,7 +38,7 @@
     @endforeach
     @if ($total_earnings_after_vat > 0)
     <div class="row" style="margin-top: 5px;">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Atividades por operador
@@ -146,7 +146,7 @@
             </div>
             @endif
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Totais

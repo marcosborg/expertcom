@@ -22,12 +22,25 @@
             display: block;
             position: absolute;
             opacity: 0.4;
+            z-index: 0;
+        }
+
+        a {
+            position: absolute;
+            z-index: 999;
+            top: 50%;
         }
     </style>
 </head>
 
 <body>
     <div class="bg"></div>
+    @auth
+    <a href="/admin" class="btn btn-large btn-outline-light">DASHBOARD</a>
+    @else
+    <a href="/login" class="btn btn-large btn-outline-light">LOGIN</a>
+    @endauth
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
     </script>

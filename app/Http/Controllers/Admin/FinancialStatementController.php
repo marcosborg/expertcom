@@ -400,6 +400,7 @@ class FinancialStatementController extends Controller
         $adjustments = Adjustment::whereHas('drivers', function ($query) use ($driver_id) {
             $query->where('id', $driver_id);
         })
+            ->where('company_id', $company_id)
             ->where(function ($query) use ($tvde_week) {
                 $query->where('start_date', '<=', $tvde_week->start_date)
                     ->orWhereNull('start_date');

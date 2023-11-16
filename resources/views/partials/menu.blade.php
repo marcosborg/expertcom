@@ -1173,6 +1173,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('company_park_access')
+                            <li class="{{ request()->is("admin/company-parks") || request()->is("admin/company-parks/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.company-parks.index") }}">
+                                    <i class="fa-fw fas fa-parking">
+
+                                    </i>
+                                    <span>{{ trans('cruds.companyPark.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                         @can('weekly_expense_report_access')
                             <li class="{{ request()->is("admin/weekly-expense-reports") || request()->is("admin/weekly-expense-reports/*") ? "active" : "" }}">
                                 <a href="/admin/weekly-expense-reports">

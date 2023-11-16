@@ -1657,5 +1657,25 @@ return [
         'title'          => 'Company Report',
         'title_singular' => 'Company Report',
     ],
+    'companyPark' => [
+        'title'          => 'Company Park',
+        'title_singular' => 'Company Park',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'tvde_week'         => 'Tvde Week',
+            'tvde_week_helper'  => ' ',
+            'company'           => 'Company',
+            'company_helper'    => ' ',
+            'value'             => 'Value',
+            'value_helper'      => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
 
 ];

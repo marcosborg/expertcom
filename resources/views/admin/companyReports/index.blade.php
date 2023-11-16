@@ -68,7 +68,7 @@
                             @foreach ($drivers as $driver)
                             @if ($driver->total_uber || $driver->total_bolt)
                             <tr>
-                                <td>{{ $driver->name }}</td>
+                                <td>{{ $driver->id }}</td>
                                 <td style="text-align: right;">{{ number_format($driver->total_uber +
                                     $driver->total_tips_uber, 2) }} <small>€</small></td>
                                 <td style="text-align: right;">{{ number_format($driver->total_bolt +

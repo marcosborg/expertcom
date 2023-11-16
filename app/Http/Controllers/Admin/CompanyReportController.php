@@ -89,7 +89,6 @@ class CompanyReportController extends Controller
 
         $drivers = Driver::where('company_id', $company_id)
             ->where('state_id', 1)
-            //->where('id', 334)
             ->orderBy('name')
             ->get()
             ->load([
@@ -121,85 +120,87 @@ class CompanyReportController extends Controller
                 ->where('company_id', $driver->company_id)
                 ->get();
 
-            $driver->total_uber = $uber_activities ? $uber_activities->sum('earnings_two') : 0;
-            $driver->total_uber_tips = $uber_activities ? $uber_activities->sum('earnings_one') : 0;
-            $driver->total_bolt = $bolt_activities ? $bolt_activities->sum('earnings_two') : 0;
-            $driver->total_bolt_tips = $uber_activities ? $bolt_activities->sum('earnings_one') : 0;
-            $total_uber[] = $driver->total_uber;
-            $total_bolt[] = $driver->total_bolt;
-            $driver->total_operators = $driver->total_uber + $driver->total_bolt;
+            if ($uber_activities->sum('earnings_two') > 0 || $bolt_activities->sum('earnings_two') > 0) {
+                $driver->total_uber = $uber_activities ? $uber_activities->sum('earnings_two') : 0;
+                $driver->total_uber_tips = $uber_activities ? $uber_activities->sum('earnings_one') : 0;
+                $driver->total_bolt = $bolt_activities ? $bolt_activities->sum('earnings_two') : 0;
+                $driver->total_bolt_tips = $uber_activities ? $bolt_activities->sum('earnings_one') : 0;
+                $total_uber[] = $driver->total_uber;
+                $total_bolt[] = $driver->total_bolt;
+                $driver->total_operators = $driver->total_uber + $driver->total_bolt;
 
-            // contract_type_ranks
-            $total_no_tips = ($driver->total_uber - $driver->total_uber_tips) + ($driver->total_bolt - $driver->total_bolt_tips);
+                // contract_type_ranks
+                $total_no_tips = ($driver->total_uber - $driver->total_uber_tips) + ($driver->total_bolt - $driver->total_bolt_tips);
 
-            $contract_type_rank = ContractTypeRank::where('contract_type_id', $driver->contract_type_id)
-                ->where('from', '<=', $total_no_tips > 0 ? $total_no_tips : 0)
-                ->where('to', '>=', $total_no_tips > 0 ? $total_no_tips : 0)
-                ->first();
+                $contract_type_rank = ContractTypeRank::where('contract_type_id', $driver->contract_type_id)
+                    ->where('from', '<=', $total_no_tips > 0 ? $total_no_tips : 0)
+                    ->where('to', '>=', $total_no_tips > 0 ? $total_no_tips : 0)
+                    ->first();
 
-            // taxação de ganhos e gorjetas
+                // taxação de ganhos e gorjetas
 
-            if ($contract_type_rank) {
-                $total_no_tips = ($total_no_tips * $contract_type_rank->percent) / 100;
-            }
-
-            $payments_no_tips[] = $total_no_tips;
-
-            if ($driver->contract_vat->tips !== 0) {
-                $tips[] = $driver->total_uber_tips + $driver->total_bolt_tips - (($driver->total_uber_tips + $driver->total_bolt_tips) * ($driver->contract_vat->tips / 100));
-            } else {
-                $tips[] = $driver->total_uber_tips + $driver->total_bolt_tips;
-            }
-
-            // abastecimentos
-
-            if ($driver->card) {
-                $combustion_transactions = CombustionTransaction::where([
-                    'tvde_week_id' => $tvde_week_id,
-                    'card' => $driver->card->code
-                ])->sum('total');
-                if ($combustion_transactions) {
-                    $fuel_transactions[] = $combustion_transactions;
+                if ($contract_type_rank) {
+                    $total_no_tips = ($total_no_tips * $contract_type_rank->percent) / 100;
                 }
-            }
 
-            if ($driver->electric) {
-                $electric_transactions = ElectricTransaction::where([
-                    'tvde_week_id' => $tvde_week_id,
-                    'card' => $driver->electric->code
-                ])->sum('total');
-                if ($electric_transactions) {
-                    $fuel_transactions[] = $electric_transactions;
-                }
-            }
+                $payments_no_tips[] = $total_no_tips;
 
-            // adjustments
-
-            $adjustments = Adjustment::where('company_id', $company_id)
-                ->where(function ($query) use ($tvde_week) {
-                    $query->where('start_date', '<=', $tvde_week->start_date)
-                        ->orWhereNull('start_date');
-                })
-                ->where(function ($query) use ($tvde_week) {
-                    $query->where('end_date', '>=', $tvde_week->end_date)
-                        ->orWhereNull('end_date');
-                })
-                ->whereHas('drivers', function ($adjustment) use ($driver) {
-                    $adjustment->where('driver_id', $driver->id);
-                })
-                ->get();
-
-            foreach ($adjustments as $adjustment) {
-                if ($adjustment->type == 'refund') {
-                    $total_adjustments[] = (-$adjustment->amount);
+                if ($driver->contract_vat->tips !== 0) {
+                    $tips[] = $driver->total_uber_tips + $driver->total_bolt_tips - (($driver->total_uber_tips + $driver->total_bolt_tips) * ($driver->contract_vat->tips / 100));
                 } else {
-                    $total_adjustments[] = $adjustment->amount;
+                    $tips[] = $driver->total_uber_tips + $driver->total_bolt_tips;
                 }
-                if ($adjustment->company_expense == true) {
+
+                // abastecimentos
+
+                if ($driver->card) {
+                    $combustion_transactions = CombustionTransaction::where([
+                        'tvde_week_id' => $tvde_week_id,
+                        'card' => $driver->card->code
+                    ])->sum('total');
+                    if ($combustion_transactions) {
+                        $fuel_transactions[] = $combustion_transactions;
+                    }
+                }
+
+                if ($driver->electric) {
+                    $electric_transactions = ElectricTransaction::where([
+                        'tvde_week_id' => $tvde_week_id,
+                        'card' => $driver->electric->code
+                    ])->sum('total');
+                    if ($electric_transactions) {
+                        $fuel_transactions[] = $electric_transactions;
+                    }
+                }
+
+                // adjustments
+
+                $adjustments = Adjustment::where('company_id', $company_id)
+                    ->where(function ($query) use ($tvde_week) {
+                        $query->where('start_date', '<=', $tvde_week->start_date)
+                            ->orWhereNull('start_date');
+                    })
+                    ->where(function ($query) use ($tvde_week) {
+                        $query->where('end_date', '>=', $tvde_week->end_date)
+                            ->orWhereNull('end_date');
+                    })
+                    ->whereHas('drivers', function ($adjustment) use ($driver) {
+                        $adjustment->where('driver_id', $driver->id);
+                    })
+                    ->get();
+
+                foreach ($adjustments as $adjustment) {
                     if ($adjustment->type == 'refund') {
-                        $company_adjustment[] = $adjustment->amount;
+                        $total_adjustments[] = (-$adjustment->amount);
                     } else {
-                        $company_adjustment[] = (-$adjustment->amount);
+                        $total_adjustments[] = $adjustment->amount;
+                    }
+                    if ($adjustment->company_expense == true) {
+                        if ($adjustment->type == 'refund') {
+                            $company_adjustment[] = (-$adjustment->amount);
+                        } else {
+                            $company_adjustment[] = $adjustment->amount;
+                        }
                     }
                 }
             }

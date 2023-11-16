@@ -80,7 +80,7 @@
                             </tr>
                             <tr>
                                 <th>Totais</th>
-                                <td>{{ $total_earnings }}€</td>
+                                <td>{{ number_format($total_earnings, 2) }}€</td>
                                 @if ($driver)
                                 <td></td>
                                 <td>{{ number_format($total_after_vat, 2) }}€</td>

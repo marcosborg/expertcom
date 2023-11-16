@@ -7,6 +7,7 @@ use App\Models\Adjustment;
 use App\Models\Card;
 use App\Models\CombustionTransaction;
 use App\Models\CompanyExpense;
+use App\Models\CompanyPark;
 use App\Models\ContractTypeRank;
 use App\Models\Driver;
 use App\Models\Electric;
@@ -90,8 +91,6 @@ class WeeklyExpenseReportController extends Controller
         $tvde_week = TvdeWeek::find($tvde_week_id);
 
         $drivers_payments = [];
-
-        $company_electricity = [];
 
         foreach ($drivers as $driver) {
 
@@ -227,7 +226,6 @@ class WeeklyExpenseReportController extends Controller
                     $gross_debts = $gross_debts + $electric_expenses['value'];
                     if ($electric_expenses['value'] > 0) {
                         $electric_racio = ($electric_expenses['value'] / $total_earnings) * 100;
-                        $company_electricity[] = $electric_expenses['value'];
                     } else {
                         $electric_racio = 0;
                     }
@@ -256,7 +254,9 @@ class WeeklyExpenseReportController extends Controller
             ->where('end_date', '>=', $today)
             ->get();
 
-        $company_electricity = array_sum($company_electricity);
+        $company_park = CompanyPark::where('company_id', $company_id)
+            ->where('tvde_week_id', $tvde_week_id)
+            ->sum('value');
 
         return view('admin.weeklyExpenseReports.index', compact([
             'company_id',
@@ -269,7 +269,7 @@ class WeeklyExpenseReportController extends Controller
             'adjustments',
             'company_expenses',
             'drivers_payment',
-            'company_electricity'
+            'company_park'
         ]));
     }
 

@@ -128,12 +128,12 @@
                         <td style="text-align: right;">{{ number_format($drivers_payment, 2) }} <small>€</small></td>
                         <td></td>
                     </tr>
-                    @if ($company_electricity)
+                    @if ($company_park)
                     <tr>
-                        <td>Eletricidade</td>
+                        <td>Park</td>
                         <td></td>
                         <td></td>
-                        <td style="text-align: right;">{{ number_format($company_electricity, 2) }} <small>€</small>
+                        <td style="text-align: right;">{{ number_format($company_park, 2) }} <small>€</small>
                         </td>
                         <td></td>
                     </tr>
@@ -145,7 +145,7 @@
                         <th></th>
                         <th></th>
                         <th style="text-align: right;">{{ number_format(array_sum($total_adjustments_weekly) +
-                            array_sum($total_company_expenses_weekly) + $drivers_payment + $company_electricity, 2) }}
+                            array_sum($total_company_expenses_weekly) + $drivers_payment + $company_park, 2) }}
                             <small>€</small></th>
                         <th></th>
                     </tr>

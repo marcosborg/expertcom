@@ -197,14 +197,13 @@ class CompanyReportController extends Controller
                     }
                     if ($adjustment->company_expense == true) {
                         if ($adjustment->type == 'refund') {
-                            $company_adjustment[] = (-$adjustment->amount);
+                            $company_adjustment[] = -$adjustment->amount;
                         } else {
                             $company_adjustment[] = $adjustment->amount;
                         }
                     }
                 }
             }
-
         }
 
         $company_expenses = CompanyExpense::where('start_date', '<=', $tvde_week->start_date)

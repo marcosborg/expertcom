@@ -251,13 +251,6 @@ class WeeklyExpenseReportController extends Controller
 
         $today = Carbon::today()->toDateString();
 
-        $adjustments = Adjustment::where('company_id', $company_id)
-            ->where('start_date', '<=', $today)
-            ->where('end_date', '>=', $today)
-            ->where('company_expense', 1)
-            ->get()
-            ->load('drivers');
-
         $company_expenses = CompanyExpense::where('company_id', $company_id)
             ->where('start_date', '<=', $today)
             ->where('end_date', '>=', $today)

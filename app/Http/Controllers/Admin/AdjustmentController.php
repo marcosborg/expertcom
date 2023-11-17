@@ -84,7 +84,11 @@ class AdjustmentController extends Controller
                 return '<input type="checkbox" disabled ' . ($row->company_expense ? 'checked' : null) . '>';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'drivers', 'company', 'company_expense']);
+            $table->editColumn('fleet_management', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->fleet_management ? 'checked' : null) . '>';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'drivers', 'company', 'company_expense', 'fleet_management']);
 
             return $table->make(true);
         }

@@ -1617,6 +1617,8 @@ return [
             'company_helper'    => ' ',
             'company_expense'        => 'Company Expense',
             'company_expense_helper' => ' ',
+            'fleet_management'        => 'Fleet Management',
+            'fleet_management_helper' => ' ',
         ],
     ],
     'companyExpensesMenu' => [

@@ -58,6 +58,9 @@
                                     {{ trans('cruds.adjustment.fields.company_expense') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.adjustment.fields.fleet_management') }}
+                                </th>
+                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -126,6 +129,7 @@
 { data: 'drivers', name: 'drivers.code' },
 { data: 'company_name', name: 'company.name' },
 { data: 'company_expense', name: 'company_expense' },
+{ data: 'fleet_management', name: 'fleet_management' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

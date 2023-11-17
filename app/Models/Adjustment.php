@@ -36,6 +36,7 @@ class Adjustment extends Model
         'end_date',
         'company_id',
         'company_expense',
+        'fleet_management',
         'created_at',
         'updated_at',
         'deleted_at',

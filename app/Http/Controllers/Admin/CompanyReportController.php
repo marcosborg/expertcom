@@ -89,6 +89,7 @@ class CompanyReportController extends Controller
 
         $drivers = Driver::where('company_id', $company_id)
             ->where('state_id', 1)
+            //->where('id', 283)
             ->orderBy('name')
             ->get()
             ->load([
@@ -99,83 +100,106 @@ class CompanyReportController extends Controller
 
         $total_uber = [];
         $total_bolt = [];
-        $payments_no_tips = [];
-        $tips = [];
-        $fuel_transactions = [];
-        $total_adjustments = [];
-        $company_adjustment = [];
-        $total_company_expenses = [];
+        $total_operators = [];
 
         foreach ($drivers as $driver) {
-            $uber_uuid = $driver->uber_uuid;
-            $bolt_name = $driver->bolt_name;
-            $uber_activities = TvdeActivity::where('tvde_week_id', $tvde_week_id)
-                ->where('tvde_operator_id', 1)
-                ->where('driver_code', $uber_uuid)
-                ->where('company_id', $driver->company_id)
-                ->get();
-            $bolt_activities = TvdeActivity::where('tvde_week_id', $tvde_week_id)
-                ->where('tvde_operator_id', 2)
-                ->where('driver_code', $bolt_name)
-                ->where('company_id', $driver->company_id)
+            $uber_activities = TvdeActivity::where([
+                'company_id' => $company_id,
+                'tvde_operator_id' => 1,
+                'tvde_week_id' => $tvde_week_id,
+                'driver_code' => $driver->uber_uuid
+            ])
                 ->get();
 
-            if ($uber_activities->sum('earnings_two') > 0 || $bolt_activities->sum('earnings_two') > 0) {
-                $driver->total_uber = $uber_activities ? $uber_activities->sum('earnings_two') : 0;
-                $driver->total_uber_tips = $uber_activities ? $uber_activities->sum('earnings_one') : 0;
-                $driver->total_bolt = $bolt_activities ? $bolt_activities->sum('earnings_two') : 0;
-                $driver->total_bolt_tips = $uber_activities ? $bolt_activities->sum('earnings_one') : 0;
-                $total_uber[] = $driver->total_uber;
-                $total_bolt[] = $driver->total_bolt;
-                $driver->total_operators = $driver->total_uber + $driver->total_bolt;
+            $uber_total_earnings = $uber_activities->sum('earnings_two');
+            $uber_tips = $uber_activities->sum('earnings_one');
+            $uber_earnings = $uber_total_earnings - $uber_tips;
 
-                // contract_type_ranks
-                $total_no_tips = ($driver->total_uber - $driver->total_uber_tips) + ($driver->total_bolt - $driver->total_bolt_tips);
+            $bolt_activities = TvdeActivity::where([
+                'company_id' => $company_id,
+                'tvde_operator_id' => 2,
+                'tvde_week_id' => $tvde_week_id,
+                'driver_code' => $driver->bolt_name
+            ])
+                ->get();
 
-                $contract_type_rank = ContractTypeRank::where('contract_type_id', $driver->contract_type_id)
-                    ->where('from', '<=', $total_no_tips > 0 ? $total_no_tips : 0)
-                    ->where('to', '>=', $total_no_tips > 0 ? $total_no_tips : 0)
+            $bolt_total_earnings = $bolt_activities->sum('earnings_two');
+            $bolt_tips = $bolt_activities->sum('earnings_one');
+            $bolt_earnings = $bolt_total_earnings - $bolt_tips;
+
+            if ($bolt_total_earnings > 0 || $uber_total_earnings > 0) {
+
+                //EARNINGS
+
+                $uber = collect([
+                    'total_earnings' => $uber_total_earnings,
+                    'tips' => $uber_tips,
+                    'earnings' => $uber_earnings
+                ]);
+
+                $bolt = collect([
+                    'total_earnings' => $bolt_total_earnings,
+                    'tips' => $bolt_tips,
+                    'earnings' => $bolt_earnings
+                ]);
+
+                $total_earnings = $bolt_total_earnings + $uber_total_earnings;
+                $total_earnings_no_tips = $uber_earnings + $bolt_earnings;
+                $total_tips = $uber_tips + $bolt_tips;
+
+                //DISCOUNT
+
+                $contract_type_rank = ContractTypeRank::where([
+                    'contract_type_id' => $driver->contract_type_id
+                ])
+                    ->where('from', '<=', $total_earnings_no_tips)
+                    ->where('to', '>=', $total_earnings_no_tips)
                     ->first();
 
-                // taxação de ganhos e gorjetas
-
                 if ($contract_type_rank) {
-                    $total_no_tips = ($total_no_tips * $contract_type_rank->percent) / 100;
-                }
-
-                $payments_no_tips[] = $total_no_tips;
-
-                if ($driver->contract_vat->tips !== 0) {
-                    $tips[] = $driver->total_uber_tips + $driver->total_bolt_tips - (($driver->total_uber_tips + $driver->total_bolt_tips) * ($driver->contract_vat->tips / 100));
+                    $percent = $contract_type_rank->percent;
                 } else {
-                    $tips[] = $driver->total_uber_tips + $driver->total_bolt_tips;
+                    $percent = 0;
                 }
+                
+                $earnings_after_discount = ($total_earnings_no_tips * $percent) / 100;
 
-                // abastecimentos
+                $tips_after_discount = ($total_tips * (100 - $driver->contract_vat->tips)) / 100;
 
-                if ($driver->card) {
-                    $combustion_transactions = CombustionTransaction::where([
-                        'tvde_week_id' => $tvde_week_id,
-                        'card' => $driver->card->code
-                    ])->sum('total');
-                    if ($combustion_transactions) {
-                        $fuel_transactions[] = $combustion_transactions;
-                    }
-                }
+                //FUEL
+
+                $fuel_transactions = 0;
 
                 if ($driver->electric) {
                     $electric_transactions = ElectricTransaction::where([
                         'tvde_week_id' => $tvde_week_id,
                         'card' => $driver->electric->code
-                    ])->sum('total');
-                    if ($electric_transactions) {
-                        $fuel_transactions[] = $electric_transactions;
+                    ])
+                        ->sum('total');
+
+                    if ($electric_transactions > 0) {
+                        $fuel_transactions = $electric_transactions;
                     }
                 }
 
-                // adjustments
+                if ($driver->card) {
+                    $combustion_transactions = CombustionTransaction::where([
+                        'tvde_week_id' => $tvde_week_id,
+                        'card' => $driver->card->code
+                    ])
+                        ->sum('total');
 
-                $adjustments = Adjustment::where('company_id', $company_id)
+                    if ($combustion_transactions > 0) {
+                        $fuel_transactions = $combustion_transactions;
+                    }
+                }
+
+                $driver->fuel = $fuel_transactions;
+
+                //ADJUSTMENTS
+                $adjustments = Adjustment::whereHas('drivers', function ($query) use ($driver) {
+                    $query->where('id', $driver->id);
+                })
                     ->where(function ($query) use ($tvde_week) {
                         $query->where('start_date', '<=', $tvde_week->start_date)
                             ->orWhereNull('start_date');
@@ -184,52 +208,56 @@ class CompanyReportController extends Controller
                         $query->where('end_date', '>=', $tvde_week->end_date)
                             ->orWhereNull('end_date');
                     })
-                    ->whereHas('drivers', function ($adjustment) use ($driver) {
-                        $adjustment->where('driver_id', $driver->id);
-                    })
                     ->get();
 
+                $refunds = [];
+                $deducts = [];
+
                 foreach ($adjustments as $adjustment) {
-                    if ($adjustment->type == 'refund') {
-                        $total_adjustments[] = (-$adjustment->amount);
+                    if ($adjustment->type == 'deduct') {
+                        $deducts[] = $adjustment->amount;
                     } else {
-                        $total_adjustments[] = $adjustment->amount;
-                    }
-                    if ($adjustment->company_expense == true) {
-                        if ($adjustment->type == 'refund') {
-                            $company_adjustment[] = -$adjustment->amount;
-                        } else {
-                            $company_adjustment[] = $adjustment->amount;
-                        }
+                        $refunds[] = $adjustment->amount;
                     }
                 }
+
+                $refunds = array_sum($refunds);
+                $deducts = array_sum($deducts);
+                $adjustments = $refunds - $deducts;
+
+                $earnings = collect([
+                    'uber' => $uber,
+                    'bolt' => $bolt,
+                    'total' => $total_earnings,
+                    'total_tips' => $total_tips,
+                    'percent' => $contract_type_rank->percent ?? 0,
+                    'tips_percent' => $driver->contract_vat->tips,
+                    'total_no_tips' => $total_earnings_no_tips,
+                    'earnings_after_discount' => $earnings_after_discount,
+                    'tips_after_discount' => $tips_after_discount,
+                ]);
+
+                $driver->earnings = $earnings;
+                $driver->refunds = $refunds;
+                $driver->adjustments = $adjustments;
+
+                $driver->total = $earnings_after_discount + $tips_after_discount - $fuel_transactions + $adjustments;
+
+                $total_uber[] = $uber_total_earnings;
+                $total_bolt[] = $bolt_total_earnings;
+                $total_operators[] = $total_earnings;
+
             }
+
         }
 
-        $company_expenses = CompanyExpense::where('start_date', '<=', $tvde_week->start_date)
-            ->where('end_date', '>=', $tvde_week->end_date)
-            ->where('company_id', $company_id)
-            ->get();
+        //return $total_uber;
 
-        foreach ($company_expenses as $company_expense) {
-            $total_company_expenses[] = $company_expense->qty * $company_expense->weekly_value;
-        }
-
-        $total_uber = array_sum($total_uber);
-        $total_bolt = array_sum($total_bolt);
-        $total_operators = $total_uber + $total_bolt;
-        $payments_no_tips = array_sum($payments_no_tips);
-        $tips = array_sum($tips);
-        $fuel_transactions = array_sum($fuel_transactions);
-        $total_adjustments = array_sum($total_adjustments);
-        $company_expenses = array_sum($company_adjustment) + array_sum($total_company_expenses);
-        $payments = $payments_no_tips + $tips - $fuel_transactions - $total_adjustments;
-        $profit = $total_operators - $payments - $company_expenses;
-        if ($company_id != 0) {
-            $roi = (($total_operators - ($payments + $company_expenses)) / ($payments + $company_expenses)) * 100;
-        } else {
-            $roi = 0;
-        }
+        $totals = collect([
+            'total_uber' => array_sum($total_uber),
+            'total_bolt' => array_sum($total_bolt),
+            'total_operators' => array_sum($total_operators),
+        ]);
 
         return view('admin.companyReports.index', compact([
             'company_id',
@@ -240,14 +268,7 @@ class CompanyReportController extends Controller
             'tvde_weeks',
             'tvde_week_id',
             'drivers',
-            'total_uber',
-            'total_bolt',
-            'total_operators',
-            'payments',
-            'company_adjustment',
-            'company_expenses',
-            'profit',
-            'roi'
+            'totals'
         ]));
 
     }

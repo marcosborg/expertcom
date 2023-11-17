@@ -89,7 +89,6 @@ class CompanyReportController extends Controller
 
         $drivers = Driver::where('company_id', $company_id)
             ->where('state_id', 1)
-            //->where('id', 283)
             ->orderBy('name')
             ->get()
             ->load([
@@ -208,6 +207,7 @@ class CompanyReportController extends Controller
                 $adjustments = Adjustment::whereHas('drivers', function ($query) use ($driver) {
                     $query->where('id', $driver->id);
                 })
+                    ->where('company_id', $company_id)
                     ->where(function ($query) use ($tvde_week) {
                         $query->where('start_date', '<=', $tvde_week->start_date)
                             ->orWhereNull('start_date');
@@ -230,7 +230,11 @@ class CompanyReportController extends Controller
                             $deducts[] = $adjustment->amount;
                         }
                     } else {
-                        $refunds[] = $adjustment->amount;
+                        if ($adjustment->fleet_management) {
+                            $fleet_management[] = (- $adjustment->amount);
+                        } else {
+                            $refunds[] = $adjustment->amount;
+                        }
                     }
                 }
 

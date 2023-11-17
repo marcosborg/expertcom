@@ -101,6 +101,12 @@ class CompanyReportController extends Controller
         $total_uber = [];
         $total_bolt = [];
         $total_operators = [];
+        $total_earnings_after_discount = [];
+        $total_tips_after_discount = [];
+        $total_fuel_transactions = [];
+        $total_adjustments = [];
+        $total_fleet_management = [];
+        $total_drivers = [];
 
         foreach ($drivers as $driver) {
             $uber_activities = TvdeActivity::where([
@@ -161,7 +167,7 @@ class CompanyReportController extends Controller
                 } else {
                     $percent = 0;
                 }
-                
+
                 $earnings_after_discount = ($total_earnings_no_tips * $percent) / 100;
 
                 $tips_after_discount = ($total_tips * (100 - $driver->contract_vat->tips)) / 100;
@@ -196,6 +202,8 @@ class CompanyReportController extends Controller
 
                 $driver->fuel = $fuel_transactions;
 
+                $total_fuel_transactions[] = $fuel_transactions;
+
                 //ADJUSTMENTS
                 $adjustments = Adjustment::whereHas('drivers', function ($query) use ($driver) {
                     $query->where('id', $driver->id);
@@ -212,10 +220,15 @@ class CompanyReportController extends Controller
 
                 $refunds = [];
                 $deducts = [];
+                $fleet_management = [];
 
                 foreach ($adjustments as $adjustment) {
                     if ($adjustment->type == 'deduct') {
-                        $deducts[] = $adjustment->amount;
+                        if ($adjustment->fleet_management) {
+                            $fleet_management[] = $adjustment->amount;
+                        } else {
+                            $deducts[] = $adjustment->amount;
+                        }
                     } else {
                         $refunds[] = $adjustment->amount;
                     }
@@ -224,6 +237,12 @@ class CompanyReportController extends Controller
                 $refunds = array_sum($refunds);
                 $deducts = array_sum($deducts);
                 $adjustments = $refunds - $deducts;
+
+                $total_adjustments[] = $adjustments;
+
+                $fleet_management = array_sum($fleet_management);
+
+                $total_fleet_management[] = $fleet_management;
 
                 $earnings = collect([
                     'uber' => $uber,
@@ -240,23 +259,31 @@ class CompanyReportController extends Controller
                 $driver->earnings = $earnings;
                 $driver->refunds = $refunds;
                 $driver->adjustments = $adjustments;
+                $driver->fleet_management = $fleet_management;
 
-                $driver->total = $earnings_after_discount + $tips_after_discount - $fuel_transactions + $adjustments;
+                $driver->total = $earnings_after_discount + $tips_after_discount - $fuel_transactions + $adjustments - $fleet_management;
 
                 $total_uber[] = $uber_total_earnings;
                 $total_bolt[] = $bolt_total_earnings;
                 $total_operators[] = $total_earnings;
+                $total_earnings_after_discount[] = $earnings_after_discount;
+                $total_tips_after_discount[] = $tips_after_discount;
+                $total_drivers[] = $driver->total;
 
             }
 
         }
 
-        //return $total_uber;
-
         $totals = collect([
             'total_uber' => array_sum($total_uber),
             'total_bolt' => array_sum($total_bolt),
             'total_operators' => array_sum($total_operators),
+            'total_earnings_after_discount' => array_sum($total_earnings_after_discount),
+            'total_tips_after_discount' => array_sum($total_tips_after_discount),
+            'total_fuel_transactions' => array_sum($total_fuel_transactions),
+            'total_adjustments' => array_sum($total_adjustments),
+            'total_fleet_management' => array_sum($total_fleet_management),
+            'total_drivers' => array_sum($total_drivers),
         ]);
 
         return view('admin.companyReports.index', compact([

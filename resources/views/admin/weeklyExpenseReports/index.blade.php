@@ -45,112 +45,111 @@
             }} a {{ \Carbon\Carbon::parse($tvde_week->end_date)->format('d') }}</a>
         @endforeach
     </div>
-    <div class="panel panel-default" style="margin-top: 20px;">
-        <div class="panel-heading">
-            Custos operacionais
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Custos operacionais
+                </div>
+                <div class="panel-body">
+                    <table style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th style="text-align: right;">Qtd.</th>
+                                <th style="text-align: right;">Unitário</th>
+                                <th style="text-align: right;">Semanal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Despesas fixas</th>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @foreach ($company_expenses as $company_expense)
+                            <tr>
+                                <td>{{ $company_expense->name }}</td>
+                                <td style="text-align: right;">{{ $company_expense->qty }}</td>
+                                <td style="text-align: right;">{{ $company_expense->weekly_value }} <small>€</small>
+                                </td>
+                                <td style="text-align: right;">{{ number_format($company_expense->total, 2) }}
+                                    <small>€</small>
+                                </td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <th>Despesas variáveis</th>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Ajustes</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;">{{ number_format($totals['total_company_adjustments'], 2)
+                                    }} <small>€</small></td>
+                            </tr>
+                            <tr>
+                                <td>Park</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;">{{ $company_park }} <small>€</small></td>
+                            </tr>
+                            <tr>
+                                <td>Pagamentos a motoristas</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right">{{ number_format($totals['total_drivers'], 2) }} <small>€</small></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Total de despesas</th>
+                                <th></th>
+                                <th></th>
+                                <th style="text-align: right;">{{ number_format($final_total, 2) }} <small>€</small>
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="panel-body">
-            <table style="width: 100%">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th style="text-align: right;">Qtd.</th>
-                        <th style="text-align: right;">Unitário</th>
-                        <th style="text-align: right;">Semanal</th>
-                        <th style="text-align: right;">Mensal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                    $total_adjustments_unit = [];
-                    $total_adjustments_weekly = [];
-                    $total_adjustments_monthly = [];
-                    @endphp
-                    @foreach ($adjustments as $adjustment)
-                    <tr>
-                        <td>{{ $adjustment->name }}</td>
-                        <td style="text-align: right;">{{ $adjustment->drivers->count() }}</td>
-                        <td style="text-align: right;">{{ $adjustment->type == 'refund' ? '' : '-' }}{{
-                            number_format($adjustment->amount, 2) }} <small>€</small></td>
-                        <td style="text-align: right;">{{ $adjustment->type == 'refund' ? '' : '-' }}{{
-                            number_format($adjustment->amount *
-                            $adjustment->drivers->count(), 2) }} <small>€</small></td>
-                        <td style="text-align: right;">{{ $adjustment->type == 'refund' ? '' : '-' }}{{
-                            number_format($adjustment->amount *
-                            $adjustment->drivers->count() * 4, 2) }} <small>€</small></td>
-                    </tr>
-                    @php
-                    $total_adjustments_unit[] = $adjustment->type == 'refund' ? $adjustment->amount : -
-                    $adjustment->amount;
-                    $total_adjustments_weekly[] = $adjustment->type == 'refund' ? $adjustment->amount : -
-                    $adjustment->amount * $adjustment->drivers->count();
-                    $total_adjustments_monthly[] = $adjustment->type == 'refund' ? $adjustment->amount : -
-                    $adjustment->amount * $adjustment->drivers->count() * 4;
-                    @endphp
-                    @endforeach
-                    @php
-                    $total_company_expenses_unit = [];
-                    $total_company_expenses_weekly = [];
-                    $total_company_expenses_monthly = [];
-                    @endphp
-                    @foreach ($company_expenses as $company_expense)
-                    <tr>
-                        <td>{{ $company_expense->name }}</td>
-                        <td style="text-align: right;">{{ $company_expense->qty }}</td>
-                        <td style="text-align: right;">{{ number_format($company_expense->weekly_value, 2) }}
-                            <small>€</small>
-                        </td>
-                        <td style="text-align: right;">{{ number_format($company_expense->weekly_value *
-                            $company_expense->qty, 2) }} <small>€</small></td>
-                        <td style="text-align: right;">{{ number_format($company_expense->weekly_value *
-                            $company_expense->qty * 4) }} <small>€</small></td>
-                    </tr>
-                    @php
-                    $total_company_expenses_unit[] = $company_expense->weekly_value;
-                    $total_company_expenses_weekly[] = $company_expense->weekly_value * $company_expense->qty;
-                    $total_company_expenses_monthly[] = $company_expense->weekly_value * $company_expense->qty * 4;
-                    @endphp
-                    @endforeach
-                    <tr>
-                        <th>Total de despesas</th>
-                        <th></th>
-                        <th style="text-align: right;">{{ number_format(array_sum($total_adjustments_unit) +
-                            array_sum($total_company_expenses_unit), 2) }} <small>€</small></th>
-                        <th style="text-align: right;">{{ number_format(array_sum($total_adjustments_weekly) +
-                            array_sum($total_company_expenses_weekly), 2) }} <small>€</small></th>
-                        <th style="text-align: right;">{{ number_format(array_sum($total_adjustments_monthly) +
-                            array_sum($total_company_expenses_monthly), 2) }} <small>€</small></th>
-                    </tr>
-                    <tr>
-                        <td>Pagamentos a motoristas</td>
-                        <td></td>
-                        <td></td>
-                        <td style="text-align: right;">{{ number_format($drivers_payment, 2) }} <small>€</small></td>
-                        <td></td>
-                    </tr>
-                    @if ($company_park)
-                    <tr>
-                        <td>Park</td>
-                        <td></td>
-                        <td></td>
-                        <td style="text-align: right;">{{ number_format($company_park, 2) }} <small>€</small>
-                        </td>
-                        <td></td>
-                    </tr>
-                    @endif
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Total final</th>
-                        <th></th>
-                        <th></th>
-                        <th style="text-align: right;">{{ number_format(array_sum($total_adjustments_weekly) +
-                            array_sum($total_company_expenses_weekly) + $drivers_payment + $company_park, 2) }}
-                            <small>€</small></th>
-                        <th></th>
-                    </tr>
-                </tfoot>
-            </table>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Rentabilidade semanal
+                </div>
+                <div class="panel-body">
+                    <table style="width: 100%">
+                        <tbody>
+                            <tr>
+                                <th>Ganhos</th>
+                                <td style="text-align: right">{{ number_format($totals['total_operators'], 2) }} <small>€</small></td>
+                            </tr>
+                            <tr>
+                                <th>Pagamentos a motoristas</th>
+                                <td style="text-align: right">{{ number_format($totals['total_drivers'], 2) }} <small>€</small></td>
+                            </tr>
+                            <tr>
+                                <th>Despesas da empresa</th>
+                                <td style="text-align: right">{{ number_format($final_company_expenses, 2) }} <small>€</small></td>
+                            </tr>
+                            <tr>
+                                <th>Rentabilidade</th>
+                                <td style="text-align: right">{{ number_format($profit, 2) }} <small>€</small></td>
+                            </tr>
+                            <tr>
+                                <th>ROI (Return of investment)</th>
+                                <td style="text-align: right"><h1>{{ round($roi) }}<small>%</small></h1></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     @endif

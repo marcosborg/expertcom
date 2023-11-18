@@ -1652,12 +1652,12 @@ return [
         ],
     ],
     'weeklyExpenseReport' => [
-        'title'          => 'Weekly Expense Report',
-        'title_singular' => 'Weekly Expense Report',
-    ],
-    'companyReport' => [
         'title'          => 'Company Report',
         'title_singular' => 'Company Report',
+    ],
+    'companyReport' => [
+        'title'          => 'Drivers Report',
+        'title_singular' => 'Drivers Report',
     ],
     'companyPark' => [
         'title'          => 'Company Park',

@@ -117,8 +117,8 @@ class WeeklyExpenseReportController extends Controller
 
         $totals = $this->getWeekReport($company_id, $tvde_week_id)['totals'];
 
-        $final_total = $total_company_expenses + $totals['total_company_adjustments'] + $company_park + $totals['total_drivers'];
-        $final_company_expenses = $total_company_expenses + $totals['total_company_adjustments'] + $company_park;
+        $final_total = $total_company_expenses - $totals['total_company_adjustments'] + $company_park + $totals['total_drivers'];
+        $final_company_expenses = $total_company_expenses - $totals['total_company_adjustments'] + $company_park;
         $profit = $totals['total_operators'] - $final_total;
 
         $roi = (($totals['total_operators'] - $final_total) / $totals['total_operators']) * 100;

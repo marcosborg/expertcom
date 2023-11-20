@@ -89,7 +89,7 @@ trait Reports
                     'contract_type_id' => $driver->contract_type_id
                 ])
                     ->where('from', '<=', ceil($total_earnings_no_tips))
-                    ->where('to', '>=', floor($total_earnings_no_tips))
+                    ->where('to', '>=', ceil($total_earnings_no_tips))
                     ->first();
 
                 if ($contract_type_rank) {

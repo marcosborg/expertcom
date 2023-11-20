@@ -530,6 +530,38 @@ class FinancialStatementController extends Controller
             $txt_admin = 0;
         }
 
+        //GRAFICOS
+
+        $drivers = Driver::where('company_id', $company_id)->get();
+
+        $team_earnings = collect();
+
+        foreach ($drivers as $key => $d) {
+            $team_driver_bolt_earnings = TvdeActivity::where([
+                'tvde_week_id' => $tvde_week_id,
+                'tvde_operator_id' => 2,
+                'driver_code' => $d->bolt_name
+            ])
+                ->get()->sum('earnings_two');
+
+            $team_driver_uber_earnings = TvdeActivity::where([
+                'tvde_week_id' => $tvde_week_id,
+                'tvde_operator_id' => 1,
+                'driver_code' => $d->uber_uuid
+            ])
+                ->get()->sum('earnings_two');
+
+            $team_driver_earnings = $team_driver_bolt_earnings + $team_driver_uber_earnings;
+            if ($driver) {
+                $entry = collect([
+                    'driver' => $driver->uber_uuid == $d->uber_uuid || $driver->bolt_name == $d->bolt_name ? $driver->name : 'Motorista ' . $key + 1,
+                    'earnings' => sprintf("%.2f", $team_driver_earnings),
+                    'own' => $driver->uber_uuid == $d->uber_uuid || $driver->bolt_name == $d->bolt_name
+                ]);
+                $team_earnings->add($entry);
+            }
+        }
+
         /*
 
         return view('admin.financialStatements.pdf', compact([

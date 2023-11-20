@@ -301,6 +301,7 @@
         }
     });
     const ctx1 = document.getElementById('team_earnings');
+    console.log(JSON.stringify(backgrounds));
     new Chart(ctx1, {
       type: 'bar',
       data: {

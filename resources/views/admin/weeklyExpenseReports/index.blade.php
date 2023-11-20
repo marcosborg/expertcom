@@ -86,10 +86,10 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td>Ajustes</td>
+                                <td>Gestão de frota</td>
                                 <td></td>
                                 <td></td>
-                                <td style="text-align: right;">{{ number_format($totals['total_company_adjustments'], 2)
+                                <td style="text-align: right;">{{ number_format(-$totals['total_company_adjustments'], 2)
                                     }} <small>€</small></td>
                             </tr>
                             <tr>

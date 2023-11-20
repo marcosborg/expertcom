@@ -131,12 +131,8 @@
                                 <td style="text-align: right">{{ number_format($totals['total_operators'], 2) }} <small>€</small></td>
                             </tr>
                             <tr>
-                                <th>Pagamentos a motoristas</th>
-                                <td style="text-align: right">{{ number_format($totals['total_drivers'], 2) }} <small>€</small></td>
-                            </tr>
-                            <tr>
-                                <th>Despesas da empresa</th>
-                                <td style="text-align: right">{{ number_format($final_company_expenses, 2) }} <small>€</small></td>
+                                <th>Total de despesas</th>
+                                <td style="text-align: right">{{ number_format($final_total, 2) }} <small>€</small></td>
                             </tr>
                             <tr>
                                 <th>Rentabilidade</th>

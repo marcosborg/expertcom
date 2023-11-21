@@ -33,6 +33,7 @@ class Company extends Model implements HasMedia
         'zip',
         'location',
         'email',
+        'main',
         'created_at',
         'updated_at',
         'deleted_at',

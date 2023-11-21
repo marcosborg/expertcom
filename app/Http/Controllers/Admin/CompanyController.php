@@ -78,6 +78,9 @@ class CompanyController extends Controller
 
                 return '';
             });
+            $table->editColumn('main', function ($row) {
+                return $row->main ? 'Main company' : null;
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'logo']);
 

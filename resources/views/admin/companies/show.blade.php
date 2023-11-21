@@ -85,6 +85,14 @@
                                         @endif
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.company.fields.main') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $company->main ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

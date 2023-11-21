@@ -10,6 +10,8 @@ use App\Models\TvdeMonth;
 use App\Models\TvdeWeek;
 use App\Models\TvdeYear;
 use App\Models\CompanyPark;
+use App\Models\Company;
+use App\Models\Consultancy;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
@@ -115,13 +117,32 @@ class WeeklyExpenseReportController extends Controller
             ->where('company_id', $company_id)
             ->sum('value');
 
+        $consultancy = Consultancy::where('company_id', $company_id)
+            ->where('start_date', '<=', $tvde_week->start_date)
+            ->where('end_date', '>=', $tvde_week->end_date)
+            ->first();
+
         $totals = $this->getWeekReport($company_id, $tvde_week_id)['totals'];
 
-        $final_total = $total_company_expenses - $totals['total_company_adjustments'] + $company_park + $totals['total_drivers'];
-        $final_company_expenses = $total_company_expenses - $totals['total_company_adjustments'] + $company_park;
+        $company = Company::find($company_id);
+
+        $total_consultancy = 0;
+
+        if($consultancy && !$company->main){
+            
+            $total_consultancy = ($totals['total_operators'] * $consultancy->value) / 100;
+
+        }
+
+        $final_total = $total_company_expenses - $totals['total_company_adjustments'] + $company_park + $totals['total_drivers'] + $total_consultancy;
+        $final_company_expenses = $total_company_expenses - $totals['total_company_adjustments'] + $company_park + $total_consultancy;
         $profit = $totals['total_operators'] - $final_total;
 
-        $roi = (($totals['total_operators'] - $final_total) / $totals['total_operators']) * 100;
+        if ($totals['total_operators'] > 0) {
+            $roi = (($totals['total_operators'] - $final_total) / $totals['total_operators']) * 100;
+        } else {
+            $roi = 0;
+        }
 
         return view('admin.weeklyExpenseReports.index', compact([
             'company_id',
@@ -137,7 +158,8 @@ class WeeklyExpenseReportController extends Controller
             'final_total',
             'final_company_expenses',
             'profit',
-            'roi'
+            'roi',
+            'total_consultancy'
         ]));
     }
 

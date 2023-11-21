@@ -17,7 +17,7 @@
 @section('content')
 <div class="content">
 
-    @if ($company_id == 0)
+    @if ($company_id == 0 || $tvde_week_id == 0)
     <div class="alert alert-info" role="alert">
         Selecione uma empresa para ver os extratos.
     </div>
@@ -97,6 +97,12 @@
                                 <td></td>
                                 <td></td>
                                 <td style="text-align: right;">{{ $company_park }} <small>€</small></td>
+                            </tr>
+                            <tr>
+                                <td>Consultoria</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;">{{ number_format($total_consultancy, 2) }} <small>€</small></td>
                             </tr>
                             <tr>
                                 <td>Pagamentos a motoristas</td>

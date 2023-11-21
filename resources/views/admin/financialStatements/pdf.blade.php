@@ -147,8 +147,10 @@
                                 <th style="text-transform: uppercase; text-align: left" colspan="3">
                                     Abastecimento
                                     <small style="float: right">
-                                    {{ $electric_expenses ? 'Rentabilidade: ' . number_format($electric_racio, 2) . '%' : '' }}
-                                    {{ $combustion_expenses ? 'Rentabilidade: ' . number_format($combustion_racio, 2) . '%' : '' }}
+                                        {{ $electric_expenses ? 'Rentabilidade: ' . number_format($electric_racio, 2) .
+                                        '%' : '' }}
+                                        {{ $combustion_expenses ? 'Rentabilidade: ' . number_format($combustion_racio,
+                                        2) . '%' : '' }}
                                     </small>
                                 </th>
                             </tr>
@@ -242,12 +244,12 @@
                             </tr>
                             @endforeach
                             @if ($txt_admin > 0)
-                                <tr>
-                                    <th style="text-align: left;">Taxa administrativa</th>
-                                    <td></td>
-                                    <td style="text-align: right;">- {{ number_format($txt_admin, 2) }}€</td>
-                                    <td></td>
-                                </tr>
+                            <tr>
+                                <th style="text-align: left;">Taxa administrativa</th>
+                                <td></td>
+                                <td style="text-align: right;">- {{ number_format($txt_admin, 2) }}€</td>
+                                <td></td>
+                            </tr>
                             @endif
                             <tr>
                                 <th style="text-align: left;">Totais</th>
@@ -270,12 +272,41 @@
                     </table>
                 </td>
             </tr>
-            <tr>
-                <td style="vertical-align: top; width: 50%;">
-                    <img src="https://quickchart.io/chart?c={%20type:%20%27bar%27,%20data:%20{%20labels:%20[%22Motorista%201%22,%20%22Motorista%202%22,%20%22Motorista%203%22,%20%22Motorista%204%22,%20%22Motorista%205%22,%20%22Motorista%206%22,%20%22Motorista%207%22,%20%22Motorista%208%22,%20%22Motorista%209%22,%20%22Motorista%2010%22,%20%22Motorista%2011%22,%20%22Motorista%2012%22,%20%22Motorista%2013%22,%20%22Motorista%2014%22,%20%22Motorista%2015%22,%20%22Motorista%2016%22,%20%22Motorista%2017%22,%20%22Motorista%2018%22,%20%22Motorista%2019%22,%20%22Motorista%2020%22,%20%22Motorista%2021%22,%20%22Motorista%2022%22,%20%22Motorista%2023%22,%20%22Motorista%2024%22,%20%22Mateus%20Costa%22,%20%22Motorista%2026%22,%20%22Motorista%2027%22,%20%22Motorista%2028%22,%20%22Motorista%2029%22,%20%22Motorista%2030%22,%20%22Motorista%2031%22,%20%22Motorista%2032%22,%20%22Motorista%2033%22],%20datasets:%20[{%20label:%20%27Valor%20faturado%27,%20data:%20[%22274.99%22,%20%220.00%22,%20%22125.81%22,%20%22768.15%22,%20%220.00%22,%20%22410.19%22,%20%22241.14%22,%20%220.00%22,%20%22470.37%22,%20%22438.54%22,%20%22282.11%22,%20%22532.64%22,%20%22359.56%22,%20%22605.53%22,%20%22533.00%22,%20%2230.96%22,%20%220.00%22,%20%22757.48%22,%20%220.00%22,%20%22196.64%22,%20%22420.86%22,%20%22508.13%22,%20%22257.03%22,%20%22428.50%22,%20%22501.81%22,%20%22165.76%22,%20%220.00%22,%20%2237.13%22,%20%22612.02%22,%20%22527.77%22,%20%22624.92%22,%20%22630.71%22,%20%220.00%22],%20}]%20},%20options:%20{%20responsive:%20true,%20maintainAspectRatio:%20false,%20scales:%20{%20y:%20{%20beginAtZero:%20true%20}%20},%20}%20}" style="max-width: 100%;">
-                </td>
-            </tr>
         </tbody>
+    </table>
+    <table>
+        <tr>
+            <td style="vertical-align: top;">
+                <table class="bordered">
+                    <thead>
+                        <tr>
+                            <th style="text-align: left; text-transform: uppercase;">Origem dos ganhos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="{{ $chart2 }}" style="width: 100%">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="vertical-align: top; width: 66%;">
+                <table class="bordered">
+                    <thead>
+                        <tr style="text-align: left; text-transform: uppercase;">
+                            <th>Ranking de faturação semanal por motoristas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="{{ $chart1 }}" style="width: 100%"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
     </table>
     <footer>
         ExpertCom ©

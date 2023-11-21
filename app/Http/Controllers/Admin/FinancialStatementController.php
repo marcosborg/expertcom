@@ -560,7 +560,27 @@ class FinancialStatementController extends Controller
                 ]);
                 $team_earnings->add($entry);
             }
+
+            $labels = [];
+            $earnings = [];
+            $backgrounds = [];
+
+            foreach ($team_earnings as $entry) {
+                $labels[] = $entry['driver'];
+                $earnings[] = $entry['earnings'];
+                if ($entry['own']) {
+                    $backgrounds[] = '#605ca8';
+                } else {
+                    $backgrounds[] = '#00a65a94';
+                }
+            }
+
         }
+
+        $chart1 = "https://quickchart.io/chart?c={type:'bar',data:{labels:" . json_encode($labels) . ",datasets:[{borderWidth: 1, label:'Valor faturado',data:" . json_encode($earnings) . "}]}}";
+        $chart2 = "https://quickchart.io/chart?c={type:'doughnut',data:{labels:['UBER', 'BOLT', 'GORJETAS'],datasets:[{label: 'Valor faturado', data: [" . $total_earnings_uber . ", " . $total_earnings_bolt . ", " . $total_tips . "]}]}}";
+
+        //return $chart1;
 
         /*
 
@@ -598,7 +618,11 @@ class FinancialStatementController extends Controller
             'combustion_expenses',
             'combustion_racio',
             'electric_racio',
-            'total_earnings_after_vat'
+            'total_earnings_after_vat',
+            'team_earnings',
+            'txt_admin',
+            'chart1',
+            'chart2',
         ]));
 
         */
@@ -639,6 +663,9 @@ class FinancialStatementController extends Controller
             'electric_racio' => $electric_racio,
             'total_earnings_after_vat' => $total_earnings_after_vat,
             'txt_admin' => $txt_admin,
+            'team_earnings' => $team_earnings,
+            'chart1' => $chart1,
+            'chart2' => $chart2,
         ])->setOption([
                     'isRemoteEnabled' => true,
                 ]);

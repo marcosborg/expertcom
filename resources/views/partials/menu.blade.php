@@ -1162,6 +1162,17 @@
                         <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
+                        @can('consultancy_access')
+                            <li class="{{ request()->is("admin/consultancies") || request()->is("admin/consultancies/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.consultancies.index") }}">
+                                    <i class="fa-fw fas fa-chart-line">
+
+                                    </i>
+                                    <span>{{ trans('cruds.consultancy.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                         @can('company_expense_access')
                             <li class="{{ request()->is("admin/company-expenses") || request()->is("admin/company-expenses/*") ? "active" : "" }}">
                                 <a href="{{ route("admin.company-expenses.index") }}">

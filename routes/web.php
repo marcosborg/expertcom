@@ -448,6 +448,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('company-parks/destroy', 'CompanyParkController@massDestroy')->name('company-parks.massDestroy');
     Route::resource('company-parks', 'CompanyParkController');
 
+    // Consultancy
+    Route::delete('consultancies/destroy', 'ConsultancyController@massDestroy')->name('consultancies.massDestroy');
+    Route::resource('consultancies', 'ConsultancyController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

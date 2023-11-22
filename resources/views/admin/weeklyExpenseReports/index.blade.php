@@ -234,7 +234,7 @@
         }
     });
 </script>
-<div style="background: "></div>
+<div style="background: orange;"></div>
 <script>
     const ctx2 = document.getElementById('chart2');
     new Chart(ctx2, {
@@ -261,15 +261,15 @@
                     'rgba(0, 0, 255, 0.2)',
                     'rgba(255, 0, 0, 0.2)',
                     'rgba(0, 128, 0, 0.2)',
-                    'rgba(0, 128, 0, 0.2)',
-                    'rgba(0, 128, 0, 0.2)',
+                    'rgba(255, 255, 0, 0.2)',
+                    'rgba(255, 165, 0, 0.2)',
                 ],
                 borderColor: [
                     'rgba(0, 0, 255)',
                     'rgba(255, 0, 0)',
                     'rgba(0, 128, 0)',
-                    'rgba(0, 128, 0)',
-                    'rgba(0, 128, 0)',
+                    'rgba(255, 255, 0)',
+                    'rgba(255, 165, 0)',
                 ]
             }]
         },

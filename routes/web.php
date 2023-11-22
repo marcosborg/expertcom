@@ -437,6 +437,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Weekly Expense Report
     Route::prefix('weekly-expense-reports')->group(function(){
         Route::get('/', 'WeeklyExpenseReportController@index');
+        Route::get('pdf/{download?}', 'WeeklyExpenseReportController@pdf');
     });
 
     // Company Report

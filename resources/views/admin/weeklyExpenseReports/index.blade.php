@@ -278,7 +278,7 @@
             indexAxis: 'y',
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
                 }
             },
             plugins: {

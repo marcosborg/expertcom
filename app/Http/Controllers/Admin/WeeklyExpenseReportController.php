@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class WeeklyExpenseReportController extends Controller
 {
@@ -228,6 +229,17 @@ class WeeklyExpenseReportController extends Controller
             $roi = 0;
         }
 
+        //HEADER
+        $main_company = Company::where('main', true)->first();
+        //
+
+        //GRÀFICOS
+        $chart1 = 'https://quickchart.io/chart/render/sf-327b5d34-519c-4b9a-8633-715fc3d9159d?data1=' . round($totals['total_operators']) . ',' . round($final_total, 2) . ',' . round($profit) . '';
+        $chart2 = 'https://quickchart.io/chart/render/sf-a1ec3a99-3ea4-42c5-bd62-55e7b38bef2a?data1=1,2,3,4,5';
+        //
+
+
+        /*
         return view('admin.weeklyExpenseReports.pdf', compact([
             'company_id',
             'tvde_week_id',
@@ -238,8 +250,46 @@ class WeeklyExpenseReportController extends Controller
             'final_company_expenses',
             'profit',
             'roi',
-            'total_consultancy'
+            'total_consultancy',
+            'main_company',
+            'company',
+            'tvde_week',
+            'chart1',
+            'chart2',
         ]));
+
+        */
+
+        $pdf = Pdf::loadView('admin.weeklyExpenseReports.pdf', [
+            'company_id' => $company_id,
+            'tvde_week_id' => $tvde_week_id,
+            'company_expenses' => $company_expenses,
+            'totals' => $totals,
+            'company_park' => $company_park,
+            'final_total' => $final_total,
+            'final_company_expenses' => $final_company_expenses,
+            'profit' => $profit,
+            'roi' => $roi,
+            'total_consultancy' => $total_consultancy,
+            'main_company' => $main_company,
+            'company' => $company,
+            'tvde_week' => $tvde_week,
+            'chart1' => $chart1,
+            'chart2' => $chart2,
+        ])->setOption([
+                    'isRemoteEnabled' => true,
+                ]);
+
+
+        if ($request->download) {
+
+            $filename = strtolower(str_replace(' ', '_', preg_replace('/[^A-Za-z0-9\-]/', '', $company->name . '-' . $tvde_week->start_date))) . '.pdf';
+
+            return $pdf->download($filename);
+        } else {
+            return $pdf->stream();
+        }
+
     }
 
 }

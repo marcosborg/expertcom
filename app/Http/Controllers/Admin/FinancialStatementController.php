@@ -580,8 +580,6 @@ class FinancialStatementController extends Controller
         $chart1 = "https://quickchart.io/chart?c={type:'bar',data:{labels:" . json_encode($labels) . ",datasets:[{borderWidth: 1, label:'Valor faturado',data:" . json_encode($earnings) . "}]}}";
         $chart2 = "https://quickchart.io/chart?c={type:'doughnut',data:{labels:['UBER', 'BOLT', 'GORJETAS'],datasets:[{label: 'Valor faturado', data: [" . $total_earnings_uber . ", " . $total_earnings_bolt . ", " . $total_tips . "]}]}}";
 
-        //return $chart1;
-
         /*
 
         return view('admin.financialStatements.pdf', compact([

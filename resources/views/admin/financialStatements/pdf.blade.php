@@ -77,7 +77,8 @@
                         {{ $driver->address != null ?? $driver->address . ',' . $driver->zip . '<br>'}}
                         {{ $driver->city != null ?? $driver->city . '<br>' }}
                         {{ $driver->phone != null ?? $driver->phone . '<br>' }}
-                        {{ $driver->email }}
+                        {{ $driver->email }}<br>
+                        <strong>{{ $driver->brand }} {{ $driver->model }} <small>({{ $driver->license_plate }})</small></strong>
                     </p>
                 </td>
             </tr>
@@ -313,5 +314,4 @@
         <?php echo date("Y");?>
     </footer>
 </body>
-
 </html>

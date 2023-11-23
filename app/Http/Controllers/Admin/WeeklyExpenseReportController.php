@@ -235,7 +235,7 @@ class WeeklyExpenseReportController extends Controller
 
         //GRÀFICOS
         $chart1 = 'https://quickchart.io/chart/render/sf-327b5d34-519c-4b9a-8633-715fc3d9159d?data1=' . round($totals['total_operators']) . ',' . round($final_total, 2) . ',' . round($profit) . '';
-        $chart2 = 'https://quickchart.io/chart/render/sf-a1ec3a99-3ea4-42c5-bd62-55e7b38bef2a?data1=1,2,3,4,5';
+        $chart2 = 'https://quickchart.io/chart/render/sf-a1ec3a99-3ea4-42c5-bd62-55e7b38bef2a?data1=' . round($total_company_expenses) . ',' . round(-$totals['total_company_adjustments']) . ',' . round($company_park) . ',' . round($total_consultancy) . ',' . round($totals['total_drivers']) . '';
         //
 
 

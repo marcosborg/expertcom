@@ -23,24 +23,29 @@
             position: absolute;
             opacity: 0.4;
             z-index: 0;
+            top: 0;
         }
 
-        a {
-            position: absolute;
+        .center {
             z-index: 999;
-            top: 50%;
+            padding-top: 20vw;
+            text-align: center;
+            opacity: 1;
+            color: #ffffff;
         }
     </style>
 </head>
 
 <body>
     <div class="bg"></div>
-    @auth
-    <a href="/admin" class="btn btn-large btn-outline-light">DASHBOARD</a>
-    @else
-    <a href="/login" class="btn btn-large btn-outline-light">LOGIN</a>
-    @endauth
-    
+    <div class="center">
+        <h1 style="margin-bottom: 40px;">{{ trans('panel.site_title') }}</h1>
+        @auth
+        <a href="/admin" class="btn btn-large btn-outline-light">DASHBOARD</a>
+        @else
+        <a href="/login" class="btn btn-large btn-outline-light">LOGIN</a>
+        @endauth
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
     </script>

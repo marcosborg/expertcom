@@ -150,10 +150,28 @@ class FinancialStatementController extends Controller
         foreach ($adjustments as $adjustment) {
             switch ($adjustment->type) {
                 case 'refund':
-                    $refund = $refund + $adjustment->amount;
+                    if ($adjustment->amount) {
+                        $refund = $refund + $adjustment->amount;
+                    }
+                    if ($adjustment->percent) {
+                        $total = $bolt_activities->sum('earnings_two') + $uber_activities->sum('earnings_two');
+                        $percent = $adjustment->percent;
+                        $amount = ($total * $percent) / 100;
+                        $refund = $refund + $amount;
+                        $adjustment->amount = $amount;
+                    }
                     break;
                 case 'deduct':
-                    $deduct = $deduct + $adjustment->amount;
+                    if ($adjustment->amount) {
+                        $deduct = $deduct + $adjustment->amount;
+                    }
+                    if ($adjustment->percent) {
+                        $total = $bolt_activities->sum('earnings_two') + $uber_activities->sum('earnings_two');
+                        $percent = $adjustment->percent;
+                        $amount = ($total * $percent) / 100;
+                        $deduct = $deduct + $amount;
+                        $adjustment->amount = $amount;
+                    }
                     break;
             }
         }

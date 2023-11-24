@@ -32,6 +32,7 @@
             text-align: center;
             opacity: 1;
             color: #ffffff;
+            position: relative;
         }
     </style>
 </head>

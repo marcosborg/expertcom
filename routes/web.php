@@ -32,7 +32,7 @@ Route::get('faqs', 'Website\FaqsController@index');
 
 Route::get('userVerification/{token}', 'UserVerificationController@approve')->name('userVerification');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::prefix('forms')->group(function () {
     Route::post('newsletter', 'Website\FormsController@newsletter');

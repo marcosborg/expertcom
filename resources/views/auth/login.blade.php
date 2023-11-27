@@ -58,7 +58,7 @@
             </a><br>
         @endif
 
-        <a href="{{ route('register') }}">{{ trans('global.register') }}</a>
+        <a href="/register">{{ trans('global.register') }}</a>
     </div>
 </div>
 @endsection

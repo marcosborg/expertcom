@@ -9,6 +9,8 @@ use App\Models\TvdeYear;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\Reports;
+use Illuminate\Http\Request;
+use App\Models\CurrentAccount;
 
 class CompanyReportController extends Controller
 {
@@ -92,6 +94,17 @@ class CompanyReportController extends Controller
             'totals' => $results['totals']
         ]);
 
+    }
+
+    public function validateData(Request $request)
+    {
+        foreach ($request->data as $data) {
+            $current_account = new CurrentAccount;
+            $current_account->tvde_week_id = $data['tvde_week_id'];
+            $current_account->driver_id = $data['driver']['id'];
+            $current_account->data = json_encode($data['driver']);
+            $current_account->save();            
+        }
     }
 
 }

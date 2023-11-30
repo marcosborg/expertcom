@@ -435,14 +435,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('company-expenses', 'CompanyExpenseController');
 
     // Weekly Expense Report
-    Route::prefix('weekly-expense-reports')->group(function(){
+    Route::prefix('weekly-expense-reports')->group(function () {
         Route::get('/', 'WeeklyExpenseReportController@index');
         Route::get('pdf/{download?}', 'WeeklyExpenseReportController@pdf');
     });
 
     // Company Report
-    Route::prefix('company-reports')->group(function(){
+    Route::prefix('company-reports')->group(function () {
         Route::get('/', 'CompanyReportController@index')->name('company-reports.index');
+        Route::post('validate-data', 'CompanyReportController@validateData');
     });
 
     // Company Park

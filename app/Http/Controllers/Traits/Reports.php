@@ -9,6 +9,7 @@ use App\Models\Driver;
 use App\Models\ElectricTransaction;
 use App\Models\TvdeActivity;
 use App\Models\TvdeWeek;
+use App\Models\CurrentAccount;
 
 trait Reports
 {
@@ -214,6 +215,17 @@ trait Reports
                 $total_earnings_after_discount[] = $earnings_after_discount;
                 $total_tips_after_discount[] = $tips_after_discount;
                 $total_drivers[] = $driver->total;
+
+                $current_account = CurrentAccount::where([
+                    'tvde_week_id' => $tvde_week_id,
+                    'driver_id' => $driver->id,
+                ])->first();
+
+                if ($current_account) {
+                    $driver->current_account = true;
+                } else {
+                    $driver->current_account = false;
+                }
 
             }
 

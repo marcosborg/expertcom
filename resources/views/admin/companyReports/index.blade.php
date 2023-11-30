@@ -38,7 +38,7 @@
 @parent
 <script>
     validateData = () => {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked:not(:disabled)');
         const data = [];
         checkboxes.forEach((checkbox) => {
             let driver = JSON.parse(checkbox.value);
@@ -47,7 +47,21 @@
                 tvde_week_id: {{ session()->get('tvde_week_id') }},
             });
         });
-        console.log(data);
+        $.post({
+            url: '/admin/company-reports/validate-data',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                data: data,
+            },
+            success: () => {
+                location.reload();
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        });
     }
 
     // Função para selecionar todos os checkboxes que não estão marcados e não estão desativados
@@ -59,6 +73,7 @@
 
         document.getElementById('selectAll').style.display = 'none';
         document.getElementById('unselectAll').style.display = 'block';
+        checkCheckedCheckboxes();
     }
 
 // Função para desmarcar todos os checkboxes que estão marcados e não estão desativados
@@ -70,6 +85,7 @@
 
         document.getElementById('selectAll').style.display = 'block';
         document.getElementById('unselectAll').style.display = 'none';
+        checkCheckedCheckboxes();
     }
 
     // Função para verificar se existem checkboxes marcados que não estão desativados
@@ -89,7 +105,6 @@
     checkboxes.forEach((checkbox) => {
         checkbox.addEventListener('change', checkCheckedCheckboxes);
     });
-
 
 </script>
 @endsection
@@ -127,7 +142,8 @@
     <div class="panel panel-default" style="margin-top: 20px;">
         <div class="panel-heading">
             Faturação
-            <button class="btn btn-success btn-sm pull-right" onclick="validateData()" id="validateData" disabled>Validar
+            <button class="btn btn-success btn-sm pull-right" onclick="validateData()" id="validateData"
+                disabled>Validar
                 selecionados</button>
             <button class="btn btn-primary btn-sm pull-right" onclick="selectAll()" id="selectAll">Selecionar
                 todos</button>
@@ -179,8 +195,8 @@
                         <td style="text-align: right">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="{{ json_encode($driver) }}"><span
-                                        class="glyphicon glyphicon-ok green-checkmark unverified"></span>
+                                    <input type="checkbox" value="{{ json_encode($driver) }}" {{ $driver->current_account ? 'checked disabled' : '' }}><span
+                                        class="glyphicon glyphicon-ok green-checkmark {{ $driver->current_account ? 'verified' : 'unverified' }}"></span>
                                 </label>
                             </div>
                         </td>

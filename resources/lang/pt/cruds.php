@@ -1705,5 +1705,25 @@ return [
             'end_date_helper'   => ' ',
         ],
     ],
+    'currentAccount' => [
+        'title'          => 'Current Account',
+        'title_singular' => 'Current Account',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'tvde_week'         => 'Tvde Week',
+            'tvde_week_helper'  => ' ',
+            'driver'            => 'Driver',
+            'driver_helper'     => ' ',
+            'data'              => 'Data',
+            'data_helper'       => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
 
 ];

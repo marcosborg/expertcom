@@ -453,6 +453,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('consultancies/destroy', 'ConsultancyController@massDestroy')->name('consultancies.massDestroy');
     Route::resource('consultancies', 'ConsultancyController');
 
+    // Current Account
+    Route::delete('current-accounts/destroy', 'CurrentAccountController@massDestroy')->name('current-accounts.massDestroy');
+    Route::resource('current-accounts', 'CurrentAccountController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

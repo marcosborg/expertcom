@@ -1217,6 +1217,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('current_account_access')
+                            <li class="{{ request()->is("admin/current-accounts") || request()->is("admin/current-accounts/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.current-accounts.index") }}">
+                                    <i class="fa-fw fas fa-table">
+
+                                    </i>
+                                    <span>{{ trans('cruds.currentAccount.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

@@ -157,7 +157,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <img src="{{ $chart2 }}" style="width: 100%; margin-top: 40px;">
+                    <!--<img src="" style="width: 100%; margin-top: 40px;">-->
                 </td>
                 <td style="vertical-align: top; width: 40%;">
                     <table class="bordered">

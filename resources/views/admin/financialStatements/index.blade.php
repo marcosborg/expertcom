@@ -325,6 +325,11 @@
 </script>
 <script>
     const ctx2 = document.getElementById('driver_earnings');
+    console.log({
+        total_earnings_uber: {!! $total_earnings_uber !!},
+        total_earnings_bolt: {!! $total_earnings_bolt !!},
+        total_tips: {!! $total_tips !!}
+    });
     new Chart(ctx2, {
       type: 'doughnut',
       data: {

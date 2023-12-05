@@ -235,7 +235,7 @@ class WeeklyExpenseReportController extends Controller
 
         //GRÀFICOS
         $chart1 = 'https://quickchart.io/chart/render/sf-fbb733f3-c043-4dd5-b32b-5e12dfedf0e4?data1=' . round($totals['total_operators']) . ',' . round($final_total, 2) . ',' . round($profit) . '';
-        $chart2 = 'https://quickchart.io/chart/render/sf-9970a21b-53f3-4f4f-b4e9-ea355f70f7ab?data1=' . round($total_company_expenses) . ',' . round(-$totals['total_company_adjustments']) . ',' . round($company_park) . ',' . round($total_consultancy) . ',' . round($totals['total_drivers']) . '';
+        //$chart2 = 'https://quickchart.io/chart/render/sf-9970a21b-53f3-4f4f-b4e9-ea355f70f7ab?data1=' . round($total_company_expenses) . ',' . round(-$totals['total_company_adjustments']) . ',' . round($company_park) . ',' . round($total_consultancy) . ',' . round($totals['total_drivers']) . '';
         //
 
         /*
@@ -254,8 +254,7 @@ class WeeklyExpenseReportController extends Controller
             'main_company',
             'company',
             'tvde_week',
-            'chart1',
-            'chart2',
+            'chart1',            
         ]));
 
         */
@@ -275,7 +274,6 @@ class WeeklyExpenseReportController extends Controller
             'company' => $company,
             'tvde_week' => $tvde_week,
             'chart1' => $chart1,
-            'chart2' => $chart2,
         ])->setOption([
                     'isRemoteEnabled' => true,
                 ]);

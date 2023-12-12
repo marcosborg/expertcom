@@ -27,68 +27,15 @@ class WeeklyExpenseReportController extends Controller
     {
         abort_if(Gate::denies('weekly_expense_report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $company_id = session()->get('company_id') ?? $company_id = session()->get('company_id');
-
-        // START FILTER
-
-        $tvde_year_id = session()->get('tvde_year_id') ? session()->get('tvde_year_id') : $tvde_year_id = TvdeYear::orderBy('name')->first()->id;
-        if (session()->has('tvde_month_id')) {
-            $tvde_month_id = session()->get('tvde_month_id');
-        } else {
-            $tvde_month = TvdeMonth::orderBy('number', 'desc')
-                ->whereHas('weeks', function ($week) use ($company_id) {
-                    $week->whereHas('tvdeActivities', function ($tvdeActivity) use ($company_id) {
-                        $tvdeActivity->where('company_id', $company_id);
-                    });
-                })
-                ->where('year_id', $tvde_year_id)
-                ->first();
-            if ($tvde_month) {
-                $tvde_month_id = $tvde_month->id;
-            } else {
-                $tvde_month_id = 0;
-            }
-        }
-        if (session()->has('tvde_week_id')) {
-            $tvde_week_id = session()->get('tvde_week_id');
-        } else {
-            $tvde_week = TvdeWeek::orderBy('number', 'desc')->where('tvde_month_id', $tvde_month_id)->first();
-            if ($tvde_week) {
-                $tvde_week_id = $tvde_week->id;
-                session()->put('tvde_week_id', $tvde_week->id);
-            } else {
-                $tvde_week_id = 1;
-            }
-        }
-
-        $tvde_years = TvdeYear::orderBy('name')
-            ->whereHas('months', function ($month) use ($company_id) {
-                $month->whereHas('weeks', function ($week) use ($company_id) {
-                    $week->whereHas('tvdeActivities', function ($tvdeActivity) use ($company_id) {
-                        $tvdeActivity->where('company_id', $company_id);
-                    });
-                });
-            })
-            ->get();
-        $tvde_months = TvdeMonth::orderBy('number', 'asc')
-            ->whereHas('weeks', function ($week) use ($company_id) {
-                $week->whereHas('tvdeActivities', function ($tvdeActivity) use ($company_id) {
-                    $tvdeActivity->where('company_id', $company_id);
-                });
-            })
-            ->where('year_id', $tvde_year_id)->get();
-
-        $tvde_weeks = TvdeWeek::orderBy('number', 'asc')
-            ->whereHas('tvdeActivities', function ($tvdeActivity) use ($company_id) {
-                $tvdeActivity->where('company_id', $company_id);
-            })
-            ->where('tvde_month_id', $tvde_month_id)->get();
-
-        // END FILTER
-
-        $drivers = Driver::where('company_id', $company_id)->get();
-
-        $tvde_week = TvdeWeek::find($tvde_week_id);
+        $filter = $this->filter();
+        $company_id = $filter['company_id'];
+        $tvde_week_id = $filter['tvde_week_id'];
+        $tvde_week = $filter['tvde_week'];
+        $tvde_years = $filter['tvde_years'];
+        $tvde_year_id = $filter['tvde_year_id'];
+        $tvde_months = $filter['tvde_months'];
+        $tvde_month_id = $filter['tvde_month_id'];
+        $tvde_weeks = $filter['tvde_weeks'];
 
         //COMPANY EXPENSES
 
@@ -135,7 +82,7 @@ class WeeklyExpenseReportController extends Controller
 
         }
 
-        $final_total = $total_company_expenses - $totals['total_company_adjustments'] + $company_park + $totals['total_drivers'] - $total_consultancy;
+        $final_total = $total_company_expenses - $totals['total_company_adjustments'] + $company_park + $totals['total_drivers'] + $total_consultancy;
         $final_company_expenses = $total_company_expenses - $totals['total_company_adjustments'] + $company_park - $total_consultancy;
         $profit = $totals['total_operators'] - $final_total;
 

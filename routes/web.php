@@ -458,6 +458,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('current-accounts/destroy', 'CurrentAccountController@massDestroy')->name('current-accounts.massDestroy');
     Route::resource('current-accounts', 'CurrentAccountController');
 
+    // Drivers Balance
+    Route::delete('drivers-balances/destroy', 'DriversBalanceController@massDestroy')->name('drivers-balances.massDestroy');
+    Route::resource('drivers-balances', 'DriversBalanceController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

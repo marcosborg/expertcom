@@ -90,8 +90,8 @@
                     </table>
                 </div>
             </div>
-            @if (($electric_expenses && $electric_expenses['value'] > 0) || ($combustion_expenses &&
-            $combustion_expenses['value'] > 0))
+            @if (($electric_expenses && $electric_expenses->value > 0) || ($combustion_expenses &&
+            $combustion_expenses->value > 0))
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Abastecimento
@@ -178,7 +178,7 @@
                                 <td>{{ number_format($total_tip_after_vat, 2) }}€</td>
                                 @endif
                             </tr>
-                            @if ($electric_expenses && $electric_expenses['value'] > 0)
+                            @if ($electric_expenses && $electric_expenses->value > 0)
                             <tr>
                                 <th>Abastecimento elétrico</th>
                                 <td></td>
@@ -188,7 +188,7 @@
                                 @endif
                             </tr>
                             @endif
-                            @if ($combustion_expenses && $combustion_expenses['value'] > 0)
+                            @if ($combustion_expenses && $combustion_expenses->value > 0)
                             <tr>
                                 <th>Abastecimento combustivel</th>
                                 <td></td>
@@ -207,12 +207,12 @@
                             </tr>
                             @endforeach
                             @if ($txt_admin > 0)
-                                <tr>
-                                    <th>Taxa administrativa</th>
-                                    <td></td>
-                                    <td>- {{ number_format($txt_admin, 2) }}€</td>
-                                    <td></td>
-                                </tr>
+                            <tr>
+                                <th>Taxa administrativa</th>
+                                <td></td>
+                                <td>- {{ number_format($txt_admin, 2) }}€</td>
+                                <td></td>
+                            </tr>
                             @endif
                             <tr>
                                 <th>Totais</th>
@@ -230,10 +230,21 @@
                 <div class="panel-body">
                     <h3 class="pull-left">Valor a pagar: <span style="font-weight: 800;">{{
                             number_format($final_total, 2) }}</span>€</h3>
-                            <div class="pull-right">
-                                <a target="_new" href="/admin/financial-statements/pdf" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i></a>
-                                <a href="/admin/financial-statements/pdf/1" class="btn btn-primary"><i class="fa fa-cloud-download"></i></a>
-                            </div>
+                    <div class="pull-right">
+                        <a target="_new" href="/admin/financial-statements/pdf" class="btn btn-primary"><i
+                                class="fa fa-file-pdf-o"></i></a>
+                        <a href="/admin/financial-statements/pdf/1" class="btn btn-primary"><i
+                                class="fa fa-cloud-download"></i></a>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <form class="form-inline" method="post">
+                        <div class="input-group">
+                            <div class="input-group-addon">Saldo (€)</div>
+                            <input type="number" class="form-control" value="{{ $driver_balance->balance }}">
+                        </div>
+                        <button type="submit" class="btn btn-success">Atualizar saldo</button>
+                    </form>
                 </div>
             </div>
         </div>

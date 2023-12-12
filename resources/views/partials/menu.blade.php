@@ -966,6 +966,7 @@
                                 </a>
                             </li>
                             @endcan
+
                         </ul>
                     </li>
                     @endcan
@@ -1224,6 +1225,17 @@
 
                                     </i>
                                     <span>{{ trans('cruds.currentAccount.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('drivers_balance_access')
+                            <li class="{{ request()->is("admin/drivers-balances") || request()->is("admin/drivers-balances/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.drivers-balances.index") }}">
+                                    <i class="fa-fw fas fa-hand-holding-usd">
+
+                                    </i>
+                                    <span>{{ trans('cruds.driversBalance.title') }}</span>
 
                                 </a>
                             </li>

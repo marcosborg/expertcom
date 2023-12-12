@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\Reports;
 use Illuminate\Http\Request;
 use App\Models\CurrentAccount;
+use App\Models\DriversBalance;
 
 class CompanyReportController extends Controller
 {
@@ -99,11 +100,26 @@ class CompanyReportController extends Controller
     public function validateData(Request $request)
     {
         foreach ($request->data as $data) {
+
+            $data = $this->getDriverWeekReport($data['driver']['id'], $data['driver']['company_id'], $data['tvde_week_id']);
+
             $current_account = new CurrentAccount;
             $current_account->tvde_week_id = $data['tvde_week_id'];
             $current_account->driver_id = $data['driver']['id'];
-            $current_account->data = json_encode($data['driver']);
-            $current_account->save();            
+            $current_account->data = json_encode($data);
+            $current_account->save();
+
+            $last_balance = DriversBalance::where([
+                'driver_id' => $data['driver']['id'],
+            ])
+                ->orderBy('tvde_week_id', 'desc')->first();
+
+            $driver_balance = new DriversBalance;
+            $driver_balance->driver_id = $data['driver']['id'];
+            $driver_balance->tvde_week_id = $data['tvde_week_id'];
+            $driver_balance->value = $data['final_total'];
+            $driver_balance->balance = $last_balance ? $last_balance->balance + $data['final_total'] : $data['final_total'];
+            $driver_balance->save();
         }
     }
 

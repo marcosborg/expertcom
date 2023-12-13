@@ -109,8 +109,8 @@
                                     @if ($electric_expenses)
                                     <tr>
                                         <th>Gastos</th>
-                                        <td>{{ $electric_expenses['amount'] }}</td>
-                                        <td>{{ $electric_expenses['total'] }}</td>
+                                        <td>{{ $electric_expenses->amount }}</td>
+                                        <td>{{ $electric_expenses->total }}</td>
                                     </tr>
                                     @endif
                                     @if ($combustion_expenses)
@@ -183,7 +183,7 @@
                                 <th>Abastecimento elétrico</th>
                                 <td></td>
                                 @if ($driver)
-                                <td>- {{ $electric_expenses['total'] }}</td>
+                                <td>- {{ $electric_expenses->total }}</td>
                                 <td></td>
                                 @endif
                             </tr>

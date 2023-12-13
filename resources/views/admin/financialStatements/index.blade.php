@@ -238,47 +238,50 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <div class="form-inline">
-                        <div class="input-group">
-                            <div class="input-group-addon">Saldo (€)</div>
-                            <input type="number" class="form-control" value="{{ $driver_balance->balance }}"
-                                id="balance">
-                        </div>
-                        <button onclick="updateBalance({{ $driver_balance->id }})" type="submit"
-                            class="btn btn-success">Atualizar saldo</button>
-                    </div>
+                    <form action="/admin/financial-statements/update-balance" method="post" id="update-balance">
+                        @csrf
+                        <input type="hidden" name="driver_balance_id" value="{{ $driver_balance->id }}">
+                        <div class="form-inline">
+                            <div class="input-group">
+                                <div class="input-group-addon">Saldo (€)</div>
+                                <input type="text" class="form-control" value="{{ $driver_balance->balance }}"
+                                    name="balance">
+                            </div>
+                            <button type="submit" class="btn btn-success">Atualizar saldo</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Origem dos ganhos
-                </div>
-                <div class="panel-body">
-                    <canvas id="driver_earnings" style="height: 400px"></canvas>
-                </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Origem dos ganhos
             </div>
-        </div>
-        <div class="col-lg-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Ranking de faturação semanal por motoristas
-                </div>
-                <div class="panel-body">
-                    <canvas id="team_earnings" style="height: 400px"></canvas>
-                </div>
+            <div class="panel-body">
+                <canvas id="driver_earnings" style="height: 400px"></canvas>
             </div>
         </div>
     </div>
-    @else
-    <div class="alert alert-info" style="margin-top: 20px;" role="alert">
-        Não temos registo de viagens para este motorista nesta semana.
+    <div class="col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Ranking de faturação semanal por motoristas
+            </div>
+            <div class="panel-body">
+                <canvas id="team_earnings" style="height: 400px"></canvas>
+            </div>
+        </div>
     </div>
-    @endif
-    @endif
+</div>
+@else
+<div class="alert alert-info" style="margin-top: 20px;" role="alert">
+    Não temos registo de viagens para este motorista nesta semana.
+</div>
+@endif
+@endif
 </div>
 @endsection
 @section('styles')
@@ -439,6 +442,10 @@
       }
     });
 </script>
+<script src="https://malsup.github.io/jquery.form.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
+</script>
 <script>
     updateBalance = (driver_balance_id) => {
         var balance = $('#balance').val();
@@ -448,5 +455,37 @@
         }
         console.log(data);
     }
+    $(() => {
+        $('#update-balance').ajaxForm({
+            beforeSubmit: () => {
+                $('#update-balance').LoadingOverlay('show');
+            },
+            success: () => {
+                $('#update-balance').LoadingOverlay('hide');
+                Swal.fire({
+                    title: 'Atualizado com sucesso',
+                    icon: 'success',
+                }).then(() => {
+                    location.reload();
+                });
+            },
+            error: (error) => {
+                $('#update-balance').LoadingOverlay('hide');
+                var html = '';
+                $.each(error.responseJSON.errors, (i, v) => {
+                    $.each(v, (index, value) => {
+                        html += value + '<br>'
+                    });
+                });
+                Swal.fire({
+                    title: 'Erro de validação',
+                    html: html,
+                    icon: 'error',
+                }).then(() => {
+                    location.reload();
+                });
+            }
+        });
+    });
 </script>
 @endsection

@@ -482,7 +482,15 @@ class FinancialStatementController extends Controller
 
     public function updateBalance(Request $request)
     {
-        return $request;
+        $request->validate([
+            'balance' => 'required|numeric'
+        ], [], [
+            'balance' => 'Saldo'
+        ]);
+
+        $drivers_balance = DriversBalance::find($request->driver_balance_id);
+        $drivers_balance->balance = $request->balance;
+        $drivers_balance->save();
     }
 
 }

@@ -116,8 +116,8 @@
                                     @if ($combustion_expenses)
                                     <tr>
                                         <th>Gastos</th>
-                                        <td>{{ $combustion_expenses['amount'] }}</td>
-                                        <td>{{ $combustion_expenses['total'] }}</td>
+                                        <td>{{ $combustion_expenses->amount }}</td>
+                                        <td>{{ $combustion_expenses->total }}</td>
                                     </tr>
                                     @endif
                                 </tbody>
@@ -193,7 +193,7 @@
                                 <th>Abastecimento combustivel</th>
                                 <td></td>
                                 @if ($driver)
-                                <td>- {{ $combustion_expenses['total'] }}</td>
+                                <td>- {{ $combustion_expenses->total }}</td>
                                 <td></td>
                                 @endif
                             </tr>

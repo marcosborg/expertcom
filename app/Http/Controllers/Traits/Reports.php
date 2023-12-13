@@ -29,7 +29,7 @@ trait Reports
             ->load([
                 'contract_vat',
                 'card',
-                'electric'
+                'electric',
             ]);
 
         $total_uber = [];
@@ -528,7 +528,7 @@ trait Reports
 
         $tvde_week = TvdeWeek::find($tvde_week_id);
 
-        $drivers = Driver::where('company_id', $company_id)->get();
+        $drivers = Driver::where('company_id', $company_id)->orderBy('name')->get();
 
         return [
             'company_id' => $company_id,
@@ -539,6 +539,7 @@ trait Reports
             'tvde_months' => $tvde_months,
             'tvde_month_id' => $tvde_month_id,
             'tvde_weeks' => $tvde_weeks,
+            'drivers' => $drivers,
         ];
     }
 }

@@ -195,7 +195,8 @@
                         <td style="text-align: right">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="{{ json_encode($driver) }}" {{ $driver->current_account ? 'checked disabled' : '' }}><span
+                                    <input type="checkbox" value="{{ json_encode($driver) }}" {{
+                                        $driver->current_account ? 'checked disabled' : '' }}><span
                                         class="glyphicon glyphicon-ok green-checkmark {{ $driver->current_account ? 'verified' : 'unverified' }}"></span>
                                 </label>
                             </div>

@@ -238,13 +238,15 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <form class="form-inline" method="post">
+                    <div class="form-inline">
                         <div class="input-group">
                             <div class="input-group-addon">Saldo (€)</div>
-                            <input type="number" class="form-control" value="{{ $driver_balance->balance }}">
+                            <input type="number" class="form-control" value="{{ $driver_balance->balance }}"
+                                id="balance">
                         </div>
-                        <button type="submit" class="btn btn-success">Atualizar saldo</button>
-                    </form>
+                        <button onclick="updateBalance({{ $driver_balance->id }})" type="submit"
+                            class="btn btn-success">Atualizar saldo</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -436,5 +438,15 @@
         }
       }
     });
+</script>
+<script>
+    updateBalance = (driver_balance_id) => {
+        var balance = $('#balance').val();
+        let data = {
+            driver_balance_id: driver_balance_id,
+            balance: balance
+        }
+        console.log(data);
+    }
 </script>
 @endsection

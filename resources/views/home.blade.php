@@ -27,7 +27,7 @@
     </div>
     @if ($total_earnings_after_vat > 0)
     <div class="row" style="margin-top: 5px;">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Atividades por operador
@@ -134,8 +134,58 @@
                 </div>
             </div>
             @endif
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Ajustes
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th style="text-align: right;">Créditos</th>
+                                @if ($driver)
+                                <th style="text-align: right;">Débitos</th>
+                                @endif
+                            </tr>
+                            @if ($electric_expenses && $electric_expenses->value > 0)
+                            <tr>
+                                <th>Abastecimento elétrico</th>
+                                <td></td>
+                                @if ($driver)
+                                <td>- {{ $electric_expenses->total }}</td>
+                                @endif
+                            </tr>
+                            @endif
+                            @if ($combustion_expenses && $combustion_expenses->value > 0)
+                            <tr>
+                                <th>Abastecimento combustivel</th>
+                                <td></td>
+                                @if ($driver)
+                                <td>- {{ $combustion_expenses->total }}</td>
+                                @endif
+                            </tr>
+                            @endif
+                            @foreach ($adjustments as $adjustment)
+                            <tr>
+                                <th>{{ $adjustment->name }}</th>
+                                <td>{{ $adjustment->type == 'refund' ? '' . $adjustment->amount . '€' : '' }}</td>
+                                <td>{{ $adjustment->type == 'deduct' ? '- ' . $adjustment->amount . '€' : '' }}</td>
+                            </tr>
+                            @endforeach
+                            @if ($txt_admin > 0)
+                            <tr>
+                                <th>Taxa administrativa</th>
+                                <td></td>
+                                <td>- {{ number_format($txt_admin, 2) }}€</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Recibo

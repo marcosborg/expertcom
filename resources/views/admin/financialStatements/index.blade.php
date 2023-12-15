@@ -253,35 +253,35 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Origem dos ganhos
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Origem dos ganhos
+                </div>
+                <div class="panel-body">
+                    <canvas id="driver_earnings" style="height: 400px"></canvas>
+                </div>
             </div>
-            <div class="panel-body">
-                <canvas id="driver_earnings" style="height: 400px"></canvas>
+        </div>
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Ranking de faturação semanal por motoristas
+                </div>
+                <div class="panel-body">
+                    <canvas id="team_earnings" style="height: 400px"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Ranking de faturação semanal por motoristas
-            </div>
-            <div class="panel-body">
-                <canvas id="team_earnings" style="height: 400px"></canvas>
-            </div>
-        </div>
+    @else
+    <div class="alert alert-info" style="margin-top: 20px;" role="alert">
+        Não temos registo de viagens para este motorista nesta semana.
     </div>
+    @endif
+    @endif
 </div>
-@else
-<div class="alert alert-info" style="margin-top: 20px;" role="alert">
-    Não temos registo de viagens para este motorista nesta semana.
-</div>
-@endif
-@endif
 </div>
 @endsection
 @section('styles')
@@ -447,14 +447,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
 </script>
 <script>
-    updateBalance = (driver_balance_id) => {
-        var balance = $('#balance').val();
-        let data = {
-            driver_balance_id: driver_balance_id,
-            balance: balance
-        }
-        console.log(data);
-    }
     $(() => {
         $('#update-balance').ajaxForm({
             beforeSubmit: () => {

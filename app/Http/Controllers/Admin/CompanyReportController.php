@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\TvdeMonth;
-use App\Models\TvdeWeek;
-use App\Models\TvdeYear;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\Reports;
 use Illuminate\Http\Request;
 use App\Models\CurrentAccount;
 use App\Models\DriversBalance;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ActivityLaunchesSend;
 
 class CompanyReportController extends Controller
 {
@@ -25,7 +24,6 @@ class CompanyReportController extends Controller
         $filter = $this->filter();
         $company_id = $filter['company_id'];
         $tvde_week_id = $filter['tvde_week_id'];
-        $tvde_week = $filter['tvde_week'];
         $tvde_years = $filter['tvde_years'];
         $tvde_year_id = $filter['tvde_year_id'];
         $tvde_months = $filter['tvde_months'];
@@ -71,6 +69,11 @@ class CompanyReportController extends Controller
             $driver_balance->value = $data['final_total'];
             $driver_balance->balance = $last_balance ? $last_balance->balance + $data['final_total'] : $data['final_total'];
             $driver_balance->save();
+
+            $email = $data['driver']['email'];
+
+            Notification::route('mail', $email)
+                ->notify(new ActivityLaunchesSend());
         }
     }
 

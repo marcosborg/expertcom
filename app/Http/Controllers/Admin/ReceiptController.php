@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\DriversBalance;
 
 class ReceiptController extends Controller
 {
@@ -31,9 +32,9 @@ class ReceiptController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'receipt_show';
-                $editGate      = 'receipt_edit';
-                $deleteGate    = 'receipt_delete';
+                $viewGate = 'receipt_show';
+                $editGate = 'receipt_edit';
+                $deleteGate = 'receipt_delete';
                 $crudRoutePart = 'receipts';
 
                 return view('partials.datatablesActions', compact(
@@ -86,6 +87,7 @@ class ReceiptController extends Controller
 
     public function store(StoreReceiptRequest $request)
     {
+
         $receipt = Receipt::create($request->all());
 
         if ($request->input('file', false)) {
@@ -96,7 +98,19 @@ class ReceiptController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $receipt->id]);
         }
 
-        return redirect()->route('admin.receipts.index');
+        //AtualDriversBalance
+        $driver_id = $request->driver_id;
+        $tvde_week_id = $request->tvde_week_id;
+        $value = $request->value;
+        $drivers_balance = DriversBalance::where([
+            'driver_id' => $driver_id,
+            'tvde_week_id' => $tvde_week_id
+        ])->first();
+        $balance = $drivers_balance->balance - $value;
+        $drivers_balance->balance = $balance;
+        $drivers_balance->save();
+
+        return redirect()->back();
     }
 
     public function edit(Receipt $receipt)
@@ -115,7 +129,7 @@ class ReceiptController extends Controller
         $receipt->update($request->all());
 
         if ($request->input('file', false)) {
-            if (! $receipt->file || $request->input('file') !== $receipt->file->file_name) {
+            if (!$receipt->file || $request->input('file') !== $receipt->file->file_name) {
                 if ($receipt->file) {
                     $receipt->file->delete();
                 }
@@ -161,10 +175,10 @@ class ReceiptController extends Controller
     {
         abort_if(Gate::denies('receipt_create') && Gate::denies('receipt_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Receipt();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Receipt();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

@@ -40,9 +40,6 @@
                                         {{ trans('cruds.driver.fields.email') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.currentAccount.fields.data') }}
-                                    </th>
-                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -67,9 +64,6 @@
                                         </td>
                                         <td>
                                             {{ $currentAccount->driver->email ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $currentAccount->data ?? '' }}
                                         </td>
                                         <td>
                                             @can('current_account_show')

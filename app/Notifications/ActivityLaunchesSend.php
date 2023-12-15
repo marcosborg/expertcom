@@ -11,16 +11,14 @@ class ActivityLaunchesSend extends Notification
 {
     use Queueable;
 
-    private $data;
-
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct()
     {
-        $this->data = $data;
+
     }
 
     /**
@@ -42,40 +40,14 @@ class ActivityLaunchesSend extends Notification
      */
     public function toMail($notifiable)
     {
-        $html = '<table style="width: 100%;">';
-        $html .= '<thead>';
-        $html .= '<tr>';
-        $html .= '<th>N.</th>';
-        $html .= '<th>Semana</th>';
-        $html .= '<th>Receber</th>';
-        $html .= '<th>Descontar</th>';
-        $html .= '<th>Acerto</th>';
-        $html .= '<th>Total</th>';
-        $html .= '</tr>';
-        $html .= '</thead>';
-        $html .= '<tbody>';
-        foreach ($this->data as $value) {
-            $html .= '<tr>';
-            $html .= '<td style="border-bottom: solid 1px #cccccc; text-align: center;">' . $value['number'] . '</td>';
-            $html .= '<td style="border-bottom: solid 1px #cccccc; text-align: center;">' . $value['start_date'] . '<br>' . $value['end_date'] . '</td>';
-            $html .= '<td style="border-bottom: solid 1px #cccccc; text-align: center;">' . $value['sum'] . '</td>';
-            $html .= '<td style="border-bottom: solid 1px #cccccc; text-align: center;">' . $value['sub'] . '</td>';
-            $html .= '<td style="border-bottom: solid 1px #cccccc; text-align: center;">' . $value['refund'] . '</td>';
-            $html .= '<td style="border-bottom: solid 1px #cccccc; text-align: center;">' . $value['total'] . '</td>';
-            $html .= '</tr>';
-        }
-        $html .= '</tbody>';
-        $html .= '</table>';
-
         return (new MailMessage)
-                    ->subject('Extrato ExpertCom')
-                    ->greeting('Olá!')
-                    ->line('O ExpertCom o extrato abaixo.')
-                    ->line($html)
-                    ->line('Visite a sua área pessoal para verificar os detalhes e fazer upload do recibo.')
-                    ->action('Área pessoal', url('https://expertcom.pt/login'))
-                    ->line('Obrigado pela preferência')
-                    ->salutation('Equipa ExpertCom');
+            ->subject('No extrato em ' . env('APP_NAME'))
+            ->greeting('Olá!')
+            ->line('Recebeu um novo extrato na sua área pessoal.')
+            ->line('Visite a sua área pessoal para verificar os detalhes e fazer upload do recibo.')
+            ->action('Área pessoal', url(env('APP_URL')))
+            ->line('Obrigado pela preferência')
+            ->salutation('Equipa ' . env('APP_NAME'));
     }
 
     /**

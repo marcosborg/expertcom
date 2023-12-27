@@ -9,6 +9,7 @@ use App\Http\Controllers\Traits\Reports;
 use Illuminate\Http\Request;
 use App\Models\CurrentAccount;
 use App\Models\DriversBalance;
+use App\Models\Driver;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ActivityLaunchesSend;
 
@@ -74,6 +75,7 @@ class CompanyReportController extends Controller
 
             Notification::route('mail', $email)
                 ->notify(new ActivityLaunchesSend());
+
         }
     }
 

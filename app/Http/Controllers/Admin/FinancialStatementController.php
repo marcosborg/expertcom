@@ -77,6 +77,9 @@ class FinancialStatementController extends Controller
             $total_tips_uber = [];
             $total_tips_bolt = [];
             $total_earnings = [];
+            $total_earnings_no_tip = [];
+            $total_tips = [];
+            $gross_credits = [];
             foreach ($drivers as $driver) {
                 $results = CurrentAccount::where([
                     'tvde_week_id' => $tvde_week_id,
@@ -90,6 +93,9 @@ class FinancialStatementController extends Controller
                     $total_tips_uber[] = $data->total_tips_uber;
                     $total_tips_bolt[] = $data->total_tips_bolt;
                     $total_earnings[] = $data->total_earnings;
+                    $total_earnings_no_tip[] = $data->total_earnings_no_tip;
+                    $total_tips[] = $data->total_tips;
+                    $gross_credits[] = $data->gross_credits;
                 }
             }
 
@@ -98,6 +104,9 @@ class FinancialStatementController extends Controller
             $total_tips_uber = array_sum($total_tips_uber);
             $total_tips_bolt = array_sum($total_tips_bolt);
             $total_earnings = array_sum($total_earnings);
+            $total_earnings_no_tip = array_sum($total_earnings_no_tip);
+            $total_tips = array_sum($total_tips);
+            $gross_credits = array_sum($gross_credits);
         }
 
         //GRAFICOS
@@ -156,14 +165,14 @@ class FinancialStatementController extends Controller
             'total_tips_bolt' => $results ? $results->total_tips_bolt : $total_tips_bolt ?? 0,
             'bolt_tip_percent' => $results ? $results->bolt_tip_percent : 0,
             'bolt_tip_after_vat' => $results ? $results->bolt_tip_after_vat : 0,
-            'total_tips' => $results ? $results->total_tips : 0,
+            'total_tips' => $results ? $results->total_tips : $total_tips ?? 0,
             'total_tip_after_vat' => $results ? $results->total_tip_after_vat : 0,
             'adjustments' => $results ? $results->adjustments : [],
             'total_earnings' => $results ? $results->total_earnings : $total_earnings ?? 0,
-            'total_earnings_no_tip' => $results ? $results->total_earnings_no_tip : 0,
+            'total_earnings_no_tip' => $results ? $results->total_earnings_no_tip : $total_earnings_no_tip ?? 0,
             'total' => $results ? $results->total : 0,
             'total_after_vat' => $results ? $results->total_after_vat : 0,
-            'gross_credits' => $results ? $results->gross_credits : 0,
+            'gross_credits' => $results ? $results->gross_credits : $gross_credits ?? 0,
             'gross_debts' => $results ? $results->gross_debts : 0,
             'final_total' => $results ? $results->final_total : 0,
             'driver' => $results ? $results->driver : null,

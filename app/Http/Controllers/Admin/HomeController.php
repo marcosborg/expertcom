@@ -16,6 +16,10 @@ class HomeController
     public function index()
     {
 
+        if (auth()->user()->hasRole('Empresas Associadas')) {
+            return redirect('/admin/company-dashboard');
+        }
+
         if (auth()->user()->hasRole('Driver') && auth()->user()->driver->count() > 0) {
             $user = auth()->user()->load('driver');
             session()->put('driver_id', $user->driver[0]->id);
@@ -37,7 +41,7 @@ class HomeController
         $drivers = Driver::where('company_id', $company_id)
             ->where('state_id', 1)
             ->get();
-            
+
         if ($driver_id != 0) {
             $driver = Driver::find($driver_id)->load([
                 'contract_type',
@@ -138,5 +142,10 @@ class HomeController
     {
         session()->forget('driver_id');
         session()->put('company_id', $company_id);
+    }
+
+    public function companyDashboard()
+    {
+        return view('company_dashboard');
     }
 }

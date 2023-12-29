@@ -55,6 +55,9 @@
                                     {{ trans('cruds.company.fields.main') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.company.fields.user') }}
+                                </th>
+                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -122,6 +125,7 @@
 { data: 'email', name: 'email' },
 { data: 'logo', name: 'logo', sortable: false, searchable: false },
 { data: 'main', name: 'main' },
+{ data: 'user_name', name: 'user.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -93,6 +93,14 @@
                                         <input type="checkbox" disabled="disabled" {{ $company->main ? 'checked' : '' }}>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.company.fields.user') }}
+                                    </th>
+                                    <td>
+                                        {{ $company->user->name ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

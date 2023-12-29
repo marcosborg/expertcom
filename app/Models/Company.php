@@ -33,6 +33,7 @@ class Company extends Model implements HasMedia
         'zip',
         'location',
         'email',
+        'user_id',
         'main',
         'created_at',
         'updated_at',
@@ -60,5 +61,10 @@ class Company extends Model implements HasMedia
         }
 
         return $file;
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

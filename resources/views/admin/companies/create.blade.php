@@ -79,6 +79,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.company.fields.main_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('user') ? 'has-error' : '' }}">
+                            <label for="user_id">{{ trans('cruds.company.fields.user') }}</label>
+                            <select class="form-control select2" name="user_id" id="user_id">
+                                @foreach($users as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('user'))
+                                <span class="help-block" role="alert">{{ $errors->first('user') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.company.fields.user_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

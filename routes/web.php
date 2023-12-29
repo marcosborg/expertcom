@@ -54,6 +54,7 @@ Route::prefix('ajax')->group(function () {
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('company-dashboard', 'HomeController@companyDashboard');
 
     Route::get('/select-company/{company_id}', 'HomeController@selectCompany');
 

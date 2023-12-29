@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\User;
 
 class CompanyController extends Controller
 {
@@ -25,7 +26,7 @@ class CompanyController extends Controller
         abort_if(Gate::denies('company_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Company::query()->select(sprintf('%s.*', (new Company)->table));
+            $query = Company::with(['user'])->select(sprintf('%s.*', (new Company)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -78,11 +79,11 @@ class CompanyController extends Controller
 
                 return '';
             });
-            $table->editColumn('main', function ($row) {
-                return $row->main ? 'Main company' : null;
+            $table->addColumn('user_name', function ($row) {
+                return $row->user ? $row->user->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'logo']);
+            $table->rawColumns(['actions', 'placeholder', 'logo', 'user']);
 
             return $table->make(true);
         }
@@ -94,7 +95,9 @@ class CompanyController extends Controller
     {
         abort_if(Gate::denies('company_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.companies.create');
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.companies.create', compact('users'));
     }
 
     public function store(StoreCompanyRequest $request)
@@ -116,7 +119,11 @@ class CompanyController extends Controller
     {
         abort_if(Gate::denies('company_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.companies.edit', compact('company'));
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $company->load('user');
+
+        return view('admin.companies.edit', compact('company', 'users'));
     }
 
     public function update(UpdateCompanyRequest $request, Company $company)
@@ -140,6 +147,8 @@ class CompanyController extends Controller
     public function show(Company $company)
     {
         abort_if(Gate::denies('company_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $company->load('user');
 
         return view('admin.companies.show', compact('company'));
     }

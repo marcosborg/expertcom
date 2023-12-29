@@ -1435,6 +1435,8 @@ return [
             'deleted_at_helper' => ' ',
             'main'              => 'Main',
             'main_helper'       => ' ',
+            'user'              => 'User',
+            'user_helper'       => ' ',
         ],
     ],
     'electric' => [

@@ -50,17 +50,43 @@ class FinancialStatementController extends Controller
                 'contract_type',
                 'contract_vat'
             ]);
+            $results = CurrentAccount::where([
+                'tvde_week_id' => $tvde_week_id,
+                'driver_id' => $driver_id
+            ])->first();
+
+            if ($results) {
+                $results = json_decode($results->data);
+            }
         } else {
             $driver = null;
-        }
+            //COLLECT ALL DRIVER RESULTS
+            $total_earnings_uber = [];
+            $total_earnings_bolt = [];
+            $total_tips_uber = [];
+            $total_tips_bolt = [];
+            $total_earnings = [];
+            foreach ($drivers as $driver) {
+                $results = CurrentAccount::where([
+                    'tvde_week_id' => $tvde_week_id,
+                    'driver_id' => $driver->id
+                ])->first();
 
-        $results = CurrentAccount::where([
-            'tvde_week_id' => $tvde_week_id,
-            'driver_id' => $driver_id
-        ])->first();
+                if ($results) {
+                    $data = json_decode($results->data);
+                    $total_earnings_uber[] = $data->total_earnings_uber;
+                    $total_earnings_bolt[] = $data->total_earnings_bolt;
+                    $total_tips_uber[] = $data->total_tips_uber;
+                    $total_tips_bolt[] = $data->total_tips_bolt;
+                    $total_earnings[] = $data->total_earnings;
+                }
+            }
 
-        if ($results) {
-            $results = json_decode($results->data);
+            $total_earnings_uber = array_sum($total_earnings_uber);
+            $total_earnings_bolt = array_sum($total_earnings_bolt);
+            $total_tips_uber = array_sum($total_tips_uber);
+            $total_tips_bolt = array_sum($total_tips_bolt);
+            $total_earnings = array_sum($total_earnings);
         }
 
         //GRAFICOS
@@ -108,21 +134,21 @@ class FinancialStatementController extends Controller
             'tvde_week_id' => $tvde_week_id,
             'drivers' => $drivers,
             'driver_id' => $results ? $results->driver_id : 0,
-            'total_earnings_uber' => $results ? $results->total_earnings_uber : 0,
+            'total_earnings_uber' => $results ? $results->total_earnings_uber : $total_earnings_uber ?? 0,
             'contract_type_rank' => $results ? $results->contract_type_rank : 0,
             'total_uber' => $results ? $results->total_uber : 0,
-            'total_earnings_bolt' => $results ? $results->total_earnings_bolt : 0,
+            'total_earnings_bolt' => $results ? $results->total_earnings_bolt : $total_earnings_bolt ?? 0,
             'total_bolt' => $results ? $results->total_bolt : 0,
-            'total_tips_uber' => $results ? $results->total_tips_uber : 0,
+            'total_tips_uber' => $results ? $results->total_tips_uber : $total_tips_uber ?? 0,
             'uber_tip_percent' => $results ? $results->uber_tip_percent : 0,
             'uber_tip_after_vat' => $results ? $results->uber_tip_after_vat : 0,
-            'total_tips_bolt' => $results ? $results->total_tips_bolt : 0,
+            'total_tips_bolt' => $results ? $results->total_tips_bolt : $total_tips_bolt ?? 0,
             'bolt_tip_percent' => $results ? $results->bolt_tip_percent : 0,
             'bolt_tip_after_vat' => $results ? $results->bolt_tip_after_vat : 0,
             'total_tips' => $results ? $results->total_tips : 0,
             'total_tip_after_vat' => $results ? $results->total_tip_after_vat : 0,
-            'adjustments' => $results ? $results->adjustments : 0,
-            'total_earnings' => $results ? $results->total_earnings : 0,
+            'adjustments' => $results ? $results->adjustments : [],
+            'total_earnings' => $results ? $results->total_earnings : $total_earnings ?? 0,
             'total_earnings_no_tip' => $results ? $results->total_earnings_no_tip : 0,
             'total' => $results ? $results->total : 0,
             'total_after_vat' => $results ? $results->total_after_vat : 0,
@@ -137,7 +163,7 @@ class FinancialStatementController extends Controller
             'electric_racio' => $results ? $results->electric_racio : 0,
             'total_earnings_after_vat' => $results ? $results->total_earnings_after_vat : 0,
             'txt_admin' => $results ? $results->txt_admin : 0,
-            'driver_balance' => $driver_balance
+            'driver_balance' => $driver_balance ?? null
         ]);
     }
 

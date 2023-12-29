@@ -36,7 +36,6 @@
         class="btn btn-default {{ $driver_id == $d->id ? 'disabled selected' : '' }}" style="margin-top: 5px;">{{
         $d->name }}</a>
     @endforeach
-    @if ($total_earnings_after_vat > 0)
     <div class="row" style="margin-top: 5px;">
         <div class="col-md-5">
             <div class="panel panel-default">
@@ -226,6 +225,7 @@
                     </table>
                 </div>
             </div>
+            @if ($driver)
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3 class="pull-left">Valor a pagar: <span style="font-weight: 800;">{{
@@ -240,17 +240,18 @@
                 <div class="panel-footer">
                     <form action="/admin/financial-statements/update-balance" method="post" id="update-balance">
                         @csrf
-                        <input type="hidden" name="driver_balance_id" value="{{ $driver_balance->id }}">
+                        <input type="hidden" name="driver_balance_id" value="{{ $driver_balance->id ?? 0 }}">
                         <div class="form-inline">
                             <div class="input-group">
                                 <div class="input-group-addon">Saldo (€)</div>
-                                <input type="text" class="form-control" value="{{ $driver_balance->balance }}"
+                                <input type="text" class="form-control" value="{{ $driver_balance->balance ?? 0 }}"
                                     name="balance">
                             </div>
                             <button type="submit" class="btn btn-success">Atualizar saldo</button>
                     </form>
                 </div>
             </div>
+            @endif
         </div>
     </div>
     <div class="row">
@@ -275,13 +276,7 @@
             </div>
         </div>
     </div>
-    @else
-    <div class="alert alert-info" style="margin-top: 20px;" role="alert">
-        Não temos registo de viagens para este motorista nesta semana.
-    </div>
     @endif
-    @endif
-</div>
 </div>
 @endsection
 @section('styles')

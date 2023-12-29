@@ -197,6 +197,7 @@
                                 @endif
                             </tr>
                             @endif
+                            @if ($adjustments)
                             @foreach ($adjustments as $adjustment)
                             <tr>
                                 <th>{{ $adjustment->name }}</th>
@@ -205,6 +206,7 @@
                                 <td></td>
                             </tr>
                             @endforeach
+                            @endif
                             @if ($txt_admin > 0)
                             <tr>
                                 <th>Taxa administrativa</th>

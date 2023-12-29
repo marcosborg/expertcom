@@ -167,7 +167,7 @@ class FinancialStatementController extends Controller
             'bolt_tip_after_vat' => $results ? $results->bolt_tip_after_vat : 0,
             'total_tips' => $results ? $results->total_tips : $total_tips ?? 0,
             'total_tip_after_vat' => $results ? $results->total_tip_after_vat : 0,
-            'adjustments' => $results ? $results->adjustments : [],
+            'adjustments' => $results ? $results->adjustments : null,
             'total_earnings' => $results ? $results->total_earnings : $total_earnings ?? 0,
             'total_earnings_no_tip' => $results ? $results->total_earnings_no_tip : $total_earnings_no_tip ?? 0,
             'total' => $results ? $results->total : 0,

@@ -25,6 +25,12 @@ class WeeklyExpenseReportController extends Controller
     {
         abort_if(Gate::denies('weekly_expense_report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        if(auth()->user()->hasRole('Empresas Associadas')){
+            $user = auth()->user()->load('company');
+            $company_id = $user->company->id;
+            session()->put('company_id', $company_id);
+        }
+
         $filter = $this->filter();
         $company_id = $filter['company_id'];
         $tvde_week_id = $filter['tvde_week_id'];

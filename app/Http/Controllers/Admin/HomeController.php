@@ -7,6 +7,13 @@ use App\Models\TvdeActivity;
 use App\Http\Controllers\Traits\Reports;
 use App\Models\CurrentAccount;
 use App\Models\DriversBalance;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
+use Carbon\Carbon;
+use App\Models\CompanyExpense;
+use App\Models\CompanyPark;
+use App\Models\Consultancy;
+use App\Models\Company;
 
 class HomeController
 {
@@ -146,6 +153,97 @@ class HomeController
 
     public function companyDashboard()
     {
-        return view('company_dashboard');
+        abort_if(Gate::denies('weekly_expense_report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if (auth()->user()->hasRole('Empresas Associadas')) {
+            $user = auth()->user()->load('company');
+            $company_id = $user->company->id;
+            session()->put('company_id', $company_id);
+        }
+
+        $filter = $this->filter();
+        $company_id = $filter['company_id'];
+        $tvde_week_id = $filter['tvde_week_id'];
+        $tvde_week = $filter['tvde_week'];
+        $tvde_years = $filter['tvde_years'];
+        $tvde_year_id = $filter['tvde_year_id'];
+        $tvde_months = $filter['tvde_months'];
+        $tvde_month_id = $filter['tvde_month_id'];
+        $tvde_weeks = $filter['tvde_weeks'];
+
+        //COMPANY EXPENSES
+
+        $now = Carbon::now()->format('Y-m-d');
+
+        $company_expenses = CompanyExpense::where([
+            'company_id' => $company_id,
+        ])
+            ->where('start_date', '<=', $now)
+            ->where('end_date', '>=', $now)
+            ->get();
+
+        $company_expenses = $company_expenses->map(function ($expense) {
+            $expense->total = $expense->qty * $expense->weekly_value;
+            return $expense;
+        });
+
+        $total_company_expenses = [];
+
+        foreach ($company_expenses as $company_expense) {
+            $total_company_expenses[] = $company_expense->total;
+        }
+
+        $total_company_expenses = array_sum($total_company_expenses);
+
+        $company_park = CompanyPark::where('tvde_week_id', $tvde_week_id)
+            ->where('company_id', $company_id)
+            ->sum('value');
+
+        $consultancy = Consultancy::where('company_id', $company_id)
+            ->where('start_date', '<=', $tvde_week->start_date)
+            ->where('end_date', '>=', $tvde_week->end_date)
+            ->first();
+
+        $totals = $this->getWeekReport($company_id, $tvde_week_id)['totals'];
+
+        $company = Company::find($company_id);
+
+        $total_consultancy = 0;
+
+        if ($consultancy && !$company->main) {
+
+            $total_consultancy = ($totals['total_operators'] * $consultancy->value) / 100;
+
+        }
+
+        $final_total = $total_company_expenses - $totals['total_company_adjustments'] + $company_park + $totals['total_drivers'] + $total_consultancy;
+        $final_company_expenses = $total_company_expenses - $totals['total_company_adjustments'] + $company_park - $total_consultancy;
+        $profit = $totals['total_operators'] - $final_total;
+
+        if ($totals['total_operators'] > 0) {
+            $roi = (($totals['total_operators'] - $final_total) / $totals['total_operators']) * 100;
+        } else {
+            $roi = 0;
+        }
+
+        return view('admin.weeklyExpenseReports.index', compact([
+            'company_id',
+            'tvde_years',
+            'tvde_year_id',
+            'tvde_months',
+            'tvde_month_id',
+            'tvde_weeks',
+            'tvde_week_id',
+            'company_expenses',
+            'total_company_expenses',
+            'totals',
+            'company_park',
+            'final_total',
+            'final_company_expenses',
+            'profit',
+            'roi',
+            'total_consultancy'
+        ]));
     }
+
 }

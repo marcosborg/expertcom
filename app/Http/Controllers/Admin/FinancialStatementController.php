@@ -57,8 +57,19 @@ class FinancialStatementController extends Controller
 
             if ($results) {
                 $results = json_decode($results->data);
+            } else {
+                session()->put('driver_id', 0);
+                return redirect()->to(url()->current());
+
             }
         } else {
+            $results = CurrentAccount::where([
+                'tvde_week_id' => $tvde_week_id,
+            ])->first();
+
+            if ($results) {
+                $results = json_decode($results->data);
+            }
             $driver = null;
             //COLLECT ALL DRIVER RESULTS
             $total_earnings_uber = [];

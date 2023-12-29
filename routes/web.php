@@ -292,6 +292,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::prefix('my-receipts')->group(function () {
         Route::get('/', 'MyReceiptsController@index')->name('my-receipts.index');
         Route::post('create', 'MyReceiptsController@create');
+        Route::get('pay-receipt/{receipt_id}/{paid}', 'MyReceiptsController@payReceipt');
     });
 
     // Document

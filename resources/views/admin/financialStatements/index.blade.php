@@ -237,6 +237,7 @@
                                 class="fa fa-cloud-download"></i></a>
                     </div>
                 </div>
+                @if (auth()->user()->hasRole('Admin'))
                 <div class="panel-footer">
                     <form action="/admin/financial-statements/update-balance" method="post" id="update-balance">
                         @csrf
@@ -250,6 +251,7 @@
                             <button type="submit" class="btn btn-success">Atualizar saldo</button>
                     </form>
                 </div>
+                @endif
             </div>
             @endif
         </div>

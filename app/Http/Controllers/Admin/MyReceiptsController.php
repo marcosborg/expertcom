@@ -19,12 +19,19 @@ class MyReceiptsController extends Controller
     {
         abort_if(Gate::denies('my_receipt_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $driver = Driver::where('user_id', auth()->user()->id)->first();
+        if (auth()->user()->hasRole('Empresas Associadas')) {
+            $receipts = Receipt::whereHas('driver', function ($driver) {
+                $driver->where('company_id', session()->get('company_id'));
+            })
+                ->get()->load('driver');
+        } else {
+            $driver = Driver::where('user_id', auth()->user()->id)->first();
 
-        $receipts = Receipt::where([
-            'driver_id' => $driver->id
-        ])
-            ->get();
+            $receipts = Receipt::where([
+                'driver_id' => $driver->id
+            ])
+                ->get()->load('driver');
+        }
 
         return view('admin.myReceipts.index')->with([
             'receipts' => $receipts,
@@ -57,6 +64,13 @@ class MyReceiptsController extends Controller
         User::find(2)->notify(new NewReceipt($driver));
 
         return redirect()->back()->with('message', 'Enviado com sucesso');
+    }
+
+    public function payReceipt($receipt_id, $paid)
+    {
+        $receipt = Receipt::find($receipt_id);
+        $receipt->paid = $paid;
+        $receipt->save();
     }
 
 }

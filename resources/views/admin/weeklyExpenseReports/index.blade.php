@@ -122,7 +122,7 @@
                                 <th style="text-align: right;">{{ number_format($final_total, 2) }} <small>€</small>
                                 </th>
                             </tr>
-                            @if ($fleet_adjusments)
+                            @if (isset($fleet_adjusments) && $fleet_adjusments)
                             <tr>
                                 <td>Prevenção de frota</td>
                                 <td></td>
@@ -132,7 +132,7 @@
                                 </td>
                             </tr>
                             @endif
-                            @if ($fleet_consultancies)
+                            @if (isset($fleet_consultancies) && $fleet_consultancies)
                             <tr>
                                 <td>Consultadorias</td>
                                 <td></td>
@@ -142,7 +142,7 @@
                                 </td>
                             </tr>
                             @endif
-                            @if ($fleet_company_parks)
+                            @if (isset($fleet_company_parks) && $fleet_company_parks)
                             <tr>
                                 <td>Pagamento de park</td>
                                 <td></td>
@@ -152,7 +152,7 @@
                                 </td>
                             </tr>
                             @endif
-                            @if ($fleet_earnings)
+                            @if (isset($fleet_earnings) && $fleet_earnings)
                             <tr>
                                 <th>Totais de ganhos provenientes de outras empresas</th>
                                 <td></td>
@@ -190,7 +190,7 @@
                                 <th>Total de despesas</th>
                                 <td style="text-align: right">{{ number_format($final_total, 2) }} <small>€</small></td>
                             </tr>
-                            @if ($fleet_earnings)
+                            @if (isset($fleet_earnings) && $fleet_earnings)
                             <tr>
                                 <th>Ganhos provenientes de outra empresas</th>
                                 <td style="text-align: right">{{ number_format($fleet_earnings, 2) }} <small>€</small>

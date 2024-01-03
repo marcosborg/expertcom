@@ -108,6 +108,7 @@ class WeeklyExpenseReportController extends Controller
                     }
                 }
             }
+
             $fleet_adjusments = array_sum($fleet_adjusments);
 
             $fleet_consultancies = Consultancy::where('start_date', '<=', $tvde_week->start_date)

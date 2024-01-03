@@ -115,8 +115,6 @@
                                     <small>€</small>
                                 </td>
                             </tr>
-                        </tbody>
-                        <tfoot>
                             <tr>
                                 <th>Total de despesas</th>
                                 <th></th>
@@ -124,15 +122,52 @@
                                 <th style="text-align: right;">{{ number_format($final_total, 2) }} <small>€</small>
                                 </th>
                             </tr>
+                            @if ($fleet_adjusments)
                             <tr>
-                                <td colspan="5"></td>
+                                <td>Prevenção de frota</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;">{{ number_format($fleet_adjusments, 2) }}
+                                    <small>€</small>
+                                </td>
                             </tr>
+                            @endif
+                            @if ($fleet_consultancies)
+                            <tr>
+                                <td>Consultadorias</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;">{{ number_format($fleet_consultancies, 2) }}
+                                    <small>€</small>
+                                </td>
+                            </tr>
+                            @endif
+                            @if ($fleet_company_parks)
+                            <tr>
+                                <td>Pagamento de park</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;">{{ number_format($fleet_company_parks, 2) }}
+                                    <small>€</small>
+                                </td>
+                            </tr>
+                            @endif
+                            @if ($fleet_earnings)
+                            <tr>
+                                <th>Totais de ganhos provenientes de outras empresas</th>
+                                <td></td>
+                                <td></td>
+                                <th style="text-align: right;">{{ number_format($fleet_earnings, 2) }}
+                                    <small>€</small>
+                                </th>
+                            </tr>
+                            @endif
                             <tr>
                                 <td colspan="5">
                                     <canvas id="chart2" style="margin-top: 20px; height: 200px;"></canvas>
                                 </td>
                             </tr>
-                        </tfoot>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -155,6 +190,13 @@
                                 <th>Total de despesas</th>
                                 <td style="text-align: right">{{ number_format($final_total, 2) }} <small>€</small></td>
                             </tr>
+                            @if ($fleet_earnings)
+                            <tr>
+                                <th>Ganhos provenientes de outra empresas</th>
+                                <td style="text-align: right">{{ number_format($fleet_earnings, 2) }} <small>€</small>
+                                </td>
+                            </tr>
+                            @endif
                             <tr>
                                 <th>Rentabilidade</th>
                                 <td style="text-align: right">{{ number_format($profit, 2) }} <small>€</small></td>

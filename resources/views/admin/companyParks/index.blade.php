@@ -37,6 +37,9 @@
                                         {{ trans('cruds.companyPark.fields.value') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.companyPark.fields.fleet_management') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -58,6 +61,10 @@
                                         </td>
                                         <td>
                                             {{ $companyPark->value ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $companyPark->fleet_management ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $companyPark->fleet_management ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             @can('company_park_show')

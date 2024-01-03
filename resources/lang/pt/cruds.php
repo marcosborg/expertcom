@@ -1677,6 +1677,8 @@ return [
             'updated_at_helper' => ' ',
             'deleted_at'        => 'Deleted at',
             'deleted_at_helper' => ' ',
+            'fleet_management'        => 'Fleet Management',
+            'fleet_management_helper' => ' ',
         ],
     ],
     'consultancy' => [

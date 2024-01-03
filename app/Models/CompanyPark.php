@@ -23,6 +23,7 @@ class CompanyPark extends Model
         'tvde_week_id',
         'company_id',
         'value',
+        'fleet_management',
         'created_at',
         'updated_at',
         'deleted_at',

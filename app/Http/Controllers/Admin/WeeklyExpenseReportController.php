@@ -15,6 +15,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\CurrentAccount;
 
 class WeeklyExpenseReportController extends Controller
 {
@@ -25,7 +26,7 @@ class WeeklyExpenseReportController extends Controller
     {
         abort_if(Gate::denies('weekly_expense_report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if(auth()->user()->hasRole('Empresas Associadas')){
+        if (auth()->user()->hasRole('Empresas Associadas')) {
             $user = auth()->user()->load('company');
             $company_id = $user->company->id;
             session()->put('company_id', $company_id);
@@ -86,12 +87,50 @@ class WeeklyExpenseReportController extends Controller
 
         }
 
+        //GET EARNINGS FROM OTHER COMPANIES
+
+        $fleet_adjusments = 0;
+        $fleet_consultancies = 0;
+        $fleet_company_parks = 0;
+        $fleet_earnings = 0;
+
+        if ($company->main) {
+
+            $current_accounts = CurrentAccount::where([
+                'tvde_week_id' => $tvde_week_id
+            ])->get();
+            $fleet_adjusments = [];
+            foreach ($current_accounts as $current_account) {
+                $data = json_decode($current_account->data);
+                foreach ($data->adjustments as $fleet_adjusment) {
+                    if ($fleet_adjusment->fleet_management) {
+                        $fleet_adjusments[] = $fleet_adjusment->amount;
+                    }
+                }
+            }
+            $fleet_adjusments = array_sum($fleet_adjusments);
+
+            $fleet_consultancies = Consultancy::where('start_date', '<=', $tvde_week->start_date)
+                ->where('end_date', '>=', $tvde_week->end_date)
+                ->sum('value');
+
+            $fleet_company_parks = CompanyPark::where([
+                'tvde_week_id' => $tvde_week->id,
+                'fleet_management' => true
+            ])->sum('value');
+
+            $fleet_earnings = $fleet_adjusments + $fleet_consultancies + $fleet_company_parks;
+        }
+
+        ////////////////////////////////
+
         $final_total = $total_company_expenses - $totals['total_company_adjustments'] + $company_park + $totals['total_drivers'] + $total_consultancy;
         $final_company_expenses = $total_company_expenses - $totals['total_company_adjustments'] + $company_park - $total_consultancy;
-        $profit = $totals['total_operators'] - $final_total;
+
+        $profit = $totals['total_operators'] - $final_total + $fleet_earnings + $fleet_earnings;
 
         if ($totals['total_operators'] > 0) {
-            $roi = (($totals['total_operators'] - $final_total) / $totals['total_operators']) * 100;
+            $roi = (($totals['total_operators'] - $final_total + $fleet_earnings) / $totals['total_operators']) * 100;
         } else {
             $roi = 0;
         }
@@ -112,7 +151,11 @@ class WeeklyExpenseReportController extends Controller
             'final_company_expenses',
             'profit',
             'roi',
-            'total_consultancy'
+            'total_consultancy',
+            'fleet_adjusments',
+            'fleet_consultancies',
+            'fleet_company_parks',
+            'fleet_earnings'
         ]));
     }
 

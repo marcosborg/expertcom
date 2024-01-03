@@ -44,6 +44,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.companyPark.fields.value_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('fleet_management') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="fleet_management" value="0">
+                                <input type="checkbox" name="fleet_management" id="fleet_management" value="1" {{ $companyPark->fleet_management || old('fleet_management', 0) === 1 ? 'checked' : '' }}>
+                                <label for="fleet_management" style="font-weight: 400">{{ trans('cruds.companyPark.fields.fleet_management') }}</label>
+                            </div>
+                            @if($errors->has('fleet_management'))
+                                <span class="help-block" role="alert">{{ $errors->first('fleet_management') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.companyPark.fields.fleet_management_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

@@ -15,7 +15,7 @@
                             <label class="required" for="tvde_week_id">{{ trans('cruds.companyPark.fields.tvde_week') }}</label>
                             <select class="form-control select2" name="tvde_week_id" id="tvde_week_id" required>
                                 @foreach($tvde_weeks as $id => $entry)
-                                    <option value="{{ $id }}" {{ session()->get('tvde_week_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                    <option value="{{ $id }}" {{ old('tvde_week_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('tvde_week'))
@@ -27,7 +27,7 @@
                             <label class="required" for="company_id">{{ trans('cruds.companyPark.fields.company') }}</label>
                             <select class="form-control select2" name="company_id" id="company_id" required>
                                 @foreach($companies as $id => $entry)
-                                    <option value="{{ $id }}" {{ session()->get('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                    <option value="{{ $id }}" {{ old('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('company'))
@@ -42,6 +42,17 @@
                                 <span class="help-block" role="alert">{{ $errors->first('value') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.companyPark.fields.value_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('fleet_management') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="fleet_management" value="0">
+                                <input type="checkbox" name="fleet_management" id="fleet_management" value="1" {{ old('fleet_management', 0) == 1 ? 'checked' : '' }}>
+                                <label for="fleet_management" style="font-weight: 400">{{ trans('cruds.companyPark.fields.fleet_management') }}</label>
+                            </div>
+                            @if($errors->has('fleet_management'))
+                                <span class="help-block" role="alert">{{ $errors->first('fleet_management') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.companyPark.fields.fleet_management_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

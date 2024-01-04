@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\CurrentAccount;
+use App\Models\TvdeActivity;
 
 class WeeklyExpenseReportController extends Controller
 {
@@ -94,7 +95,7 @@ class WeeklyExpenseReportController extends Controller
         $fleet_company_parks = 0;
         $fleet_earnings = 0;
 
-        if ($company->main) {
+        if ($company && $company->main) {
 
             $current_accounts = CurrentAccount::where([
                 'tvde_week_id' => $tvde_week_id
@@ -111,9 +112,30 @@ class WeeklyExpenseReportController extends Controller
 
             $fleet_adjusments = array_sum($fleet_adjusments);
 
-            $fleet_consultancies = Consultancy::where('start_date', '<=', $tvde_week->start_date)
-                ->where('end_date', '>=', $tvde_week->end_date)
-                ->sum('value');
+            $companies = Company::whereHas('tvde_activities', function ($tvde_activity) use ($tvde_week_id) {
+                $tvde_activity->where('tvde_week_id', $tvde_week_id);
+            })
+                ->get();
+
+            $fleet_consultancies = [];
+
+            foreach ($companies as $company) {
+                $fleet_consultancy = Consultancy::where('company_id', $company->id)
+                    ->where('start_date', '<=', $tvde_week->start_date)
+                    ->where('end_date', '>=', $tvde_week->end_date)
+                    ->first();
+                $earnings = TvdeActivity::where([
+                    'company_id' => $company->id,
+                    'tvde_week_id' => $tvde_week_id,
+                ])
+                    ->sum('earnings_two');
+
+                if ($fleet_consultancy && $fleet_consultancy->value && $earnings) {
+                    $fleet_consultancies[] = ($earnings * $fleet_consultancy->value) / 100;
+                }
+            }
+
+            $fleet_consultancies = array_sum($fleet_consultancies);
 
             $fleet_company_parks = CompanyPark::where([
                 'tvde_week_id' => $tvde_week->id,

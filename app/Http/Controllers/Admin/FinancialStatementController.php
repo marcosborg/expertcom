@@ -211,7 +211,7 @@ class FinancialStatementController extends Controller
 
     public function pdf(Request $request)
     {
-        abort_if(Gate::denies('financial_statement_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('financial-pdf'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tvde_week_id = session()->get('tvde_week_id');
         $driver_id = session()->get('driver_id');

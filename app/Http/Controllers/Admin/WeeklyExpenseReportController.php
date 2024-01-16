@@ -100,17 +100,21 @@ class WeeklyExpenseReportController extends Controller
             $current_accounts = CurrentAccount::where([
                 'tvde_week_id' => $tvde_week_id
             ])->get();
-            $fleet_adjusments = [];
+            $fleet_adjustments = [];
             foreach ($current_accounts as $current_account) {
                 $data = json_decode($current_account->data);
-                foreach ($data->adjustments as $fleet_adjusment) {
-                    if ($fleet_adjusment->fleet_management) {
-                        $fleet_adjusments[] = $fleet_adjusment->amount;
+                foreach ($data->adjustments as $fleet_adjustment) {
+                    if ($fleet_adjustment->fleet_management == true) {
+                        $fleet_adjustments[] = $fleet_adjustment;
                     }
                 }
             }
 
-            $fleet_adjusments = array_sum($fleet_adjusments);
+            //return view('teste', compact('fleet_adjustments'));
+
+            //return $fleet_adjusments;
+
+            $fleet_adjusments = array_sum($fleet_adjustments);
 
             $companies = Company::whereHas('tvde_activities', function ($tvde_activity) use ($tvde_week_id) {
                 $tvde_activity->where('tvde_week_id', $tvde_week_id);

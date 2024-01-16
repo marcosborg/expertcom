@@ -100,19 +100,22 @@ class WeeklyExpenseReportController extends Controller
             $current_accounts = CurrentAccount::where([
                 'tvde_week_id' => $tvde_week_id
             ])->get();
+
             $fleet_adjustments = [];
+
             foreach ($current_accounts as $current_account) {
                 $data = json_decode($current_account->data);
                 foreach ($data->adjustments as $fleet_adjustment) {
                     if ($fleet_adjustment->fleet_management == true) {
-                        $fleet_adjustments[] = $fleet_adjustment;
+                        if ($fleet_adjustment->type == 'refund') {
+                            $fleet_adjustments[] = (-$fleet_adjustment->amount);
+                        } else {
+                            $fleet_adjustments[] = $fleet_adjustment->amount;
+                        }
+
                     }
                 }
             }
-
-            //return view('teste', compact('fleet_adjustments'));
-
-            //return $fleet_adjusments;
 
             $fleet_adjusments = array_sum($fleet_adjustments);
 

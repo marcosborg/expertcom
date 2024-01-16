@@ -15,6 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\DriversBalance;
+use App\Models\Company;
 
 class ReceiptController extends Controller
 {
@@ -25,7 +26,7 @@ class ReceiptController extends Controller
         abort_if(Gate::denies('receipt_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Receipt::with(['driver'])->select(sprintf('%s.*', (new Receipt)->table));
+            $query = Receipt::with(['driver.company'])->select(sprintf('%s.*', (new Receipt)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -43,7 +44,8 @@ class ReceiptController extends Controller
                     'deleteGate',
                     'crudRoutePart',
                     'row'
-                ));
+                )
+                );
             });
 
             $table->editColumn('id', function ($row) {
@@ -72,8 +74,9 @@ class ReceiptController extends Controller
         }
 
         $drivers = Driver::get();
+        $companies = Company::all();
 
-        return view('admin.receipts.index', compact('drivers'));
+        return view('admin.receipts.index', compact('drivers', 'companies'));
     }
 
     public function create()

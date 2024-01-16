@@ -28,6 +28,9 @@
                                     {{ trans('cruds.receipt.fields.id') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.company.title_singular') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.receipt.fields.driver') }}
                                 </th>
                                 <th>
@@ -54,6 +57,14 @@
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($companies as $key => $item)
+                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                     <select class="search">
@@ -134,6 +145,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'driver.company.name', name: 'driver.company.name' },
 { data: 'driver_name', name: 'driver.name' },
 { data: 'driver.code', name: 'driver.code' },
 { data: 'value', name: 'value' },

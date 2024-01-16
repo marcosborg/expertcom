@@ -473,7 +473,7 @@ trait Reports
     public function filter()
     {
         $company_id = session()->get('company_id') ?? $company_id = session()->get('company_id');
-        $tvde_year_id = session()->get('tvde_year_id') ? session()->get('tvde_year_id') : $tvde_year_id = TvdeYear::orderBy('name')->first()->id;
+        $tvde_year_id = session()->get('tvde_year_id') ? session()->get('tvde_year_id') : $tvde_year_id = TvdeYear::orderBy('name', 'desc')->first()->id;
         if (session()->has('tvde_month_id')) {
             $tvde_month_id = session()->get('tvde_month_id');
         } else {
@@ -494,7 +494,10 @@ trait Reports
         if (session()->has('tvde_week_id')) {
             $tvde_week_id = session()->get('tvde_week_id');
         } else {
-            $tvde_week = TvdeWeek::orderBy('number', 'desc')->where('tvde_month_id', $tvde_month_id)->first();
+            $tvde_week = TvdeWeek::has('tvdeActivities')
+                ->orderBy('number', 'desc')
+                ->where('tvde_month_id', $tvde_month_id)
+                ->first();
             if ($tvde_week) {
                 $tvde_week_id = $tvde_week->id;
                 session()->put('tvde_week_id', $tvde_week->id);

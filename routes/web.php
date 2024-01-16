@@ -468,8 +468,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Toll Payment
     Route::delete('toll-payments/destroy', 'TollPaymentController@massDestroy')->name('toll-payments.massDestroy');
-    Route::post('adjustments/parse-csv-import', 'TollPaymentController@parseCsvImport')->name('toll-payments.parseCsvImport');
-    Route::post('adjustments/process-csv-import', 'TollPaymentController@processCsvImport')->name('toll-payments.processCsvImport');
+    Route::post('toll-payments/parse-csv-import', 'TollPaymentController@parseCsvImport')->name('toll-payments.parseCsvImport');
+    Route::post('toll-payments/process-csv-import', 'TollPaymentController@processCsvImport')->name('toll-payments.processCsvImport');
     Route::resource('toll-payments', 'TollPaymentController');
 
     // Toll Card

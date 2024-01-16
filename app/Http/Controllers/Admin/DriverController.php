@@ -15,6 +15,7 @@ use App\Models\Driver;
 use App\Models\Electric;
 use App\Models\Local;
 use App\Models\State;
+use App\Models\TollCard;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class DriverController extends Controller
         abort_if(Gate::denies('driver_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Driver::with(['user', 'card', 'electric', 'local', 'contract_type', 'contract_vat', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
+            $query = Driver::with(['user', 'card', 'electric', 'tool_card', 'local', 'contract_type', 'contract_vat', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -73,6 +74,10 @@ class DriverController extends Controller
 
             $table->addColumn('electric_code', function ($row) {
                 return $row->electric ? $row->electric->code : '';
+            });
+
+            $table->addColumn('tool_code', function ($row) {
+                return $row->tool ? $row->tool->code : '';
             });
 
             $table->addColumn('local_name', function ($row) {
@@ -171,6 +176,8 @@ class DriverController extends Controller
 
         $electrics = Electric::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $tool_cards = TollCard::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $locals = Local::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $contract_types = ContractType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -181,7 +188,7 @@ class DriverController extends Controller
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.drivers.create', compact('cards', 'companies', 'contract_types', 'contract_vats', 'electrics', 'locals', 'states', 'users'));
+        return view('admin.drivers.create', compact('cards', 'companies', 'contract_types', 'contract_vats', 'electrics', 'tool_cards', 'locals', 'states', 'users'));
     }
 
     public function store(StoreDriverRequest $request)
@@ -201,6 +208,8 @@ class DriverController extends Controller
 
         $electrics = Electric::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $tool_cards = TollCard::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $locals = Local::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $contract_types = ContractType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -213,7 +222,7 @@ class DriverController extends Controller
 
         $driver->load('user', 'card', 'electric', 'local', 'contract_type', 'contract_vat', 'state', 'company');
 
-        return view('admin.drivers.edit', compact('cards', 'companies', 'contract_types', 'contract_vats', 'driver', 'electrics', 'locals', 'states', 'users'));
+        return view('admin.drivers.edit', compact('cards', 'companies', 'contract_types', 'contract_vats', 'driver', 'electrics', 'tool_cards', 'locals', 'states', 'users'));
     }
 
     public function update(UpdateDriverRequest $request, Driver $driver)
@@ -227,7 +236,7 @@ class DriverController extends Controller
     {
         abort_if(Gate::denies('driver_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $driver->load('user', 'card', 'electric', 'local', 'contract_type', 'contract_vat', 'state', 'company', 'driverDocuments', 'driverReceipts');
+        $driver->load('user', 'card', 'electric', 'tool_card', 'local', 'contract_type', 'contract_vat', 'state', 'company', 'driverDocuments', 'driverReceipts');
 
         return view('admin.drivers.show', compact('driver'));
     }

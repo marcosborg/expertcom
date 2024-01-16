@@ -112,15 +112,9 @@ class WeeklyExpenseReportController extends Controller
                         } else {
                             $fleet_adjustments[] = $fleet_adjustment->amount;
                         }
-                        //$fleet_adjustment->driver = $data->driver->name;
-                        //$fleet_adjustments[] = $fleet_adjustment;
                     }
                 }
             }
-
-            //return $fleet_adjustments;
-
-            //return view('test', compact('fleet_adjustments'));
 
             $fleet_adjusments = array_sum($fleet_adjustments);
 

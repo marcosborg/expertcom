@@ -145,7 +145,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'driver.company.name', name: 'driver.company.name' },
+{ data: 'company_name', name: 'driver.company.name' },
 { data: 'driver_name', name: 'driver.name' },
 { data: 'driver.code', name: 'driver.code' },
 { data: 'value', name: 'value' },

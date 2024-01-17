@@ -51,6 +51,11 @@ class ReceiptController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+
+            $table->addColumn('company_name', function ($row) {
+                return $row->driver->company ? $row->driver->company->name : '';
+            });
+
             $table->addColumn('driver_name', function ($row) {
                 return $row->driver ? $row->driver->name : '';
             });

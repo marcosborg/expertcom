@@ -38,13 +38,15 @@ class ReceiptController extends Controller
                 $deleteGate = 'receipt_delete';
                 $crudRoutePart = 'receipts';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                )
+                return view(
+                    'partials.datatablesActions',
+                    compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    )
                 );
             });
 
@@ -69,11 +71,14 @@ class ReceiptController extends Controller
             $table->editColumn('file', function ($row) {
                 return $row->file ? '<a href="' . $row->file->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
+            $table->editColumn('receipt_value', function ($row) {
+                return '<input id="receipt_value-' . $row->id . '" type="number">';
+            });
             $table->editColumn('paid', function ($row) {
                 return '<input id="check-' . $row->id . '" onclick="checkPay(' . $row->id . ')" type="checkbox" ' . ($row->paid ? 'disabled' : '') . ' ' . ($row->paid ? 'checked' : null) . '>';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'driver', 'file', 'paid']);
+            $table->rawColumns(['actions', 'placeholder', 'driver', 'file', 'receipt_value', 'paid']);
 
             return $table->make(true);
         }
@@ -114,8 +119,8 @@ class ReceiptController extends Controller
             'driver_id' => $driver_id,
             'tvde_week_id' => $tvde_week_id
         ])->first();
-        $balance = $drivers_balance->balance - $value;
-        $drivers_balance->balance = $balance;
+        $balance = $drivers_balance->drivers_balance - $value;
+        $drivers_balance->drivers_balance = $balance;
         $drivers_balance->save();
 
         return redirect()->back();
@@ -191,11 +196,21 @@ class ReceiptController extends Controller
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 
-    public function checkPay(Request $request)
+    public function checkPay($receipt_id, $receipt_value)
     {
-        $receipt = Receipt::find($request->receipt_id);
+        $receipt = Receipt::find($receipt_id);
         $receipt->paid = true;
         $receipt->save();
+
+        //AtualDriversBalance
+        $driver_id = $receipt->driver_id;
+        $drivers_balance = DriversBalance::where([
+            'driver_id' => $driver_id
+        ])->orderBy('id', 'desc')->first();
+        $balance = $drivers_balance->balance - $receipt_value;
+        $drivers_balance->balance = $balance;
+        $drivers_balance->drivers_balance = $balance;
+        $drivers_balance->save();
 
     }
 }

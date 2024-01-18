@@ -531,6 +531,7 @@ class FinancialStatementController extends Controller
 
         $drivers_balance = DriversBalance::find($request->driver_balance_id);
         $drivers_balance->balance = $request->balance;
+        $drivers_balance->drivers_balance = $request->balance;
         $drivers_balance->save();
     }
 

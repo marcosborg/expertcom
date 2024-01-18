@@ -191,7 +191,7 @@
                     Recibo
                 </div>
                 <div class="panel-body">
-                    @if ($driver_balance->balance > 0)
+                    @if ($driver_balance->drivers_balance > 0)
                     <form method="POST" action="{{ route("admin.receipts.store") }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="driver_id" value="{{ $driver_id }}">
@@ -199,7 +199,7 @@
                         <div class="form-group {{ $errors->has('value') ? 'has-error' : '' }}">
                             <label class="required" for="value">Saldo</label>
                             <input class="form-control" type="number" name="value" id="value"
-                                value="{{ $driver_balance->balance }}" required>
+                                value="{{ $driver_balance->drivers_balance }}" required>
                             @if($errors->has('value'))
                             <span class="help-block" role="alert">{{ $errors->first('value') }}</span>
                             @endif
@@ -245,7 +245,7 @@
                         <div class="form-inline">
                             <div class="input-group">
                                 <div class="input-group-addon">Saldo (€)</div>
-                                <input type="text" class="form-control" value="{{ $driver_balance->balance }}"
+                                <input type="text" class="form-control" value="{{ $driver_balance->drivers_balance }}"
                                     name="balance" disabled>
                             </div>
                     </form>

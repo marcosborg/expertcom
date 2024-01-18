@@ -57,6 +57,14 @@
                                         {{ $driversBalance->balance }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.driversBalance.fields.drivers_balance') }}
+                                    </th>
+                                    <td>
+                                        {{ $driversBalance->drivers_balance }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

@@ -1747,6 +1747,8 @@ return [
             'updated_at_helper' => ' ',
             'deleted_at'        => 'Deleted at',
             'deleted_at_helper' => ' ',
+            'drivers_balance'        => 'Drivers Balance',
+            'drivers_balance_helper' => ' ',
         ],
     ],
     'tollPayment' => [

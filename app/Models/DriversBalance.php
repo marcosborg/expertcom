@@ -24,6 +24,7 @@ class DriversBalance extends Model
         'tvde_week_id',
         'value',
         'balance',
+        'drivers_balance',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -46,6 +46,9 @@
                                         {{ trans('cruds.driversBalance.fields.balance') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.driversBalance.fields.drivers_balance') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -76,6 +79,9 @@
                                         </td>
                                         <td>
                                             {{ $driversBalance->balance ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $driversBalance->drivers_balance ?? '' }}
                                         </td>
                                         <td>
                                             @can('drivers_balance_show')

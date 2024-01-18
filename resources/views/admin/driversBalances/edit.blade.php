@@ -52,6 +52,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.driversBalance.fields.balance_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('drivers_balance') ? 'has-error' : '' }}">
+                            <label for="drivers_balance">{{ trans('cruds.driversBalance.fields.drivers_balance') }}</label>
+                            <input class="form-control" type="number" name="drivers_balance" id="drivers_balance" value="{{ old('drivers_balance', $driversBalance->drivers_balance) }}" step="0.01">
+                            @if($errors->has('drivers_balance'))
+                                <span class="help-block" role="alert">{{ $errors->first('drivers_balance') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.driversBalance.fields.drivers_balance_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

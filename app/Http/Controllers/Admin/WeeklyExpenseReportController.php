@@ -159,7 +159,7 @@ class WeeklyExpenseReportController extends Controller
         $profit = $totals['total_operators'] - $final_total + $fleet_earnings;
 
         if ($totals['total_operators'] > 0) {
-            $roi = (($totals['total_operators'] - $final_total + $fleet_earnings) / $totals['total_operators']) * 100;
+            $roi = ($profit / ($totals['total_operators'] + $fleet_earnings)) * 100;
         } else {
             $roi = 0;
         }

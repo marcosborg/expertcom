@@ -112,17 +112,9 @@ class WeeklyExpenseReportController extends Controller
                         } else {
                             $fleet_adjustments[] = $fleet_adjustment->amount;
                         }
-                        /*
-                        $fleet_adjustment->driver_name = $data->driver->name;
-                        $fleet_adjustments[] = $fleet_adjustment;
-                        */
                     }
                 }
             }
-
-            //return $fleet_adjustments;
-
-            //return view('test', compact('fleet_adjustments'));
 
             $fleet_adjusments = array_sum($fleet_adjustments);
 
@@ -164,7 +156,7 @@ class WeeklyExpenseReportController extends Controller
         $final_total = $total_company_expenses - $totals['total_company_adjustments'] + $company_park + $totals['total_drivers'] + $total_consultancy;
         $final_company_expenses = $total_company_expenses - $totals['total_company_adjustments'] + $company_park - $total_consultancy;
 
-        $profit = $totals['total_operators'] - $final_total + $fleet_earnings + $fleet_earnings;
+        $profit = $totals['total_operators'] - $final_total + $fleet_earnings;
 
         if ($totals['total_operators'] > 0) {
             $roi = (($totals['total_operators'] - $final_total + $fleet_earnings) / $totals['total_operators']) * 100;

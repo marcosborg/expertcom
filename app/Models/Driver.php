@@ -138,4 +138,9 @@ class Driver extends Model
         return $this->belongsTo(Company::class, 'company_id');
     }
 
+    public function team()
+    {
+        return $this->hasMany(Team::class);
+    }
+
 }

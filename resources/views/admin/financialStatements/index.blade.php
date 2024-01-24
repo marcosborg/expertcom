@@ -34,7 +34,7 @@
     @foreach ($drivers as $d)
     <a href="/admin/financial-statements/driver/{{ $d->id }}"
         class="btn btn-default {{ $driver_id == $d->id ? 'disabled selected' : '' }}" style="margin-top: 5px;">{{
-        $d->name }}</a>
+        $d->name }} {{ $d->team->count() > 0 ? '(Team)' : '' }}</a>
     @endforeach
     <div class="row" style="margin-top: 5px;">
         <div class="col-md-5">
@@ -77,6 +77,18 @@
                                 <td>{{ $bolt_tip_after_vat }}€</td>
                                 @endif
                             </tr>
+                            @if ($team_results)
+                            @foreach ($team_results as $team_result)
+                            <tr>
+                                <th>{{ $team_result->driver->name }}</th>
+                                <td>{{ number_format($team_result->gross_credits, 2) }}€</td>
+                                @if ($driver)
+                                <td></td>
+                                <td></td>
+                                @endif
+                            </tr>
+                            @endforeach
+                            @endif
                             <tr>
                                 <th>Totais</th>
                                 <td>{{ number_format($total_earnings, 2) }}€</td>
@@ -340,11 +352,6 @@
 </script>
 <script>
     const ctx2 = document.getElementById('driver_earnings');
-    console.log({
-        total_earnings_uber: {!! $total_earnings_uber !!},
-        total_earnings_bolt: {!! $total_earnings_bolt !!},
-        total_tips: {!! $total_tips !!}
-    });
     new Chart(ctx2, {
       type: 'doughnut',
       data: {
@@ -480,3 +487,4 @@
     });
 </script>
 @endsection
+<script>{!! json_encode($team_results) !!}</script>

@@ -1789,5 +1789,25 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
+    'team' => [
+        'title'          => 'Team',
+        'title_singular' => 'Team',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'name'              => 'Name',
+            'name_helper'       => ' ',
+            'driver'            => 'Driver',
+            'driver_helper'     => ' ',
+            'drivers'           => 'Drivers',
+            'drivers_helper'    => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
 
 ];

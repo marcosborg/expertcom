@@ -69,6 +69,7 @@ class CompanyReportController extends Controller
             $driver_balance->tvde_week_id = $data['tvde_week_id'];
             $driver_balance->value = $data['final_total'];
             $driver_balance->balance = $last_balance ? $last_balance->balance + $data['final_total'] : $data['final_total'];
+            $driver_balance->drivers_balance = $last_balance ? $last_balance->balance + $data['final_total'] : $data['final_total'];
             $driver_balance->save();
 
             $email = $data['driver']['email'];
@@ -109,6 +110,7 @@ class CompanyReportController extends Controller
         $driver_balance->tvde_week_id = $tvde_week_id;
         $driver_balance->value = $data['final_total'];
         $driver_balance->balance = $last_balance ? $last_balance->balance + $data['final_total'] : $data['final_total'];
+        $driver_balance->drivers_balance = $last_balance ? $last_balance->balance + $data['final_total'] : $data['final_total'];
         $driver_balance->save();
 
     }

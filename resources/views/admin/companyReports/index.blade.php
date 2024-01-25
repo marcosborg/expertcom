@@ -36,6 +36,7 @@
 @endsection
 @section('scripts')
 @parent
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     validateData = () => {
         const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked:not(:disabled)');

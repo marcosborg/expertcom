@@ -56,7 +56,9 @@
                 data: data,
             },
             success: () => {
-                location.reload();
+                Swal.fire('Atualizado com sucesso').then(() => {
+                    location.reload();
+                });
             },
             error: (error) => {
                 console.log(error);

@@ -23,6 +23,7 @@ trait Reports
         $tvde_week = TvdeWeek::find($tvde_week_id);
 
         $drivers = Driver::where('company_id', $company_id)
+            ->where('id', 274)
             ->where('state_id', 1)
             ->orderBy('name')
             ->get()
@@ -93,8 +94,8 @@ trait Reports
                 $contract_type_rank = ContractTypeRank::where([
                     'contract_type_id' => $driver->contract_type_id
                 ])
-                    ->where('from', '<=', ceil($total_earnings_no_tips))
-                    ->where('to', '>=', ceil($total_earnings_no_tips))
+                    ->where('from', '<=', ceil($total_earnings))
+                    ->where('to', '>=', ceil($total_earnings))
                     ->first();
 
                 if ($contract_type_rank) {

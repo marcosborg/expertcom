@@ -48,23 +48,23 @@
                             <tr>
                                 <th>UBER</th>
                                 <td>{{ $total_earnings_uber }}€</td>
-                                @if ($driver)
-                                <td>{{ $contract_type_rank ? $contract_type_rank->percent : '' }}%</td>
+                                @if ($driver || $team_results)
+                                <td>{{ $contract_type_rank ? $contract_type_rank->percent : '0' }}%</td>
                                 <td>{{ $total_uber }}€</td>
                                 @endif
                             </tr>
                             <tr>
                                 <th>BOLT</th>
                                 <td>{{ $total_earnings_bolt }}€</td>
-                                @if ($driver)
-                                <td>{{ $contract_type_rank ? $contract_type_rank->percent : '' }}%</td>
+                                @if ($driver || $team_results)
+                                <td>{{ $contract_type_rank ? $contract_type_rank->percent : '0' }}%</td>
                                 <td>{{ $total_bolt }}€</td>
                                 @endif
                             </tr>
                             <tr>
                                 <th>Gorjeta UBER</th>
                                 <td>{{ $total_tips_uber }}€</td>
-                                @if ($driver)
+                                @if ($driver || $team_results)
                                 <td>{{ $uber_tip_percent }}%</td>
                                 <td>{{ $uber_tip_after_vat }}€</td>
                                 @endif
@@ -72,18 +72,19 @@
                             <tr>
                                 <th>Gorjeta BOLT</th>
                                 <td>{{ $total_tips_bolt }}€</td>
-                                @if ($driver)
+                                @if ($driver || $team_results)
                                 <td>{{ $bolt_tip_percent }}%</td>
                                 <td>{{ $bolt_tip_after_vat }}€</td>
                                 @endif
                             </tr>
                             @if ($team_results)
                             @foreach ($team_results as $team_result)
+                            <script>console.log({!! json_encode($team_result) !!})</script>
                             <tr>
                                 <th>{{ $team_result->driver->name }}</th>
                                 <td>{{ number_format($team_result->gross_credits, 2) }}€</td>
-                                @if ($driver)
-                                <td></td>
+                                @if ($driver || $team_results)
+                                <td>{{ $team_result->contract_type_rank->percent }}%</td>
                                 <td></td>
                                 @endif
                             </tr>
@@ -92,7 +93,7 @@
                             <tr>
                                 <th>Totais</th>
                                 <td>{{ number_format($total_earnings, 2) }}€</td>
-                                @if ($driver)
+                                @if ($driver || $team_results)
                                 <td></td>
                                 <td>{{ number_format($total_after_vat, 2) }}€</td>
                                 @endif

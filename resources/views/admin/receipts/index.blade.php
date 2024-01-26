@@ -49,6 +49,9 @@
                                     Valor do recibo
                                 </th>
                                 <th>
+                                    {{ trans('cruds.receipt.fields.verified') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.receipt.fields.paid') }}
                                 </th>
                                 <th>
@@ -78,6 +81,8 @@
                                         <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>
@@ -159,6 +164,7 @@
 { data: 'balance', name: 'balance' },
 { data: 'file', name: 'file', sortable: false, searchable: false },
 { data: 'receipt_value', name: 'receipt_value', sortable: false, searchable: false },
+{ data: 'verified', name: 'verified' },
 { data: 'paid', name: 'paid'},
 { data: 'created_at', name: 'created_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
@@ -199,16 +205,28 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 </script>
 <script>
     checkPay = (receipt_id) => {
+        if($('#verified-' + receipt_id).prop('checked') == true){
+            $('#check-' + receipt_id).attr('disabled', 'true');
+            $.get('/admin/receipts/checkPay/' + receipt_id).then((resp) => {
+                console.log(resp);
+            });
+        } else {
+            alert('Falta verificar o recibo.');
+            $('#check-' + receipt_id).prop('checked', false);
+        }
+    }
+
+    checkVerified = (receipt_id) => {
 
         var receipt_value = $('#receipt_value-' + receipt_id).val();
         if(receipt_value.length > 0){
-            $('#check-' + receipt_id).attr('disabled', 'true');
-        $.get('/admin/receipts/checkPay/' + receipt_id + '/' + receipt_value).then((resp) => {
-            console.log(resp);
-        });
+            $('#verified-' + receipt_id).attr('disabled', 'true');
+            $.get('/admin/receipts/checkVerified/' + receipt_id + '/' + receipt_value).then((resp) => {
+                console.log(resp);
+            });
         } else {
             alert('Falta o valor do recibo.');
-            $('#check-' + receipt_id).prop('checked', false);
+            $('#verified-' + receipt_id).prop('checked', false);
         }
     }
 </script>

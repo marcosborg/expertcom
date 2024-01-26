@@ -1203,6 +1203,8 @@ return [
             'paid_helper'       => ' ',
             'balance'           => 'Saldo',
             'balance_helper'    => ' ',
+            'verified'          => 'Verified',
+            'verified_helper'   => ' ',
         ],
     ],
     'myReceipt' => [

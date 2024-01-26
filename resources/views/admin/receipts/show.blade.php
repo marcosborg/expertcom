@@ -63,6 +63,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.receipt.fields.verified') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $receipt->verified ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.receipt.fields.balance') }}
                                     </th>
                                     <td>

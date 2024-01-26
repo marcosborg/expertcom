@@ -40,6 +40,9 @@
                                     {{ trans('cruds.receipt.fields.value') }}
                                 </th>
                                 <th>
+                                    Saldo
+                                </th>
+                                <th>
                                     {{ trans('cruds.receipt.fields.file') }}
                                 </th>
                                 <th>
@@ -59,7 +62,6 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search">
@@ -80,7 +82,6 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -89,7 +90,8 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>
@@ -154,6 +156,7 @@
 { data: 'driver_name', name: 'driver.name' },
 { data: 'driver.code', name: 'driver.code' },
 { data: 'value', name: 'value' },
+{ data: 'balance', name: 'balance' },
 { data: 'file', name: 'file', sortable: false, searchable: false },
 { data: 'receipt_value', name: 'receipt_value', sortable: false, searchable: false },
 { data: 'paid', name: 'paid'},

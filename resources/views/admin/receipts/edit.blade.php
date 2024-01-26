@@ -52,6 +52,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.receipt.fields.paid_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('balance') ? 'has-error' : '' }}">
+                            <label for="balance">{{ trans('cruds.receipt.fields.balance') }}</label>
+                            <input class="form-control" type="number" name="balance" id="balance" value="{{ old('balance', $receipt->balance) }}" step="0.01">
+                            @if($errors->has('balance'))
+                                <span class="help-block" role="alert">{{ $errors->first('balance') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.receipt.fields.balance_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

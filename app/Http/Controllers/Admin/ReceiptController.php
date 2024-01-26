@@ -68,6 +68,9 @@ class ReceiptController extends Controller
             $table->editColumn('value', function ($row) {
                 return $row->value ? $row->value : '';
             });
+            $table->editColumn('balance', function ($row) {
+                return $row->balance ? $row->balance : '';
+            });
             $table->editColumn('file', function ($row) {
                 return $row->file ? '<a href="' . $row->file->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });

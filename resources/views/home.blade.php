@@ -196,6 +196,7 @@
                         @csrf
                         <input type="hidden" name="driver_id" value="{{ $driver_id }}">
                         <input type="hidden" name="tvde_week_id" value="{{ $tvde_week_id }}">
+                        <input type="hidden" name="balance" value="{{ $driver_balance->drivers_balance }}">
                         <div class="form-group {{ $errors->has('value') ? 'has-error' : '' }}">
                             <label class="required" for="value">Saldo</label>
                             <input class="form-control" type="number" name="value" id="value"

@@ -61,6 +61,14 @@
                                         <input type="checkbox" disabled="disabled" {{ $receipt->paid ? 'checked' : '' }}>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.receipt.fields.balance') }}
+                                    </th>
+                                    <td>
+                                        {{ $receipt->balance }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

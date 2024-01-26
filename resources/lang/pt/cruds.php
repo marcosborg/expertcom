@@ -1201,6 +1201,8 @@ return [
             'deleted_at_helper' => ' ',
             'paid'              => 'Pago',
             'paid_helper'       => ' ',
+            'balance'           => 'Saldo',
+            'balance_helper'    => ' ',
         ],
     ],
     'myReceipt' => [

@@ -223,6 +223,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             $('#verified-' + receipt_id).attr('disabled', 'true');
             $.get('/admin/receipts/checkVerified/' + receipt_id + '/' + receipt_value).then((resp) => {
                 console.log(resp);
+                $('#receipt_value-' + receipt_id).attr('disabled', 'true');
             });
         } else {
             alert('Falta o valor do recibo.');

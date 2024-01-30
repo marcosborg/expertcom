@@ -75,7 +75,7 @@ class ReceiptController extends Controller
                 return $row->file ? '<a href="' . $row->file->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
             $table->editColumn('receipt_value', function ($row) {
-                return '<input id="receipt_value-' . $row->id . '" type="number">';
+                return '<input id="receipt_value-' . $row->id . '" type="number" value="' . $row->verified_value . '" ' . ($row->verified ? 'disabled' : '') . '>';
             });
             $table->editColumn('verified', function ($row) {
                 return '<input id="verified-' . $row->id . '" onclick="checkVerified(' . $row->id . ')" type="checkbox" ' . ($row->verified ? 'disabled' : '') . ' ' . ($row->verified ? 'checked' : null) . '>';

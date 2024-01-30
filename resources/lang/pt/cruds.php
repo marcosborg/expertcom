@@ -1205,6 +1205,8 @@ return [
             'balance_helper'    => ' ',
             'verified'          => 'Verified',
             'verified_helper'   => ' ',
+            'verified_value'        => 'Verified Value',
+            'verified_value_helper' => ' ',
         ],
     ],
     'myReceipt' => [

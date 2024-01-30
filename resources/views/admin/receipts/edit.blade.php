@@ -71,6 +71,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.receipt.fields.balance_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('verified_value') ? 'has-error' : '' }}">
+                            <label for="verified_value">{{ trans('cruds.receipt.fields.verified_value') }}</label>
+                            <input class="form-control" type="number" name="verified_value" id="verified_value" value="{{ old('verified_value', $receipt->verified_value) }}" step="0.01">
+                            @if($errors->has('verified_value'))
+                                <span class="help-block" role="alert">{{ $errors->first('verified_value') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.receipt.fields.verified_value_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

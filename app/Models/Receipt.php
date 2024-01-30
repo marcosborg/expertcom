@@ -30,6 +30,7 @@ class Receipt extends Model implements HasMedia
         'driver_id',
         'value',
         'balance',
+        'verified_value',
         'verified',
         'paid',
         'created_at',

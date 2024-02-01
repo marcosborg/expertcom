@@ -230,9 +230,9 @@
                             @if ($team_final_total)
                             <tr>
                                 <th>Equipa</th>
-                                <th></th>
-                                <td style="text-align: right;">{{ number_format($team_final_total, 2) }}€</td>
-                                <td></td>
+                                <td style="text-align: right;">{{ number_format($team_liquid_credits, 2) }}€</td>
+                                <td style="text-align: right;">- {{ number_format($team_final_total, 2) }}€</td>
+                                <td style="text-align: right;">{{ number_format($team_final_result, 2) }}€</td>
                             </tr>
                             @endif
                             <tr>

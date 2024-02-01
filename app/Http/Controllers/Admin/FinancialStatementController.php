@@ -69,7 +69,6 @@ class FinancialStatementController extends Controller
                 $total_earnings_no_tip = 0;
                 $total_tips = 0;
                 $gross_credits = 0;
-
             }
 
         } else {
@@ -116,6 +115,8 @@ class FinancialStatementController extends Controller
         $total_earnings = isset($results) ? $results->total_earnings : $total_earnings ?? 0;
         $total_after_vat = isset($results) ? $results->total_after_vat : 0;
         $gross_debts = isset($results) ? $results->gross_debts : 0;
+        $gross_credits = isset($results) ? $results->gross_credits : $gross_credits ?? 0;
+        $final_total = isset($results) ? $results->final_total : 0;
 
         $team_results = [];
         $team_gross_credits = [];
@@ -142,11 +143,15 @@ class FinancialStatementController extends Controller
         $team_gross_credits = array_sum($team_gross_credits);
         $team_liquid_credits = array_sum($team_liquid_credits);
         $team_final_total = array_sum($team_final_total);
+        $team_final_result = 0;
 
         if ($team_gross_credits > 0) {
             $total_earnings = $total_earnings + $team_gross_credits;
             $total_after_vat = $total_after_vat + $team_liquid_credits;
             $gross_debts = $gross_debts + $team_final_total;
+            $gross_credits = $gross_credits + $team_liquid_credits;
+            $team_final_result = $team_liquid_credits - $team_final_total;
+            $final_total = $gross_credits - $gross_debts;
         }
 
         //GRAFICOS
@@ -212,9 +217,9 @@ class FinancialStatementController extends Controller
             'total_earnings_no_tip' => isset($results) ? $results->total_earnings_no_tip : $total_earnings_no_tip ?? 0,
             'total' => isset($results) ? $results->total : 0,
             'total_after_vat' => $total_after_vat,
-            'gross_credits' => isset($results) ? $results->gross_credits : $gross_credits ?? 0,
+            'gross_credits' => $gross_credits,
             'gross_debts' => $gross_debts,
-            'final_total' => isset($results) ? $results->final_total : 0,
+            'final_total' => $final_total,
             'driver' => isset($driver) ? $driver : null,
             'team_earnings' => $team_earnings,
             'electric_expenses' => isset($results) ? $results->electric_expenses : 0,
@@ -226,6 +231,8 @@ class FinancialStatementController extends Controller
             'driver_balance' => $driver_balance ?? null,
             'team_results' => $team_results ?? null,
             'team_final_total' => $team_final_total,
+            'team_liquid_credits' => $team_liquid_credits,
+            'team_final_result' => $team_final_result
         ]);
     }
 

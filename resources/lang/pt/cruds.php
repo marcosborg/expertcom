@@ -1207,6 +1207,8 @@ return [
             'verified_helper'   => ' ',
             'verified_value'        => 'Verified Value',
             'verified_value_helper' => ' ',
+            'amount_transferred'        => 'Amount Transferred',
+            'amount_transferred_helper' => ' ',
         ],
     ],
     'myReceipt' => [

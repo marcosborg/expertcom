@@ -33,6 +33,7 @@ class Receipt extends Model implements HasMedia
         'verified_value',
         'verified',
         'paid',
+        'amount_transferred',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -84,7 +84,11 @@ class ReceiptController extends Controller
                 return '<input id="check-' . $row->id . '" onclick="checkPay(' . $row->id . ')" type="checkbox" ' . ($row->paid ? 'disabled' : '') . ' ' . ($row->paid ? 'checked' : null) . '>';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'driver', 'file', 'receipt_value', 'paid', 'verified']);
+            $table->editColumn('amount_transferred', function ($row) {
+                return '<input id="amount_transferred-' . $row->id . '" type="number" value="' . $row->amount_transferred . '" ' . ($row->verified ? 'disabled' : '') . '>';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'driver', 'file', 'receipt_value', 'amount_transferred', 'paid', 'verified']);
 
             return $table->make(true);
         }
@@ -210,10 +214,12 @@ class ReceiptController extends Controller
 
     }
 
-    public function checkVerified($receipt_id, $receipt_value)
+    public function checkVerified($receipt_id, $receipt_value, $amount_transferred)
     {
         $receipt = Receipt::find($receipt_id);
         $receipt->verified = true;
+        $receipt->verified_value = $receipt_value;
+        $receipt->amount_transferred = $amount_transferred;
         $receipt->save();
 
         //AtualDriversBalance

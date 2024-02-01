@@ -85,6 +85,14 @@
                                         {{ $receipt->verified_value }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.receipt.fields.amount_transferred') }}
+                                    </th>
+                                    <td>
+                                        {{ $receipt->amount_transferred }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

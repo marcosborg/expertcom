@@ -52,6 +52,9 @@
                                     {{ trans('cruds.receipt.fields.verified') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.receipt.fields.amount_transferred') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.receipt.fields.paid') }}
                                 </th>
                                 <th>
@@ -81,6 +84,8 @@
                                         <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>
@@ -165,6 +170,7 @@
 { data: 'file', name: 'file', sortable: false, searchable: false },
 { data: 'receipt_value', name: 'receipt_value', sortable: false, searchable: false },
 { data: 'verified', name: 'verified' },
+{ data: 'amount_transferred', name: 'amount_transferred'},
 { data: 'paid', name: 'paid'},
 { data: 'created_at', name: 'created_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
@@ -217,17 +223,18 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
     }
 
     checkVerified = (receipt_id) => {
-
         var receipt_value = $('#receipt_value-' + receipt_id).val();
-        if(receipt_value.length > 0){
+        var amount_transferred = $('#amount_transferred-' + receipt_id).val();
+        if(receipt_value.length > 0 && amount_transferred.length > 0){
             $('#verified-' + receipt_id).attr('disabled', 'true');
-            $.get('/admin/receipts/checkVerified/' + receipt_id + '/' + receipt_value).then((resp) => {
-                console.log(resp);
+            $.get('/admin/receipts/checkVerified/' + receipt_id + '/' + receipt_value + '/' + amount_transferred).then((resp) => {
                 $('#receipt_value-' + receipt_id).attr('disabled', 'true');
+                $('#amount_transferred-' + receipt_id).attr('disabled', 'true');
             });
         } else {
-            alert('Falta o valor do recibo.');
+            alert('Valor do recibo e quantia a transferir obrigatórios.');
             $('#verified-' + receipt_id).prop('checked', false);
+            $('#amount_transferred-' + receipt_id).prop('checked', false);
         }
     }
 </script>

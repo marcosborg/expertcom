@@ -65,16 +65,16 @@
                                 <th>Gorjeta UBER</th>
                                 <td>{{ $total_tips_uber }}€</td>
                                 @if ($driver || $team_results)
-                                <td>{{ $uber_tip_percent }}%</td>
-                                <td>{{ $uber_tip_after_vat }}€</td>
+                                <td>{{ number_format($uber_tip_percent, 2) }}%</td>
+                                <td>{{ number_format($uber_tip_after_vat, 2) }}€</td>
                                 @endif
                             </tr>
                             <tr>
                                 <th>Gorjeta BOLT</th>
                                 <td>{{ $total_tips_bolt }}€</td>
                                 @if ($driver || $team_results)
-                                <td>{{ $bolt_tip_percent }}%</td>
-                                <td>{{ $bolt_tip_after_vat }}€</td>
+                                <td>{{ number_format($bolt_tip_percent, 2) }}%</td>
+                                <td>{{ number_format($bolt_tip_after_vat, 2) }}€</td>
                                 @endif
                             </tr>
                             @if ($team_results)
@@ -83,8 +83,8 @@
                                 <th>{{ $team_result->driver->name }}</th>
                                 <td>{{ number_format($team_result->gross_credits, 2) }}€</td>
                                 @if ($driver || $team_results)
-                                <td>{{ $team_result->contract_type_rank->percent }}%</td>
-                                <td></td>
+                                <td>{{ number_format($driver->contract_type->contract_type_ranks[0]->percent, 2) }}%</td>
+                                <td>{{ $team_result->total_after_vat }}€</td>
                                 @endif
                             </tr>
                             @endforeach
@@ -224,6 +224,14 @@
                                 <th>Taxa administrativa</th>
                                 <td></td>
                                 <td>- {{ number_format($txt_admin, 2) }}€</td>
+                                <td></td>
+                            </tr>
+                            @endif
+                            @if ($team_final_total)
+                            <tr>
+                                <th>Equipa</th>
+                                <th></th>
+                                <td style="text-align: right;">{{ number_format($team_final_total, 2) }}€</td>
                                 <td></td>
                             </tr>
                             @endif
@@ -487,4 +495,6 @@
     });
 </script>
 @endsection
-<script>{!! json_encode($team_results) !!}</script>
+<script>
+    {!! json_encode($team_results) !!}
+</script>

@@ -79,7 +79,6 @@
                             </tr>
                             @if ($team_results)
                             @foreach ($team_results as $team_result)
-                            <script>console.log({!! json_encode($team_result) !!})</script>
                             <tr>
                                 <th>{{ $team_result->driver->name }}</th>
                                 <td>{{ number_format($team_result->gross_credits, 2) }}€</td>

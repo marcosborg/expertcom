@@ -45,6 +45,8 @@ class FinancialStatementController extends Controller
 
         $driver_id = session()->get('driver_id') ? session()->get('driver_id') : $driver_id = 0;
 
+        $total_earnings = 0;
+
         if ($driver_id != 0) {
 
             $driver = Driver::find($driver_id)->load([

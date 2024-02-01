@@ -68,18 +68,7 @@ class DriverController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
-            $table->addColumn('card_code', function ($row) {
-                return $row->card ? $row->card->code : '';
-            });
-
-            $table->addColumn('electric_code', function ($row) {
-                return $row->electric ? $row->electric->code : '';
-            });
-
-            $table->addColumn('tool_code', function ($row) {
-                return $row->tool ? $row->tool->code : '';
-            });
-
+            
             $table->addColumn('local_name', function ($row) {
                 return $row->local ? $row->local->name : '';
             });

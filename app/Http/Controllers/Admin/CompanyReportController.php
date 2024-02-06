@@ -72,10 +72,13 @@ class CompanyReportController extends Controller
             $driver_balance->drivers_balance = $last_balance ? $last_balance->balance + $data['final_total'] : $data['final_total'];
             $driver_balance->save();
 
+            /*
             $email = $data['driver']['email'];
 
+            
             Notification::route('mail', $email)
                 ->notify(new ActivityLaunchesSend());
+            */ 
 
         }
     }

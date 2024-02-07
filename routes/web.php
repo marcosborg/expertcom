@@ -287,6 +287,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('receipts/ckmedia', 'ReceiptController@storeCKEditorImages')->name('receipts.storeCKEditorImages');
     Route::get('receipts/checkPay/{receipt_id}', 'ReceiptController@checkPay');
     Route::get('receipts/checkVerified/{receipt_id}/{receipt_value}/{amount_transferred}', 'ReceiptController@checkVerified');
+    Route::get('receipts/paid', 'ReceiptController@index');
     Route::resource('receipts', 'ReceiptController');
 
     // My Receipts

@@ -7,6 +7,11 @@
             <a class="btn btn-success" href="{{ route('admin.receipts.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.receipt.title_singular') }}
             </a>
+            @if (url()->current() == url('/admin/receipts/paid'))
+            <a href="/admin/receipts" class="btn btn-primary pull-right">Ver não pagos</a>
+            @else
+            <a href="/admin/receipts/paid" class="btn btn-primary pull-right">Ver histórico dos recibos pagos</a>
+            @endif
         </div>
     </div>
     @endcan
@@ -158,7 +163,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.receipts.index') }}",
+    ajax: "/admin/receipts{{ url()->current() == url('/admin/receipts/paid') ? '/paid' : '' }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },

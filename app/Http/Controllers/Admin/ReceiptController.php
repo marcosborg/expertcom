@@ -26,7 +26,11 @@ class ReceiptController extends Controller
         abort_if(Gate::denies('receipt_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Receipt::with(['driver.company'])->select(sprintf('%s.*', (new Receipt)->table));
+
+            $query = Receipt::where('paid', url()->current() == url('/admin/receipts/paid') ? 1 : 0)
+                ->with(['driver.company'])
+                ->select(sprintf('%s.*', (new Receipt)->table));
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

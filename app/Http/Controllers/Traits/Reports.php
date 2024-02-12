@@ -68,7 +68,7 @@ trait Reports
             $bolt_tips = $bolt_activities->sum('earnings_one');
             $bolt_earnings = $bolt_total_earnings - $bolt_tips;
 
-            if ($bolt_total_earnings > 0 || $uber_total_earnings > 0) {
+            
 
                 //EARNINGS
 
@@ -231,7 +231,7 @@ trait Reports
                     $driver->current_account = false;
                 }
 
-            }
+            
 
         }
 

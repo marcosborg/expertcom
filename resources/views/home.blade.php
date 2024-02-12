@@ -25,7 +25,7 @@
             }} a {{ \Carbon\Carbon::parse($tvde_week->end_date)->format('d') }}</a>
         @endforeach
     </div>
-    @if ($total_earnings_after_vat > 0)
+    
     <div class="row" style="margin-top: 5px;">
         <div class="col-md-6">
             <div class="panel panel-default">
@@ -277,11 +277,7 @@
         </div>
     </div>
 </div>
-@else
-<div class="alert alert-info" style="margin-top: 20px;" role="alert">
-    Não temos registo de viagens para este motorista nesta semana.
-</div>
-@endif
+
 @else
 <div class="alert alert-info">
     Ainda não tem um papel atribuido como Driver. Peça ajuda ao seu gestor de conta.

@@ -130,12 +130,14 @@ class FinancialStatementController extends Controller
                         'tvde_week_id' => $tvde_week_id,
                         'driver_id' => $team_driver->id
                     ])->first();
-                    $d = json_decode($r->data);
-                    $d->total_after_vat = round((($driver->contract_type->contract_type_ranks[0]->percent * $d->total_earnings)/100), 2);
-                    $team_results[] = $d;
-                    $team_gross_credits[] = $d->gross_credits;
-                    $team_liquid_credits[] = $d->total_after_vat;
-                    $team_final_total[] = $d->final_total;
+                    if ($r) {
+                        $d = json_decode($r->data);
+                        $d->total_after_vat = round((($driver->contract_type->contract_type_ranks[0]->percent * $d->total_earnings) / 100), 2);
+                        $team_results[] = $d;
+                        $team_gross_credits[] = $d->gross_credits;
+                        $team_liquid_credits[] = $d->total_after_vat;
+                        $team_final_total[] = $d->final_total;
+                    }
                 }
             }
         }

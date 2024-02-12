@@ -25,7 +25,7 @@
             }} a {{ \Carbon\Carbon::parse($tvde_week->end_date)->format('d') }}</a>
         @endforeach
     </div>
-    
+
     <div class="row" style="margin-top: 5px;">
         <div class="col-md-6">
             <div class="panel panel-default">
@@ -166,6 +166,7 @@
                                 @endif
                             </tr>
                             @endif
+                            @if ($adjustments)
                             @foreach ($adjustments as $adjustment)
                             <tr>
                                 <th>{{ $adjustment->name }}</th>
@@ -173,6 +174,7 @@
                                 <td>{{ $adjustment->type == 'deduct' ? '- ' . $adjustment->amount . '€' : '' }}</td>
                             </tr>
                             @endforeach
+                            @endif
                             @if ($txt_admin > 0)
                             <tr>
                                 <th>Taxa administrativa</th>
@@ -191,8 +193,8 @@
                     Recibo
                 </div>
                 <div class="panel-body">
-                    @if ($driver_balance->drivers_balance > 0)
-                    <form method="POST" action="{{ route("admin.receipts.store") }}" enctype="multipart/form-data">
+                    @if ($driver_balance && $driver_balance->drivers_balance > 0)
+                    <form method="POST" action="{{ route(" admin.receipts.store") }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="driver_id" value="{{ $driver_id }}">
                         <input type="hidden" name="tvde_week_id" value="{{ $tvde_week_id }}">
@@ -239,6 +241,7 @@
                                 class="fa fa-cloud-download"></i></a>
                     </div>
                 </div>
+                @if ($driver_balance)
                 <div class="panel-footer">
                     <form action="/admin/financial-statements/update-balance" method="post" id="update-balance">
                         @csrf
@@ -251,6 +254,7 @@
                             </div>
                     </form>
                 </div>
+                @endif
             </div>
         </div>
     </div>

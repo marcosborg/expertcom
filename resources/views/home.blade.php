@@ -194,7 +194,7 @@
                 </div>
                 <div class="panel-body">
                     @if ($driver_balance && $driver_balance->drivers_balance > 0)
-                    <form method="POST" action="{{ route(" admin.receipts.store") }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route("admin.receipts.store") }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="driver_id" value="{{ $driver_id }}">
                         <input type="hidden" name="tvde_week_id" value="{{ $tvde_week_id }}">

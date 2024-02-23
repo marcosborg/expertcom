@@ -55,6 +55,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('company-dashboard', 'HomeController@companyDashboard');
+    Route::get('company-invoice-dashboard', 'HomeController@companyInvoiceDashboard');
 
     Route::get('/select-company/{company_id}', 'HomeController@selectCompany');
 

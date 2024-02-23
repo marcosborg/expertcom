@@ -73,4 +73,9 @@ class Company extends Model implements HasMedia
     {
         return $this->hasMany(TvdeActivity::class);
     }
+
+    public function company_invoices()
+    {
+        return $this->hasMany(CompanyInvoice::class)->orderBy('id', 'desc');
+    }
 }

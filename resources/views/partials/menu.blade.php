@@ -1285,6 +1285,14 @@
                 </ul>
             </li>
             @endcan
+            @if (auth()->user()->hasRole('Empresas Associadas'))
+            <li class="{{ request()->is("admin/company-dashboard") ? "active" : "" }}">
+                <a href="/admin/company-dashboard">
+                    <i class="fa-fw fas fa-file-contract"></i>
+                    <span>Relatórios</span>
+                </a>
+            </li>
+            @endif
             @php($unread = \App\Models\QaTopic::unreadCount())
             <li class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "active" : "" }}">
                 <a href="{{ route("admin.messenger.index") }}">

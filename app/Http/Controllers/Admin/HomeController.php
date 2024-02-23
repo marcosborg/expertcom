@@ -24,7 +24,7 @@ class HomeController
     {
 
         if (auth()->user()->hasRole('Empresas Associadas')) {
-            return redirect('/admin/company-dashboard');
+            return redirect('/admin/company-invoice-dashboard');
         }
 
         if (auth()->user()->hasRole('Driver') && auth()->user()->driver->count() > 0) {
@@ -244,6 +244,19 @@ class HomeController
             'roi',
             'total_consultancy'
         ]));
+    }
+
+    public function companyInvoiceDashboard()
+    {
+
+        $company = auth()->user()->company->load('company_invoices');
+
+        if ($company->suspended) {
+            session()->flush();
+            return redirect('/login')->with('message', 'A sua conta está suspensa. Entre em contacto com a ' . env('APP_NAME'));
+        }
+
+        return view('admin.companyInvoiceDashboard.index', compact('company'));
     }
 
 }

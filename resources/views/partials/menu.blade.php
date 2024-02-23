@@ -65,6 +65,17 @@
                         </a>
                     </li>
                     @endcan
+                    @can('company_invoice_access')
+                            <li class="{{ request()->is("admin/company-invoices") || request()->is("admin/company-invoices/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.company-invoices.index") }}">
+                                    <i class="fa-fw fas fa-building">
+
+                                    </i>
+                                    <span>{{ trans('cruds.companyInvoice.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                 </ul>
             </li>
             @endcan

@@ -482,6 +482,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('teams/destroy', 'TeamController@massDestroy')->name('teams.massDestroy');
     Route::resource('teams', 'TeamController');
 
+    // Company Invoice
+    Route::delete('company-invoices/destroy', 'CompanyInvoiceController@massDestroy')->name('company-invoices.massDestroy');
+    Route::post('company-invoices/media', 'CompanyInvoiceController@storeMedia')->name('company-invoices.storeMedia');
+    Route::post('company-invoices/ckmedia', 'CompanyInvoiceController@storeCKEditorImages')->name('company-invoices.storeCKEditorImages');
+    Route::resource('company-invoices', 'CompanyInvoiceController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

@@ -83,7 +83,11 @@ class CompanyController extends Controller
                 return $row->user ? $row->user->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'logo', 'user']);
+            $table->editColumn('suspended', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->suspended ? 'checked' : null) . '>';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'logo', 'user', 'suspended']);
 
             return $table->make(true);
         }

@@ -1,16 +1,12 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content">
-    @can('company_create')
+    @can('company_invoice_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route('admin.companies.create') }}">
-                    {{ trans('global.add') }} {{ trans('cruds.company.title_singular') }}
+                <a class="btn btn-success" href="{{ route('admin.company-invoices.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.companyInvoice.title_singular') }}
                 </a>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                    {{ trans('global.app_csvImport') }}
-                </button>
-                @include('csvImport.modal', ['model' => 'Company', 'route' => 'admin.companies.parseCsvImport'])
             </div>
         </div>
     @endcan
@@ -18,47 +14,32 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('cruds.company.title_singular') }} {{ trans('global.list') }}
+                    {{ trans('cruds.companyInvoice.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Company">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-CompanyInvoice">
                         <thead>
                             <tr>
                                 <th width="10">
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.id') }}
+                                    {{ trans('cruds.companyInvoice.fields.id') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.name') }}
+                                    {{ trans('cruds.companyInvoice.fields.company') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.vat') }}
+                                    {{ trans('cruds.companyInvoice.fields.tvde_week') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.address') }}
+                                    {{ trans('cruds.companyInvoice.fields.invoice') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.zip') }}
+                                    {{ trans('cruds.companyInvoice.fields.info') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.location') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.email') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.logo') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.main') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.user') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.suspended') }}
+                                    {{ trans('cruds.companyInvoice.fields.payed') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -80,11 +61,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('company_delete')
+@can('company_invoice_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.companies.massDestroy') }}",
+    url: "{{ route('admin.company-invoices.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -116,27 +97,22 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.companies.index') }}",
+    ajax: "{{ route('admin.company-invoices.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
-{ data: 'vat', name: 'vat' },
-{ data: 'address', name: 'address' },
-{ data: 'zip', name: 'zip' },
-{ data: 'location', name: 'location' },
-{ data: 'email', name: 'email' },
-{ data: 'logo', name: 'logo', sortable: false, searchable: false },
-{ data: 'main', name: 'main' },
-{ data: 'user_name', name: 'user.name' },
-{ data: 'suspended', name: 'suspended' },
+{ data: 'company_name', name: 'company.name' },
+{ data: 'tvde_week_start_date', name: 'tvde_week.start_date' },
+{ data: 'invoice', name: 'invoice', sortable: false, searchable: false },
+{ data: 'info', name: 'info' },
+{ data: 'payed', name: 'payed' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   };
-  let table = $('.datatable-Company').DataTable(dtOverrideGlobals);
+  let table = $('.datatable-CompanyInvoice').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

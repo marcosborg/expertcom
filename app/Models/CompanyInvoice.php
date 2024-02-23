@@ -10,14 +10,14 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Company extends Model implements HasMedia
+class CompanyInvoice extends Model implements HasMedia
 {
     use SoftDeletes, InteractsWithMedia, HasFactory;
 
-    public $table = 'companies';
+    public $table = 'company_invoices';
 
     protected $appends = [
-        'logo',
+        'invoice',
     ];
 
     protected $dates = [
@@ -27,15 +27,10 @@ class Company extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'name',
-        'vat',
-        'address',
-        'zip',
-        'location',
-        'email',
-        'user_id',
-        'suspended',
-        'main',
+        'company_id',
+        'tvde_week_id',
+        'info',
+        'payed',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -52,25 +47,18 @@ class Company extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function getLogoAttribute()
+    public function company()
     {
-        $file = $this->getMedia('logo')->last();
-        if ($file) {
-            $file->url = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-            $file->preview = $file->getUrl('preview');
-        }
-
-        return $file;
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
-    public function user()
+    public function tvde_week()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(TvdeWeek::class, 'tvde_week_id');
     }
 
-    public function tvde_activities()
+    public function getInvoiceAttribute()
     {
-        return $this->hasMany(TvdeActivity::class);
+        return $this->getMedia('invoice');
     }
 }

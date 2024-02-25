@@ -45,6 +45,15 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.companyInvoice.fields.invoice_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('payment_receipt') ? 'has-error' : '' }}">
+                            <label for="payment_receipt">{{ trans('cruds.companyInvoice.fields.payment_receipt') }}</label>
+                            <div class="needsclick dropzone" id="payment_receipt-dropzone">
+                            </div>
+                            @if($errors->has('payment_receipt'))
+                                <span class="help-block" role="alert">{{ $errors->first('payment_receipt') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.companyInvoice.fields.payment_receipt_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('info') ? 'has-error' : '' }}">
                             <label for="info">{{ trans('cruds.companyInvoice.fields.info') }}</label>
                             <textarea class="form-control" name="info" id="info">{{ old('info', $companyInvoice->info) }}</textarea>
@@ -117,6 +126,56 @@ Dropzone.options.invoiceDropzone = {
               file.previewElement.classList.add('dz-complete')
               $('form').append('<input type="hidden" name="invoice[]" value="' + file.file_name + '">')
             }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+<script>
+    Dropzone.options.paymentReceiptDropzone = {
+    url: '{{ route('admin.company-invoices.storeMedia') }}',
+    maxFilesize: 2, // MB
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 2
+    },
+    success: function (file, response) {
+      $('form').find('input[name="payment_receipt"]').remove()
+      $('form').append('<input type="hidden" name="payment_receipt" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="payment_receipt"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($companyInvoice) && $companyInvoice->payment_receipt)
+      var file = {!! json_encode($companyInvoice->payment_receipt) !!}
+          this.options.addedfile.call(this, file)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="payment_receipt" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
 @endif
     },
      error: function (file, response) {

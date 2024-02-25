@@ -55,6 +55,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.companyInvoice.fields.payment_receipt') }}
+                                    </th>
+                                    <td>
+                                        @if($companyInvoice->payment_receipt)
+                                            <a href="{{ $companyInvoice->payment_receipt->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.companyInvoice.fields.info') }}
                                     </th>
                                     <td>

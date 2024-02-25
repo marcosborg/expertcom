@@ -18,6 +18,7 @@ class CompanyInvoice extends Model implements HasMedia
 
     protected $appends = [
         'invoice',
+        'payment_receipt',
     ];
 
     protected $dates = [
@@ -60,5 +61,10 @@ class CompanyInvoice extends Model implements HasMedia
     public function getInvoiceAttribute()
     {
         return $this->getMedia('invoice');
+    }
+
+    public function getPaymentReceiptAttribute()
+    {
+        return $this->getMedia('payment_receipt')->last();
     }
 }

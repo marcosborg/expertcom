@@ -14,11 +14,15 @@ use App\Models\CompanyExpense;
 use App\Models\CompanyPark;
 use App\Models\Consultancy;
 use App\Models\Company;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
+use Illuminate\Http\Request;
+use App\Models\CompanyInvoice;
 
 class HomeController
 {
 
     use Reports;
+    use MediaUploadingTrait;
 
     public function index()
     {
@@ -257,6 +261,16 @@ class HomeController
         }
 
         return view('admin.companyInvoiceDashboard.index', compact('company'));
+    }
+
+    public function companyInvoiceUploadMedia(Request $request)
+    {
+        $file = $this->storeMedia($request);
+        $fileData = json_decode($file->content());
+        $fileName = $fileData->name;
+        $company_invoice = CompanyInvoice::find($request->company_invoice_id);
+        $company_invoice->addMedia(storage_path('tmp/uploads/' . $fileName))->toMediaCollection('payment_receipt');
+        return redirect()->back();
     }
 
 }

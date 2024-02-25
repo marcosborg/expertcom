@@ -16,6 +16,7 @@
                                     <th>Semana</th>
                                     <th>Fatura</th>
                                     <th>Informação</th>
+                                    <th>Comprovativo de pagamento</th>
                                     <th>Pago</th>
                                 </tr>
                             </thead>
@@ -31,6 +32,28 @@
                                         @endforeach
                                     </td>
                                     <td>{{ $company_invoice->info }}</td>
+                                    <td>
+                                        @if ($company_invoice->payment_receipt)
+                                        <a href="{{ $company_invoice->payment_receipt->getUrl() }}"
+                                            target="_new">Download</a>
+                                        @else
+                                        <form action="{{ route('admin.company-invoice-upload-media') }}" method="post"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <input type="hidden" name="company_invoice_id"
+                                                        value="{{ $company_invoice->id }}">
+                                                    <input type="file" class="form-control" name="file" required>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button type="submit"
+                                                        class="btn btn-success btn-sm btn-block">Enviar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($company_invoice->payed)
                                         <span class="badge badge-success">Pago</span>
@@ -54,8 +77,12 @@
     .badge-success {
         background: green;
     }
+
     .badge-danger {
         background: red;
     }
 </style>
 @endsection
+<script>
+    console.log({!! $company !!})
+</script>

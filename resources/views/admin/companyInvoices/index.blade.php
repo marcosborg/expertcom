@@ -36,6 +36,9 @@
                                     {{ trans('cruds.companyInvoice.fields.invoice') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.companyInvoice.fields.payment_receipt') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.companyInvoice.fields.info') }}
                                 </th>
                                 <th>
@@ -104,6 +107,7 @@
 { data: 'company_name', name: 'company.name' },
 { data: 'tvde_week_start_date', name: 'tvde_week.start_date' },
 { data: 'invoice', name: 'invoice', sortable: false, searchable: false },
+{ data: 'payment_receipt', name: 'payment_receipt', sortable: false, searchable: false },
 { data: 'info', name: 'info' },
 { data: 'payed', name: 'payed' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

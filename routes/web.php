@@ -56,6 +56,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('company-dashboard', 'HomeController@companyDashboard');
     Route::get('company-invoice-dashboard', 'HomeController@companyInvoiceDashboard');
+    Route::post('company-invoice-upload-media', 'HomeController@companyInvoiceUploadMedia')->name('company-invoice-upload-media');
 
     Route::get('/select-company/{company_id}', 'HomeController@selectCompany');
 

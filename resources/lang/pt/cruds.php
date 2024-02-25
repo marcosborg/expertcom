@@ -1841,6 +1841,8 @@ return [
             'updated_at_helper' => ' ',
             'deleted_at'        => 'Deleted at',
             'deleted_at_helper' => ' ',
+            'payment_receipt'        => 'Payment Receipt',
+            'payment_receipt_helper' => ' ',
         ],
     ],
 

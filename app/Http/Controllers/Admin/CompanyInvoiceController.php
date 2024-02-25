@@ -68,6 +68,9 @@ class CompanyInvoiceController extends Controller
 
                 return implode(', ', $links);
             });
+            $table->editColumn('payment_receipt', function ($row) {
+                return $row->payment_receipt ? '<a href="' . $row->payment_receipt->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
             $table->editColumn('info', function ($row) {
                 return $row->info ? $row->info : '';
             });
@@ -75,7 +78,7 @@ class CompanyInvoiceController extends Controller
                 return '<input type="checkbox" disabled ' . ($row->payed ? 'checked' : null) . '>';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'company', 'tvde_week', 'invoice', 'payed']);
+            $table->rawColumns(['actions', 'placeholder', 'company', 'tvde_week', 'invoice', 'payment_receipt', 'payed']);
 
             return $table->make(true);
         }
@@ -100,6 +103,10 @@ class CompanyInvoiceController extends Controller
 
         foreach ($request->input('invoice', []) as $file) {
             $companyInvoice->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('invoice');
+        }
+
+        if ($request->input('payment_receipt', false)) {
+            $companyInvoice->addMedia(storage_path('tmp/uploads/' . basename($request->input('payment_receipt'))))->toMediaCollection('payment_receipt');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -138,6 +145,17 @@ class CompanyInvoiceController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $companyInvoice->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('invoice');
             }
+        }
+
+        if ($request->input('payment_receipt', false)) {
+            if (! $companyInvoice->payment_receipt || $request->input('payment_receipt') !== $companyInvoice->payment_receipt->file_name) {
+                if ($companyInvoice->payment_receipt) {
+                    $companyInvoice->payment_receipt->delete();
+                }
+                $companyInvoice->addMedia(storage_path('tmp/uploads/' . basename($request->input('payment_receipt'))))->toMediaCollection('payment_receipt');
+            }
+        } elseif ($companyInvoice->payment_receipt) {
+            $companyInvoice->payment_receipt->delete();
         }
 
         return redirect()->route('admin.company-invoices.index');

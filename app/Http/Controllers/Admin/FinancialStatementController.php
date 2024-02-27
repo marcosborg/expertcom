@@ -30,6 +30,7 @@ class FinancialStatementController extends Controller
 
     public function index()
     {
+
         abort_if(Gate::denies('financial_statement_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $filter = $this->filter();
@@ -123,7 +124,7 @@ class FinancialStatementController extends Controller
         $team_liquid_credits = [];
         $team_final_total = [];
 
-        if ($driver->team->count() > 0) {
+        if ($driver_id != 0 && $driver->team->count() > 0) {
             foreach ($driver->team as $team) {
                 foreach ($team->drivers as $team_driver) {
                     $r = CurrentAccount::where([

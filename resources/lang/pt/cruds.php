@@ -1845,5 +1845,25 @@ return [
             'payment_receipt_helper' => ' ',
         ],
     ],
+    'companyData' => [
+        'title'          => 'Company Data',
+        'title_singular' => 'Company Data',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'company'           => 'Company',
+            'company_helper'    => ' ',
+            'tvde_week'         => 'Tvde Week',
+            'tvde_week_helper'  => ' ',
+            'data'              => 'Data',
+            'data_helper'       => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
 
 ];

@@ -463,6 +463,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('company_data_access')
+                            <li class="{{ request()->is("admin/company-datas") || request()->is("admin/company-datas/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.company-datas.index") }}">
+                                    <i class="fa-fw fas fa-database">
+
+                                    </i>
+                                    <span>{{ trans('cruds.companyData.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

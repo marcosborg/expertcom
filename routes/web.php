@@ -490,6 +490,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('company-invoices/ckmedia', 'CompanyInvoiceController@storeCKEditorImages')->name('company-invoices.storeCKEditorImages');
     Route::resource('company-invoices', 'CompanyInvoiceController');
 
+    // Company Data
+    Route::delete('company-datas/destroy', 'CompanyDataController@massDestroy')->name('company-datas.massDestroy');
+    Route::resource('company-datas', 'CompanyDataController');
+
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

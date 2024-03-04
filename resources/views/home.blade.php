@@ -55,7 +55,7 @@
                                 <th>Gorjeta UBER</th>
                                 <td>{{ $total_tips_uber }}€</td>
                                 @if ($driver)
-                                <td>{{ $uber_tip_percent }}%</td>
+                                <td>{{ number_format($uber_tip_percent, 2) }}%</td>
                                 <td>{{ $uber_tip_after_vat }}€</td>
                                 @endif
                             </tr>
@@ -63,10 +63,33 @@
                                 <th>Gorjeta BOLT</th>
                                 <td>{{ $total_tips_bolt }}€</td>
                                 @if ($driver)
-                                <td>{{ $bolt_tip_percent }}%</td>
+                                <td>{{ number_format($bolt_tip_percent, 2) }}%</td>
                                 <td>{{ $bolt_tip_after_vat }}€</td>
                                 @endif
                             </tr>
+                            @php
+                            $team_earnigs = 0;
+                            $team_debts = 0;
+                            @endphp
+                            @if (count($team_drivers) > 0)
+                            @foreach ($team_drivers as $team_driver)
+                            <tr>
+                                <th>{{ $team_driver->name }}</th>
+                                <td>{{ number_format($team_driver->driver_report['total_earnings'], 2) }}</td>
+                                <td>{{ $contract_type_rank ? $contract_type_rank->percent : '' }}%</td>
+                                <td>{{ number_format(($team_driver->driver_report['total_earnings'] *
+                                    $contract_type_rank->percent) / 100, 2) }}</td>
+                            </tr>
+                            @php
+                            $total_earnings = $total_earnings + $team_driver->driver_report['total_earnings'];
+                            $total_after_vat = $total_after_vat + (($team_driver->driver_report['total_earnings'] *
+                            $contract_type_rank->percent) / 100);
+                            $team_debts = $team_debts - $team_driver->driver_report['final_total'];
+                            $team_earnigs = $team_earnigs + (($team_driver->driver_report['total_earnings'] *
+                            $contract_type_rank->percent) / 100);
+                            @endphp
+                            @endforeach
+                            @endif
                             <tr>
                                 <th>Totais</th>
                                 <td>{{ number_format($total_earnings, 2) }}€</td>
@@ -174,6 +197,16 @@
                                 <td>{{ $adjustment->type == 'deduct' ? '- ' . $adjustment->amount . '€' : '' }}</td>
                             </tr>
                             @endforeach
+                            @endif
+                            @if ($team_earnings)
+                            <tr>
+                                <th>Equipa</th>
+                                <td>{{ number_format($team_earnigs, 2) }}€</td>
+                                <td>{{ number_format($team_debts, 2) }}€</td>
+                            </tr>
+                            @php
+                            $final_total = $final_total + ($team_earnigs + $team_debts);
+                            @endphp
                             @endif
                             @if ($txt_admin > 0)
                             <tr>
@@ -494,3 +527,6 @@
 }
 </script>
 @endsection
+<script>
+    console.log({!! json_encode($team_drivers) !!})
+</script>

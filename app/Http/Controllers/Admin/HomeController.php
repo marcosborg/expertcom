@@ -71,6 +71,22 @@ class HomeController
             $results = json_decode($results->data);
         }
 
+        //TEAM
+        $team_drivers = [];
+        $driver->load('team.drivers');
+        if ($driver->team) {
+            $teams = $driver->team;
+            foreach ($teams as $team) {
+                foreach ($team->drivers as $team_driver) {
+                    $driver_report = $this->getDriverWeekReport($team_driver->id, $team_driver->company_id, $tvde_week_id);
+                    $team_driver->driver_report = $driver_report;
+                    $team_drivers[] = $team_driver;
+                }
+            }
+        }
+
+        //
+
         //GRAFICOS
 
         $team_earnings = collect();
@@ -145,7 +161,8 @@ class HomeController
             'electric_racio' => $results ? $results->electric_racio : 0,
             'total_earnings_after_vat' => $results ? $results->total_earnings_after_vat : 0,
             'txt_admin' => $results ? $results->txt_admin : 0,
-            'driver_balance' => $driver_balance
+            'driver_balance' => $driver_balance,
+            'team_drivers' => $results ? $team_drivers : [],
         ]);
     }
 

@@ -73,14 +73,16 @@ class HomeController
 
         //TEAM
         $team_drivers = [];
-        $driver->load('team.drivers');
-        if ($driver->team) {
-            $teams = $driver->team;
-            foreach ($teams as $team) {
-                foreach ($team->drivers as $team_driver) {
-                    $driver_report = $this->getDriverWeekReport($team_driver->id, $team_driver->company_id, $tvde_week_id);
-                    $team_driver->driver_report = $driver_report;
-                    $team_drivers[] = $team_driver;
+        if ($driver) {
+            $driver->load('team.drivers');
+            if ($driver->team) {
+                $teams = $driver->team;
+                foreach ($teams as $team) {
+                    foreach ($team->drivers as $team_driver) {
+                        $driver_report = $this->getDriverWeekReport($team_driver->id, $team_driver->company_id, $tvde_week_id);
+                        $team_driver->driver_report = $driver_report;
+                        $team_drivers[] = $team_driver;
+                    }
                 }
             }
         }

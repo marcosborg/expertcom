@@ -240,6 +240,7 @@ class HomeController
         }
 
         $final_total = $total_company_expenses - $totals['total_company_adjustments'] + $company_park + $totals['total_drivers'] + $total_consultancy;
+
         $final_company_expenses = $total_company_expenses - $totals['total_company_adjustments'] + $company_park - $total_consultancy;
         $profit = $totals['total_operators'] - $final_total;
 
@@ -265,8 +266,10 @@ class HomeController
             'final_company_expenses',
             'profit',
             'roi',
-            'total_consultancy'
-        ]));
+            'total_consultancy',
+        ]))->with([
+            'total_company_adjustments' => $totals['total_company_adjustments']
+        ]);
     }
 
     public function companyInvoiceDashboard()

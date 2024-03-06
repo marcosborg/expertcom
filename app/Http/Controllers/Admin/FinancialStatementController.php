@@ -46,6 +46,11 @@ class FinancialStatementController extends Controller
 
         $driver_id = session()->get('driver_id') ? session()->get('driver_id') : $driver_id = 0;
 
+        if (!session()->has('company_id')) {
+            $company_id = auth()->user()->company->id;
+            session()->put('company_id', $company_id);
+        }
+
         if ($driver_id != 0) {
 
             $driver = Driver::find($driver_id)->load([

@@ -76,7 +76,8 @@ class WeeklyExpenseReportController extends Controller
             'fleet_adjusments' => $data->fleet_adjusments,
             'fleet_consultancies' => $data->fleet_consultancies,
             'fleet_company_parks' => $data->fleet_company_parks,
-            'fleet_earnings' => $data->fleet_earnings
+            'fleet_earnings' => $data->fleet_earnings,
+            'total_company_adjustments' => $data->totals->total_company_adjustments,
         ]);
     }
 

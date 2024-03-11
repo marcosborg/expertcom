@@ -1,11 +1,15 @@
 <?php
 
-namespace App\View\Components\website\components;
+namespace App\View\Components;
 
 use Illuminate\View\Component;
+use App\Models\HeroBanner;
 
-class menu extends Component
+class hero extends Component
 {
+
+    private $hero;
+
     /**
      * Create a new component instance.
      *
@@ -13,7 +17,7 @@ class menu extends Component
      */
     public function __construct()
     {
-        //
+        $this->hero = HeroBanner::first();
     }
 
     /**
@@ -23,6 +27,6 @@ class menu extends Component
      */
     public function render()
     {
-        return view('components.website.components.menu');
+        return view('components.hero')->with('hero', $this->hero);
     }
 }

@@ -1,55 +1,8 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
-//Route::get('/', 'Website\HomePageController@index');
-Route::prefix('tvde')->group(function () {
-    Route::get('aluguer-de-viaturas', 'Website\CarsController@index');
-    Route::get('trabalhar-com-viatura-propria', 'Website\OwnCarController@index');
-    Route::prefix('stand')->group(
-        function () {
-            Route::get('/', 'Website\StandController@index');
-            Route::get('/{id}', 'Website\StandController@car');
-        }
-    );
-    Route::get('estafetas', 'Website\CouriersController@index');
-    Route::get('formacao', 'Website\TrainingsController@index');
-    Route::get('transfers-tours', 'Website\TransferTourController@index');
-    Route::get('transfer-tour/{id}', 'Website\TransferTourController@transferTour');
-    Route::get('consultadoria', 'Website\ConsultingController@index');
-});
-
-Route::prefix('loja')->group(function () {
-    Route::get('acessorios', 'Website\ProductsController@index');
-});
-
-Route::get('legal/{id}/{slug}', 'Website\LegalController@index');
-
-Route::get('pagina/{id}/{slug}', 'Website\PagesController@index');
-
-Route::get('faqs', 'Website\FaqsController@index');
-
-Route::get('userVerification/{token}', 'UserVerificationController@approve')->name('userVerification');
+Route::get('/', 'WebsiteController@index');
 
 Auth::routes(['register' => false]);
-
-Route::prefix('forms')->group(function () {
-    Route::post('newsletter', 'Website\FormsController@newsletter');
-    Route::post('carRentalContact', 'Website\FormsController@carRentalContact');
-    Route::post('ownCarContact', 'Website\FormsController@ownCarContact');
-    Route::post('courierContact', 'Website\FormsController@courierContact');
-    Route::post('trainingContact', 'Website\FormsController@trainingContact');
-    Route::post('pageContact', 'Website\FormsController@pageContact');
-    Route::post('consultingContact', 'Website\FormsController@consultingContact');
-    Route::post('transferTourContact', 'Website\FormsController@transferTourContact');
-    Route::post('standCarContact', 'Website\FormsController@standCarContact');
-});
-
-Route::prefix('ajax')->group(function () {
-    Route::get('car/{car_id}', 'Website\AjaxController@car');
-    Route::get('standCars', 'Website\AjaxController@standCars');
-});
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
@@ -495,6 +448,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('company-datas', 'CompanyDataController');
 
 });
+
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password
     if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {

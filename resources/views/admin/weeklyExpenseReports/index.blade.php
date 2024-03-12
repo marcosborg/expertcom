@@ -89,7 +89,7 @@
                                 <td>Prevenção de frota</td>
                                 <td></td>
                                 <td></td>
-                                <td style="text-align: right;">{{ number_format($total_company_expenses,
+                                <td style="text-align: right;">{{ number_format($totals->total_fleet_management,
                                     2)
                                     }} <small>€</small></td>
                             </tr>

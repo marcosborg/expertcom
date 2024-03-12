@@ -1,5 +1,5 @@
 <!-- ======= Hero Section ======= -->
-<section id="hero" style="background-image: url('{{ $hero->image->getUrl() }}')">
+<section id="hero" style="background-image: url('')">
     <div class="hero-container" data-aos="fade-up" data-aos-delay="150">
         <h1>{{ $hero->title }}</h1>
         <h2>{{ $hero->subtitle }}</h2>

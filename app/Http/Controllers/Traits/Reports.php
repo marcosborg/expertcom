@@ -553,13 +553,13 @@ trait Reports
 
     public function saveCompanyExpenses($company_id, $tvde_week_id)
     {
-        $now = \Carbon\Carbon::now()->format('Y-m-d');
+        $tvde_week = TvdeWeek::find($tvde_week_id);
 
         $company_expenses = CompanyExpense::where([
             'company_id' => $company_id,
         ])
-            ->where('start_date', '<=', $now)
-            ->where('end_date', '>=', $now)
+            ->where('start_date', '<=', $tvde_week->start_date)
+            ->where('end_date', '>=', $tvde_week->start_date)
             ->get();
 
         $company_expenses = $company_expenses->map(function ($expense) {

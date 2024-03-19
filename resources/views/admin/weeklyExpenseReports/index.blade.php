@@ -89,7 +89,7 @@
                                 <td>Prevenção de frota</td>
                                 <td></td>
                                 <td></td>
-                                <td style="text-align: right;">{{ number_format($totals->total_fleet_management, 2)
+                                <td style="text-align: right;">{{ number_format(isset($totals->total_fleet_management) ? $totals->total_fleet_management : $totals['total_fleet_management'], 2)
                                     }} <small>€</small></td>
                             </tr>
                             <tr>
@@ -110,7 +110,7 @@
                                 <td>Pagamentos a motoristas</td>
                                 <td></td>
                                 <td></td>
-                                <td style="text-align: right">{{ number_format($totals->total_drivers, 2) }}
+                                <td style="text-align: right">{{ number_format(isset($totals->total_drivers) ? $totals->total_drivers : $totals['total_drivers'], 2) }}
                                     <small>€</small>
                                 </td>
                             </tr>
@@ -181,7 +181,7 @@
                         <tbody>
                             <tr>
                                 <th>Ganhos</th>
-                                <td style="text-align: right">{{ number_format($totals->total_operators, 2) }}
+                                <td style="text-align: right">{{ number_format(isset($totals->total_operators) ? $totals->total_operators : $totals['total_operators'], 2) }}
                                     <small>€</small>
                                 </td>
                             </tr>
@@ -245,7 +245,7 @@
             datasets: [{
                 label: 'Ganhos',
                 data: [
-                    {{ round($totals->total_operators) }}, 
+                    {{ round(isset($totals->total_operators) ? $totals->total_operators : $totals['total_operators']) }}, 
                     {{ round($final_total) }}, 
                     {{ round($profit) }}],
                 borderWidth: 1,
@@ -294,7 +294,7 @@
                     {{ round(-$total_company_adjustments) }}, 
                     {{ round($company_park) }},
                     {{ round($total_consultancy) }},
-                    {{ round($totals->total_drivers) }}
+                    {{ round(isset($totals->total_drivers) ? $totals->total_drivers : $totals['total_drivers']) }}
                 ],
                 borderWidth: 1,
                 backgroundColor: [

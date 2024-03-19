@@ -559,7 +559,7 @@ trait Reports
             'company_id' => $company_id,
         ])
             ->where('start_date', '<=', $tvde_week->start_date)
-            ->where('end_date', '>=', $tvde_week->start_date)
+            ->where('end_date', '>=', $tvde_week->end_date)
             ->get();
 
         $company_expenses = $company_expenses->map(function ($expense) {

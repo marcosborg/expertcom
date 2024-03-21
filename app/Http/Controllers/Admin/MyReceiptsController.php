@@ -28,9 +28,27 @@ class MyReceiptsController extends Controller
 
         if ($request->ajax()) {
 
-            $query = Receipt::where('paid', url()->current() == url('/admin/my-receipts/paid') ? 1 : 0)
-                ->with(['driver.company'])
-                ->select(sprintf('%s.*', (new Receipt)->table));
+            if (auth()->user()->hasRole('Empresas Associadas')) {
+                $query = Receipt::where('paid', url()->current() == url('/admin/my-receipts/paid') ? 1 : 0)
+                    ->with(['driver.company'])
+                    ->whereHas('driver', function ($driver) {
+                        $driver->whereHas('company', function ($company) {
+                            $company->where('id', session()->get('company_id'));
+                        });
+                    })
+                    ->select(sprintf('%s.*', (new Receipt)->table));
+            } elseif (auth()->user()->hasRole('Admin')) {
+                $query = Receipt::where('paid', url()->current() == url('/admin/my-receipts/paid') ? 1 : 0)
+                    ->with(['driver.company'])
+                    ->select(sprintf('%s.*', (new Receipt)->table));
+            } else {
+                $query = Receipt::where('paid', url()->current() == url('/admin/my-receipts/paid') ? 1 : 0)
+                    ->with(['driver.company'])
+                    ->whereHas('driver', function ($driver) {
+                        $driver->where('id', session()->get('driver_id'));
+                    })
+                    ->select(sprintf('%s.*', (new Receipt)->table));
+            }
 
             $table = Datatables::of($query);
 
@@ -94,7 +112,13 @@ class MyReceiptsController extends Controller
             return $table->make(true);
         }
 
-        $drivers = Driver::where('company_id', session()->get('company_id'))->get();
+        if (auth()->user()->hasRole('Empresas Associadas')) {
+            $drivers = Driver::where('company_id', session()->get('company_id'))->get();
+        } elseif (auth()->user()->hasRole('Admin')) {
+            $drivers = Driver::get();
+        } else {
+            $drivers = Driver::where('id', session()->get('driver_id'))->get();
+        }
 
         return view('admin.myReceipts.index', compact('drivers'));
     }

@@ -1,3 +1,7 @@
+@php
+    $hero = \App\Models\HeroBanner::first();
+@endphp
+
 <!-- ======= Hero Section ======= -->
 <section id="hero" style="background-image: url('{{ $hero->image ? $hero->image->getUrl() : '' }}')">
     <div class="hero-container" data-aos="fade-up" data-aos-delay="150">

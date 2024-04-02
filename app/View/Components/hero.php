@@ -3,12 +3,9 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
-use App\Models\HeroBanner;
 
 class hero extends Component
 {
-
-    private $hero;
 
     /**
      * Create a new component instance.
@@ -17,7 +14,7 @@ class hero extends Component
      */
     public function __construct()
     {
-        $this->hero = HeroBanner::first();
+        
     }
 
     /**
@@ -27,6 +24,6 @@ class hero extends Component
      */
     public function render()
     {
-        return view('components.hero')->with('hero', $this->hero);
+        return view('components.hero');
     }
 }

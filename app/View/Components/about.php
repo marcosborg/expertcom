@@ -3,12 +3,9 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
-use App\Models\HomeInfo;
 
 class about extends Component
 {
-
-    private $about;
 
     /**
      * Create a new component instance.
@@ -17,7 +14,7 @@ class about extends Component
      */
     public function __construct()
     {
-        $this->about = HomeInfo::first();
+        
     }
 
     /**
@@ -27,6 +24,6 @@ class about extends Component
      */
     public function render()
     {
-        return view('components.about')->with('about', $this->about);
+        return view('components.about');
     }
 }

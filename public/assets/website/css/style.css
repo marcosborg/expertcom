@@ -1653,3 +1653,12 @@ section {
 #footer .credits a {
   transition: 0.3s;
 }
+
+.btn-theme {
+  background: #ff4a17;
+  border: 0;
+  padding: 10px 24px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 4px;
+}

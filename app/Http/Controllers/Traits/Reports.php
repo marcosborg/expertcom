@@ -440,6 +440,35 @@ trait Reports
             $txt_admin = 0;
         }
 
+        $team_results = [];
+        $team_gross_credits = [];
+        $team_liquid_credits = [];
+        $team_final_total = [];
+
+        if ($driver_id != 0 && $driver->team->count() > 0) {
+            foreach ($driver->team as $team) {
+                foreach ($team->drivers as $team_driver) {
+                    $r = CurrentAccount::where([
+                        'tvde_week_id' => $tvde_week_id,
+                        'driver_id' => $team_driver->id
+                    ])->first();
+                    if ($r) {
+                        $d = json_decode($r->data);
+                        $d->total_after_vat = round((($driver->contract_type->contract_type_ranks[0]->percent * $d->total_earnings) / 100), 2);
+                        $team_results[] = $d;
+                        $team_gross_credits[] = $d->gross_credits;
+                        $team_liquid_credits[] = $d->total_after_vat;
+                        $team_final_total[] = $d->final_total;
+                    }
+                }
+            }
+        }
+
+        $team_gross_credits = array_sum($team_gross_credits);
+        $team_liquid_credits = array_sum($team_liquid_credits);
+        $team_final_total = array_sum($team_final_total);
+        $team_final_result = 0;
+
         return compact([
             'company_id',
             'tvde_week_id',
@@ -471,7 +500,12 @@ trait Reports
             'combustion_racio',
             'electric_racio',
             'total_earnings_after_vat',
-            'txt_admin'
+            'txt_admin',
+            'team_gross_credits',
+            'team_liquid_credits',
+            'team_final_total',
+            'team_final_result',
+            'team_results'
         ]);
     }
 

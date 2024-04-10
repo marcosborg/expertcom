@@ -124,34 +124,11 @@ class FinancialStatementController extends Controller
         $gross_credits = isset($results) ? $results->gross_credits : $gross_credits ?? 0;
         $final_total = isset($results) ? $results->final_total : 0;
 
-        $team_results = [];
-        $team_gross_credits = [];
-        $team_liquid_credits = [];
-        $team_final_total = [];
-
-        if ($driver_id != 0 && $driver->team->count() > 0) {
-            foreach ($driver->team as $team) {
-                foreach ($team->drivers as $team_driver) {
-                    $r = CurrentAccount::where([
-                        'tvde_week_id' => $tvde_week_id,
-                        'driver_id' => $team_driver->id
-                    ])->first();
-                    if ($r) {
-                        $d = json_decode($r->data);
-                        $d->total_after_vat = round((($driver->contract_type->contract_type_ranks[0]->percent * $d->total_earnings) / 100), 2);
-                        $team_results[] = $d;
-                        $team_gross_credits[] = $d->gross_credits;
-                        $team_liquid_credits[] = $d->total_after_vat;
-                        $team_final_total[] = $d->final_total;
-                    }
-                }
-            }
-        }
-
-        $team_gross_credits = array_sum($team_gross_credits);
-        $team_liquid_credits = array_sum($team_liquid_credits);
-        $team_final_total = array_sum($team_final_total);
-        $team_final_result = 0;
+        $team_gross_credits = $results->team_gross_credits ?? 0;
+        $team_liquid_credits = $results->team_liquid_credits ?? 0;
+        $team_final_total = $results->team_final_total ?? 0;
+        $team_final_result = $results->team_final_result ?? 0;
+        $team_results = $results->team_results ?? [];
 
         if ($team_gross_credits > 0) {
             $total_earnings = $total_earnings + $team_gross_credits;

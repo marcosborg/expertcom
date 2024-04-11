@@ -233,9 +233,9 @@
                         <input type="hidden" name="tvde_week_id" value="{{ $tvde_week_id }}">
                         <input type="hidden" name="balance" value="{{ $driver_balance->drivers_balance }}">
                         <div class="form-group {{ $errors->has('value') ? 'has-error' : '' }}">
-                            <label class="required" for="value">Saldo</label>
-                            <input class="form-control" type="number" name="value" id="value"
-                                value="{{ $driver_balance->drivers_balance }}" required>
+                            <label class="required" for="value">Valor do recibo</label>
+                            <input class="form-control" type="text" name="value" id="value"
+                                value="" placeholder="Verifique o seu recibo para confirmar o valor." required>
                             @if($errors->has('value'))
                             <span class="help-block" role="alert">{{ $errors->first('value') }}</span>
                             @endif

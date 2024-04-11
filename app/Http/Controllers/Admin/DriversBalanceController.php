@@ -19,7 +19,17 @@ class DriversBalanceController extends Controller
     {
         abort_if(Gate::denies('drivers_balance_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $driversBalances = DriversBalance::with(['driver', 'tvde_week'])->get();
+        if (session()->has('company_id')) {
+            if (session()->get('company_id' == '0')) {
+                $driversBalances = DriversBalance::with(['driver.company', 'tvde_week'])->get();
+            } else {
+                $driversBalances = DriversBalance::whereHas('driver', function ($driver) {
+                    $driver->where('company_id', session()->get('company_id'));
+                })->with(['driver.company', 'tvde_week'])->get();
+            }
+        } else {
+            $driversBalances = DriversBalance::with(['driver.company', 'tvde_week'])->get();
+        }
 
         return view('admin.driversBalances.index', compact('driversBalances'));
     }

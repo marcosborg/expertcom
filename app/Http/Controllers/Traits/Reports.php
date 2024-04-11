@@ -6,6 +6,7 @@ use App\Models\Adjustment;
 use App\Models\CombustionTransaction;
 use App\Models\ContractTypeRank;
 use App\Models\Driver;
+use App\Models\DriversBalance;
 use App\Models\ElectricTransaction;
 use App\Models\TvdeActivity;
 use App\Models\TvdeWeek;
@@ -49,6 +50,7 @@ trait Reports
         $total_company_adjustments = [];
 
         foreach ($drivers as $driver) {
+
             $uber_activities = TvdeActivity::where([
                 'company_id' => $company_id,
                 'tvde_operator_id' => 1,
@@ -72,8 +74,6 @@ trait Reports
             $bolt_total_earnings = $bolt_activities->sum('earnings_two');
             $bolt_tips = $bolt_activities->sum('earnings_one');
             $bolt_earnings = $bolt_total_earnings - $bolt_tips;
-
-
 
             //EARNINGS
 
@@ -215,6 +215,10 @@ trait Reports
             $driver->refunds = $refunds;
             $driver->adjustments = $adjustments;
             $driver->fleet_management = $fleet_management;
+
+            //BALANCE
+            $driver_balance = DriversBalance::where('driver_id', $driver->id)->orderBy('id', 'desc')->first();
+            $driver->balance = $driver_balance ? $driver_balance->drivers_balance : 0;
 
             $driver->total = $earnings_after_discount + $tips_after_discount - $fuel_transactions + $adjustments - $fleet_management;
 

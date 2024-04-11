@@ -25,6 +25,9 @@
 
                                     </th>
                                     <th>
+                                        Company
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.driversBalance.fields.id') }}
                                     </th>
                                     <th>
@@ -58,6 +61,9 @@
                                     <tr data-entry-id="{{ $driversBalance->id }}">
                                         <td>
 
+                                        </td>
+                                        <td>
+                                            {{ $driversBalance->driver->company->name ?? '' }}
                                         </td>
                                         <td>
                                             {{ $driversBalance->id ?? '' }}

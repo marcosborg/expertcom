@@ -17,82 +17,63 @@
                     {{ trans('cruds.currentAccount.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable datatable-CurrentAccount">
-                            <thead>
-                                <tr>
-                                    <th width="10">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-CurrentAccount">
+                        <thead>
+                            <tr>
+                                <th width="10">
 
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.currentAccount.fields.id') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.currentAccount.fields.tvde_week') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.currentAccount.fields.driver') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.driver.fields.name') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.driver.fields.email') }}
-                                    </th>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($currentAccounts as $key => $currentAccount)
-                                    <tr data-entry-id="{{ $currentAccount->id }}">
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                            {{ $currentAccount->id ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $currentAccount->tvde_week->start_date ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $currentAccount->driver->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $currentAccount->driver->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $currentAccount->driver->email ?? '' }}
-                                        </td>
-                                        <td>
-                                            @can('current_account_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.current-accounts.show', $currentAccount->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('current_account_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('admin.current-accounts.edit', $currentAccount->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('current_account_delete')
-                                                <form action="{{ route('admin.current-accounts.destroy', $currentAccount->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
-
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                </th>
+                                <th>
+                                    {{ trans('cruds.currentAccount.fields.id') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.currentAccount.fields.tvde_week') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.currentAccount.fields.driver') }}
+                                </th>
+                                <th>
+                                    Company
+                                </th>
+                                <th>
+                                    {{ trans('cruds.driver.fields.email') }}
+                                </th>
+                                <th>
+                                    &nbsp;
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($tvde_weeks as $key => $item)
+                                            <option value="{{ $item->start_date }}">{{ $item->start_date }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($drivers as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
 
@@ -108,14 +89,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('current_account_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.current-accounts.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
+      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+          return entry.id
       });
 
       if (ids.length === 0) {
@@ -137,18 +118,54 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  $.extend(true, $.fn.dataTable.defaults, {
+  let dtOverrideGlobals = {
+    buttons: dtButtons,
+    processing: true,
+    serverSide: true,
+    retrieve: true,
+    aaSorting: [],
+    ajax: "{{ route('admin.current-accounts.index') }}",
+    columns: [
+        { data: 'placeholder', name: 'placeholder' },
+        { data: 'id', name: 'id' },
+        { data: 'tvde_week_start_date', name: 'tvde_week.start_date' },
+        { data: 'driver_name', name: 'driver.name' },
+        { data: 'driver.company.name', name: 'driver.company.name' },
+        { data: 'driver.email', name: 'driver.email' },
+        { data: 'actions', name: '{{ trans('global.actions') }}' }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  });
-  let table = $('.datatable-CurrentAccount:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  };
+  let table = $('.datatable-CurrentAccount').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-})
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
+});
 
 </script>
 @endsection

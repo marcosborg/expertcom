@@ -56,28 +56,11 @@ class CompanyController extends Controller
             $table->editColumn('vat', function ($row) {
                 return $row->vat ? $row->vat : '';
             });
-            $table->editColumn('address', function ($row) {
-                return $row->address ? $row->address : '';
-            });
-            $table->editColumn('zip', function ($row) {
-                return $row->zip ? $row->zip : '';
-            });
             $table->editColumn('location', function ($row) {
                 return $row->location ? $row->location : '';
             });
             $table->editColumn('email', function ($row) {
                 return $row->email ? $row->email : '';
-            });
-            $table->editColumn('logo', function ($row) {
-                if ($photo = $row->logo) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
-
-                return '';
             });
             $table->addColumn('user_name', function ($row) {
                 return $row->user ? $row->user->name : '';
@@ -87,7 +70,7 @@ class CompanyController extends Controller
                 return '<input type="checkbox" disabled ' . ($row->suspended ? 'checked' : null) . '>';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'logo', 'user', 'suspended']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'suspended']);
 
             return $table->make(true);
         }

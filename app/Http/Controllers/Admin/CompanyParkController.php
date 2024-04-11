@@ -32,7 +32,7 @@ class CompanyParkController extends Controller
     {
         abort_if(Gate::denies('company_park_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tvde_weeks = TvdeWeek::pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tvde_weeks = TvdeWeek::orderBy('start_date', 'desc')->get()->pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -50,7 +50,7 @@ class CompanyParkController extends Controller
     {
         abort_if(Gate::denies('company_park_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tvde_weeks = TvdeWeek::pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tvde_weeks = TvdeWeek::orderBy('start_date', 'desc')->get()->pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

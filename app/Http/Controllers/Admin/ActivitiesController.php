@@ -101,7 +101,7 @@ class ActivityLaunchController extends Controller
 
         $drivers = Driver::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $weeks = TvdeWeek::pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $weeks = TvdeWeek::orderBy('start_date', 'desc')->get()->pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.activityLaunches.create', compact('drivers', 'weeks'));
     }
@@ -119,7 +119,7 @@ class ActivityLaunchController extends Controller
 
         $drivers = Driver::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $weeks = TvdeWeek::pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $weeks = TvdeWeek::orderBy('start_date', 'desc')->get()->pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $activityLaunch->load('driver', 'week');
 

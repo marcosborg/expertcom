@@ -73,7 +73,7 @@ class ElectricTransactionController extends Controller
     {
         abort_if(Gate::denies('electric_transaction_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tvde_weeks = TvdeWeek::pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tvde_weeks = TvdeWeek::orderBy('start_date', 'desc')->get()->pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.electricTransactions.create', compact('tvde_weeks'));
     }
@@ -89,7 +89,7 @@ class ElectricTransactionController extends Controller
     {
         abort_if(Gate::denies('electric_transaction_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tvde_weeks = TvdeWeek::pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tvde_weeks = TvdeWeek::orderBy('start_date', 'desc')->get()->pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $electricTransaction->load('tvde_week');
 

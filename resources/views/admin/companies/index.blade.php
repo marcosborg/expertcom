@@ -37,19 +37,10 @@
                                     {{ trans('cruds.company.fields.vat') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.company.fields.address') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.zip') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.company.fields.location') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.company.fields.email') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.company.fields.logo') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.company.fields.main') }}
@@ -122,11 +113,8 @@
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'vat', name: 'vat' },
-{ data: 'address', name: 'address' },
-{ data: 'zip', name: 'zip' },
 { data: 'location', name: 'location' },
 { data: 'email', name: 'email' },
-{ data: 'logo', name: 'logo', sortable: false, searchable: false },
 { data: 'main', name: 'main' },
 { data: 'user_name', name: 'user.name' },
 { data: 'suspended', name: 'suspended' },

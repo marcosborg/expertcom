@@ -70,7 +70,7 @@ class TollPaymentController extends Controller
     {
         abort_if(Gate::denies('toll_payment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tvde_weeks = TvdeWeek::pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tvde_weeks = TvdeWeek::orderBy('start_date', 'desc')->get()->pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.tollPayments.create', compact('tvde_weeks'));
     }
@@ -86,7 +86,7 @@ class TollPaymentController extends Controller
     {
         abort_if(Gate::denies('toll_payment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tvde_weeks = TvdeWeek::pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $tvde_weeks = TvdeWeek::orderBy('start_date', 'desc')->get()->pluck('start_date', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tollPayment->load('tvde_week');
 

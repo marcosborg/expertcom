@@ -7,7 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyVehicleItemRequest;
 use App\Http\Requests\StoreVehicleItemRequest;
 use App\Http\Requests\UpdateVehicleItemRequest;
-use App\Models\Driver;
+use App\Models\Company;
 use App\Models\VehicleBrand;
 use App\Models\VehicleItem;
 use App\Models\VehicleModel;
@@ -24,7 +24,7 @@ class VehicleItemController extends Controller
     {
         abort_if(Gate::denies('vehicle_item_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $vehicleItems = VehicleItem::with(['driver', 'vehicle_brand', 'vehicle_model', 'media'])->get();
+        $vehicleItems = VehicleItem::with(['company', 'vehicle_brand', 'vehicle_model', 'media'])->get();
 
         return view('admin.vehicleItems.index', compact('vehicleItems'));
     }
@@ -33,13 +33,13 @@ class VehicleItemController extends Controller
     {
         abort_if(Gate::denies('vehicle_item_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $vehicle_brands = VehicleBrand::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $vehicle_models = VehicleModel::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.vehicleItems.create', compact('drivers', 'vehicle_brands', 'vehicle_models'));
+        return view('admin.vehicleItems.create', compact('companies', 'vehicle_brands', 'vehicle_models'));
     }
 
     public function store(StoreVehicleItemRequest $request)
@@ -61,15 +61,15 @@ class VehicleItemController extends Controller
     {
         abort_if(Gate::denies('vehicle_item_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $vehicle_brands = VehicleBrand::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $vehicle_models = VehicleModel::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $vehicleItem->load('driver', 'vehicle_brand', 'vehicle_model');
+        $vehicleItem->load('company', 'vehicle_brand', 'vehicle_model');
 
-        return view('admin.vehicleItems.edit', compact('drivers', 'vehicleItem', 'vehicle_brands', 'vehicle_models'));
+        return view('admin.vehicleItems.edit', compact('companies', 'vehicleItem', 'vehicle_brands', 'vehicle_models'));
     }
 
     public function update(UpdateVehicleItemRequest $request, VehicleItem $vehicleItem)
@@ -97,7 +97,7 @@ class VehicleItemController extends Controller
     {
         abort_if(Gate::denies('vehicle_item_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $vehicleItem->load('driver', 'vehicle_brand', 'vehicle_model', 'vehicleItemVehicleEvents');
+        $vehicleItem->load('company', 'vehicle_brand', 'vehicle_model', 'vehicleItemVehicleEvents');
 
         return view('admin.vehicleItems.show', compact('vehicleItem'));
     }

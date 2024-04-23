@@ -11,17 +11,17 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.vehicle-items.store") }}" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group {{ $errors->has('driver') ? 'has-error' : '' }}">
-                            <label for="driver_id">{{ trans('cruds.vehicleItem.fields.driver') }}</label>
-                            <select class="form-control select2" name="driver_id" id="driver_id">
-                                @foreach($drivers as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('driver_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        <div class="form-group {{ $errors->has('company') ? 'has-error' : '' }}">
+                            <label for="company_id">{{ trans('cruds.vehicleItem.fields.company') }}</label>
+                            <select class="form-control select2" name="company_id" id="company_id">
+                                @foreach($companies as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('company_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('driver'))
-                                <span class="help-block" role="alert">{{ $errors->first('driver') }}</span>
+                            @if($errors->has('company'))
+                                <span class="help-block" role="alert">{{ $errors->first('company') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.vehicleItem.fields.driver_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.vehicleItem.fields.company_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('vehicle_brand') ? 'has-error' : '' }}">
                             <label class="required" for="vehicle_brand_id">{{ trans('cruds.vehicleItem.fields.vehicle_brand') }}</label>

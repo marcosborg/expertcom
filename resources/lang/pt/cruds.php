@@ -1397,8 +1397,6 @@ return [
         'fields'         => [
             'id'                   => 'ID',
             'id_helper'            => ' ',
-            'driver'               => 'Driver',
-            'driver_helper'        => ' ',
             'vehicle_brand'        => 'Marca',
             'vehicle_brand_helper' => ' ',
             'vehicle_model'        => 'Modelo',
@@ -1415,6 +1413,8 @@ return [
             'updated_at_helper'    => ' ',
             'deleted_at'           => 'Deleted at',
             'deleted_at_helper'    => ' ',
+            'company'              => 'Company',
+            'company_helper'       => ' ',
         ],
     ],
     'company' => [

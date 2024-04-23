@@ -14,9 +14,6 @@
                             <a class="btn btn-default" href="{{ route('admin.vehicle-items.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
-                            <a class="btn btn-success" href="/admin/vehicle-items/{{ $vehicleItem->id }}/edit">
-                                Editar
-                            </a>
                         </div>
                         <table class="table table-bordered table-striped">
                             <tbody>
@@ -30,10 +27,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.vehicleItem.fields.driver') }}
+                                        {{ trans('cruds.vehicleItem.fields.company') }}
                                     </th>
                                     <td>
-                                        {{ $vehicleItem->driver->name ?? '' }}
+                                        {{ $vehicleItem->company->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -74,9 +71,9 @@
                                     </th>
                                     <td>
                                         @foreach($vehicleItem->documents as $key => $media)
-                                        <a class="btn btn-success btn-sm" href="{{ $media->getUrl() }}" target="_blank">
-                                            {{ ucfirst(str_replace('_', '', strstr($media->name, '_', false))) }}
-                                        </a>
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
                                         @endforeach
                                     </td>
                                 </tr>
@@ -97,16 +94,14 @@
                 </div>
                 <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
                     <li role="presentation">
-                        <a href="#vehicle_item_vehicle_events" aria-controls="vehicle_item_vehicle_events" role="tab"
-                            data-toggle="tab">
+                        <a href="#vehicle_item_vehicle_events" aria-controls="vehicle_item_vehicle_events" role="tab" data-toggle="tab">
                             {{ trans('cruds.vehicleEvent.title') }}
                         </a>
                     </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane" role="tabpanel" id="vehicle_item_vehicle_events">
-                        @includeIf('admin.vehicleItems.relationships.vehicleItemVehicleEvents', ['vehicleEvents' =>
-                        $vehicleItem->vehicleItemVehicleEvents])
+                        @includeIf('admin.vehicleItems.relationships.vehicleItemVehicleEvents', ['vehicleEvents' => $vehicleItem->vehicleItemVehicleEvents])
                     </div>
                 </div>
             </div>

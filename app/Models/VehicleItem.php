@@ -27,7 +27,7 @@ class VehicleItem extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'driver_id',
+        'company_id',
         'vehicle_brand_id',
         'vehicle_model_id',
         'year',
@@ -53,9 +53,9 @@ class VehicleItem extends Model implements HasMedia
         return $this->hasMany(VehicleEvent::class, 'vehicle_item_id', 'id');
     }
 
-    public function driver()
+    public function company()
     {
-        return $this->belongsTo(Driver::class, 'driver_id');
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
     public function vehicle_brand()

@@ -1296,6 +1296,74 @@
                 </ul>
             </li>
             @endcan
+            @can('form_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-keyboard">
+
+                        </i>
+                        <span>{{ trans('cruds.form.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('form_name_access')
+                            <li class="{{ request()->is("admin/form-names") || request()->is("admin/form-names/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.form-names.index") }}">
+                                    <i class="fa-fw fas fa-keyboard">
+
+                                    </i>
+                                    <span>{{ trans('cruds.formName.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('form_input_access')
+                            <li class="{{ request()->is("admin/form-inputs") || request()->is("admin/form-inputs/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.form-inputs.index") }}">
+                                    <i class="fa-fw fas fa-keyboard">
+
+                                    </i>
+                                    <span>{{ trans('cruds.formInput.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('form_data_access')
+                            <li class="{{ request()->is("admin/form-datas") || request()->is("admin/form-datas/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.form-datas.index") }}">
+                                    <i class="fa-fw fas fa-database">
+
+                                    </i>
+                                    <span>{{ trans('cruds.formData.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('form_assembly_access')
+                            <li class="{{ request()->is("admin/form-assemblies") || request()->is("admin/form-assemblies/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.form-assemblies.index") }}">
+                                    <i class="fa-fw fas fa-keyboard">
+
+                                    </i>
+                                    <span>{{ trans('cruds.formAssembly.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('form_communication_access')
+                            <li class="{{ request()->is("admin/form-communications") || request()->is("admin/form-communications/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.form-communications.index") }}">
+                                    <i class="fa-fw fas fa-keyboard">
+
+                                    </i>
+                                    <span>{{ trans('cruds.formCommunication.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
             @if (auth()->user()->hasRole('Empresas Associadas'))
             <li class="{{ request()->is("admin/company-dashboard") ? "active" : "" }}">
                 <a href="/admin/company-dashboard">

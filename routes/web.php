@@ -449,6 +449,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('company-datas/destroy', 'CompanyDataController@massDestroy')->name('company-datas.massDestroy');
     Route::resource('company-datas', 'CompanyDataController');
 
+    // Form Name
+    Route::delete('form-names/destroy', 'FormNameController@massDestroy')->name('form-names.massDestroy');
+    Route::post('form-names/media', 'FormNameController@storeMedia')->name('form-names.storeMedia');
+    Route::post('form-names/ckmedia', 'FormNameController@storeCKEditorImages')->name('form-names.storeCKEditorImages');
+    Route::resource('form-names', 'FormNameController');
+
+    // Form Input
+    Route::delete('form-inputs/destroy', 'FormInputController@massDestroy')->name('form-inputs.massDestroy');
+    Route::resource('form-inputs', 'FormInputController');
+
+    // Form Data
+    Route::delete('form-datas/destroy', 'FormDataController@massDestroy')->name('form-datas.massDestroy');
+    Route::resource('form-datas', 'FormDataController');
+
+    // Form Assembly
+    Route::delete('form-assemblies/destroy', 'FormAssemblyController@massDestroy')->name('form-assemblies.massDestroy');
+    Route::resource('form-assemblies', 'FormAssemblyController');
+
+    // Form Comunication
+    Route::delete('form-comunications/destroy', 'FormComunicationController@massDestroy')->name('form-comunications.massDestroy');
+    Route::resource('form-comunications', 'FormComunicationController');
+
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

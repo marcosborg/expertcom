@@ -49,6 +49,14 @@
                                         {{ App\Models\FormInput::TYPE_RADIO[$formInput->type] ?? '' }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.formInput.fields.form_name') }}
+                                    </th>
+                                    <td>
+                                        {{ $formInput->form_name->name ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

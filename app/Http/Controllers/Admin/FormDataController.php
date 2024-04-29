@@ -31,7 +31,7 @@ class FormDataController extends Controller
 
         $form_names = FormName::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $drivers = Driver::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $vehicle_items = VehicleItem::pluck('license_plate', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -51,7 +51,7 @@ class FormDataController extends Controller
 
         $form_names = FormName::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $drivers = Driver::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $vehicle_items = VehicleItem::pluck('license_plate', 'id')->prepend(trans('global.pleaseSelect'), '');
 

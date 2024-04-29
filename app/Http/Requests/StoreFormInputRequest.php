@@ -28,6 +28,10 @@ class StoreFormInputRequest extends FormRequest
             'type' => [
                 'required',
             ],
+            'form_name_id' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }

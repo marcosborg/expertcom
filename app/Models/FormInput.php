@@ -23,6 +23,7 @@ class FormInput extends Model
         'label',
         'name',
         'type',
+        'form_name_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -40,5 +41,10 @@ class FormInput extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function form_name()
+    {
+        return $this->belongsTo(FormName::class, 'form_name_id');
     }
 }

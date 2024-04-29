@@ -37,6 +37,9 @@
                                         {{ trans('cruds.formInput.fields.type') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.formInput.fields.form_name') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -58,6 +61,9 @@
                                         </td>
                                         <td>
                                             {{ App\Models\FormInput::TYPE_RADIO[$formInput->type] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $formInput->form_name->name ?? '' }}
                                         </td>
                                         <td>
                                             @can('form_input_show')

@@ -1909,6 +1909,8 @@ return [
             'updated_at_helper' => ' ',
             'deleted_at'        => 'Deleted at',
             'deleted_at_helper' => ' ',
+            'form_name'         => 'Form Name',
+            'form_name_helper'  => ' ',
         ],
     ],
     'formData' => [

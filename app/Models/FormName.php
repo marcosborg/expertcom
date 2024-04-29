@@ -40,4 +40,9 @@ class FormName extends Model implements HasMedia
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
+
+    public function form_inputs()
+    {
+        return $this->hasMany(FormInput::class);
+    }
 }

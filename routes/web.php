@@ -464,12 +464,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('form-datas', 'FormDataController');
 
     // Form Assembly
-    Route::delete('form-assemblies/destroy', 'FormAssemblyController@massDestroy')->name('form-assemblies.massDestroy');
-    Route::resource('form-assemblies', 'FormAssemblyController');
+    Route::prefix('form-assemblies')->group(function () {
+        Route::get('/{id?}', 'FormAssemblyController@index')->name('form-assemblies.index');
+        Route::post('new-field', 'FormAssemblyController@newField')->name('form-assemblies.new-field');
+        Route::post('send-form-data', 'FormAssemblyController@sendFormData')->name('form-assemblies.send-form-data');
+    });
 
-    // Form Comunication
-    Route::delete('form-comunications/destroy', 'FormComunicationController@massDestroy')->name('form-comunications.massDestroy');
-    Route::resource('form-comunications', 'FormComunicationController');
+    // Form Communication
+    Route::delete('form-communications/destroy', 'FormCommunicationController@massDestroy')->name('form-communications.massDestroy');
+    Route::resource('form-communications', 'FormCommunicationController');
 
 });
 

@@ -53,6 +53,25 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.formInput.fields.form_name_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('required') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="required" value="0">
+                                <input type="checkbox" name="required" id="required" value="1" {{ $formInput->required || old('required', 0) === 1 ? 'checked' : '' }}>
+                                <label for="required" style="font-weight: 400">{{ trans('cruds.formInput.fields.required') }}</label>
+                            </div>
+                            @if($errors->has('required'))
+                                <span class="help-block" role="alert">{{ $errors->first('required') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.formInput.fields.required_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('position') ? 'has-error' : '' }}">
+                            <label class="required" for="position">{{ trans('cruds.formInput.fields.position') }}</label>
+                            <input class="form-control" type="number" name="position" id="position" value="{{ old('position', $formInput->position) }}" step="1" required>
+                            @if($errors->has('position'))
+                                <span class="help-block" role="alert">{{ $errors->first('position') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.formInput.fields.position_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

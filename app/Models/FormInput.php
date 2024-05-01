@@ -24,6 +24,8 @@ class FormInput extends Model
         'name',
         'type',
         'form_name_id',
+        'required',
+        'position',
         'created_at',
         'updated_at',
         'deleted_at',

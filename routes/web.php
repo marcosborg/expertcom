@@ -466,8 +466,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Form Assembly
     Route::prefix('form-assemblies')->group(function () {
         Route::get('/{id?}', 'FormAssemblyController@index')->name('form-assemblies.index');
+        Route::post('add-form-name', 'FormAssemblyController@addFormName')->name('form-assemblies.add-form-name');
         Route::post('new-field', 'FormAssemblyController@newField')->name('form-assemblies.new-field');
         Route::post('send-form-data', 'FormAssemblyController@sendFormData')->name('form-assemblies.send-form-data');
+        Route::get('delete-form-name/{form_name_id}', 'FormAssemblyController@deleteFormName')->name('form-assemblies.delete-form-name');
+        Route::get('delete-form-input/{form_input_id}', 'FormAssemblyController@deleteFormInput')->name('form-assemblies.delete-form-input');
+        Route::get('form-inputs/{form_name_id}', 'FormAssemblyController@formInputs')->name('form-assemblies.form-inputs');
+        Route::post('update-input-position', 'FormAssemblyController@updateInputPosition')->name('form-assemblies.update-input-position');
     });
 
     // Form Communication

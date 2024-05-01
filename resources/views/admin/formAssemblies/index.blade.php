@@ -8,15 +8,20 @@
                 <div class="panel-heading">
                     {{ trans('cruds.formAssembly.title') }}
                 </div>
-                <form action="">
+                <form action="{{ route('admin.form-assemblies.add-form-name') }}" method="post">
+                    @csrf
                     <div class="panel-body">
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" name="name" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" class="form-control"></textarea>
+                        </div>
                     </div>
                     <div class="panel-footer">
-                        <button class="btn btn-success">Save</button>
+                        <button class="btn btn-success" type="submit">Save</button>
                     </div>
                 </form>
             </div>
@@ -26,8 +31,10 @@
                 </div>
                 <div class="list-group">
                     @foreach ($form_names as $form)
-                    <a href="{{ url('admin/form-assemblies') }}/{{ $form->id }}" class="list-group-item">{{ $form->name
-                        }}</a>
+                    <a href="{{ url('admin/form-assemblies') }}/{{ $form->id }}" class="list-group-item">
+                        <label>{{ $form->name }}</label><br>
+                        <small>{!! $form->description !!}</small>
+                    </a>
                     @endforeach
                 </div>
             </div>
@@ -50,6 +57,12 @@
                             <label>Name</label>
                             <input type="text" class="form-control" name="name">
                         </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="required" value="true"> Required
+                            </label>
+                        </div>
+                        <hr>
                         <div class="radio">
                             <label>
                                 <input type="radio" name="type" id="text" value="text" checked>
@@ -99,82 +112,35 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     {{ $form_name->name }}
+                    <a onclick="return confirm('Are you sure?');"
+                        href="{{ route('admin.form-assemblies.delete-form-name', ['form_name_id' => $form_name->id]) }}"
+                        class="btn btn-sm btn-link pull-right"><span class="glyphicon glyphicon-trash"
+                            aria-hidden="true"></span></a>
                 </div>
                 <form action="{{ route('admin.form-assemblies.send-form-data') }}" method="post">
                     @csrf
                     <input type="hidden" name="form_name_id" value="{{ $form_name->id }}">
                     <div class="panel-body">
                         <div class="form-group">
-                            <label>Driver</label>
-                            <select name="driver_id" class="form-control">
-                                <option selected disabled">Select</option>
+                            <label>Driver *</label>
+                            <select name="driver_id" class="form-control select2">
+                                <option selected disabled>Select</option>
                                 @foreach ($drivers as $driver)
                                 <option value="{{ $driver->id }}">{{ $driver->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>License</label>
-                            <select name="vehicle_item_id" class="form-control">
-                                <option selected disabled">Select</option>
+                            <label>License *</label>
+                            <select name="vehicle_item_id" class="form-control select2">
+                                <option selected disabled>Select</option>
                                 @foreach ($vehicle_items as $vehicle_item)
                                 <option value="{{ $vehicle_item->id }}">{{ $vehicle_item->license_plate }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        @foreach ($form_name->form_inputs as $form_input)
-                        @switch($form_input->type)
-                        @case('text')
-                        <div class="form-group">
-                            <label>{{ $form_input->label }}</label>
-                            <input type="text" class="form-control" name="{{ $form_input->name }}" required>
-                        </div>
-                        @break
-                        @case('number')
-                        <div class="form-group">
-                            <label>{{ $form_input->label }}</label>
-                            <input type="number" class="form-control" name="{{ $form_input->name }}" required>
-                        </div>
-                        @break
-                        @case('date')
-                        <div class="form-group">
-                            <label>{{ $form_input->label }}</label>
-                            <input type="date" class="form-control" name="{{ $form_input->name }}" required>
-                        </div>
-                        @break
-                        @case('textarea')
-                        <div class="form-group">
-                            <label>{{ $form_input->label }}</label>
-                            <textarea class="form-control" name="{{ $form_input->name }}" required></textarea>
-                        </div>
-                        @break
-                        @case('checkbox')
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="{{ $form_input->name }}"> {{ $form_input->label }}
-                            </label>
-                        </div>
-                        @break
-                        @case('radio')
-                        <label>{{ $form_input->label }}</label>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="{{ $form_input->name }}" id="{{ $form_input->name }}_1"
-                                    value="Sim" checked>
-                                Sim
-                            </label>
-                        </div>
-                        <div class="radio disabled">
-                            <label>
-                                <input type="radio" name="{{ $form_input->name }}" id="{{ $form_input->name }}_2"
-                                    value="Não">
-                                Não
-                            </label>
-                        </div>
-                        @break
-                        @default
-                        @endswitch
-                        @endforeach
+                        <div id="form_input_content"></div>
+                        <p>* Required</p>
                     </div>
                     <div class="panel-footer">
                         <button type="submit" class="btn btn-success">Send</button>
@@ -186,3 +152,56 @@
     </div>
 </div>
 @endsection
+@section('styles')
+<style>
+    label {
+        width: 100%;
+    }
+</style>
+@endsection
+@if ($form_name)
+@section('scripts')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(()=>{
+        loadFormInputs();
+    });
+
+    loadFormInputs = () => {
+        $.get("{{ route('admin.form-assemblies.form-inputs', ['form_name_id' => $form_name->id]) }}").then((resp) => {
+            $('#form_input_content').html(resp);
+            $('#form_input_content').sortable({
+                update: () => {
+                    let data = [];
+                    $('.item').each(function(index) {
+                        let position = index + 1;
+                        let form_input_id = $(this).attr('data-form_input_id');
+                        let item = {
+                            form_input_id: form_input_id,
+                            position: position
+                        }
+                        data.push(item);
+                    });
+                    $.ajax({
+                        url: "{{ route('admin.form-assemblies.update-input-position') }}",
+                        method: 'POST',
+                        data: {data: JSON.stringify(data)},
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: (resp) => {
+                            console.log(resp);
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    })
+                } 
+            });
+        });
+    }
+
+</script>
+@endsection
+@endif

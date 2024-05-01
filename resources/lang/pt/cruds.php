@@ -1911,6 +1911,10 @@ return [
             'deleted_at_helper' => ' ',
             'form_name'         => 'Form Name',
             'form_name_helper'  => ' ',
+            'required'          => 'Required',
+            'required_helper'   => ' ',
+            'position'          => 'Position',
+            'position_helper'   => ' ',
         ],
     ],
     'formData' => [

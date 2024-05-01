@@ -22,11 +22,8 @@ class FormAssemblyController extends Controller
 
         $form_name = FormName::find($id);
 
-        if ($form_name) {
-            $form_name->load('form_inputs');
-        }
-
         $drivers = Driver::all();
+
         $vehicle_items = VehicleItem::all();
 
         return view('admin.formAssemblies.index', compact('form_names', 'form_name', 'drivers', 'vehicle_items'));
@@ -34,16 +31,28 @@ class FormAssemblyController extends Controller
 
     public function newField(Request $request)
     {
+
         $request->validate([
             'name' => 'required|max: 255',
             'label' => 'required|max: 255',
         ]);
+
+        $last_form_input = FormInput::where('form_name_id', $request->form_name_id)->orderBy('position', 'desc')->first();
+        if ($last_form_input) {
+            $position = $last_form_input->position + 1;
+        } else {
+            $position = 1;
+        }
 
         $form_input = new FormInput;
         $form_input->name = $request->name;
         $form_input->label = $request->label;
         $form_input->type = $request->type;
         $form_input->form_name_id = $request->form_name_id;
+        if ($request->required) {
+            $form_input->required = true;
+        }
+        $form_input->position = $position;
         $form_input->save();
 
         return redirect()->back()->with('message', 'Success');
@@ -52,6 +61,15 @@ class FormAssemblyController extends Controller
 
     public function sendFormData(Request $request)
     {
+
+        $request->validate([
+            'driver_id' => 'required',
+            'vehicle_item_id' => 'required'
+        ], [], [
+            'driver_id' => 'Driver',
+            'vehicle_item_id' => 'License'
+        ]);
+
         $driver = Driver::find($request->driver_id)->load('company');
         $vehicle_item = VehicleItem::find($request->vehicle_item_id)->load('company', 'vehicle_brand', 'vehicle_model');
         $data = [];
@@ -74,6 +92,49 @@ class FormAssemblyController extends Controller
         $form_data->save();
 
         return redirect()->back()->with('message', 'Success');
+    }
+
+    public function addFormName(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255'
+        ]);
+
+        $form_name = new FormName;
+        $form_name->name = $request->name;
+        $form_name->description = $request->description;
+        $form_name->save();
+
+        return redirect()->back()->with('message', 'Success');
+    }
+
+    public function deleteFormName($form_name_id)
+    {
+        FormName::find($form_name_id)->delete();
+        return redirect()->back()->with('message', 'Success');
+    }
+
+    public function deleteFormInput($form_input_id)
+    {
+        FormInput::find($form_input_id)->delete();
+        return redirect()->back()->with('message', 'Success');
+    }
+
+    public function formInputs($form_name_id)
+    {
+        $form_inputs = FormInput::orderBy('position')->where('form_name_id', $form_name_id)->get();
+
+        return view('admin.formAssemblies.inputs', compact('form_inputs'));
+    }
+
+    public function updateInputPosition(Request $request)
+    {
+        $data = json_decode($request->data);
+
+        foreach ($data as $item) {
+            FormInput::find($item->form_input_id)->update(['position' => $item->position]);
+        }
+
     }
 
 }

@@ -112,7 +112,7 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                console.log('Upload bem-sucedido:', data);
+                console.log(data);
                 photos = photos + ',' + data.name;
                 $('input[name=photos-' + form_input_id + ']').val(photos);
             },

@@ -145,17 +145,24 @@ class FormAssemblyController extends Controller
 
     public function uploadFile(Request $request)
     {
-        $result = $this->storeMedia($request);
-        $data = json_decode($result);
-        $file = $data->file;
+        $jsonResponse = $this->storeMedia($request);
+        $data = json_decode($jsonResponse->getContent(), true);
 
-        $path = storage_path('/app/files/uploads');
-        $file->move($path, $data->name);
+        $originalPath = $data['path'] . '/' . $data['name'];
 
-        return [
-            'path' => $path,
-            'name' => $data->name
-        ];
+        $targetDir = storage_path('app/uploads');
+
+        // Certifique-se de que o diretório de destino existe
+        if (!file_exists($targetDir)) {
+            mkdir($targetDir, 0777, true); // Assegure-se de ajustar as permissões conforme necessário
+        }
+
+        $newPath = $targetDir . '/' . $data['name'];
+
+        rename($originalPath, $newPath);
+        $data['path'] = $newPath;
+
+        return $data;
     }
 
 }

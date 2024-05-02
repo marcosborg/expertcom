@@ -150,7 +150,7 @@ class FormAssemblyController extends Controller
 
         $originalPath = $data['path'] . '/' . $data['name'];
 
-        $targetDir = storage_path('app/uploads');
+        $targetDir = storage_path('app/public');
 
         // Certifique-se de que o diretório de destino existe
         if (!file_exists($targetDir)) {

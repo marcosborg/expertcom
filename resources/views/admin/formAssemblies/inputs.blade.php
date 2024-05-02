@@ -45,7 +45,8 @@
     <label>
         <input type="checkbox" name="{{ $form_input->name }}" {{ $form_input->required ?
         'required' : '' }}> {{ $form_input->label }}{{ $form_input->required ? ' *' : '' }}<a
-            onclick="return confirm('Are you sure?')" href="{{ route("admin.form-assemblies.delete-form-input", ['form_input_id'=> $form_input->id]) }}"
+            onclick="return confirm('Are you sure?')" href="{{ route("admin.form-assemblies.delete-form-input",
+            ['form_input_id'=> $form_input->id]) }}"
             class="btn btn-sm btn-link pull-right"><span class="glyphicon glyphicon-trash"
                 aria-hidden="true"></span></a>
     </label>
@@ -71,12 +72,53 @@
         </div>
     </div>
     <div class="col-md-4">
-        <a onclick="return confirm('Are you sure?')" href="{{ route("admin.form-assemblies.delete-form-input", ['form_input_id'=> $form_input->id]) }}"
+        <a onclick="return confirm('Are you sure?')" href="{{ route("admin.form-assemblies.delete-form-input",
+            ['form_input_id'=> $form_input->id]) }}"
             class="btn btn-sm btn-link pull-right"><span class="glyphicon glyphicon-trash"
                 aria-hidden="true"></span></a>
     </div>
 </div>
 @break
+@case('photos')
+<label>{{ $form_input->label }}</label>
+<input type="file" id="photo-{{ $form_input->id }}" onchange="submitPhoto('{{ $form_input->id }}')">
+<input type="hidden" name="photos-{{ $form_input->id }}">
+<ul id="photo-list-{{ $form_input->id }}"></ul>
+@break
 @default
 @endswitch
 @endforeach
+<script>
+    submitPhoto = (form_input_id) => {
+        var input = document.getElementById('photo-' + form_input_id);
+        var fileList = document.getElementById('photo-list-' + form_input_id);
+        var formData = new FormData();
+        var files = input.files;
+        var photos = $('input[name=photos-' + form_input_id + ']').val();
+
+        for (var i = 0; i < files.length; i++) {
+            var li = document.createElement('li');
+            li.textContent = files[i].name;
+            fileList.appendChild(li);
+            formData.append('file', files[i]);
+        }
+        $.ajax({
+            url: '{{ route('admin.form-assemblies.store-media') }}',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log('Upload bem-sucedido:', data);
+                photos = photos + ',' + data.name;
+                $('input[name=photos-' + form_input_id + ']').val(photos);
+            },
+            error: function (error) {
+                console.error('Erro no upload:', error);
+            }
+        });
+    }
+</script>

@@ -11,9 +11,13 @@ use App\Models\VehicleItem;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 
 class FormAssemblyController extends Controller
 {
+
+    use MediaUploadingTrait;
+
     public function index($id = null)
     {
         abort_if(Gate::denies('form_assembly_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -61,6 +65,8 @@ class FormAssemblyController extends Controller
 
     public function sendFormData(Request $request)
     {
+
+        return $request;
 
         $request->validate([
             'driver_id' => 'required',

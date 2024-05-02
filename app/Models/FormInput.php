@@ -38,6 +38,7 @@ class FormInput extends Model
         'textarea' => 'Textarea',
         'checkbox' => 'Checkbox',
         'radio'    => 'Radio',
+        'photos'   => 'Photos',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

@@ -99,6 +99,12 @@
                                 Radio
                             </label>
                         </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="type" id="photos" value="photos">
+                                Photos
+                            </label>
+                        </div>
                     </div>
                     <div class="panel-footer">
                         <button class="btn btn-success" type="submit">
@@ -140,7 +146,6 @@
                             </select>
                         </div>
                         <div id="form_input_content"></div>
-                        <p>* Required</p>
                     </div>
                     <div class="panel-footer">
                         <button type="submit" class="btn btn-success">Send</button>

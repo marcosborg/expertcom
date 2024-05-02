@@ -66,7 +66,15 @@ class FormAssemblyController extends Controller
     public function sendFormData(Request $request)
     {
 
-        return $request;
+        $processedData = [];
+
+        foreach ($request->all() as $key => $value) {
+            if (strpos($key, 'photos') !== false) {
+                $processedData[$key] = json_encode(explode(',', $value));
+            } else {
+                $processedData[$key] = $value;
+            }
+        }
 
         $request->validate([
             'driver_id' => 'required',
@@ -82,7 +90,7 @@ class FormAssemblyController extends Controller
         $data['driver'] = $driver->name . ' - ' . $driver->company->name;
         $data['vehicle_item'] = $vehicle_item->license_plate . ' - (' . $vehicle_item->vehicle_brand->name . ' ' . $vehicle_item->vehicle_model->name . ')';
 
-        foreach ($request->all() as $label => $value) {
+        foreach ($processedData as $label => $value) {
             if ($label != '_token' && $label != 'form_name_id' && $label != 'driver_id' && $label != 'vehicle_item_id') {
                 $data[$label] = $value;
             }

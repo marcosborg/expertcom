@@ -473,7 +473,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('delete-form-input/{form_input_id}', 'FormAssemblyController@deleteFormInput')->name('form-assemblies.delete-form-input');
         Route::get('form-inputs/{form_name_id}', 'FormAssemblyController@formInputs')->name('form-assemblies.form-inputs');
         Route::post('update-input-position', 'FormAssemblyController@updateInputPosition')->name('form-assemblies.update-input-position');
-        Route::post('store-media', 'FormAssemblyController@storeMedia')->name('form-assemblies.store-media');
+        Route::post('store-media', 'FormAssemblyController@uploadFile')->name('form-assemblies.store-media');
     });
 
     // Form Communication

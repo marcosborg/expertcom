@@ -143,4 +143,19 @@ class FormAssemblyController extends Controller
 
     }
 
+    public function uploadFile(Request $request)
+    {
+        $result = $this->storeMedia($request);
+        $data = json_decode($result);
+        $file = $data->file;
+
+        $path = storage_path('/app/files/uploads');
+        $file->move($path, $data->name);
+
+        return [
+            'path' => $path,
+            'name' => $data->name
+        ];
+    }
+
 }

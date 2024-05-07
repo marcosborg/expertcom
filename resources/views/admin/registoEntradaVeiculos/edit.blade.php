@@ -2340,23 +2340,19 @@
     var uploadedFrenteTetoPhotosMap = {}
 Dropzone.options.frenteTetoPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="frente_teto_photos[]" value="' + response.name + '">')
       uploadedFrenteTetoPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2368,14 +2364,14 @@ Dropzone.options.frenteTetoPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->frente_teto_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->frente_teto_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="frente_teto_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->frente_teto_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="frente_teto_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2395,29 +2391,24 @@ Dropzone.options.frenteTetoPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedFrenteParabrisaPhotosMap = {}
 Dropzone.options.frenteParabrisaPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="frente_parabrisa_photos[]" value="' + response.name + '">')
       uploadedFrenteParabrisaPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2429,14 +2420,14 @@ Dropzone.options.frenteParabrisaPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->frente_parabrisa_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->frente_parabrisa_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="frente_parabrisa_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->frente_parabrisa_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="frente_parabrisa_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2456,29 +2447,24 @@ Dropzone.options.frenteParabrisaPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedFrenteCapoPhotosMap = {}
 Dropzone.options.frenteCapoPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="frente_capo_photos[]" value="' + response.name + '">')
       uploadedFrenteCapoPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2490,14 +2476,14 @@ Dropzone.options.frenteCapoPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->frente_capo_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->frente_capo_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="frente_capo_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->frente_capo_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="frente_capo_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2517,29 +2503,24 @@ Dropzone.options.frenteCapoPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedFrenteParachoquePhotosMap = {}
 Dropzone.options.frenteParachoquePhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="frente_parachoque_photos[]" value="' + response.name + '">')
       uploadedFrenteParachoquePhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2551,14 +2532,14 @@ Dropzone.options.frenteParachoquePhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->frente_parachoque_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->frente_parachoque_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="frente_parachoque_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->frente_parachoque_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="frente_parachoque_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2578,68 +2559,6 @@ Dropzone.options.frenteParachoquePhotosDropzone = {
          return _results
      }
 }
-
-</script>
-<script>
-    var uploadedLateralEsquerdaParalamaDiantPhotosMap = {}
-Dropzone.options.lateralEsquerdaParalamaDiantPhotosDropzone = {
-    url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 2,
-      width: 4096,
-      height: 4096
-    },
-    success: function (file, response) {
-      $('form').append('<input type="hidden" name="lateral_esquerda_paralama_diant_photos[]" value="' + response.name + '">')
-      uploadedLateralEsquerdaParalamaDiantPhotosMap[file.name] = response.name
-    },
-    removedfile: function (file) {
-      console.log(file)
-      file.previewElement.remove()
-      var name = ''
-      if (typeof file.file_name !== 'undefined') {
-        name = file.file_name
-      } else {
-        name = uploadedLateralEsquerdaParalamaDiantPhotosMap[file.name]
-      }
-      $('form').find('input[name="lateral_esquerda_paralama_diant_photos[]"][value="' + name + '"]').remove()
-    },
-    init: function () {
-@if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_esquerda_paralama_diant_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->lateral_esquerda_paralama_diant_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="lateral_esquerda_paralama_diant_photos[]" value="' + file.file_name + '">')
-        }
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
-
-         return _results
-     }
-}
-
 </script>
 <script>
     var uploadedLateralEsquerdaRetrovisorPhotosMap = {}

@@ -183,50 +183,22 @@ class RegistoEntradaVeiculo extends Model implements HasMedia
 
     public function getFrenteTetoPhotosAttribute()
     {
-        $files = $this->getMedia('frente_teto_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('frente_teto_photos');
     }
 
     public function getFrenteParabrisaPhotosAttribute()
     {
-        $files = $this->getMedia('frente_parabrisa_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('frente_parabrisa_photos');
     }
 
     public function getFrenteCapoPhotosAttribute()
     {
-        $files = $this->getMedia('frente_capo_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('frente_capo_photos');
     }
 
     public function getFrenteParachoquePhotosAttribute()
     {
-        $files = $this->getMedia('frente_parachoque_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('frente_parachoque_photos');
     }
 
     public function getLateralEsquerdaParalamaDiantPhotosAttribute()

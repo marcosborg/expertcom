@@ -70,15 +70,18 @@ class RegistoEntradaVeiculoController extends Controller
 
         $registoEntradaVeiculo->update($request->all());
 
-        if ($request->input('frente_teto_photos', false)) {
-            if (! $registoEntradaVeiculo->frente_teto_photos || $request->input('frente_teto_photos') !== $registoEntradaVeiculo->frente_teto_photos->file_name) {
-                if ($registoEntradaVeiculo->frente_teto_photos) {
-                    $registoEntradaVeiculo->frente_teto_photos->delete();
+        if (count($registoEntradaVeiculo->frente_teto_photos) > 0) {
+            foreach ($registoEntradaVeiculo->frente_teto_photos as $media) {
+                if (!in_array($media->file_name, $request->input('frente_teto_photos', []))) {
+                    $media->delete();
                 }
-                $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($request->input('frente_teto_photos'))))->toMediaCollection('frente_teto_photos');
             }
-        } elseif ($registoEntradaVeiculo->frente_teto_photos) {
-            $registoEntradaVeiculo->frente_teto_photos->delete();
+        }
+        $media = $registoEntradaVeiculo->frente_teto_photos->pluck('file_name')->toArray();
+        foreach ($request->input('frente_teto_photos', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_teto_photos');
+            }
         }
 
         if (count($registoEntradaVeiculo->frente_parabrisa_photos) > 0) {

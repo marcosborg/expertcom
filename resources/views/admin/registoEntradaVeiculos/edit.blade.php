@@ -884,133 +884,77 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div
-                                                    class="form-group {{ $errors->has('traseira_tampa_traseira_photos') ? 'has-error' : '' }}">
-                                                    <label for="traseira_tampa_traseira_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_tampa_traseira_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="traseira_tampa_traseira_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('traseira_tampa_traseira_photos') ? 'has-error' : '' }}">
+                                                    <label for="traseira_tampa_traseira_photos">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_tampa_traseira_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="traseira_tampa_traseira_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('traseira_tampa_traseira_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('traseira_tampa_traseira_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('traseira_tampa_traseira_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_tampa_traseira_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_tampa_traseira_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('traseira_lanternas_dir_photos') ? 'has-error' : '' }}">
-                                                    <label for="traseira_lanternas_dir_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_lanternas_dir_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="traseira_lanternas_dir_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('traseira_lanternas_dir_photos') ? 'has-error' : '' }}">
+                                                    <label for="traseira_lanternas_dir_photos">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_lanternas_dir_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="traseira_lanternas_dir_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('traseira_lanternas_dir_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('traseira_lanternas_dir_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('traseira_lanternas_dir_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_lanternas_dir_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_lanternas_dir_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('traseira_lanterna_esq_photos') ? 'has-error' : '' }}">
-                                                    <label for="traseira_lanterna_esq_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_lanterna_esq_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="traseira_lanterna_esq_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('traseira_lanterna_esq_photos') ? 'has-error' : '' }}">
+                                                    <label for="traseira_lanterna_esq_photos">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_lanterna_esq_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="traseira_lanterna_esq_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('traseira_lanterna_esq_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('traseira_lanterna_esq_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('traseira_lanterna_esq_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_lanterna_esq_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_lanterna_esq_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('traseira_parachoque_tras_photos') ? 'has-error' : '' }}">
-                                                    <label for="traseira_parachoque_tras_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_parachoque_tras_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="traseira_parachoque_tras_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('traseira_parachoque_tras_photos') ? 'has-error' : '' }}">
+                                                    <label for="traseira_parachoque_tras_photos">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_parachoque_tras_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="traseira_parachoque_tras_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('traseira_parachoque_tras_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('traseira_parachoque_tras_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('traseira_parachoque_tras_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_parachoque_tras_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_parachoque_tras_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('traseira_estepe_photos') ? 'has-error' : '' }}">
-                                                    <label for="traseira_estepe_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_estepe_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="traseira_estepe_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('traseira_estepe_photos') ? 'has-error' : '' }}">
+                                                    <label for="traseira_estepe_photos">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_estepe_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="traseira_estepe_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('traseira_estepe_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('traseira_estepe_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('traseira_estepe_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_estepe_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_estepe_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('traseira_macaco_photos') ? 'has-error' : '' }}">
-                                                    <label for="traseira_macaco_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_macaco_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="traseira_macaco_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('traseira_macaco_photos') ? 'has-error' : '' }}">
+                                                    <label for="traseira_macaco_photos">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_macaco_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="traseira_macaco_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('traseira_macaco_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('traseira_macaco_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('traseira_macaco_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_macaco_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_macaco_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('traseira_chave_de_roda_photos') ? 'has-error' : '' }}">
-                                                    <label for="traseira_chave_de_roda_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_chave_de_roda_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="traseira_chave_de_roda_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('traseira_chave_de_roda_photos') ? 'has-error' : '' }}">
+                                                    <label for="traseira_chave_de_roda_photos">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_chave_de_roda_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="traseira_chave_de_roda_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('traseira_chave_de_roda_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('traseira_chave_de_roda_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('traseira_chave_de_roda_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_chave_de_roda_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_chave_de_roda_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('traseira_triangulo_photos') ? 'has-error' : '' }}">
-                                                    <label for="traseira_triangulo_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_triangulo_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="traseira_triangulo_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('traseira_triangulo_photos') ? 'has-error' : '' }}">
+                                                    <label for="traseira_triangulo_photos">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_triangulo_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="traseira_triangulo_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('traseira_triangulo_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('traseira_triangulo_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('traseira_triangulo_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.traseira_triangulo_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.traseira_triangulo_photos_helper') }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -1180,86 +1124,50 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div
-                                                    class="form-group {{ $errors->has('lateral_direita_lateral_photos') ? 'has-error' : '' }}">
-                                                    <label for="lateral_direita_lateral_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.lateral_direita_lateral_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="lateral_direita_lateral_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('lateral_direita_lateral_photos') ? 'has-error' : '' }}">
+                                                    <label for="lateral_direita_lateral_photos">{{ trans('cruds.registoEntradaVeiculo.fields.lateral_direita_lateral_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="lateral_direita_lateral_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('lateral_direita_lateral_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('lateral_direita_lateral_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('lateral_direita_lateral_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.lateral_direita_lateral_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.lateral_direita_lateral_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('lateral_direita_porta_tras_photos') ? 'has-error' : '' }}">
-                                                    <label for="lateral_direita_porta_tras_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.lateral_direita_porta_tras_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="lateral_direita_porta_tras_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('lateral_direita_porta_tras_photos') ? 'has-error' : '' }}">
+                                                    <label for="lateral_direita_porta_tras_photos">{{ trans('cruds.registoEntradaVeiculo.fields.lateral_direita_porta_tras_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="lateral_direita_porta_tras_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('lateral_direita_porta_tras_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('lateral_direita_porta_tras_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('lateral_direita_porta_tras_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.lateral_direita_porta_tras_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.lateral_direita_porta_tras_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('lateral_direita_porta_diant_photos') ? 'has-error' : '' }}">
-                                                    <label for="lateral_direita_porta_diant_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.lateral_direita_porta_diant_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="lateral_direita_porta_diant_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('lateral_direita_porta_diant_photos') ? 'has-error' : '' }}">
+                                                    <label for="lateral_direita_porta_diant_photos">{{ trans('cruds.registoEntradaVeiculo.fields.lateral_direita_porta_diant_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="lateral_direita_porta_diant_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('lateral_direita_porta_diant_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('lateral_direita_porta_diant_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('lateral_direita_porta_diant_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.lateral_direita_porta_diant_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.lateral_direita_porta_diant_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('lateral_direita_retrovisor_photos') ? 'has-error' : '' }}">
-                                                    <label for="lateral_direita_retrovisor_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.lateral_direita_retrovisor_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="lateral_direita_retrovisor_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('lateral_direita_retrovisor_photos') ? 'has-error' : '' }}">
+                                                    <label for="lateral_direita_retrovisor_photos">{{ trans('cruds.registoEntradaVeiculo.fields.lateral_direita_retrovisor_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="lateral_direita_retrovisor_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('lateral_direita_retrovisor_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('lateral_direita_retrovisor_photos') }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('lateral_direita_retrovisor_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.lateral_direita_retrovisor_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.lateral_direita_retrovisor_photos_helper') }}</span>
                                                 </div>
-                                                <div
-                                                    class="form-group {{ $errors->has('lateral_direita_paralama_diant_photos') ? 'has-error' : '' }}">
-                                                    <label for="lateral_direita_paralama_diant_photos">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.lateral_direita_paralama_diant_photos')
-                                                        }}</label>
-                                                    <div class="needsclick dropzone"
-                                                        id="lateral_direita_paralama_diant_photos-dropzone">
+                                                <div class="form-group {{ $errors->has('lateral_direita_paralama_diant_photos') ? 'has-error' : '' }}">
+                                                    <label for="lateral_direita_paralama_diant_photos">{{ trans('cruds.registoEntradaVeiculo.fields.lateral_direita_paralama_diant_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="lateral_direita_paralama_diant_photos-dropzone">
                                                     </div>
                                                     @if($errors->has('lateral_direita_paralama_diant_photos'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('lateral_direita_paralama_diant_photos')
-                                                        }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('lateral_direita_paralama_diant_photos') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.lateral_direita_paralama_diant_photos_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.lateral_direita_paralama_diant_photos_helper') }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -1322,19 +1230,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div
-                                                    class="form-group {{ $errors->has('cinzeiro') ? 'has-error' : '' }}">
-                                                    <label for="cinzeiro">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.cinzeiro') }}</label>
+                                                <div class="form-group {{ $errors->has('cinzeiro') ? 'has-error' : '' }}">
+                                                    <label for="cinzeiro">{{ trans('cruds.registoEntradaVeiculo.fields.cinzeiro') }}</label>
                                                     <div class="needsclick dropzone" id="cinzeiro-dropzone">
                                                     </div>
                                                     @if($errors->has('cinzeiro'))
-                                                    <span class="help-block" role="alert">{{ $errors->first('cinzeiro')
-                                                        }}</span>
+                                                        <span class="help-block" role="alert">{{ $errors->first('cinzeiro') }}</span>
                                                     @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.cinzeiro_helper')
-                                                        }}</span>
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.cinzeiro_helper') }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -2561,26 +2464,78 @@ Dropzone.options.frenteParachoquePhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralEsquerdaRetrovisorPhotosMap = {}
-Dropzone.options.lateralEsquerdaRetrovisorPhotosDropzone = {
+    var uploadedLateralEsquerdaParalamaDiantPhotosMap = {}
+Dropzone.options.lateralEsquerdaParalamaDiantPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="lateral_esquerda_paralama_diant_photos[]" value="' + response.name + '">')
+      uploadedLateralEsquerdaParalamaDiantPhotosMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedLateralEsquerdaParalamaDiantPhotosMap[file.name]
+      }
+      $('form').find('input[name="lateral_esquerda_paralama_diant_photos[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_esquerda_paralama_diant_photos)
+          var files =
+            {!! json_encode($registoEntradaVeiculo->lateral_esquerda_paralama_diant_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="lateral_esquerda_paralama_diant_photos[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+<script>
+    var uploadedLateralEsquerdaRetrovisorPhotosMap = {}
+Dropzone.options.lateralEsquerdaRetrovisorPhotosDropzone = {
+    url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
+    maxFilesize: 5, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="lateral_esquerda_retrovisor_photos[]" value="' + response.name + '">')
       uploadedLateralEsquerdaRetrovisorPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2592,14 +2547,14 @@ Dropzone.options.lateralEsquerdaRetrovisorPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_esquerda_retrovisor_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->lateral_esquerda_retrovisor_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="lateral_esquerda_retrovisor_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->lateral_esquerda_retrovisor_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="lateral_esquerda_retrovisor_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2619,29 +2574,24 @@ Dropzone.options.lateralEsquerdaRetrovisorPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedLateralEsquerdaPortaDianteiraPhotosMap = {}
 Dropzone.options.lateralEsquerdaPortaDianteiraPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="lateral_esquerda_porta_dianteira_photos[]" value="' + response.name + '">')
       uploadedLateralEsquerdaPortaDianteiraPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2653,14 +2603,14 @@ Dropzone.options.lateralEsquerdaPortaDianteiraPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_esquerda_porta_dianteira_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->lateral_esquerda_porta_dianteira_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="lateral_esquerda_porta_dianteira_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->lateral_esquerda_porta_dianteira_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="lateral_esquerda_porta_dianteira_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2680,29 +2630,24 @@ Dropzone.options.lateralEsquerdaPortaDianteiraPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedLateralEsquerdaPortaTraseiraPhotosMap = {}
 Dropzone.options.lateralEsquerdaPortaTraseiraPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="lateral_esquerda_porta_traseira_photos[]" value="' + response.name + '">')
       uploadedLateralEsquerdaPortaTraseiraPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2714,14 +2659,14 @@ Dropzone.options.lateralEsquerdaPortaTraseiraPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_esquerda_porta_traseira_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->lateral_esquerda_porta_traseira_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="lateral_esquerda_porta_traseira_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->lateral_esquerda_porta_traseira_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="lateral_esquerda_porta_traseira_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2741,29 +2686,24 @@ Dropzone.options.lateralEsquerdaPortaTraseiraPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedLateralEsquerdaLateralPhotosMap = {}
 Dropzone.options.lateralEsquerdaLateralPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="lateral_esquerda_lateral_photos[]" value="' + response.name + '">')
       uploadedLateralEsquerdaLateralPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2775,14 +2715,14 @@ Dropzone.options.lateralEsquerdaLateralPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_esquerda_lateral_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->lateral_esquerda_lateral_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="lateral_esquerda_lateral_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->lateral_esquerda_lateral_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="lateral_esquerda_lateral_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2802,29 +2742,24 @@ Dropzone.options.lateralEsquerdaLateralPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedTraseiraTampaTraseiraPhotosMap = {}
 Dropzone.options.traseiraTampaTraseiraPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="traseira_tampa_traseira_photos[]" value="' + response.name + '">')
       uploadedTraseiraTampaTraseiraPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2836,14 +2771,14 @@ Dropzone.options.traseiraTampaTraseiraPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->traseira_tampa_traseira_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->traseira_tampa_traseira_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="traseira_tampa_traseira_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->traseira_tampa_traseira_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="traseira_tampa_traseira_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2863,29 +2798,24 @@ Dropzone.options.traseiraTampaTraseiraPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedTraseiraLanternasDirPhotosMap = {}
 Dropzone.options.traseiraLanternasDirPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="traseira_lanternas_dir_photos[]" value="' + response.name + '">')
       uploadedTraseiraLanternasDirPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2897,14 +2827,14 @@ Dropzone.options.traseiraLanternasDirPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->traseira_lanternas_dir_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->traseira_lanternas_dir_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="traseira_lanternas_dir_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->traseira_lanternas_dir_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="traseira_lanternas_dir_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2924,29 +2854,24 @@ Dropzone.options.traseiraLanternasDirPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedTraseiraLanternaEsqPhotosMap = {}
 Dropzone.options.traseiraLanternaEsqPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="traseira_lanterna_esq_photos[]" value="' + response.name + '">')
       uploadedTraseiraLanternaEsqPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -2958,14 +2883,14 @@ Dropzone.options.traseiraLanternaEsqPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->traseira_lanterna_esq_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->traseira_lanterna_esq_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="traseira_lanterna_esq_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->traseira_lanterna_esq_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="traseira_lanterna_esq_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -2985,29 +2910,24 @@ Dropzone.options.traseiraLanternaEsqPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedTraseiraParachoqueTrasPhotosMap = {}
 Dropzone.options.traseiraParachoqueTrasPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="traseira_parachoque_tras_photos[]" value="' + response.name + '">')
       uploadedTraseiraParachoqueTrasPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3019,14 +2939,14 @@ Dropzone.options.traseiraParachoqueTrasPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->traseira_parachoque_tras_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->traseira_parachoque_tras_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="traseira_parachoque_tras_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->traseira_parachoque_tras_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="traseira_parachoque_tras_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3046,29 +2966,24 @@ Dropzone.options.traseiraParachoqueTrasPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedTraseiraEstepePhotosMap = {}
 Dropzone.options.traseiraEstepePhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="traseira_estepe_photos[]" value="' + response.name + '">')
       uploadedTraseiraEstepePhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3080,14 +2995,14 @@ Dropzone.options.traseiraEstepePhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->traseira_estepe_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->traseira_estepe_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="traseira_estepe_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->traseira_estepe_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="traseira_estepe_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3107,29 +3022,24 @@ Dropzone.options.traseiraEstepePhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedTraseiraMacacoPhotosMap = {}
 Dropzone.options.traseiraMacacoPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="traseira_macaco_photos[]" value="' + response.name + '">')
       uploadedTraseiraMacacoPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3141,14 +3051,14 @@ Dropzone.options.traseiraMacacoPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->traseira_macaco_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->traseira_macaco_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="traseira_macaco_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->traseira_macaco_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="traseira_macaco_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3168,29 +3078,24 @@ Dropzone.options.traseiraMacacoPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedTraseiraChaveDeRodaPhotosMap = {}
 Dropzone.options.traseiraChaveDeRodaPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="traseira_chave_de_roda_photos[]" value="' + response.name + '">')
       uploadedTraseiraChaveDeRodaPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3202,14 +3107,14 @@ Dropzone.options.traseiraChaveDeRodaPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->traseira_chave_de_roda_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->traseira_chave_de_roda_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="traseira_chave_de_roda_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->traseira_chave_de_roda_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="traseira_chave_de_roda_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3229,29 +3134,24 @@ Dropzone.options.traseiraChaveDeRodaPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedTraseiraTrianguloPhotosMap = {}
 Dropzone.options.traseiraTrianguloPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="traseira_triangulo_photos[]" value="' + response.name + '">')
       uploadedTraseiraTrianguloPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3263,14 +3163,14 @@ Dropzone.options.traseiraTrianguloPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->traseira_triangulo_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->traseira_triangulo_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="traseira_triangulo_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->traseira_triangulo_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="traseira_triangulo_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3290,29 +3190,24 @@ Dropzone.options.traseiraTrianguloPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedLateralDireitaLateralPhotosMap = {}
 Dropzone.options.lateralDireitaLateralPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="lateral_direita_lateral_photos[]" value="' + response.name + '">')
       uploadedLateralDireitaLateralPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3324,14 +3219,14 @@ Dropzone.options.lateralDireitaLateralPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_direita_lateral_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->lateral_direita_lateral_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="lateral_direita_lateral_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->lateral_direita_lateral_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="lateral_direita_lateral_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3351,29 +3246,24 @@ Dropzone.options.lateralDireitaLateralPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedLateralDireitaPortaTrasPhotosMap = {}
 Dropzone.options.lateralDireitaPortaTrasPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="lateral_direita_porta_tras_photos[]" value="' + response.name + '">')
       uploadedLateralDireitaPortaTrasPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3385,14 +3275,14 @@ Dropzone.options.lateralDireitaPortaTrasPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_direita_porta_tras_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->lateral_direita_porta_tras_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="lateral_direita_porta_tras_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->lateral_direita_porta_tras_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="lateral_direita_porta_tras_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3412,29 +3302,24 @@ Dropzone.options.lateralDireitaPortaTrasPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedLateralDireitaPortaDiantPhotosMap = {}
 Dropzone.options.lateralDireitaPortaDiantPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="lateral_direita_porta_diant_photos[]" value="' + response.name + '">')
       uploadedLateralDireitaPortaDiantPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3446,14 +3331,14 @@ Dropzone.options.lateralDireitaPortaDiantPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_direita_porta_diant_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->lateral_direita_porta_diant_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="lateral_direita_porta_diant_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->lateral_direita_porta_diant_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="lateral_direita_porta_diant_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3473,29 +3358,24 @@ Dropzone.options.lateralDireitaPortaDiantPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedLateralDireitaRetrovisorPhotosMap = {}
 Dropzone.options.lateralDireitaRetrovisorPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="lateral_direita_retrovisor_photos[]" value="' + response.name + '">')
       uploadedLateralDireitaRetrovisorPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3507,14 +3387,14 @@ Dropzone.options.lateralDireitaRetrovisorPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_direita_retrovisor_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->lateral_direita_retrovisor_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="lateral_direita_retrovisor_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->lateral_direita_retrovisor_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="lateral_direita_retrovisor_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3534,29 +3414,24 @@ Dropzone.options.lateralDireitaRetrovisorPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedLateralDireitaParalamaDiantPhotosMap = {}
 Dropzone.options.lateralDireitaParalamaDiantPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="lateral_direita_paralama_diant_photos[]" value="' + response.name + '">')
       uploadedLateralDireitaParalamaDiantPhotosMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3568,14 +3443,14 @@ Dropzone.options.lateralDireitaParalamaDiantPhotosDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->lateral_direita_paralama_diant_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->lateral_direita_paralama_diant_photos) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="lateral_direita_paralama_diant_photos[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->lateral_direita_paralama_diant_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="lateral_direita_paralama_diant_photos[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3595,29 +3470,24 @@ Dropzone.options.lateralDireitaParalamaDiantPhotosDropzone = {
          return _results
      }
 }
-
 </script>
 <script>
     var uploadedCinzeiroMap = {}
 Dropzone.options.cinzeiroDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
-      width: 4096,
-      height: 4096
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="cinzeiro[]" value="' + response.name + '">')
       uploadedCinzeiroMap[file.name] = response.name
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
       var name = ''
       if (typeof file.file_name !== 'undefined') {
@@ -3629,14 +3499,14 @@ Dropzone.options.cinzeiroDropzone = {
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->cinzeiro)
-      var files = {!! json_encode($registoEntradaVeiculo->cinzeiro) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="cinzeiro[]" value="' + file.file_name + '">')
-        }
+          var files =
+            {!! json_encode($registoEntradaVeiculo->cinzeiro) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="cinzeiro[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {
@@ -3656,6 +3526,5 @@ Dropzone.options.cinzeiroDropzone = {
          return _results
      }
 }
-
 </script>
 @endsection

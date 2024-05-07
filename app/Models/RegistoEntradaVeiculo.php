@@ -203,230 +203,97 @@ class RegistoEntradaVeiculo extends Model implements HasMedia
 
     public function getLateralEsquerdaParalamaDiantPhotosAttribute()
     {
-        $files = $this->getMedia('lateral_esquerda_paralama_diant_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('lateral_esquerda_paralama_diant_photos');
     }
 
     public function getLateralEsquerdaRetrovisorPhotosAttribute()
     {
-        $files = $this->getMedia('lateral_esquerda_retrovisor_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('lateral_esquerda_retrovisor_photos');
     }
 
     public function getLateralEsquerdaPortaDianteiraPhotosAttribute()
     {
-        $files = $this->getMedia('lateral_esquerda_porta_dianteira_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('lateral_esquerda_porta_dianteira_photos');
     }
 
     public function getLateralEsquerdaPortaTraseiraPhotosAttribute()
     {
-        $files = $this->getMedia('lateral_esquerda_porta_traseira_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('lateral_esquerda_porta_traseira_photos');
     }
 
     public function getLateralEsquerdaLateralPhotosAttribute()
     {
-        $files = $this->getMedia('lateral_esquerda_lateral_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('lateral_esquerda_lateral_photos');
     }
 
     public function getTraseiraTampaTraseiraPhotosAttribute()
     {
-        $files = $this->getMedia('traseira_tampa_traseira_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('traseira_tampa_traseira_photos');
     }
 
     public function getTraseiraLanternasDirPhotosAttribute()
     {
-        $files = $this->getMedia('traseira_lanternas_dir_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('traseira_lanternas_dir_photos');
     }
 
     public function getTraseiraLanternaEsqPhotosAttribute()
     {
-        $files = $this->getMedia('traseira_lanterna_esq_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('traseira_lanterna_esq_photos');
     }
 
     public function getTraseiraParachoqueTrasPhotosAttribute()
     {
-        $files = $this->getMedia('traseira_parachoque_tras_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('traseira_parachoque_tras_photos');
     }
 
     public function getTraseiraEstepePhotosAttribute()
     {
-        $files = $this->getMedia('traseira_estepe_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('traseira_estepe_photos');
     }
 
     public function getTraseiraMacacoPhotosAttribute()
     {
-        $files = $this->getMedia('traseira_macaco_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('traseira_macaco_photos');
     }
 
     public function getTraseiraChaveDeRodaPhotosAttribute()
     {
-        $files = $this->getMedia('traseira_chave_de_roda_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('traseira_chave_de_roda_photos');
     }
 
     public function getTraseiraTrianguloPhotosAttribute()
     {
-        $files = $this->getMedia('traseira_triangulo_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('traseira_triangulo_photos');
     }
 
     public function getLateralDireitaLateralPhotosAttribute()
     {
-        $files = $this->getMedia('lateral_direita_lateral_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('lateral_direita_lateral_photos');
     }
 
     public function getLateralDireitaPortaTrasPhotosAttribute()
     {
-        $files = $this->getMedia('lateral_direita_porta_tras_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('lateral_direita_porta_tras_photos');
     }
 
     public function getLateralDireitaPortaDiantPhotosAttribute()
     {
-        $files = $this->getMedia('lateral_direita_porta_diant_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('lateral_direita_porta_diant_photos');
     }
 
     public function getLateralDireitaRetrovisorPhotosAttribute()
     {
-        $files = $this->getMedia('lateral_direita_retrovisor_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('lateral_direita_retrovisor_photos');
     }
 
     public function getLateralDireitaParalamaDiantPhotosAttribute()
     {
-        $files = $this->getMedia('lateral_direita_paralama_diant_photos');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('lateral_direita_paralama_diant_photos');
     }
 
     public function getCinzeiroAttribute()
     {
-        $files = $this->getMedia('cinzeiro');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->getMedia('cinzeiro');
     }
 
     public function getCopiaDeLicencaDeTvdeDataAttribute($value)

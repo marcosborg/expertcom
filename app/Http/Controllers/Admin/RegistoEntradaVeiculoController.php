@@ -80,7 +80,7 @@ class RegistoEntradaVeiculoController extends Controller
         $media = $registoEntradaVeiculo->frente_teto_photos->pluck('file_name')->toArray();
         foreach ($request->input('frente_teto_photos', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                //$registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_teto_photos');
+                $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)));//->toMediaCollection('frente_teto_photos');
             }
         }
 

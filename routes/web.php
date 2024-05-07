@@ -480,12 +480,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('form-communications/destroy', 'FormCommunicationController@massDestroy')->name('form-communications.massDestroy');
     Route::resource('form-communications', 'FormCommunicationController');
 
-    // Registo Entrada Veiculo
-    Route::delete('registo-entrada-veiculos/destroy', 'RegistoEntradaVeiculoController@massDestroy')->name('registo-entrada-veiculos.massDestroy');
-    Route::post('registo-entrada-veiculos/media', 'RegistoEntradaVeiculoController@storeMedia')->name('registo-entrada-veiculos.storeMedia');
-    Route::post('registo-entrada-veiculos/ckmedia', 'RegistoEntradaVeiculoController@storeCKEditorImages')->name('registo-entrada-veiculos.storeCKEditorImages');
-    Route::resource('registo-entrada-veiculos', 'RegistoEntradaVeiculoController');
-
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

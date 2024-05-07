@@ -2337,63 +2337,57 @@
 
 @section('scripts')
 <script>
-    var uploadedFrenteTetoPhotosMap = {}
-Dropzone.options.frenteTetoPhotosDropzone = {
+    Dropzone.options.frenteTetoPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFiles: 1,
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },
     success: function (file, response) {
-      $('form').append('<input type="hidden" name="frente_teto_photos[]" value="' + response.name + '">')
-      uploadedFrenteTetoPhotosMap[file.name] = response.name
+      $('form').find('input[name="frente_teto_photos"]').remove()
+      $('form').append('<input type="hidden" name="frente_teto_photos" value="' + response.name + '">')
     },
     removedfile: function (file) {
-      console.log(file)
       file.previewElement.remove()
-      var name = ''
-      if (typeof file.file_name !== 'undefined') {
-        name = file.file_name
-      } else {
-        name = uploadedFrenteTetoPhotosMap[file.name]
+      if (file.status !== 'error') {
+        $('form').find('input[name="frente_teto_photos"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
       }
-      $('form').find('input[name="frente_teto_photos[]"][value="' + name + '"]').remove()
     },
     init: function () {
 @if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->frente_teto_photos)
-      var files = {!! json_encode($registoEntradaVeiculo->frente_teto_photos) !!}
-          for (var i in files) {
-          var file = files[i]
+      var file = {!! json_encode($registoEntradaVeiculo->frente_teto_photos) !!}
           this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="frente_teto_photos[]" value="' + file.file_name + '">')
-        }
+      this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="frente_teto_photos" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
 @endif
     },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
+    error: function (file, response) {
+        if ($.type(response) === 'string') {
+            var message = response //dropzone sends it's own error messages in string
+        } else {
+            var message = response.errors.file
+        }
+        file.previewElement.classList.add('dz-error')
+        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+        _results = []
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            node = _ref[_i]
+            _results.push(node.textContent = message)
+        }
 
-         return _results
-     }
+        return _results
+    }
 }
 
 </script>

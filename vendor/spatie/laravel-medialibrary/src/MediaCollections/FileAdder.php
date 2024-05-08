@@ -330,12 +330,12 @@ class FileAdder
             $media->order_column = $this->order;
         }
 
+        */
+
         $media->custom_properties = $this->customProperties;
 
         $media->generated_conversions = [];
         $media->responsive_images = [];
-
-        */
 
         $media->manipulations = $this->manipulations;
 

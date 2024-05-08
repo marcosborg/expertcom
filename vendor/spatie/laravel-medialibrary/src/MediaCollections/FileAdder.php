@@ -335,6 +335,8 @@ class FileAdder
         $media->generated_conversions = [];
         $media->responsive_images = [];
 
+        */
+
         $media->manipulations = $this->manipulations;
 
         if (filled($this->customHeaders)) {
@@ -342,8 +344,6 @@ class FileAdder
         }
 
         $media->fill($this->properties);
-
-        */
 
         $this->attachMedia($media);
 

@@ -135,9 +135,9 @@
                                     </th>
                                     <td>
                                         @foreach($registoEntradaVeiculo->frente_do_veiculo_teto_photos as $key => $media)
-                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                            <img src="{{ $media->getUrl() }}">
                                                 {{ trans('global.view_file') }}
-                                            </a>
+                                    </img>
                                         @endforeach
                                     </td>
                                 </tr>

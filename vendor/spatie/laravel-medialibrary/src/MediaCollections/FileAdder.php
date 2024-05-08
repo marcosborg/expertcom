@@ -333,7 +333,7 @@ class FileAdder
         $media->generated_conversions = [];
         $media->responsive_images = [];
 
-        $media->manipulations = $this->manipulations;
+        //$media->manipulations = $this->manipulations;
 
         if (filled($this->customHeaders)) {
             $media->setCustomHeaders($this->customHeaders);

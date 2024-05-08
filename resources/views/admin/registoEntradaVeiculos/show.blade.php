@@ -930,7 +930,7 @@
                                         {{ trans('cruds.registoEntradaVeiculo.fields.possui_triangulo') }}
                                     </th>
                                     <td>
-                                        {{ $registoEntradaVeiculo->possui_triangulo }}
+                                        <input type="checkbox" disabled="disabled" {{ $registoEntradaVeiculo->possui_triangulo ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>

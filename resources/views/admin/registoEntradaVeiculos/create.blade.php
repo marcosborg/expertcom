@@ -2,102 +2,123 @@
 @section('content')
 <div class="content">
 
-    <div class="row">
-        <div class="col-md-offset-4 col-lg-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ trans('global.create') }} {{ trans('cruds.registoEntradaVeiculo.title_singular') }}
-                </div>
-                <div class="panel-body">
-                    <form method="POST" action="{{ route("admin.registo-entrada-veiculos.store") }}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group {{ $errors->has('data_e_horario') ? 'has-error' : '' }}">
-                            <label for="data_e_horario">{{ trans('cruds.registoEntradaVeiculo.fields.data_e_horario') }}</label>
-                            <input class="form-control datetime" type="text" name="data_e_horario" id="data_e_horario" value="{{ old('data_e_horario') }}">
-                            @if($errors->has('data_e_horario'))
-                                <span class="help-block" role="alert">{{ $errors->first('data_e_horario') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.data_e_horario_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('user') ? 'has-error' : '' }}">
-                            <label class="required" for="user_id">{{ trans('cruds.registoEntradaVeiculo.fields.user') }}</label>
-                            <select class="form-control select2" name="user_id" id="user_id" required>
-                                @foreach($users as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('user'))
-                                <span class="help-block" role="alert">{{ $errors->first('user') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.user_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('driver') ? 'has-error' : '' }}">
-                            <label class="required" for="driver_id">{{ trans('cruds.registoEntradaVeiculo.fields.driver') }}</label>
-                            <select class="form-control select2" name="driver_id" id="driver_id" required>
-                                @foreach($drivers as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('driver_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('driver'))
-                                <span class="help-block" role="alert">{{ $errors->first('driver') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.driver_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('vehicle_item') ? 'has-error' : '' }}">
-                            <label class="required" for="vehicle_item_id">{{ trans('cruds.registoEntradaVeiculo.fields.vehicle_item') }}</label>
-                            <select class="form-control select2" name="vehicle_item_id" id="vehicle_item_id" required>
-                                @foreach($vehicle_items as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('vehicle_item_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('vehicle_item'))
-                                <span class="help-block" role="alert">{{ $errors->first('vehicle_item') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.vehicle_item_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('bateria_a_chegada') ? 'has-error' : '' }}">
-                            <label class="required" for="bateria_a_chegada">{{ trans('cruds.registoEntradaVeiculo.fields.bateria_a_chegada') }}</label>
-                            <input class="form-control" type="number" name="bateria_a_chegada" id="bateria_a_chegada" value="{{ old('bateria_a_chegada', '') }}" step="1" required>
-                            @if($errors->has('bateria_a_chegada'))
-                                <span class="help-block" role="alert">{{ $errors->first('bateria_a_chegada') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.bateria_a_chegada_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('de_bateria_de_saida') ? 'has-error' : '' }}">
-                            <label class="required" for="de_bateria_de_saida">{{ trans('cruds.registoEntradaVeiculo.fields.de_bateria_de_saida') }}</label>
-                            <input class="form-control" type="number" name="de_bateria_de_saida" id="de_bateria_de_saida" value="{{ old('de_bateria_de_saida', '') }}" step="1" required>
-                            @if($errors->has('de_bateria_de_saida'))
-                                <span class="help-block" role="alert">{{ $errors->first('de_bateria_de_saida') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.de_bateria_de_saida_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('km_atual') ? 'has-error' : '' }}">
-                            <label class="required" for="km_atual">{{ trans('cruds.registoEntradaVeiculo.fields.km_atual') }}</label>
-                            <input class="form-control" type="number" name="km_atual" id="km_atual" value="{{ old('km_atual', '') }}" step="1" required>
-                            @if($errors->has('km_atual'))
-                                <span class="help-block" role="alert">{{ $errors->first('km_atual') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.km_atual_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
-
+  <div class="row">
+    <div class="col-md-offset-4 col-lg-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          {{ trans('global.create') }} {{ trans('cruds.registoEntradaVeiculo.title_singular') }}
         </div>
+        <div class="panel-body">
+          <form method="POST" action="{{ route("admin.registo-entrada-veiculos.store") }}"
+            enctype="multipart/form-data">
+            @csrf
+            <div class="form-group {{ $errors->has('data_e_horario') ? 'has-error' : '' }}">
+              <label for="data_e_horario">{{ trans('cruds.registoEntradaVeiculo.fields.data_e_horario') }}</label>
+              <input class="form-control datetime" type="text" name="data_e_horario" id="data_e_horario"
+                value="{{ old('data_e_horario') }}">
+              @if($errors->has('data_e_horario'))
+              <span class="help-block" role="alert">{{ $errors->first('data_e_horario') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.data_e_horario_helper') }}</span>
+            </div>
+            @if (auth()->user()->hasRole('tecnico'))
+            <div class="form-group">
+              <label>{{ trans('cruds.registoEntradaVeiculo.fields.user') }}</label>
+              <select class="form-control select2" disabled>
+                @foreach($users as $id => $entry)
+                <option value="{{ $id }}" {{ auth()->user()->id == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                @endforeach
+              </select>
+              <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            </div>
+            @else
+            <div class="form-group {{ $errors->has('user') ? 'has-error' : '' }}">
+              <label class="required" for="user_id">{{ trans('cruds.registoEntradaVeiculo.fields.user') }}</label>
+              <select class="form-control select2" name="user_id" id="user_id" required>
+                @foreach($users as $id => $entry)
+                <option value="{{ $id }}" {{ old('user_id')==$id ? 'selected' : '' }}>{{ $entry }}</option>
+                @endforeach
+              </select>
+              @if($errors->has('user'))
+              <span class="help-block" role="alert">{{ $errors->first('user') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.user_helper') }}</span>
+            </div>
+            @endif
+            <div class="form-group {{ $errors->has('driver') ? 'has-error' : '' }}">
+              <label class="required" for="driver_id">{{ trans('cruds.registoEntradaVeiculo.fields.driver') }}</label>
+              <select class="form-control select2" name="driver_id" id="driver_id" required>
+                @foreach($drivers as $id => $entry)
+                <option value="{{ $id }}" {{ old('driver_id')==$id ? 'selected' : '' }}>{{ $entry }}</option>
+                @endforeach
+              </select>
+              @if($errors->has('driver'))
+              <span class="help-block" role="alert">{{ $errors->first('driver') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.driver_helper') }}</span>
+            </div>
+            <div class="form-group {{ $errors->has('vehicle_item') ? 'has-error' : '' }}">
+              <label class="required" for="vehicle_item_id">{{ trans('cruds.registoEntradaVeiculo.fields.vehicle_item')
+                }}</label>
+              <select class="form-control select2" name="vehicle_item_id" id="vehicle_item_id" required>
+                @foreach($vehicle_items as $id => $entry)
+                <option value="{{ $id }}" {{ old('vehicle_item_id')==$id ? 'selected' : '' }}>{{ $entry }}</option>
+                @endforeach
+              </select>
+              @if($errors->has('vehicle_item'))
+              <span class="help-block" role="alert">{{ $errors->first('vehicle_item') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.vehicle_item_helper') }}</span>
+            </div>
+            <div class="form-group {{ $errors->has('bateria_a_chegada') ? 'has-error' : '' }}">
+              <label class="required" for="bateria_a_chegada">{{
+                trans('cruds.registoEntradaVeiculo.fields.bateria_a_chegada') }}</label>
+              <input class="form-control" type="number" name="bateria_a_chegada" id="bateria_a_chegada"
+                value="{{ old('bateria_a_chegada', '') }}" step="1" required>
+              @if($errors->has('bateria_a_chegada'))
+              <span class="help-block" role="alert">{{ $errors->first('bateria_a_chegada') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.bateria_a_chegada_helper') }}</span>
+            </div>
+            <div class="form-group {{ $errors->has('de_bateria_de_saida') ? 'has-error' : '' }}">
+              <label class="required" for="de_bateria_de_saida">{{
+                trans('cruds.registoEntradaVeiculo.fields.de_bateria_de_saida') }}</label>
+              <input class="form-control" type="number" name="de_bateria_de_saida" id="de_bateria_de_saida"
+                value="{{ old('de_bateria_de_saida', '') }}" step="1" required>
+              @if($errors->has('de_bateria_de_saida'))
+              <span class="help-block" role="alert">{{ $errors->first('de_bateria_de_saida') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.de_bateria_de_saida_helper')
+                }}</span>
+            </div>
+            <div class="form-group {{ $errors->has('km_atual') ? 'has-error' : '' }}">
+              <label class="required" for="km_atual">{{ trans('cruds.registoEntradaVeiculo.fields.km_atual') }}</label>
+              <input class="form-control" type="number" name="km_atual" id="km_atual" value="{{ old('km_atual', '') }}"
+                step="1" required>
+              @if($errors->has('km_atual'))
+              <span class="help-block" role="alert">{{ $errors->first('km_atual') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.km_atual_helper') }}</span>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-danger" type="submit">
+                {{ trans('global.save') }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+
     </div>
+  </div>
 </div>
 @endsection
 
 @section('scripts')
 <script>
-    var uploadedFrenteDoVeiculoTetoPhotosMap = {}
+  var uploadedFrenteDoVeiculoTetoPhotosMap = {}
 Dropzone.options.frenteDoVeiculoTetoPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -153,7 +174,7 @@ Dropzone.options.frenteDoVeiculoTetoPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedFrenteDoVeiculoParabrisaPhotosMap = {}
+  var uploadedFrenteDoVeiculoParabrisaPhotosMap = {}
 Dropzone.options.frenteDoVeiculoParabrisaPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -209,7 +230,7 @@ Dropzone.options.frenteDoVeiculoParabrisaPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedFrenteDoVeiculoCapoPhotosMap = {}
+  var uploadedFrenteDoVeiculoCapoPhotosMap = {}
 Dropzone.options.frenteDoVeiculoCapoPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -265,7 +286,7 @@ Dropzone.options.frenteDoVeiculoCapoPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedFrenteDoVeiculoParachoquePhotosMap = {}
+  var uploadedFrenteDoVeiculoParachoquePhotosMap = {}
 Dropzone.options.frenteDoVeiculoParachoquePhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -321,7 +342,7 @@ Dropzone.options.frenteDoVeiculoParachoquePhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralEsquerdaParalamaDiantPhotosMap = {}
+  var uploadedLateralEsquerdaParalamaDiantPhotosMap = {}
 Dropzone.options.lateralEsquerdaParalamaDiantPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -377,7 +398,7 @@ Dropzone.options.lateralEsquerdaParalamaDiantPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralEsquerdaRetrovisorPhotosMap = {}
+  var uploadedLateralEsquerdaRetrovisorPhotosMap = {}
 Dropzone.options.lateralEsquerdaRetrovisorPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -433,7 +454,7 @@ Dropzone.options.lateralEsquerdaRetrovisorPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralEsquerdaPortaDiantPhotosMap = {}
+  var uploadedLateralEsquerdaPortaDiantPhotosMap = {}
 Dropzone.options.lateralEsquerdaPortaDiantPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -489,7 +510,7 @@ Dropzone.options.lateralEsquerdaPortaDiantPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralEsquerdaPortaTrasPhotosMap = {}
+  var uploadedLateralEsquerdaPortaTrasPhotosMap = {}
 Dropzone.options.lateralEsquerdaPortaTrasPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -545,7 +566,7 @@ Dropzone.options.lateralEsquerdaPortaTrasPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralEsquerdaLateralPhotosMap = {}
+  var uploadedLateralEsquerdaLateralPhotosMap = {}
 Dropzone.options.lateralEsquerdaLateralPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -601,7 +622,7 @@ Dropzone.options.lateralEsquerdaLateralPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedTraseiraTampaTraseiraPhotosMap = {}
+  var uploadedTraseiraTampaTraseiraPhotosMap = {}
 Dropzone.options.traseiraTampaTraseiraPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -657,7 +678,7 @@ Dropzone.options.traseiraTampaTraseiraPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedTraseiraLanternasDirPhotosMap = {}
+  var uploadedTraseiraLanternasDirPhotosMap = {}
 Dropzone.options.traseiraLanternasDirPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -713,7 +734,7 @@ Dropzone.options.traseiraLanternasDirPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedTraseiraLanternaEsqPhotosMap = {}
+  var uploadedTraseiraLanternaEsqPhotosMap = {}
 Dropzone.options.traseiraLanternaEsqPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -769,7 +790,7 @@ Dropzone.options.traseiraLanternaEsqPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedTraseiraParachoqueTrasPhotosMap = {}
+  var uploadedTraseiraParachoqueTrasPhotosMap = {}
 Dropzone.options.traseiraParachoqueTrasPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -825,7 +846,7 @@ Dropzone.options.traseiraParachoqueTrasPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedTraseiraEstepePhotosMap = {}
+  var uploadedTraseiraEstepePhotosMap = {}
 Dropzone.options.traseiraEstepePhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -881,7 +902,7 @@ Dropzone.options.traseiraEstepePhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedTraseiraMacacoPhotosMap = {}
+  var uploadedTraseiraMacacoPhotosMap = {}
 Dropzone.options.traseiraMacacoPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -937,7 +958,7 @@ Dropzone.options.traseiraMacacoPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedTraseiraChaveDeRodaPhotosMap = {}
+  var uploadedTraseiraChaveDeRodaPhotosMap = {}
 Dropzone.options.traseiraChaveDeRodaPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -993,7 +1014,7 @@ Dropzone.options.traseiraChaveDeRodaPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedTraseiraTrianguloPhotosMap = {}
+  var uploadedTraseiraTrianguloPhotosMap = {}
 Dropzone.options.traseiraTrianguloPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -1049,7 +1070,7 @@ Dropzone.options.traseiraTrianguloPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralDireitaLateralPhotosMap = {}
+  var uploadedLateralDireitaLateralPhotosMap = {}
 Dropzone.options.lateralDireitaLateralPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -1105,7 +1126,7 @@ Dropzone.options.lateralDireitaLateralPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralDireitaPortaTrasPhotosMap = {}
+  var uploadedLateralDireitaPortaTrasPhotosMap = {}
 Dropzone.options.lateralDireitaPortaTrasPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -1161,7 +1182,7 @@ Dropzone.options.lateralDireitaPortaTrasPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralDireitaPortaDiantPhotosMap = {}
+  var uploadedLateralDireitaPortaDiantPhotosMap = {}
 Dropzone.options.lateralDireitaPortaDiantPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -1217,7 +1238,7 @@ Dropzone.options.lateralDireitaPortaDiantPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralDireitaRetrovisorPhotosMap = {}
+  var uploadedLateralDireitaRetrovisorPhotosMap = {}
 Dropzone.options.lateralDireitaRetrovisorPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -1273,7 +1294,7 @@ Dropzone.options.lateralDireitaRetrovisorPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedLateralDireitaParalamaDiantPhotosMap = {}
+  var uploadedLateralDireitaParalamaDiantPhotosMap = {}
 Dropzone.options.lateralDireitaParalamaDiantPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB
@@ -1329,7 +1350,7 @@ Dropzone.options.lateralDireitaParalamaDiantPhotosDropzone = {
 }
 </script>
 <script>
-    var uploadedCinzeiroPhotosMap = {}
+  var uploadedCinzeiroPhotosMap = {}
 Dropzone.options.cinzeiroPhotosDropzone = {
     url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
     maxFilesize: 5, // MB

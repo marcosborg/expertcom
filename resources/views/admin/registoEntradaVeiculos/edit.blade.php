@@ -12,6 +12,27 @@
                         Dados de entrada
                     </div>
                     <div class="panel-body">
+                        @if (auth()->user()->hasRole('tecnico'))
+                        <div class="form-group">
+                            <label>{{ trans('cruds.registoEntradaVeiculo.fields.data_e_horario') }}</label>
+                            <input class="form-control datetime" type="text" disabled
+                                value="{{ $registoEntradaVeiculo->data_e_horario }}">
+                            <input type="hidden" name="data_e_horario" id="data_e_horario"
+                                value="{{ $registoEntradaVeiculo->data_e_horario }}">
+                        </div>
+                        <div class="form-group">
+                            <label>{{ trans('cruds.registoEntradaVeiculo.fields.user')
+                                }}</label>
+                            <select class="form-control select2" disabled>
+                                @foreach($users as $id => $entry)
+                                <option value="{{ $id }}" {{ (old('user_id') ? old('user_id') : $registoEntradaVeiculo->
+                                    user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            <input type="hidden" name="user_id" id="user_id"
+                                value="{{ $registoEntradaVeiculo->user->id }}">
+                        </div>
+                        @else
                         <div class="form-group {{ $errors->has('data_e_horario') ? 'has-error' : '' }}">
                             <label for="data_e_horario">{{ trans('cruds.registoEntradaVeiculo.fields.data_e_horario')
                                 }}</label>
@@ -38,6 +59,7 @@
                             <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.user_helper')
                                 }}</span>
                         </div>
+                        @endif
                         <div class="form-group {{ $errors->has('driver') ? 'has-error' : '' }}">
                             <label class="required" for="driver_id">{{
                                 trans('cruds.registoEntradaVeiculo.fields.driver') }}</label>

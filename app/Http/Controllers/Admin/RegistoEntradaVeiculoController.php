@@ -46,103 +46,7 @@ class RegistoEntradaVeiculoController extends Controller
     {
         $registoEntradaVeiculo = RegistoEntradaVeiculo::create($request->all());
 
-        foreach ($request->input('frente_do_veiculo_teto_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_teto_photos');
-        }
-
-        foreach ($request->input('frente_do_veiculo_parabrisa_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_parabrisa_photos');
-        }
-
-        foreach ($request->input('frente_do_veiculo_capo_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_capo_photos');
-        }
-
-        foreach ($request->input('frente_do_veiculo_parachoque_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_parachoque_photos');
-        }
-
-        foreach ($request->input('lateral_esquerda_paralama_diant_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_paralama_diant_photos');
-        }
-
-        foreach ($request->input('lateral_esquerda_retrovisor_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_retrovisor_photos');
-        }
-
-        foreach ($request->input('lateral_esquerda_porta_diant_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_porta_diant_photos');
-        }
-
-        foreach ($request->input('lateral_esquerda_porta_tras_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_porta_tras_photos');
-        }
-
-        foreach ($request->input('lateral_esquerda_lateral_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_lateral_photos');
-        }
-
-        foreach ($request->input('traseira_tampa_traseira_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_tampa_traseira_photos');
-        }
-
-        foreach ($request->input('traseira_lanternas_dir_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_lanternas_dir_photos');
-        }
-
-        foreach ($request->input('traseira_lanterna_esq_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_lanterna_esq_photos');
-        }
-
-        foreach ($request->input('traseira_parachoque_tras_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_parachoque_tras_photos');
-        }
-
-        foreach ($request->input('traseira_estepe_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_estepe_photos');
-        }
-
-        foreach ($request->input('traseira_macaco_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_macaco_photos');
-        }
-
-        foreach ($request->input('traseira_chave_de_roda_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_chave_de_roda_photos');
-        }
-
-        foreach ($request->input('traseira_triangulo_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_triangulo_photos');
-        }
-
-        foreach ($request->input('lateral_direita_lateral_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_lateral_photos');
-        }
-
-        foreach ($request->input('lateral_direita_porta_tras_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_porta_tras_photos');
-        }
-
-        foreach ($request->input('lateral_direita_porta_diant_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_porta_diant_photos');
-        }
-
-        foreach ($request->input('lateral_direita_retrovisor_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_retrovisor_photos');
-        }
-
-        foreach ($request->input('lateral_direita_paralama_diant_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_paralama_diant_photos');
-        }
-
-        foreach ($request->input('cinzeiro_photos', []) as $file) {
-            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('cinzeiro_photos');
-        }
-
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $registoEntradaVeiculo->id]);
-        }
-
-        return redirect()->route('admin.registo-entrada-veiculos.index');
+        return redirect('/admin/registo-entrada-veiculos/' . $registoEntradaVeiculo->id . '/edit?step=1');
     }
 
     public function edit(RegistoEntradaVeiculo $registoEntradaVeiculo)
@@ -166,327 +70,332 @@ class RegistoEntradaVeiculoController extends Controller
 
         if (count($registoEntradaVeiculo->frente_do_veiculo_teto_photos) > 0) {
             foreach ($registoEntradaVeiculo->frente_do_veiculo_teto_photos as $media) {
-                if (! in_array($media->file_name, $request->input('frente_do_veiculo_teto_photos', []))) {
+                if (!in_array($media->file_name, $request->input('frente_do_veiculo_teto_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->frente_do_veiculo_teto_photos->pluck('file_name')->toArray();
         foreach ($request->input('frente_do_veiculo_teto_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_teto_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->frente_do_veiculo_parabrisa_photos) > 0) {
             foreach ($registoEntradaVeiculo->frente_do_veiculo_parabrisa_photos as $media) {
-                if (! in_array($media->file_name, $request->input('frente_do_veiculo_parabrisa_photos', []))) {
+                if (!in_array($media->file_name, $request->input('frente_do_veiculo_parabrisa_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->frente_do_veiculo_parabrisa_photos->pluck('file_name')->toArray();
         foreach ($request->input('frente_do_veiculo_parabrisa_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_parabrisa_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->frente_do_veiculo_capo_photos) > 0) {
             foreach ($registoEntradaVeiculo->frente_do_veiculo_capo_photos as $media) {
-                if (! in_array($media->file_name, $request->input('frente_do_veiculo_capo_photos', []))) {
+                if (!in_array($media->file_name, $request->input('frente_do_veiculo_capo_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->frente_do_veiculo_capo_photos->pluck('file_name')->toArray();
         foreach ($request->input('frente_do_veiculo_capo_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_capo_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->frente_do_veiculo_parachoque_photos) > 0) {
             foreach ($registoEntradaVeiculo->frente_do_veiculo_parachoque_photos as $media) {
-                if (! in_array($media->file_name, $request->input('frente_do_veiculo_parachoque_photos', []))) {
+                if (!in_array($media->file_name, $request->input('frente_do_veiculo_parachoque_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->frente_do_veiculo_parachoque_photos->pluck('file_name')->toArray();
         foreach ($request->input('frente_do_veiculo_parachoque_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_parachoque_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->lateral_esquerda_paralama_diant_photos) > 0) {
             foreach ($registoEntradaVeiculo->lateral_esquerda_paralama_diant_photos as $media) {
-                if (! in_array($media->file_name, $request->input('lateral_esquerda_paralama_diant_photos', []))) {
+                if (!in_array($media->file_name, $request->input('lateral_esquerda_paralama_diant_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->lateral_esquerda_paralama_diant_photos->pluck('file_name')->toArray();
         foreach ($request->input('lateral_esquerda_paralama_diant_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_paralama_diant_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->lateral_esquerda_retrovisor_photos) > 0) {
             foreach ($registoEntradaVeiculo->lateral_esquerda_retrovisor_photos as $media) {
-                if (! in_array($media->file_name, $request->input('lateral_esquerda_retrovisor_photos', []))) {
+                if (!in_array($media->file_name, $request->input('lateral_esquerda_retrovisor_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->lateral_esquerda_retrovisor_photos->pluck('file_name')->toArray();
         foreach ($request->input('lateral_esquerda_retrovisor_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_retrovisor_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->lateral_esquerda_porta_diant_photos) > 0) {
             foreach ($registoEntradaVeiculo->lateral_esquerda_porta_diant_photos as $media) {
-                if (! in_array($media->file_name, $request->input('lateral_esquerda_porta_diant_photos', []))) {
+                if (!in_array($media->file_name, $request->input('lateral_esquerda_porta_diant_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->lateral_esquerda_porta_diant_photos->pluck('file_name')->toArray();
         foreach ($request->input('lateral_esquerda_porta_diant_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_porta_diant_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->lateral_esquerda_porta_tras_photos) > 0) {
             foreach ($registoEntradaVeiculo->lateral_esquerda_porta_tras_photos as $media) {
-                if (! in_array($media->file_name, $request->input('lateral_esquerda_porta_tras_photos', []))) {
+                if (!in_array($media->file_name, $request->input('lateral_esquerda_porta_tras_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->lateral_esquerda_porta_tras_photos->pluck('file_name')->toArray();
         foreach ($request->input('lateral_esquerda_porta_tras_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_porta_tras_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->lateral_esquerda_lateral_photos) > 0) {
             foreach ($registoEntradaVeiculo->lateral_esquerda_lateral_photos as $media) {
-                if (! in_array($media->file_name, $request->input('lateral_esquerda_lateral_photos', []))) {
+                if (!in_array($media->file_name, $request->input('lateral_esquerda_lateral_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->lateral_esquerda_lateral_photos->pluck('file_name')->toArray();
         foreach ($request->input('lateral_esquerda_lateral_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_lateral_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->traseira_tampa_traseira_photos) > 0) {
             foreach ($registoEntradaVeiculo->traseira_tampa_traseira_photos as $media) {
-                if (! in_array($media->file_name, $request->input('traseira_tampa_traseira_photos', []))) {
+                if (!in_array($media->file_name, $request->input('traseira_tampa_traseira_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->traseira_tampa_traseira_photos->pluck('file_name')->toArray();
         foreach ($request->input('traseira_tampa_traseira_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_tampa_traseira_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->traseira_lanternas_dir_photos) > 0) {
             foreach ($registoEntradaVeiculo->traseira_lanternas_dir_photos as $media) {
-                if (! in_array($media->file_name, $request->input('traseira_lanternas_dir_photos', []))) {
+                if (!in_array($media->file_name, $request->input('traseira_lanternas_dir_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->traseira_lanternas_dir_photos->pluck('file_name')->toArray();
         foreach ($request->input('traseira_lanternas_dir_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_lanternas_dir_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->traseira_lanterna_esq_photos) > 0) {
             foreach ($registoEntradaVeiculo->traseira_lanterna_esq_photos as $media) {
-                if (! in_array($media->file_name, $request->input('traseira_lanterna_esq_photos', []))) {
+                if (!in_array($media->file_name, $request->input('traseira_lanterna_esq_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->traseira_lanterna_esq_photos->pluck('file_name')->toArray();
         foreach ($request->input('traseira_lanterna_esq_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_lanterna_esq_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->traseira_parachoque_tras_photos) > 0) {
             foreach ($registoEntradaVeiculo->traseira_parachoque_tras_photos as $media) {
-                if (! in_array($media->file_name, $request->input('traseira_parachoque_tras_photos', []))) {
+                if (!in_array($media->file_name, $request->input('traseira_parachoque_tras_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->traseira_parachoque_tras_photos->pluck('file_name')->toArray();
         foreach ($request->input('traseira_parachoque_tras_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_parachoque_tras_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->traseira_estepe_photos) > 0) {
             foreach ($registoEntradaVeiculo->traseira_estepe_photos as $media) {
-                if (! in_array($media->file_name, $request->input('traseira_estepe_photos', []))) {
+                if (!in_array($media->file_name, $request->input('traseira_estepe_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->traseira_estepe_photos->pluck('file_name')->toArray();
         foreach ($request->input('traseira_estepe_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_estepe_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->traseira_macaco_photos) > 0) {
             foreach ($registoEntradaVeiculo->traseira_macaco_photos as $media) {
-                if (! in_array($media->file_name, $request->input('traseira_macaco_photos', []))) {
+                if (!in_array($media->file_name, $request->input('traseira_macaco_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->traseira_macaco_photos->pluck('file_name')->toArray();
         foreach ($request->input('traseira_macaco_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_macaco_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->traseira_chave_de_roda_photos) > 0) {
             foreach ($registoEntradaVeiculo->traseira_chave_de_roda_photos as $media) {
-                if (! in_array($media->file_name, $request->input('traseira_chave_de_roda_photos', []))) {
+                if (!in_array($media->file_name, $request->input('traseira_chave_de_roda_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->traseira_chave_de_roda_photos->pluck('file_name')->toArray();
         foreach ($request->input('traseira_chave_de_roda_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_chave_de_roda_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->traseira_triangulo_photos) > 0) {
             foreach ($registoEntradaVeiculo->traseira_triangulo_photos as $media) {
-                if (! in_array($media->file_name, $request->input('traseira_triangulo_photos', []))) {
+                if (!in_array($media->file_name, $request->input('traseira_triangulo_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->traseira_triangulo_photos->pluck('file_name')->toArray();
         foreach ($request->input('traseira_triangulo_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_triangulo_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->lateral_direita_lateral_photos) > 0) {
             foreach ($registoEntradaVeiculo->lateral_direita_lateral_photos as $media) {
-                if (! in_array($media->file_name, $request->input('lateral_direita_lateral_photos', []))) {
+                if (!in_array($media->file_name, $request->input('lateral_direita_lateral_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->lateral_direita_lateral_photos->pluck('file_name')->toArray();
         foreach ($request->input('lateral_direita_lateral_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_lateral_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->lateral_direita_porta_tras_photos) > 0) {
             foreach ($registoEntradaVeiculo->lateral_direita_porta_tras_photos as $media) {
-                if (! in_array($media->file_name, $request->input('lateral_direita_porta_tras_photos', []))) {
+                if (!in_array($media->file_name, $request->input('lateral_direita_porta_tras_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->lateral_direita_porta_tras_photos->pluck('file_name')->toArray();
         foreach ($request->input('lateral_direita_porta_tras_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_porta_tras_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->lateral_direita_porta_diant_photos) > 0) {
             foreach ($registoEntradaVeiculo->lateral_direita_porta_diant_photos as $media) {
-                if (! in_array($media->file_name, $request->input('lateral_direita_porta_diant_photos', []))) {
+                if (!in_array($media->file_name, $request->input('lateral_direita_porta_diant_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->lateral_direita_porta_diant_photos->pluck('file_name')->toArray();
         foreach ($request->input('lateral_direita_porta_diant_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_porta_diant_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->lateral_direita_retrovisor_photos) > 0) {
             foreach ($registoEntradaVeiculo->lateral_direita_retrovisor_photos as $media) {
-                if (! in_array($media->file_name, $request->input('lateral_direita_retrovisor_photos', []))) {
+                if (!in_array($media->file_name, $request->input('lateral_direita_retrovisor_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->lateral_direita_retrovisor_photos->pluck('file_name')->toArray();
         foreach ($request->input('lateral_direita_retrovisor_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_retrovisor_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->lateral_direita_paralama_diant_photos) > 0) {
             foreach ($registoEntradaVeiculo->lateral_direita_paralama_diant_photos as $media) {
-                if (! in_array($media->file_name, $request->input('lateral_direita_paralama_diant_photos', []))) {
+                if (!in_array($media->file_name, $request->input('lateral_direita_paralama_diant_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->lateral_direita_paralama_diant_photos->pluck('file_name')->toArray();
         foreach ($request->input('lateral_direita_paralama_diant_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_paralama_diant_photos');
             }
         }
 
         if (count($registoEntradaVeiculo->cinzeiro_photos) > 0) {
             foreach ($registoEntradaVeiculo->cinzeiro_photos as $media) {
-                if (! in_array($media->file_name, $request->input('cinzeiro_photos', []))) {
+                if (!in_array($media->file_name, $request->input('cinzeiro_photos', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $registoEntradaVeiculo->cinzeiro_photos->pluck('file_name')->toArray();
         foreach ($request->input('cinzeiro_photos', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('cinzeiro_photos');
             }
         }
 
-        return redirect()->route('admin.registo-entrada-veiculos.index');
+        if (isset($request->step)) {
+            return redirect('/admin/registo-entrada-veiculos/' . $registoEntradaVeiculo->id . '/edit?step=' . $request->step);
+        } else {
+            return redirect('/admin/registo-entrada-veiculos');
+        }
+
     }
 
     public function show(RegistoEntradaVeiculo $registoEntradaVeiculo)
@@ -522,10 +431,10 @@ class RegistoEntradaVeiculoController extends Controller
     {
         abort_if(Gate::denies('registo_entrada_veiculo_create') && Gate::denies('registo_entrada_veiculo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new RegistoEntradaVeiculo();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new RegistoEntradaVeiculo();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

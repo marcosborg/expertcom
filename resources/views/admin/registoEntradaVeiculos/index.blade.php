@@ -117,7 +117,7 @@
                                             @endcan
 
                                             @can('registo_entrada_veiculo_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('admin.registo-entrada-veiculos.edit', $registoEntradaVeiculo->id) }}">
+                                                <a class="btn btn-xs btn-info" href="/admin/registo-entrada-veiculos/{{ $registoEntradaVeiculo->id }}/edit?step=1">
                                                     {{ trans('global.edit') }}
                                                 </a>
                                             @endcan

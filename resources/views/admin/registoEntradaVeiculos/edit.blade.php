@@ -137,6 +137,61 @@
                         </div>
                     </div>
                 </div>
+                @if (auth()->user()->hasRole('admin'))
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Gestão
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group {{ $errors->has('tratado') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="tratado" value="0">
+                                <input type="checkbox" name="tratado" id="tratado" value="1" {{
+                                    $registoEntradaVeiculo->tratado || old('tratado', 0) === 1 ? 'checked' : '' }}>
+                                <label for="tratado" style="font-weight: 400">{{
+                                    trans('cruds.registoEntradaVeiculo.fields.tratado') }}</label>
+                            </div>
+                            @if($errors->has('tratado'))
+                            <span class="help-block" role="alert">{{ $errors->first('tratado') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.tratado_helper')
+                                }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('comentarios') ? 'has-error' : '' }}">
+                            <label for="comentarios">{{ trans('cruds.registoEntradaVeiculo.fields.comentarios')
+                                }}</label>
+                            <textarea class="form-control" name="comentarios"
+                                id="comentarios">{{ old('comentarios', $registoEntradaVeiculo->comentarios) }}</textarea>
+                            @if($errors->has('comentarios'))
+                            <span class="help-block" role="alert">{{ $errors->first('comentarios') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.comentarios_helper')
+                                }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('reparado') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="reparado" value="0">
+                                <input type="checkbox" name="reparado" id="reparado" value="1" {{
+                                    $registoEntradaVeiculo->reparado || old('reparado', 0) === 1 ? 'checked' : '' }}>
+                                <label for="reparado" style="font-weight: 400">{{
+                                    trans('cruds.registoEntradaVeiculo.fields.reparado') }}</label>
+                            </div>
+                            @if($errors->has('reparado'))
+                            <span class="help-block" role="alert">{{ $errors->first('reparado') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.reparado_helper')
+                                }}</span>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="form-group">
+                            <button class="btn btn-danger" type="submit">
+                                {{ trans('global.save') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
             <div class="col-lg-9">
                 <ul class="nav nav-tabs">

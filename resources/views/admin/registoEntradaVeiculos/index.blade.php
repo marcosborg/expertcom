@@ -3,10 +3,23 @@
 <div class="content">
     @can('registo_entrada_veiculo_create')
         <div style="margin-bottom: 10px;" class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <a class="btn btn-success" href="{{ route('admin.registo-entrada-veiculos.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.registoEntradaVeiculo.title_singular') }}
                 </a>
+            </div>
+            <div class="col-md-6">
+                <div class="pull-right">
+                    <a class="btn btn-danger btn-sm" href="{{ route('admin.registo-entrada-veiculos.index') }}?status=damage-unfixed">
+                        Com danos não reparados
+                    </a>
+                    <a class="btn btn-primary btn-sm" href="{{ route('admin.registo-entrada-veiculos.index') }}?status=damage-fixed">
+                        Com danos reparados
+                    </a>
+                    <a class="btn btn-primary btn-sm" href="{{ route('admin.registo-entrada-veiculos.index') }}?status=all">
+                        Todos
+                    </a>
+                </div>
             </div>
         </div>
     @endcan
@@ -38,15 +51,6 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.registoEntradaVeiculo.fields.vehicle_item') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.registoEntradaVeiculo.fields.bateria_a_chegada') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.registoEntradaVeiculo.fields.de_bateria_de_saida') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.registoEntradaVeiculo.fields.km_atual') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.registoEntradaVeiculo.fields.tratado') }}
@@ -85,15 +89,6 @@
                                         </td>
                                         <td>
                                             {{ $registoEntradaVeiculo->vehicle_item->license_plate ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $registoEntradaVeiculo->bateria_a_chegada ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $registoEntradaVeiculo->de_bateria_de_saida ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $registoEntradaVeiculo->km_atual ?? '' }}
                                         </td>
                                         <td>
                                             <span style="display:none">{{ $registoEntradaVeiculo->tratado ?? '' }}</span>

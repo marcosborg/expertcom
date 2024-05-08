@@ -72,4 +72,9 @@ class VehicleItem extends Model implements HasMedia
     {
         return $this->getMedia('documents');
     }
+
+    public function registo_entrada_veiculos()
+    {
+        return $this->hasMany(RegistoEntradaVeiculo::class);
+    }
 }

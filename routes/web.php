@@ -485,6 +485,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('registo-entrada-veiculos/media', 'RegistoEntradaVeiculoController@storeMedia')->name('registo-entrada-veiculos.storeMedia');
     Route::post('registo-entrada-veiculos/ckmedia', 'RegistoEntradaVeiculoController@storeCKEditorImages')->name('registo-entrada-veiculos.storeCKEditorImages');
     Route::resource('registo-entrada-veiculos', 'RegistoEntradaVeiculoController');
+    Route::get('registo-entrada-veiculos/photos/{vehicle_item_id}', 'RegistoEntradaVeiculoController@photos')->name('registo-entrada-veiculos.photos');
 
 });
 

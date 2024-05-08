@@ -24,7 +24,19 @@ class RegistoEntradaVeiculoController extends Controller
     {
         abort_if(Gate::denies('registo_entrada_veiculo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $registoEntradaVeiculos = RegistoEntradaVeiculo::with(['user', 'driver', 'vehicle_item', 'media'])->get();
+        if (!request()->query('status')) {
+            $status = 'damage-unfixed';
+        } else {
+            $status = request()->query('status');
+        }
+
+        if ($status == 'damage-unfixed') {
+            $registoEntradaVeiculos = RegistoEntradaVeiculo::whereHas('media')->where('reparado', 0)->with(['user', 'driver', 'vehicle_item', 'media'])->get();
+        } elseif ($status == 'damage-fixed') {
+            $registoEntradaVeiculos = RegistoEntradaVeiculo::whereHas('media')->where('reparado', 1)->with(['user', 'driver', 'vehicle_item', 'media'])->get();
+        } else {
+            $registoEntradaVeiculos = RegistoEntradaVeiculo::with(['user', 'driver', 'vehicle_item', 'media'])->get();
+        }
 
         return view('admin.registoEntradaVeiculos.index', compact('registoEntradaVeiculos'));
     }
@@ -437,5 +449,26 @@ class RegistoEntradaVeiculoController extends Controller
         $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function photos(Request $request)
+    {
+
+        $vehicle_item = VehicleItem::where('id', $request->vehicle_item_id)
+            ->whereHas('registo_entrada_veiculos', function ($registos) {
+                $registos->whereHas('media');
+            })
+            ->first()
+            ->load('registo_entrada_veiculos', 'company', 'vehicle_brand', 'vehicle_model');
+
+        if ($vehicle_item) {
+            $medias = $vehicle_item->registo_entrada_veiculos->map(function ($registro) {
+                return $registro->media;
+            })->flatten();
+        } else {
+            $medias = collect([]);
+        }
+
+        return view('admin.registoEntradaVeiculos.photos', compact('vehicle_item', 'medias'));
     }
 }

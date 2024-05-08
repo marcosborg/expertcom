@@ -9,9 +9,16 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a class="btn btn-primary btn-sm pull-right" href="{{ route('admin.registo-entrada-veiculos.photos', [$registoEntradaVeiculo->vehicle_item->id]) }}">
-                    Todas as fotografias da viatura
-                </a>
+                <div class="pull-right">
+                    <a class="btn btn-primary btn-sm"
+                        href="{{ route('admin.registo-entrada-veiculos.photos', [$registoEntradaVeiculo->vehicle_item->id]) }}">
+                        Todas as fotografias da viatura
+                    </a>
+                    <a class="btn btn-success btn-sm"
+                        href="/admin/registo-entrada-veiculos/{{ $registoEntradaVeiculo->id }}/edit?step=1">
+                        Editar
+                    </a>
+                </div>
             </div>
         </div>
     </div>

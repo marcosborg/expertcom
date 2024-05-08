@@ -455,11 +455,8 @@ class RegistoEntradaVeiculoController extends Controller
     {
 
         $vehicle_item = VehicleItem::where('id', $request->vehicle_item_id)
-            ->whereHas('registo_entrada_veiculos', function ($registos) {
-                $registos->whereHas('media');
-            })
             ->first()
-            ->load('registo_entrada_veiculos', 'company', 'vehicle_brand', 'vehicle_model');
+            ->load('registo_entrada_veiculos.user', 'registo_entrada_veiculos.driver', 'company', 'vehicle_brand', 'vehicle_model');
 
         if ($vehicle_item) {
             $medias = $vehicle_item->registo_entrada_veiculos->map(function ($registro) {
@@ -470,5 +467,12 @@ class RegistoEntradaVeiculoController extends Controller
         }
 
         return view('admin.registoEntradaVeiculos.photos', compact('vehicle_item', 'medias'));
+    }
+
+    public function deleteMedia($media_id)
+    {
+        Media::find($media_id)->delete();
+        return redirect()->back();
+
     }
 }

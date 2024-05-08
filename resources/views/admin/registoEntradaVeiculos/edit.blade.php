@@ -1,6 +1,13 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content">
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-md-12">
+            <a class="btn btn-primary btn-sm pull-right" href="{{ route('admin.registo-entrada-veiculos.photos', [$registoEntradaVeiculo->vehicle_item->id]) }}">
+                Todas as fotografias da viatura
+            </a>
+        </div>
+    </div>
     <form method="POST" action="{{ route("admin.registo-entrada-veiculos.update", [$registoEntradaVeiculo->id]) }}"
         enctype="multipart/form-data">
         @method('PUT')

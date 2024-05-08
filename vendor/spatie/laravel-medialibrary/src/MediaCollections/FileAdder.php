@@ -316,8 +316,6 @@ class FileAdder
         $media->disk = $this->determineDiskName($diskName, $collectionName);
         $this->ensureDiskExists($media->disk);
 
-        /*
-
         $media->conversions_disk = $this->determineConversionsDiskName($media->disk, $collectionName);
         $this->ensureDiskExists($media->conversions_disk);
 
@@ -325,6 +323,8 @@ class FileAdder
 
         $media->mime_type = File::getMimeType($this->pathToFile);
         $media->size = filesize($this->pathToFile);
+
+        /*
 
         if (! is_null($this->order)) {
             $media->order_column = $this->order;

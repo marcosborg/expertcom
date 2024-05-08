@@ -289,7 +289,6 @@ class FileAdder
         $fileName = app(config('media-library.file_namer'))->originalFileName($sanitizedFileName);
         $this->fileName = $this->appendExtension($fileName, pathinfo($sanitizedFileName, PATHINFO_EXTENSION));
 
-        /*
         if ($this->file instanceof RemoteFile) {
             return $this->toMediaCollectionFromRemote($collectionName, $diskName);
         }
@@ -305,8 +304,6 @@ class FileAdder
         if (filesize($this->pathToFile) > config('media-library.max_file_size')) {
             throw FileIsTooBig::create($this->pathToFile);
         }
-
-        */
 
         $mediaClass = config('media-library.media_model');
         /** @var \Spatie\MediaLibrary\MediaCollections\Models\Media $media */

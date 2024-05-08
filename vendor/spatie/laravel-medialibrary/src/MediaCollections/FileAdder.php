@@ -324,13 +324,9 @@ class FileAdder
         $media->mime_type = File::getMimeType($this->pathToFile);
         $media->size = filesize($this->pathToFile);
 
-        /*
-
         if (! is_null($this->order)) {
             $media->order_column = $this->order;
         }
-
-        */
 
         $media->custom_properties = $this->customProperties;
 

@@ -47,7 +47,7 @@ class RegistoEntradaVeiculoController extends Controller
         $registoEntradaVeiculo = RegistoEntradaVeiculo::create($request->all());
 
         foreach ($request->input('frente_do_veiculo_teto_photos', []) as $file) {
-            //$registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)));
+            $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_teto_photos');
         }
 
         foreach ($request->input('frente_do_veiculo_parabrisa_photos', []) as $file) {
@@ -174,7 +174,7 @@ class RegistoEntradaVeiculoController extends Controller
         $media = $registoEntradaVeiculo->frente_do_veiculo_teto_photos->pluck('file_name')->toArray();
         foreach ($request->input('frente_do_veiculo_teto_photos', []) as $file) {
             if (count($media) === 0 || ! in_array($file, $media)) {
-                $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_teto_photos');
+                $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)));
             }
         }
 

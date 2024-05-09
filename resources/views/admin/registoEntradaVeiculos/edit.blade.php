@@ -212,6 +212,7 @@
                             de aspiração</a></li>
                 </ul>
                 @if (request()->query('step') == 1)
+                <input type="hidden" name="has_photos" value="true">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">

@@ -89,7 +89,8 @@
                                 <td>Prevenção de frota</td>
                                 <td></td>
                                 <td></td>
-                                <td style="text-align: right;">{{ number_format(isset($totals->total_fleet_management) ? $totals->total_fleet_management : $totals['total_fleet_management'], 2)
+                                <td style="text-align: right;">{{ number_format(isset($totals->total_fleet_management) ?
+                                    $totals->total_fleet_management : $totals['total_fleet_management'], 2)
                                     }} <small>€</small></td>
                             </tr>
                             <tr>
@@ -110,7 +111,8 @@
                                 <td>Pagamentos a motoristas</td>
                                 <td></td>
                                 <td></td>
-                                <td style="text-align: right">{{ number_format(isset($totals->total_drivers) ? $totals->total_drivers : $totals['total_drivers'], 2) }}
+                                <td style="text-align: right">{{ number_format(isset($totals->total_drivers) ?
+                                    $totals->total_drivers : $totals['total_drivers'], 2) }}
                                     <small>€</small>
                                 </td>
                             </tr>
@@ -181,7 +183,8 @@
                         <tbody>
                             <tr>
                                 <th>Ganhos</th>
-                                <td style="text-align: right">{{ number_format(isset($totals->total_operators) ? $totals->total_operators : $totals['total_operators'], 2) }}
+                                <td style="text-align: right">{{ number_format(isset($totals->total_operators) ?
+                                    $totals->total_operators : $totals['total_operators'], 2) }}
                                     <small>€</small>
                                 </td>
                             </tr>
@@ -221,6 +224,7 @@
                                             class="btn btn-primary"><i class="fa fa-file-pdf-o"></i></a>
                                         <a href="/admin/weekly-expense-reports/pdf/download" class="btn btn-primary"><i
                                                 class="fa fa-cloud-download"></i></a>
+                                        <a href="/admin/weekly-expense-reports/update" class="btn btn-primary" onclick="return confirm('Tem a certeza que deseja atualizar o relatório com informações mais recentes?')">Atualizar relatório</a>
                                     </div>
                                 </td>
                             </tr>

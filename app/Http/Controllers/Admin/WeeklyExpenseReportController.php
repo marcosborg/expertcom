@@ -206,4 +206,14 @@ class WeeklyExpenseReportController extends Controller
 
     }
 
+    public function update()
+    {
+        CompanyData::where([
+            'company_id' => session()->get('company_id'),
+            'tvde_week_id' => session()->get('tvde_week_id')
+        ])->delete();
+
+        return redirect()->back()->with('message', 'Atualizado com sucesso');
+    }
+
 }

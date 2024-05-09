@@ -2233,7 +2233,6 @@
 </div>
 @endsection
 
-@if (request()->query('step') == 1)
 @section('scripts')
 <script>
     var uploadedFrenteDoVeiculoTetoPhotosMap = {}
@@ -3524,4 +3523,3 @@ Dropzone.options.cinzeiroPhotosDropzone = {
 }
 </script>
 @endsection
-@endif

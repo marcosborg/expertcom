@@ -75,6 +75,8 @@ class Document extends Model implements HasMedia
         return $this->getMedia('criminal_record');
     }
 
+    /*
+
     public function getProfilePictureAttribute()
     {
         $file = $this->getMedia('profile_picture')->last();
@@ -86,6 +88,8 @@ class Document extends Model implements HasMedia
 
         return $file;
     }
+
+    */
 
     public function getDrivingLicenseAttribute()
     {

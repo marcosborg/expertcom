@@ -13,16 +13,70 @@ use App\Models\VehicleItem;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class FormDataController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
         abort_if(Gate::denies('form_data_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $formDatas = FormData::with(['form_name', 'driver', 'vehicle_item'])->get();
+        if ($request->ajax()) {
+            $query = FormData::with(['form_name', 'driver', 'vehicle_item'])->select(sprintf('%s.*', (new FormData)->table));
+            $table = Datatables::of($query);
 
-        return view('admin.formDatas.index', compact('formDatas'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = 'form_data_show';
+                $editGate      = 'form_data_edit';
+                $deleteGate    = 'form_data_delete';
+                $crudRoutePart = 'form-datas';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->addColumn('form_name_name', function ($row) {
+                return $row->form_name ? $row->form_name->name : '';
+            });
+
+            $table->addColumn('driver_code', function ($row) {
+                return $row->driver ? $row->driver->code : '';
+            });
+
+            $table->addColumn('vehicle_item_license_plate', function ($row) {
+                return $row->vehicle_item ? $row->vehicle_item->license_plate : '';
+            });
+
+            $table->editColumn('data', function ($row) {
+                $html = '';
+                foreach (json_decode($row->data) as $key => $value) {
+                    $html .= '<label>' . $key . '</label>: ' . $value . '<br>';
+                }
+                return $row->data ? $html : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'form_name', 'driver', 'vehicle_item', 'data']);
+
+            return $table->make(true);
+        }
+
+        $form_names    = FormName::get();
+        $drivers       = Driver::get();
+        $vehicle_items = VehicleItem::get();
+
+        return view('admin.formDatas.index', compact('form_names', 'drivers', 'vehicle_items'));
     }
 
     public function create()
@@ -31,7 +85,7 @@ class FormDataController extends Controller
 
         $form_names = FormName::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $drivers = Driver::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $vehicle_items = VehicleItem::pluck('license_plate', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -51,7 +105,7 @@ class FormDataController extends Controller
 
         $form_names = FormName::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $drivers = Driver::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $vehicle_items = VehicleItem::pluck('license_plate', 'id')->prepend(trans('global.pleaseSelect'), '');
 

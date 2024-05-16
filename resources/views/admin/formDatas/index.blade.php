@@ -40,6 +40,9 @@
                                         {{ trans('cruds.formData.fields.data') }}
                                     </th>
                                     <th>
+                                        {{ trans('global.created_at') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -66,6 +69,9 @@
                                         @foreach (json_decode($formData->data) as $label => $value)
                                         <label>{{ $label }}: </label> {{ $value }}<br>
                                         @endforeach
+                                    </td>
+                                    <td>
+                                        {{ $formData->created_at }}
                                     </td>
                                     <td>
                                         @can('form_data_show')

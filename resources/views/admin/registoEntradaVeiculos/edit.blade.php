@@ -209,7 +209,7 @@
                     <li role="presentation" {{ request()->query('step') == 3 ? 'class=active' : '' }}><a>3.º
                             Documentação</a></li>
                     <li role="presentation" {{ request()->query('step') == 4 ? 'class=active' : '' }}><a>4.º Checkagem
-                            de aspiração</a></li>
+                            de lavagem</a></li>
                 </ul>
                 @if (request()->query('step') == 1)
                 <input type="hidden" name="has_photos" value="true">

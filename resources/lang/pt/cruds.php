@@ -1937,6 +1937,8 @@ return [
             'updated_at_helper'   => ' ',
             'deleted_at'          => 'Deleted at',
             'deleted_at_helper'   => ' ',
+            'solved'              => 'Tratado',
+            'solved_helper'       => ' ',
         ],
     ],
     'formAssembly' => [

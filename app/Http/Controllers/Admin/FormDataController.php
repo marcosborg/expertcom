@@ -22,26 +22,46 @@ class FormDataController extends Controller
 
         abort_if(Gate::denies('form_data_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+
+        if (!request()->query('status')) {
+            return redirect('/admin/form-datas?status=unsolved');
+        }
+
         if ($request->ajax()) {
-            $query = FormData::with(['form_name', 'driver', 'vehicle_item'])->select(sprintf('%s.*', (new FormData)->table));
+
+            switch (request()->query('status')) {
+                case 'unsolved':
+                    $query = FormData::where('solved', false)->with(['form_name', 'driver', 'vehicle_item'])->select(sprintf('%s.*', (new FormData)->table));
+                    break;
+                case 'solved':
+                    $query = FormData::where('solved', true)->with(['form_name', 'driver', 'vehicle_item'])->select(sprintf('%s.*', (new FormData)->table));
+                    break;
+                default:
+                    $query = FormData::with(['form_name', 'driver', 'vehicle_item'])->select(sprintf('%s.*', (new FormData)->table));
+                    break;
+            }
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'form_data_show';
-                $editGate      = 'form_data_edit';
-                $deleteGate    = 'form_data_delete';
+                $viewGate = 'form_data_show';
+                $editGate = 'form_data_edit';
+                $deleteGate = 'form_data_delete';
                 $crudRoutePart = 'form-datas';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
+                return view(
+                    'partials.datatablesActions',
+                    compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    )
+                );
             });
 
             $table->editColumn('id', function ($row) {
@@ -66,14 +86,17 @@ class FormDataController extends Controller
                 }
                 return $row->data ? $html : '';
             });
+            $table->editColumn('solved', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->solved ? 'checked' : null) . '>';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'form_name', 'driver', 'vehicle_item', 'data']);
+            $table->rawColumns(['actions', 'placeholder', 'form_name', 'driver', 'vehicle_item', 'data', 'solved']);
 
             return $table->make(true);
         }
 
-        $form_names    = FormName::get();
-        $drivers       = Driver::get();
+        $form_names = FormName::get();
+        $drivers = Driver::get();
         $vehicle_items = VehicleItem::get();
 
         return view('admin.formDatas.index', compact('form_names', 'drivers', 'vehicle_items'));

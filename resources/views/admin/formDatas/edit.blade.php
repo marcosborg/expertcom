@@ -56,6 +56,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.formData.fields.data_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('solved') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="solved" value="0">
+                                <input type="checkbox" name="solved" id="solved" value="1" {{ $formData->solved || old('solved', 0) === 1 ? 'checked' : '' }}>
+                                <label for="solved" style="font-weight: 400">{{ trans('cruds.formData.fields.solved') }}</label>
+                            </div>
+                            @if($errors->has('solved'))
+                                <span class="help-block" role="alert">{{ $errors->first('solved') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.formData.fields.solved_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

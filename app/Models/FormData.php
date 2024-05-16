@@ -24,6 +24,7 @@ class FormData extends Model
         'driver_id',
         'vehicle_item_id',
         'data',
+        'solved',
         'created_at',
         'updated_at',
         'deleted_at',

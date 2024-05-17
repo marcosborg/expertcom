@@ -1889,6 +1889,12 @@ return [
             'updated_at_helper'  => ' ',
             'deleted_at'         => 'Deleted at',
             'deleted_at_helper'  => ' ',
+            'has_driver'         => 'Has Driver',
+            'has_driver_helper'  => ' ',
+            'has_license'        => 'Has License',
+            'has_license_helper' => ' ',
+            'roles'              => 'Roles',
+            'roles_helper'       => ' ',
         ],
     ],
     'formInput' => [

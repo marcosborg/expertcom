@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyFormNameRequest;
 use App\Http\Requests\StoreFormNameRequest;
 use App\Http\Requests\UpdateFormNameRequest;
 use App\Models\FormName;
+use App\Models\Role;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -21,7 +22,7 @@ class FormNameController extends Controller
     {
         abort_if(Gate::denies('form_name_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $formNames = FormName::all();
+        $formNames = FormName::with(['roles'])->get();
 
         return view('admin.formNames.index', compact('formNames'));
     }
@@ -30,13 +31,15 @@ class FormNameController extends Controller
     {
         abort_if(Gate::denies('form_name_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.formNames.create');
+        $roles = Role::pluck('title', 'id');
+
+        return view('admin.formNames.create', compact('roles'));
     }
 
     public function store(StoreFormNameRequest $request)
     {
         $formName = FormName::create($request->all());
-
+        $formName->roles()->sync($request->input('roles', []));
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $formName->id]);
         }
@@ -48,12 +51,17 @@ class FormNameController extends Controller
     {
         abort_if(Gate::denies('form_name_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.formNames.edit', compact('formName'));
+        $roles = Role::pluck('title', 'id');
+
+        $formName->load('roles');
+
+        return view('admin.formNames.edit', compact('formName', 'roles'));
     }
 
     public function update(UpdateFormNameRequest $request, FormName $formName)
     {
         $formName->update($request->all());
+        $formName->roles()->sync($request->input('roles', []));
 
         return redirect()->route('admin.form-names.index');
     }
@@ -61,6 +69,8 @@ class FormNameController extends Controller
     public function show(FormName $formName)
     {
         abort_if(Gate::denies('form_name_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $formName->load('roles');
 
         return view('admin.formNames.show', compact('formName'));
     }

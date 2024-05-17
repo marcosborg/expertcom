@@ -21,6 +21,12 @@ class UpdateFormNameRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'roles.*' => [
+                'integer',
+            ],
+            'roles' => [
+                'array',
+            ],
         ];
     }
 }

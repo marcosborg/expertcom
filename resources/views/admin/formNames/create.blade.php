@@ -27,6 +27,44 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.formName.fields.description_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('has_driver') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="has_driver" value="0">
+                                <input type="checkbox" name="has_driver" id="has_driver" value="1" {{ old('has_driver', 0) == 1 ? 'checked' : '' }}>
+                                <label for="has_driver" style="font-weight: 400">{{ trans('cruds.formName.fields.has_driver') }}</label>
+                            </div>
+                            @if($errors->has('has_driver'))
+                                <span class="help-block" role="alert">{{ $errors->first('has_driver') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.formName.fields.has_driver_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('has_license') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="has_license" value="0">
+                                <input type="checkbox" name="has_license" id="has_license" value="1" {{ old('has_license', 0) == 1 ? 'checked' : '' }}>
+                                <label for="has_license" style="font-weight: 400">{{ trans('cruds.formName.fields.has_license') }}</label>
+                            </div>
+                            @if($errors->has('has_license'))
+                                <span class="help-block" role="alert">{{ $errors->first('has_license') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.formName.fields.has_license_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
+                            <label for="roles">{{ trans('cruds.formName.fields.roles') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="roles[]" id="roles" multiple>
+                                @foreach($roles as $id => $role)
+                                    <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>{{ $role }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('roles'))
+                                <span class="help-block" role="alert">{{ $errors->first('roles') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.formName.fields.roles_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

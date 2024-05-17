@@ -31,6 +31,15 @@
                                         {{ trans('cruds.formName.fields.name') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.formName.fields.has_driver') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.formName.fields.has_license') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.formName.fields.roles') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -46,6 +55,19 @@
                                         </td>
                                         <td>
                                             {{ $formName->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $formName->has_driver ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $formName->has_driver ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $formName->has_license ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $formName->has_license ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            @foreach($formName->roles as $key => $item)
+                                                <span class="label label-info label-many">{{ $item->title }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('form_name_show')

@@ -8,6 +8,8 @@ use App\Models\FormData;
 use App\Models\FormInput;
 use App\Models\FormName;
 use App\Models\VehicleItem;
+use App\Models\Role;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +32,9 @@ class FormAssemblyController extends Controller
 
         $vehicle_items = VehicleItem::all();
 
-        return view('admin.formAssemblies.index', compact('form_names', 'form_name', 'drivers', 'vehicle_items'));
+        $roles = Role::pluck('title', 'id');
+
+        return view('admin.formAssemblies.index', compact('form_names', 'form_name', 'drivers', 'vehicle_items', 'roles'));
     }
 
     public function newField(Request $request)
@@ -66,6 +70,32 @@ class FormAssemblyController extends Controller
     public function sendFormData(Request $request)
     {
 
+        $form_name = FormName::find($request->form_name_id);
+
+        if ($form_name->has_driver) {
+            $request->validate([
+                'driver_id' => 'required'
+            ], [], [
+                'driver_id' => 'Driver'
+            ]);
+        }
+
+        if ($form_name->has_license) {
+            $request->validate([
+                'vehicle_item_id' => 'required'
+            ], [], [
+                'vehicle_item_id' => 'License'
+            ]);
+        }
+
+        if ($form_name->has_technician) {
+            $request->validate([
+                'user_id' => 'required'
+            ], [], [
+                'user_id' => 'Nome motorista'
+            ]);
+        }
+
         $processedData = [];
 
         foreach ($request->all() as $key => $value) {
@@ -76,19 +106,20 @@ class FormAssemblyController extends Controller
             }
         }
 
-        $request->validate([
-            'driver_id' => 'required',
-            'vehicle_item_id' => 'required'
-        ], [], [
-            'driver_id' => 'Driver',
-            'vehicle_item_id' => 'License'
-        ]);
+        if ($request->driver_id) {
+            $driver = Driver::find($request->driver_id)->load('company');
+            $data['driver'] = '<strong>Condutor: </strong>' . $driver->name . ' - ' . $driver->company->name;
+        }
+        if ($request->vehicle_item_id) {
+            $vehicle_item = VehicleItem::find($request->vehicle_item_id)->load('company', 'vehicle_brand', 'vehicle_model');
+            $data['vehicle_item'] = '<strong>Viatura: </strong>' . $vehicle_item->license_plate . ' - (' . $vehicle_item->vehicle_brand->name . ' ' . $vehicle_item->vehicle_model->name . ')';
+        }
+        if ($request->user_id) {
+            $user = User::find($request->user);
+            $data['user'] = '<strong>Técnico: </strong>' . $user->name;
+        }
 
-        $driver = Driver::find($request->driver_id)->load('company');
-        $vehicle_item = VehicleItem::find($request->vehicle_item_id)->load('company', 'vehicle_brand', 'vehicle_model');
         $data = [];
-        $data['driver'] = $driver->name . ' - ' . $driver->company->name;
-        $data['vehicle_item'] = $vehicle_item->license_plate . ' - (' . $vehicle_item->vehicle_brand->name . ' ' . $vehicle_item->vehicle_model->name . ')';
 
         foreach ($processedData as $label => $value) {
             if ($label != '_token' && $label != 'form_name_id' && $label != 'driver_id' && $label != 'vehicle_item_id') {
@@ -100,8 +131,9 @@ class FormAssemblyController extends Controller
 
         $form_data = new FormData;
         $form_data->form_name_id = $request->form_name_id;
-        $form_data->driver_id = $request->driver_id;
-        $form_data->vehicle_item_id = $request->vehicle_item_id;
+        $form_data->driver_id = $request->driver_id ?? null;
+        $form_data->vehicle_item_id = $request->vehicle_item_id ?? null;
+        $form_data->user_id = $request->user_id ?? null;
         $form_data->data = $data;
         $form_data->save();
 
@@ -117,7 +149,12 @@ class FormAssemblyController extends Controller
         $form_name = new FormName;
         $form_name->name = $request->name;
         $form_name->description = $request->description;
+        $form_name->has_driver = $request->has_driver;
+        $form_name->has_license = $request->has_license;
+        $form_name->has_technician = $request->has_technician;
         $form_name->save();
+
+        $form_name->roles()->sync($request->input('roles', []));
 
         return redirect()->back()->with('message', 'Success');
     }

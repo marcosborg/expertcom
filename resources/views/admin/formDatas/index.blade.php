@@ -66,7 +66,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($drivers as $key => $item)
-                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -151,7 +151,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'form_name_name', name: 'form_name.name' },
-{ data: 'driver_code', name: 'driver.code' },
+{ data: 'driver_name', name: 'driver.name' },
 { data: 'vehicle_item_license_plate', name: 'vehicle_item.license_plate' },
 { data: 'user_name', name: 'user.name' },
 { data: 'data', name: 'data' },

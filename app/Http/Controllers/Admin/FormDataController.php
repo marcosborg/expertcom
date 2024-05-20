@@ -20,28 +20,10 @@ class FormDataController extends Controller
 {
     public function index(Request $request)
     {
-
         abort_if(Gate::denies('form_data_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
-        if (!request()->query('status')) {
-            return redirect('/admin/form-datas?status=unsolved');
-        }
-
         if ($request->ajax()) {
-
-            switch (request()->query('status')) {
-                case 'unsolved':
-                    $query = FormData::where('solved', false)->with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
-                    break;
-                case 'solved':
-                    $query = FormData::where('solved', true)->with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
-                    break;
-                default:
-                    $query = FormData::with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
-                    break;
-            }
-
+            $query = FormData::with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -53,15 +35,13 @@ class FormDataController extends Controller
                 $deleteGate = 'form_data_delete';
                 $crudRoutePart = 'form-datas';
 
-                return view(
-                    'partials.datatablesActions',
-                    compact(
-                        'viewGate',
-                        'editGate',
-                        'deleteGate',
-                        'crudRoutePart',
-                        'row'
-                    )
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                )
                 );
             });
 
@@ -72,8 +52,8 @@ class FormDataController extends Controller
                 return $row->form_name ? $row->form_name->name : '';
             });
 
-            $table->addColumn('driver_code', function ($row) {
-                return $row->driver ? $row->driver->code : '';
+            $table->addColumn('driver_name', function ($row) {
+                return $row->driver ? $row->driver->name : '';
             });
 
             $table->addColumn('vehicle_item_license_plate', function ($row) {
@@ -95,7 +75,7 @@ class FormDataController extends Controller
                 return '<input type="checkbox" disabled ' . ($row->solved ? 'checked' : null) . '>';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'form_name', 'driver', 'vehicle_item', 'data', 'user', 'solved']);
+            $table->rawColumns(['actions', 'placeholder', 'form_name', 'driver', 'vehicle_item', 'user', 'solved', 'data']);
 
             return $table->make(true);
         }
@@ -103,8 +83,8 @@ class FormDataController extends Controller
         $form_names = FormName::get();
         $drivers = Driver::get();
         $vehicle_items = VehicleItem::get();
-        $users = User::whereHas('roles', function($query) {
-            $query->where('title', 'Técnico');
+        $users = User::whereHas('roles', function ($role) {
+            $role->where('title', 'Técnico');
         })->get();
 
         return view('admin.formDatas.index', compact('form_names', 'drivers', 'vehicle_items', 'users'));
@@ -116,15 +96,15 @@ class FormDataController extends Controller
 
         $form_names = FormName::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $drivers = Driver::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $vehicle_items = VehicleItem::pluck('license_plate', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $users = User::whereHas('roles', function($query) {
-            $query->where('title', 'Técnico');
+        $users = User::whereHas('roles', function ($role) {
+            $role->where('title', 'Técnico');
         })->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.formDatas.create', compact('drivers', 'form_names', 'vehicle_items', 'users'));
+        return view('admin.formDatas.create', compact('drivers', 'form_names', 'users', 'vehicle_items'));
     }
 
     public function store(StoreFormDataRequest $request)
@@ -140,17 +120,17 @@ class FormDataController extends Controller
 
         $form_names = FormName::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $drivers = Driver::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $vehicle_items = VehicleItem::pluck('license_plate', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $users = User::whereHas('roles', function($query) {
-            $query->where('title', 'Técnico');
+        $users = User::whereHas('roles', function ($role) {
+            $role->where('title', 'Técnico');
         })->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $formData->load('form_name', 'driver', 'vehicle_item', 'user');
 
-        return view('admin.formDatas.edit', compact('drivers', 'formData', 'form_names', 'vehicle_items', 'users'));
+        return view('admin.formDatas.edit', compact('drivers', 'formData', 'form_names', 'users', 'vehicle_items'));
     }
 
     public function update(UpdateFormDataRequest $request, FormData $formData)
@@ -164,7 +144,7 @@ class FormDataController extends Controller
     {
         abort_if(Gate::denies('form_data_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $formData->load('form_name', 'driver', 'vehicle_item');
+        $formData->load('form_name', 'driver', 'vehicle_item', 'user');
 
         return view('admin.formDatas.show', compact('formData'));
     }

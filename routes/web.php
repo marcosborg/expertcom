@@ -478,8 +478,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     });
 
     // Form Communication
-    Route::delete('form-communications/destroy', 'FormCommunicationController@massDestroy')->name('form-communications.massDestroy');
-    Route::resource('form-communications', 'FormCommunicationController');
+    Route::prefix('form-communications')->group(function(){
+        Route::get('/', 'FormCommunicationController@index')->name('form-communications.index');
+        Route::get('form/{form_id}', 'FormCommunicationController@form');
+    });
 
     // Registo Entrada Veiculo
     Route::delete('registo-entrada-veiculos/destroy', 'RegistoEntradaVeiculoController@massDestroy')->name('registo-entrada-veiculos.massDestroy');

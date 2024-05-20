@@ -22,8 +22,25 @@ class FormDataController extends Controller
     {
         abort_if(Gate::denies('form_data_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        if (!request()->query('status')) {
+            return redirect('/admin/form-datas?status=unsolved');
+        }
+
         if ($request->ajax()) {
-            $query = FormData::with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
+            switch (request()->query('status')) {
+                case 'unsolved':
+                    $query = FormData::where('solved', false)->with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
+                    break;
+                case 'solved':
+                    $query = FormData::where('solved', true)->with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
+                    break;
+                case 'all':
+                    $query = FormData::with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
+                    break;
+                default:
+                    return redirect('/admin/form-datas?status=unsolved');
+            }
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -71,7 +88,7 @@ class FormDataController extends Controller
                 foreach (json_decode($row->data) as $key => $value) {
                     if (strpos($key, 'photos') !== false) {
                         $value = json_decode($value, true);
-                        if (isset($value[1])) {
+                        if (isset ($value[1])) {
                             $value = '<a target="_new" href="' . url('/') . '/storage/' . $value[1] . '">Link</a>';
                         } else {
                             $value = '';

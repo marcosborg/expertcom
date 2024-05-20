@@ -2,13 +2,20 @@
 @section('content')
 <div class="content">
     @can('form_data_create')
-        <div style="margin-bottom: 10px;" class="row">
-            <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route('admin.form-datas.create') }}">
-                    {{ trans('global.add') }} {{ trans('cruds.formData.title_singular') }}
-                </a>
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-md-6">
+            <a class="btn btn-success" href="{{ route('admin.form-datas.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.formData.title_singular') }}
+            </a>
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right">
+                <a href="/admin/form-datas?status=unsolved" class="btn btn-{{ request()->query('status') == 'unsolved' ? 'primary' : 'default' }} btn-sm">Não tratado</a>
+                <a href="/admin/form-datas?status=solved" class="btn btn-{{ request()->query('status') == 'solved' ? 'primary' : 'default' }} btn-sm">Tratado</a>
+                <a href="/admin/form-datas?status=all" class="btn btn-{{ request()->query('status') == 'all' ? 'primary' : 'default' }} btn-sm">Todos</a>
             </div>
         </div>
+    </div>
     @endcan
     <div class="row">
         <div class="col-lg-12">
@@ -17,7 +24,8 @@
                     {{ trans('cruds.formData.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-FormData">
+                    <table
+                        class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-FormData">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -58,7 +66,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($form_names as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -66,7 +74,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($drivers as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -74,7 +82,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($vehicle_items as $key => $item)
-                                            <option value="{{ $item->license_plate }}">{{ $item->license_plate }}</option>
+                                        <option value="{{ $item->license_plate }}">{{ $item->license_plate }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -82,7 +90,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -146,7 +154,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.form-datas.index') }}",
+    ajax: "/admin/form-datas?status={{ request()->query('status') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },

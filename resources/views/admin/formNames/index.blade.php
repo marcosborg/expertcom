@@ -37,6 +37,9 @@
                                         {{ trans('cruds.formName.fields.has_license') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.formName.fields.has_technician') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.formName.fields.roles') }}
                                     </th>
                                     <th>
@@ -63,6 +66,10 @@
                                         <td>
                                             <span style="display:none">{{ $formName->has_license ?? '' }}</span>
                                             <input type="checkbox" disabled="disabled" {{ $formName->has_license ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $formName->has_technician ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $formName->has_technician ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             @foreach($formName->roles as $key => $item)

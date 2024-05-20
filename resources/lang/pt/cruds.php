@@ -1895,6 +1895,8 @@ return [
             'has_license_helper' => ' ',
             'roles'              => 'Roles',
             'roles_helper'       => ' ',
+            'has_technician'        => 'Has Technician',
+            'has_technician_helper' => ' ',
         ],
     ],
     'formInput' => [
@@ -1945,6 +1947,8 @@ return [
             'deleted_at_helper'   => ' ',
             'solved'              => 'Tratado',
             'solved_helper'       => ' ',
+            'user'                => 'Technician',
+            'user_helper'         => ' ',
         ],
     ],
     'formAssembly' => [

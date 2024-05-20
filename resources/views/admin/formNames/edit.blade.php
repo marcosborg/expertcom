@@ -50,6 +50,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.formName.fields.has_license_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('has_technician') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="has_technician" value="0">
+                                <input type="checkbox" name="has_technician" id="has_technician" value="1" {{ $formName->has_technician || old('has_technician', 0) === 1 ? 'checked' : '' }}>
+                                <label for="has_technician" style="font-weight: 400">{{ trans('cruds.formName.fields.has_technician') }}</label>
+                            </div>
+                            @if($errors->has('has_technician'))
+                                <span class="help-block" role="alert">{{ $errors->first('has_technician') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.formName.fields.has_technician_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                             <label for="roles">{{ trans('cruds.formName.fields.roles') }}</label>
                             <div style="padding-bottom: 4px">

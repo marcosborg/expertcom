@@ -21,14 +21,6 @@ class StoreFormDataRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'driver_id' => [
-                'required',
-                'integer',
-            ],
-            'vehicle_item_id' => [
-                'required',
-                'integer',
-            ],
             'data' => [
                 'required',
             ],

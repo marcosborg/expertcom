@@ -23,6 +23,7 @@ class FormData extends Model
         'form_name_id',
         'driver_id',
         'vehicle_item_id',
+        'user_id',
         'data',
         'solved',
         'created_at',
@@ -48,5 +49,10 @@ class FormData extends Model
     public function vehicle_item()
     {
         return $this->belongsTo(VehicleItem::class, 'vehicle_item_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

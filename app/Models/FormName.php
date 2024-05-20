@@ -27,6 +27,7 @@ class FormName extends Model implements HasMedia
         'description',
         'has_driver',
         'has_license',
+        'has_technician',
         'created_at',
         'updated_at',
         'deleted_at',

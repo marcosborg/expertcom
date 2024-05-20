@@ -38,7 +38,7 @@
                                         {{ trans('cruds.formData.fields.driver') }}
                                     </th>
                                     <td>
-                                        {{ $formData->driver->name ?? '' }}
+                                        {{ $formData->driver->code ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -51,12 +51,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.formData.fields.user') }}
+                                    </th>
+                                    <td>
+                                        {{ $formData->user->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.formData.fields.data') }}
                                     </th>
                                     <td>
-                                        @foreach (json_decode($formData->data) as $label => $value)
-                                            <label>{{ $label }}: </label> {{ $value }}<br>
-                                        @endforeach
+                                        {{ $formData->data }}
                                     </td>
                                 </tr>
                                 <tr>

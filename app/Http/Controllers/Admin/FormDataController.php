@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateFormDataRequest;
 use App\Models\Driver;
 use App\Models\FormData;
 use App\Models\FormName;
+use App\Models\User;
 use App\Models\VehicleItem;
 use Gate;
 use Illuminate\Http\Request;
@@ -31,13 +32,13 @@ class FormDataController extends Controller
 
             switch (request()->query('status')) {
                 case 'unsolved':
-                    $query = FormData::where('solved', false)->with(['form_name', 'driver', 'vehicle_item'])->select(sprintf('%s.*', (new FormData)->table));
+                    $query = FormData::where('solved', false)->with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
                     break;
                 case 'solved':
-                    $query = FormData::where('solved', true)->with(['form_name', 'driver', 'vehicle_item'])->select(sprintf('%s.*', (new FormData)->table));
+                    $query = FormData::where('solved', true)->with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
                     break;
                 default:
-                    $query = FormData::with(['form_name', 'driver', 'vehicle_item'])->select(sprintf('%s.*', (new FormData)->table));
+                    $query = FormData::with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
                     break;
             }
 
@@ -79,6 +80,10 @@ class FormDataController extends Controller
                 return $row->vehicle_item ? $row->vehicle_item->license_plate : '';
             });
 
+            $table->addColumn('user_name', function ($row) {
+                return $row->user ? $row->user->name : '';
+            });
+
             $table->editColumn('data', function ($row) {
                 $html = '';
                 foreach (json_decode($row->data) as $key => $value) {
@@ -90,7 +95,7 @@ class FormDataController extends Controller
                 return '<input type="checkbox" disabled ' . ($row->solved ? 'checked' : null) . '>';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'form_name', 'driver', 'vehicle_item', 'data', 'solved']);
+            $table->rawColumns(['actions', 'placeholder', 'form_name', 'driver', 'vehicle_item', 'data', 'user', 'solved']);
 
             return $table->make(true);
         }
@@ -98,8 +103,11 @@ class FormDataController extends Controller
         $form_names = FormName::get();
         $drivers = Driver::get();
         $vehicle_items = VehicleItem::get();
+        $users = User::whereHas('roles', function($query) {
+            $query->where('title', 'Técnico');
+        })->get();
 
-        return view('admin.formDatas.index', compact('form_names', 'drivers', 'vehicle_items'));
+        return view('admin.formDatas.index', compact('form_names', 'drivers', 'vehicle_items', 'users'));
     }
 
     public function create()
@@ -112,7 +120,11 @@ class FormDataController extends Controller
 
         $vehicle_items = VehicleItem::pluck('license_plate', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.formDatas.create', compact('drivers', 'form_names', 'vehicle_items'));
+        $users = User::whereHas('roles', function($query) {
+            $query->where('title', 'Técnico');
+        })->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.formDatas.create', compact('drivers', 'form_names', 'vehicle_items', 'users'));
     }
 
     public function store(StoreFormDataRequest $request)
@@ -132,9 +144,13 @@ class FormDataController extends Controller
 
         $vehicle_items = VehicleItem::pluck('license_plate', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $formData->load('form_name', 'driver', 'vehicle_item');
+        $users = User::whereHas('roles', function($query) {
+            $query->where('title', 'Técnico');
+        })->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.formDatas.edit', compact('drivers', 'formData', 'form_names', 'vehicle_items'));
+        $formData->load('form_name', 'driver', 'vehicle_item', 'user');
+
+        return view('admin.formDatas.edit', compact('drivers', 'formData', 'form_names', 'vehicle_items', 'users'));
     }
 
     public function update(UpdateFormDataRequest $request, FormData $formData)

@@ -59,6 +59,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.formName.fields.has_technician') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $formName->has_technician ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.formName.fields.roles') }}
                                     </th>
                                     <td>

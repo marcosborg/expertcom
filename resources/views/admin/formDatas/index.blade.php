@@ -1,35 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content">
-    <div class="row">
-        <div class="col-md-6">
-            @can('form_data_create')
-            <div style="margin-bottom: 10px;" class="row">
-                <div class="col-lg-12">
-                    <a class="btn btn-success" href="{{ route('admin.form-datas.create') }}">
-                        {{ trans('global.add') }} {{ trans('cruds.formData.title_singular') }}
-                    </a>
-                </div>
-            </div>
-            @endcan
-        </div>
-        <div class="col-md-6">
-            <div class="pull-right">
-                <a class="btn btn-danger btn-sm"
-                    href="/admin/form-datas?status=unsolved">
-                    Não tratado
-                </a>
-                <a class="btn btn-primary btn-sm"
-                    href="/admin/form-datas?status=solved">
-                    Tratado
-                </a>
-                <a class="btn btn-primary btn-sm"
-                    href="/admin/form-datas?status=all">
-                    Todos
+    @can('form_data_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ route('admin.form-datas.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.formData.title_singular') }}
                 </a>
             </div>
         </div>
-    </div>
+    @endcan
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -37,8 +17,7 @@
                     {{ trans('cruds.formData.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table
-                        class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-FormData">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-FormData">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -55,6 +34,9 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.formData.fields.vehicle_item') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.formData.fields.user') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.formData.fields.data') }}
@@ -76,7 +58,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($form_names as $key => $item)
-                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -84,7 +66,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($drivers as $key => $item)
-                                        <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -92,7 +74,15 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($vehicle_items as $key => $item)
-                                        <option value="{{ $item->license_plate }}">{{ $item->license_plate }}</option>
+                                            <option value="{{ $item->license_plate }}">{{ $item->license_plate }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -156,13 +146,14 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ '/admin/form-datas?status=' . request()->query('status') }}",
+    ajax: "{{ route('admin.form-datas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'form_name_name', name: 'form_name.name' },
 { data: 'driver_code', name: 'driver.code' },
 { data: 'vehicle_item_license_plate', name: 'vehicle_item.license_plate' },
+{ data: 'user_name', name: 'user.name' },
 { data: 'data', name: 'data' },
 { data: 'solved', name: 'solved' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

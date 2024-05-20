@@ -63,7 +63,19 @@
                                     </th>
                                     <td>
                                         @foreach (json_decode($formData->data) as $key => $item)
-                                            <strong>{{ $key }}: </strong>{{ $item }}<br>
+                                        @if (strpos($key, 'photos') !== false)
+                                        @php
+                                        $item = json_decode($item, true);
+                                        if (isset($item[1])) {
+                                        $item = '<a href="https://expertcom.pt/storage/' . $item[1] . '" target="_new"><img src="https://expertcom.pt/storage/' . $item[1] . '" class="img-thumbnail" width="100"></a>';
+                                        } else {
+                                        $item = '';
+                                        }
+                                        @endphp
+                                        {!! $item !!}<br>
+                                        @else
+                                        <strong>{{ $key }}: </strong>{{ $item }}<br>
+                                        @endif
                                         @endforeach
                                     </td>
                                 </tr>
@@ -72,7 +84,8 @@
                                         {{ trans('cruds.formData.fields.solved') }}
                                     </th>
                                     <td>
-                                        <input type="checkbox" disabled="disabled" {{ $formData->solved ? 'checked' : '' }}>
+                                        <input type="checkbox" disabled="disabled" {{ $formData->solved ? 'checked' : ''
+                                        }}>
                                     </td>
                                 </tr>
                             </tbody>

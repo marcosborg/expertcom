@@ -35,13 +35,15 @@ class FormDataController extends Controller
                 $deleteGate = 'form_data_delete';
                 $crudRoutePart = 'form-datas';
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                )
+                return view(
+                    'partials.datatablesActions',
+                    compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    )
                 );
             });
 
@@ -67,7 +69,17 @@ class FormDataController extends Controller
             $table->editColumn('data', function ($row) {
                 $html = '';
                 foreach (json_decode($row->data) as $key => $value) {
-                    $html .= '<label>' . $key . '</label>: ' . $value . '<br>';
+                    if (strpos($key, 'photos') !== false) {
+                        $value = json_decode($value, true);
+                        if (isset($value[1])) {
+                            $value = '<a target="_new" href="' . url('/') . '/storage/' . $value[1] . '">Link</a>';
+                        } else {
+                            $value = '';
+                        }
+                        $html .= '<label>' . $key . '</label>: ' . $value . '<br>';
+                    } else {
+                        $html .= '<label>' . $key . '</label>: ' . $value . '<br>';
+                    }
                 }
                 return $row->data ? $html : '';
             });

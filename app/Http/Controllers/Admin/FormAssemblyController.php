@@ -32,9 +32,13 @@ class FormAssemblyController extends Controller
 
         $vehicle_items = VehicleItem::all();
 
+        $users = User::whereHas('roles', function ($role) {
+            $role->where('title', 'Técnico');
+        })->get();
+
         $roles = Role::pluck('title', 'id');
 
-        return view('admin.formAssemblies.index', compact('form_names', 'form_name', 'drivers', 'vehicle_items', 'roles'));
+        return view('admin.formAssemblies.index', compact('form_names', 'form_name', 'drivers', 'vehicle_items', 'users', 'roles'));
     }
 
     public function newField(Request $request)

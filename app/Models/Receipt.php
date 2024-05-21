@@ -59,12 +59,9 @@ class Receipt extends Model implements HasMedia
         return $this->belongsTo(Driver::class, 'driver_id');
     }
 
-    /*
-
     public function getFileAttribute()
     {
         return $this->getMedia('file')->last();
     }
 
-    */
 }

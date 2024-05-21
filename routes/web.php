@@ -491,6 +491,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('registo-entrada-veiculos/photos/{vehicle_item_id}', 'RegistoEntradaVeiculoController@photos')->name('registo-entrada-veiculos.photos');
     Route::get('registo-entrada-veiculos/delete-media/{media_id}', 'RegistoEntradaVeiculoController@deleteMedia');
 
+    // Recruitment Form
+    Route::delete('recruitment-forms/destroy', 'RecruitmentFormController@massDestroy')->name('recruitment-forms.massDestroy');
+    Route::post('recruitment-forms/media', 'RecruitmentFormController@storeMedia')->name('recruitment-forms.storeMedia');
+    Route::post('recruitment-forms/ckmedia', 'RecruitmentFormController@storeCKEditorImages')->name('recruitment-forms.storeCKEditorImages');
+    Route::resource('recruitment-forms', 'RecruitmentFormController');
+
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

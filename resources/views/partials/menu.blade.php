@@ -1372,6 +1372,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('recruitment_form_access')
+                            <li class="{{ request()->is("admin/recruitment-forms") || request()->is("admin/recruitment-forms/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.recruitment-forms.index") }}">
+                                    <i class="fa-fw fas fa-users">
+
+                                    </i>
+                                    <span>{{ trans('cruds.recruitmentForm.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

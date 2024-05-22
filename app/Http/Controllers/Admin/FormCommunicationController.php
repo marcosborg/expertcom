@@ -30,7 +30,7 @@ class FormCommunicationController extends Controller
     {
 
         $form_name = FormName::find($form_id)->load('form_inputs');
-        $drivers = Driver::all();
+        $drivers = Driver::where('state_id', 1)->get();
         $vehicle_items = VehicleItem::all();
         $users = User::whereHas('roles', function ($role) {
             $role->where('title', 'Técnico');

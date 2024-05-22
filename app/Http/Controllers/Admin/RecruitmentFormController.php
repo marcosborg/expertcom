@@ -9,10 +9,12 @@ use App\Http\Requests\StoreRecruitmentFormRequest;
 use App\Http\Requests\UpdateRecruitmentFormRequest;
 use App\Models\Company;
 use App\Models\RecruitmentForm;
+use App\Notifications\RecruitmentFormNotification;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Notification;
 
 class RecruitmentFormController extends Controller
 {
@@ -38,7 +40,7 @@ class RecruitmentFormController extends Controller
 
     public function store(StoreRecruitmentFormRequest $request)
     {
-        $recruitmentForm = RecruitmentForm::create($request->all());
+        $recruitmentForm = RecruitmentForm::create($request->all())->load('company');
 
         if ($request->input('cv', false)) {
             $recruitmentForm->addMedia(storage_path('tmp/uploads/' . basename($request->input('cv'))))->toMediaCollection('cv');
@@ -47,6 +49,9 @@ class RecruitmentFormController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $recruitmentForm->id]);
         }
+
+        Notification::route('mail', $recruitmentForm->company->email)
+            ->notify(new RecruitmentFormNotification($recruitmentForm));
 
         return redirect()->route('admin.recruitment-forms.index');
     }
@@ -67,7 +72,7 @@ class RecruitmentFormController extends Controller
         $recruitmentForm->update($request->all());
 
         if ($request->input('cv', false)) {
-            if (! $recruitmentForm->cv || $request->input('cv') !== $recruitmentForm->cv->file_name) {
+            if (!$recruitmentForm->cv || $request->input('cv') !== $recruitmentForm->cv->file_name) {
                 if ($recruitmentForm->cv) {
                     $recruitmentForm->cv->delete();
                 }
@@ -113,10 +118,10 @@ class RecruitmentFormController extends Controller
     {
         abort_if(Gate::denies('recruitment_form_create') && Gate::denies('recruitment_form_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new RecruitmentForm();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new RecruitmentForm();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

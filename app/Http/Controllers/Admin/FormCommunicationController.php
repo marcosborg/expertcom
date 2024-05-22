@@ -17,7 +17,11 @@ class FormCommunicationController extends Controller
     {
         abort_if(Gate::denies('form_communication_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $form_names = FormName::all()->load('form_inputs')->chunk(3);
+        $userRoles = auth()->user()->roles->pluck('id')->toArray();
+
+        $form_names = FormName::whereHas('roles', function ($query) use ($userRoles) {
+            $query->whereIn('id', $userRoles);
+        })->get()->load('form_inputs')->chunk(3);
 
         return view('admin.formCommunications.index', compact('form_names'));
     }
@@ -28,7 +32,7 @@ class FormCommunicationController extends Controller
         $form_name = FormName::find($form_id)->load('form_inputs');
         $drivers = Driver::all();
         $vehicle_items = VehicleItem::all();
-        $users = User::whereHas('roles', function($role){
+        $users = User::whereHas('roles', function ($role) {
             $role->where('title', 'Técnico');
         })->get();
 

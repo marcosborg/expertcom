@@ -119,7 +119,7 @@ class FormAssemblyController extends Controller
             $data['vehicle_item'] = '<strong>Viatura: </strong>' . $vehicle_item->license_plate . ' - (' . $vehicle_item->vehicle_brand->name . ' ' . $vehicle_item->vehicle_model->name . ')';
         }
         if ($request->user_id) {
-            $user = User::find($request->user);
+            $user = User::find($request->user_id);
             $data['user'] = '<strong>Técnico: </strong>' . $user->name;
         }
 

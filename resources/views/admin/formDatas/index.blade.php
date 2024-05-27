@@ -50,6 +50,9 @@
                                     {{ trans('cruds.formData.fields.data') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.formData.fields.created_at') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.formData.fields.solved') }}
                                 </th>
                                 <th>
@@ -96,6 +99,8 @@
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>
@@ -163,6 +168,7 @@
 { data: 'vehicle_item_license_plate', name: 'vehicle_item.license_plate' },
 { data: 'user_name', name: 'user.name' },
 { data: 'data', name: 'data' },
+{ data: 'created_at', name: 'created_at' },
 { data: 'solved', name: 'solved' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

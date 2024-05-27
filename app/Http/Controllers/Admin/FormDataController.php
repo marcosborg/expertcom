@@ -100,6 +100,10 @@ class FormDataController extends Controller
                 }
                 return $row->data ? $html : '';
             });
+
+            $table->editColumn('created_at', function ($row) {
+                return $row->created_at ? $row->created_at : '';
+            });
             $table->editColumn('solved', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->solved ? 'checked' : null) . '>';
             });

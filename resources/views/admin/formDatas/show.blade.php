@@ -81,6 +81,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.formData.fields.created_at') }}
+                                    </th>
+                                    <td>
+                                        {{ $formData->created_at }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.formData.fields.solved') }}
                                     </th>
                                     <td>

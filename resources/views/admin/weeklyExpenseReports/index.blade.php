@@ -224,7 +224,9 @@
                                             class="btn btn-primary"><i class="fa fa-file-pdf-o"></i></a>
                                         <a href="/admin/weekly-expense-reports/pdf/download" class="btn btn-primary"><i
                                                 class="fa fa-cloud-download"></i></a>
-                                        <a href="/admin/weekly-expense-reports/update" class="btn btn-primary" onclick="return confirm('Tem a certeza que deseja atualizar o relatório com informações mais recentes?')">Atualizar relatório</a>
+                                        @if (auth()->user()->hasRole('Admin'))
+                                        <a href="/admin/weekly-expense-reports/update" class="btn btn-primary" onclick="return confirm('Tem a certeza que deseja atualizar o relatório com informações mais recentes?')">Atualizar relatório</a>    
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

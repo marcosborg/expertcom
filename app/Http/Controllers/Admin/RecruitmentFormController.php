@@ -23,8 +23,10 @@ class RecruitmentFormController extends Controller
     public function index()
     {
         abort_if(Gate::denies('recruitment_form_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        
+        $company_id = session()->get('company_id');
 
-        $recruitmentForms = RecruitmentForm::with(['company', 'media'])->get();
+        $recruitmentForms = RecruitmentForm::where('company_id', $company_id)->with(['company', 'media'])->get();
 
         return view('admin.recruitmentForms.index', compact('recruitmentForms'));
     }

@@ -73,7 +73,7 @@
                                 onchange="selectCompany(this.value)" autocomplete="off">
                                 <option {{ !session()->get('company_id') || session()->get('company_id') == 0 ?
                                     'selected' : '' }} value="0">Todas as empresas</option>
-                                @foreach (\App\Models\Company::all() as $company)
+                                @foreach (\App\Models\Company::where('suspended', 0)->get() as $company)
                                 <option {{ session()->get('company_id') && session()->get('company_id') == $company->id
                                     ? 'selected' : '' }} value="{{ $company->id }}">{{ $company->name }}</option>
                                 @endforeach

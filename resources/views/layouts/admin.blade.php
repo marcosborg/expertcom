@@ -67,19 +67,7 @@
 
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        @if (auth()->user()->hasRole('Admin'))
-                        <li class="nav-item" style="padding-top: 8px;">
-                            <select class="form-control select2" style="min-width: 200px;"
-                                onchange="selectCompany(this.value)" autocomplete="off">
-                                <option {{ !session()->get('company_id') || session()->get('company_id') == 0 ?
-                                    'selected' : '' }} value="0">Todas as empresas</option>
-                                @foreach (\App\Models\Company::where('suspended', 0)->get() as $company)
-                                <option {{ session()->get('company_id') && session()->get('company_id') == $company->id
-                                    ? 'selected' : '' }} value="{{ $company->id }}">{{ $company->name }}</option>
-                                @endforeach
-                            </select>
-                        </li>
-                        @endif
+                        <x-company-selector />
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/" target="_new">Website</a>
                         </li>

@@ -18,7 +18,7 @@ class CompanySelector extends Component
     public function __construct()
     {
         $this->companies = Company::whereHas('user.roles', function ($query) {
-            $query->where('title', 'Empresas Associadas');
+            $query->where('title', 'Empresas Associadas')->orWhere('title', 'Admin');
         })->get()->load('user.roles');
     }
 

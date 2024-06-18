@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content">
-    @can('registo_entrada_veiculo_create')
+    @can('registo_entrada_veiculo_access')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-6">
                 <a class="btn btn-success" href="{{ route('admin.registo-entrada-veiculos.create') }}">

@@ -232,6 +232,12 @@ class HomeController
     public function companyInvoiceDashboard()
     {
 
+        $company_id = auth()->user()->company->id;
+
+        if (!session()->get('company_id')) {
+            session()->put('company_id', $company_id);
+        }
+
         $company = auth()->user()->company->load('company_invoices');
 
         if ($company->suspended) {

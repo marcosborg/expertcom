@@ -85,18 +85,22 @@ class FormDataController extends Controller
 
             $table->editColumn('data', function ($row) {
                 $html = '';
-                foreach (json_decode($row->data) as $key => $value) {
-                    if (strpos($key, 'photos') !== false) {
-                        $value = json_decode($value, true);
-                        if (isset ($value[1])) {
-                            $value = '<a target="_new" href="' . url('/') . '/storage/' . $value[1] . '">Link</a>';
+                if (json_decode($row->data, true)) {
+                    foreach (json_decode($row->data) as $key => $value) {
+                        if (strpos($key, 'photos') !== false) {
+                            $value = json_decode($value, true);
+                            if (isset($value[1])) {
+                                $value = '<a target="_new" href="' . url('/') . '/storage/' . $value[1] . '">Link</a>';
+                            } else {
+                                $value = '';
+                            }
+                            $html .= '<label>' . $key . '</label>: ' . $value . '<br>';
                         } else {
-                            $value = '';
+                            $html .= '<label>' . $key . '</label>: ' . $value . '<br>';
                         }
-                        $html .= '<label>' . $key . '</label>: ' . $value . '<br>';
-                    } else {
-                        $html .= '<label>' . $key . '</label>: ' . $value . '<br>';
                     }
+                } else {
+                    $html = '';
                 }
                 return $row->data ? $html : '';
             });

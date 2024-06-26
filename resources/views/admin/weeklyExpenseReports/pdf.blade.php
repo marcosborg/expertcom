@@ -17,7 +17,7 @@
 
         th,
         td {
-            padding: 8px;
+            padding: 5px;
         }
 
         @page {
@@ -122,7 +122,7 @@
                                 <td>Prevenção de frota</td>
                                 <td></td>
                                 <td></td>
-                                <td style="text-align: right;">{{ number_format(-$totals['total_company_adjustments'],
+                                <td style="text-align: right;">{{ number_format(-$totals->total_company_adjustments,
                                     2)
                                     }} <small>€</small></td>
                             </tr>
@@ -144,7 +144,7 @@
                                 <td>Pagamentos a motoristas</td>
                                 <td></td>
                                 <td></td>
-                                <td style="text-align: right;">{{ number_format($totals['total_drivers'], 2) }}
+                                <td style="text-align: right;">{{ number_format($totals->total_drivers, 2) }}
                                     <small>€</small>
                                 </td>
                             </tr>
@@ -155,6 +155,46 @@
                                 <th style="text-align: right;">{{ number_format($final_total, 2) }} <small>€</small>
                                 </th>
                             </tr>
+                            @if (isset($fleet_adjusments) && $fleet_adjusments)
+                            <tr>
+                                <td>Prevenção de frota</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;">{{ number_format($fleet_adjusments, 2) }}
+                                    <small>€</small>
+                                </td>
+                            </tr>
+                            @endif
+                            @if (isset($fleet_consultancies) && $fleet_consultancies)
+                            <tr>
+                                <td>Consultadorias</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;">{{ number_format($fleet_consultancies, 2) }}
+                                    <small>€</small>
+                                </td>
+                            </tr>
+                            @endif
+                            @if (isset($fleet_company_parks) && $fleet_company_parks)
+                            <tr>
+                                <td>Pagamento de park</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;">{{ number_format($fleet_company_parks, 2) }}
+                                    <small>€</small>
+                                </td>
+                            </tr>
+                            @endif
+                            @if (isset($fleet_earnings) && $fleet_earnings)
+                            <tr>
+                                <th>Totais de ganhos provenientes de outras empresas</th>
+                                <td></td>
+                                <td></td>
+                                <th style="text-align: right;">{{ number_format($fleet_earnings, 2) }}
+                                    <small>€</small>
+                                </th>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                     <!--<img src="" style="width: 100%; margin-top: 40px;">-->
@@ -170,7 +210,7 @@
                         <tbody>
                             <tr>
                                 <th style="text-align: left;">Ganhos</th>
-                                <td style="text-align: right;">{{ number_format($totals['total_operators'], 2) }}
+                                <td style="text-align: right;">{{ number_format($totals->total_operators, 2) }}
                                     <small>€</small>
                                 </td>
                             </tr>
@@ -179,6 +219,13 @@
                                 <td style="text-align: right;">{{ number_format($final_total, 2) }} <small>€</small>
                                 </td>
                             </tr>
+                            @if (isset($fleet_earnings) && $fleet_earnings)
+                            <tr>
+                                <th style="text-align: left">Ganhos provenientes de outra empresas</th>
+                                <td style="text-align: right">{{ number_format($fleet_earnings, 2) }} <small>€</small>
+                                </td>
+                            </tr>
+                            @endif
                             <tr>
                                 <th style="text-align: left;">Rentabilidade</th>
                                 <td style="text-align: right;">{{ number_format($profit, 2) }} <small>€</small></td>

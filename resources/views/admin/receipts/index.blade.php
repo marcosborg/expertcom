@@ -42,6 +42,9 @@
                                     {{ trans('cruds.driver.fields.code') }}
                                 </th>
                                 <th>
+                                    IBAN
+                                </th>
+                                <th>
                                     {{ trans('cruds.receipt.fields.value') }}
                                 </th>
                                 <th>
@@ -89,6 +92,8 @@
                                         <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>
@@ -170,6 +175,7 @@
 { data: 'company_name', name: 'driver.company.name' },
 { data: 'driver_name', name: 'driver.name' },
 { data: 'driver.code', name: 'driver.code' },
+{ data: 'driver.iban', name: 'driver.iban' },
 { data: 'value', name: 'value' },
 { data: 'balance', name: 'balance' },
 { data: 'file', name: 'file', sortable: false, searchable: false },

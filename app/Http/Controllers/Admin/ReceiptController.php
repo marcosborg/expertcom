@@ -69,6 +69,9 @@ class ReceiptController extends Controller
             $table->editColumn('driver.code', function ($row) {
                 return $row->driver ? (is_string($row->driver) ? $row->driver : $row->driver->code) : '';
             });
+            $table->editColumn('driver.iban', function ($row) {
+                return $row->driver ? (is_string($row->driver) ? $row->driver : $row->driver->iban) : '';
+            });
             $table->editColumn('value', function ($row) {
                 return $row->value ? $row->value : '';
             });

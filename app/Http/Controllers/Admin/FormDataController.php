@@ -26,16 +26,57 @@ class FormDataController extends Controller
             return redirect('/admin/form-datas?status=unsolved');
         }
 
+        if (!auth()->user()->hasRole('Admin')) {
+            $company_id = auth()->user()->company->id;
+        }
+
         if ($request->ajax()) {
             switch (request()->query('status')) {
                 case 'unsolved':
-                    $query = FormData::where('solved', false)->with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
+                    if (isset($company_id)) {
+                        $query = FormData::where('solved', false)
+                            ->with(['form_name', 'driver', 'vehicle_item', 'user'])
+                            ->whereHas('driver', function ($driver) use ($company_id) {
+                                $driver->where('company_id', $company_id);
+                            })
+                            ->select(sprintf('%s.*', (new FormData)
+                                ->table));
+                    } else {
+                        $query = FormData::where('solved', false)
+                            ->with(['form_name', 'driver', 'vehicle_item', 'user'])
+                            ->select(sprintf('%s.*', (new FormData)
+                                ->table));
+                    }
                     break;
                 case 'solved':
-                    $query = FormData::where('solved', true)->with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
+                    if (isset($company_id)) {
+                        $query = FormData::where('solved', true)
+                            ->with(['form_name', 'driver', 'vehicle_item', 'user'])
+                            ->whereHas('driver', function ($driver) use ($company_id) {
+                                $driver->where('company_id', $company_id);
+                            })
+                            ->select(sprintf('%s.*', (new FormData)
+                                ->table));
+                    } else {
+                        $query = FormData::where('solved', true)
+                            ->with(['form_name', 'driver', 'vehicle_item', 'user'])
+                            ->select(sprintf('%s.*', (new FormData)
+                                ->table));
+                    }
                     break;
                 case 'all':
-                    $query = FormData::with(['form_name', 'driver', 'vehicle_item', 'user'])->select(sprintf('%s.*', (new FormData)->table));
+                    if (isset($company_id)) {
+                        $query = FormData::with(['form_name', 'driver', 'vehicle_item', 'user'])
+                            ->whereHas('driver', function ($driver) use ($company_id) {
+                                $driver->where('company_id', $company_id);
+                            })
+                            ->select(sprintf('%s.*', (new FormData)
+                                ->table));
+                    } else {
+                        $query = FormData::with(['form_name', 'driver', 'vehicle_item', 'user'])
+                            ->select(sprintf('%s.*', (new FormData)
+                                ->table));
+                    }
                     break;
                 default:
                     return redirect('/admin/form-datas?status=unsolved');

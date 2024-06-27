@@ -7,6 +7,8 @@ use Illuminate\View\Component;
 class about extends Component
 {
 
+    private $about;
+
     /**
      * Create a new component instance.
      *
@@ -14,7 +16,7 @@ class about extends Component
      */
     public function __construct()
     {
-        
+        $this->about = \App\Models\HomeInfo::first();
     }
 
     /**
@@ -24,6 +26,6 @@ class about extends Component
      */
     public function render()
     {
-        return view('components.about');
+        return view('components.about')->with('about', $this->about);
     }
 }

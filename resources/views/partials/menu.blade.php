@@ -581,18 +581,6 @@
                                 </a>
                             </li>
                             @endcan
-                            @can('activity_access')
-                            <li class="{{ request()->is("admin/activities") || request()->is("admin/activities/*") ?
-                                "active" : "" }}">
-                                <a href="{{ route("admin.activities.index") }}">
-                                    <i class="fa-fw fas fa-boxes">
-
-                                    </i>
-                                    <span>{{ trans('cruds.activity.title') }}</span>
-
-                                </a>
-                            </li>
-                            @endcan
                             @can('testimonial_access')
                             <li class="{{ request()->is("admin/testimonials") || request()->is("admin/testimonials/*")
                                 ? "active" : "" }}">

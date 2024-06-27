@@ -3,6 +3,7 @@
 <x-hero></x-hero>
 @endsection
 @section('content')
+
     <x-about></x-about>
 
     <!-- ======= About Boxes Section ======= -->

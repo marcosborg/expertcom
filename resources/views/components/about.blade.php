@@ -1,10 +1,6 @@
-@php
-    $about = \App\Models\HomeInfo::first();
-@endphp
-
 <!-- ======= About Section ======= -->
 <section id="about" class="about">
-    <div class="container" data-aos="fade-up">
+    <div class="container p-4" data-aos="fade-up">
 
         <div class="row">
 

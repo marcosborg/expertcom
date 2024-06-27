@@ -5,18 +5,21 @@
         <div class="row">
 
             <div class="col-lg-6 align-self-baseline" data-aos="zoom-in" data-aos-delay="100">
-                <img src="{{ $about->image ? $about->image->getUrl() : '' }}" class="img-fluid" alt="">
+                @if ($sobre->image)
+                <img src="{{ $sobre->image ? $sobre->image->getUrl() : '' }}" class="img-fluid" alt="">
+                @endif
+
             </div>
 
             <div class="col-lg-6 pt-3 pt-lg-0 content">
-                <h3 class="mt-4">{{ $about->title ?? '' }}</h3>
+                <h3 class="mt-4">{{ $sobre->title ?? '' }}</h3>
                 <p class="fst-italic">
-                    {{ $about->description ?? '' }}
+                    {{ $sobre->description ?? '' }}
                 </p>
-                {!! $about->text ?? '' !!}
-                @if ($about->button && $about->link)
+                {!! $sobre->text ?? '' !!}
+                @if ($sobre->button && $sobre->link)
                 <p>&nbsp;</p>
-                <a href="{{ $about->link ?? '' }}" class="btn-theme mt-4">{{ $about->button ?? '' }}</a>
+                <a href="{{ $sobre->link ?? '' }}" class="btn-theme mt-4">{{ $sobre->button ?? '' }}</a>
                 @endif
             </div>
 

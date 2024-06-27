@@ -68,14 +68,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('home-infos/ckmedia', 'HomeInfoController@storeCKEditorImages')->name('home-infos.storeCKEditorImages');
     Route::resource('home-infos', 'HomeInfoController');
 
-    // Activities
-    Route::delete('activities/destroy', 'ActivitiesController@massDestroy')->name('activities.massDestroy');
-    Route::resource('activities', 'ActivitiesController');
-
-    // Testimonials
-    Route::delete('testimonials/destroy', 'TestimonialsController@massDestroy')->name('testimonials.massDestroy');
-    Route::resource('testimonials', 'TestimonialsController');
-
     // Own Car
     Route::delete('own-cars/destroy', 'OwnCarController@massDestroy')->name('own-cars.massDestroy');
     Route::post('own-cars/media', 'OwnCarController@storeMedia')->name('own-cars.storeMedia');

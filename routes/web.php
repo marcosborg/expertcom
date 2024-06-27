@@ -1,6 +1,8 @@
 <?php
 
-Route::get('/', 'WebsiteController@index');
+Route::redirect('/', '/admin');
+
+//Route::get('/', 'WebsiteController@index');
 
 Auth::routes(['register' => false]);
 

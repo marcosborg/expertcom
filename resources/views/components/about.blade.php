@@ -5,10 +5,7 @@
         <div class="row">
 
             <div class="col-lg-6 align-self-baseline" data-aos="zoom-in" data-aos-delay="100">
-                @if ($about->image)
                 <img src="{{ $about->image ? $about->image->getUrl() : '' }}" class="img-fluid" alt="">
-                @endif
-
             </div>
 
             <div class="col-lg-6 pt-3 pt-lg-0 content">

@@ -1,3 +1,5 @@
+{!! $sobre !!}
+
 <!-- ======= About Section ======= -->
 <section id="about" class="about">
     <div class="container p-4" data-aos="fade-up">

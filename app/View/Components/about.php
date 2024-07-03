@@ -27,9 +27,6 @@ class about extends Component
      */
     public function render()
     {
-
-        print_r($this->sobre);
-
         return view('components.about')->with('sobre', $this->sobre);
     }
 }

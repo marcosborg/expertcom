@@ -6,14 +6,15 @@ use Illuminate\View\Component;
 
 class about extends Component
 {
-
-    private $sobre;
-
     /**
      * Create a new component instance.
      *
      * @return void
      */
+
+    private $sobre;
+
+
     public function __construct()
     {
         $this->sobre = \App\Models\HomeInfo::first();

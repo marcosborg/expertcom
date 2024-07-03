@@ -27,3 +27,4 @@
 
     </div>
 </section><!-- End About Section -->
+<script>console.log({!! $sobre !!})</script>

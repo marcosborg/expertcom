@@ -1,5 +1,6 @@
-{!! $sobre !!}
-
+@php
+    $sobre = \App\Models\HomeInfo::first();
+@endphp
 <!-- ======= About Section ======= -->
 <section id="about" class="about">
     <div class="container p-4" data-aos="fade-up">
@@ -29,4 +30,3 @@
 
     </div>
 </section><!-- End About Section -->
-<script>console.log({!! $sobre !!})</script>

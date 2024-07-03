@@ -12,12 +12,10 @@ class about extends Component
      * @return void
      */
 
-    private $sobre;
-
 
     public function __construct()
     {
-        $this->sobre = \App\Models\HomeInfo::first();
+        
     }
 
     /**
@@ -27,6 +25,6 @@ class about extends Component
      */
     public function render()
     {
-        return view('components.about')->with('sobre', $this->sobre);
+        return view('components.about');
     }
 }

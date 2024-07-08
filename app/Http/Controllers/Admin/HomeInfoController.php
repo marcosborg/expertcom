@@ -70,7 +70,7 @@ class HomeInfoController extends Controller
             $homeInfo->image->delete();
         }
 
-        return redirect("admin/home-infos/1/edit")->with('status', 'Atualizado com sucesso');
+        return redirect("admin/home-infos/2/edit")->with('status', 'Atualizado com sucesso');
     }
 
     public function show(HomeInfo $homeInfo)

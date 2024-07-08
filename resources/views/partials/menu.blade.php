@@ -572,7 +572,7 @@
                             @can('home_info_access')
                             <li class="{{ request()->is("admin/home-infos") || request()->is("admin/home-infos/*") ?
                                 "active" : "" }}">
-                                <a href="{{ route("admin.home-infos.index") }}">
+                                <a href="/admin/home-infos/2/edit">
                                     <i class="fa-fw fas fa-info">
 
                                     </i>

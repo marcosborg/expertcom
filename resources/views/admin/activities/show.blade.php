@@ -38,15 +38,7 @@
                                         {{ trans('cruds.activity.fields.description') }}
                                     </th>
                                     <td>
-                                        {{ $activity->description }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.activity.fields.link') }}
-                                    </th>
-                                    <td>
-                                        {{ $activity->link }}
+                                        {!! $activity->description !!}
                                     </td>
                                 </tr>
                                 <tr>
@@ -54,7 +46,7 @@
                                         {{ trans('cruds.activity.fields.icon') }}
                                     </th>
                                     <td>
-                                        {{ App\Models\Activity::ICON_SELECT[$activity->icon] ?? '' }}
+                                        {{ $activity->icon }}
                                     </td>
                                 </tr>
                                 <tr>

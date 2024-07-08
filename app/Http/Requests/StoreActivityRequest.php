@@ -21,11 +21,7 @@ class StoreActivityRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'description' => [
-                'string',
-                'nullable',
-            ],
-            'link' => [
+            'icon' => [
                 'string',
                 'nullable',
             ],

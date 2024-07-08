@@ -21,11 +21,7 @@ class UpdateActivityRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'description' => [
-                'string',
-                'nullable',
-            ],
-            'link' => [
+            'icon' => [
                 'string',
                 'nullable',
             ],

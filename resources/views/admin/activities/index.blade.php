@@ -31,12 +31,6 @@
                                         {{ trans('cruds.activity.fields.title') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.activity.fields.description') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.activity.fields.link') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.activity.fields.icon') }}
                                     </th>
                                     <th>
@@ -60,18 +54,12 @@
                                             {{ $activity->title ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $activity->description ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $activity->link ?? '' }}
-                                        </td>
-                                        <td>
-                                            <i class="{{ App\Models\Activity::ICON_SELECT[$activity->icon] ?? '' }}"></i>
+                                            {{ $activity->icon ?? '' }}
                                         </td>
                                         <td>
                                             @if($activity->image)
-                                                <a href="#" target="_blank" style="display: inline-block">
-                                                    <img src="{{ $activity->image->getUrl() }}" width="100">
+                                                <a href="{{ $activity->image->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $activity->image->getUrl('thumb') }}">
                                                 </a>
                                             @endif
                                         </td>
@@ -162,4 +150,3 @@
 
 </script>
 @endsection
-<script>console.log({!! $activities !!})</script>

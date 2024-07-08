@@ -22,28 +22,15 @@
                         </div>
                         <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                             <label for="description">{{ trans('cruds.activity.fields.description') }}</label>
-                            <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $activity->description) }}">
+                            <textarea class="form-control ckeditor" name="description" id="description">{!! old('description', $activity->description) !!}</textarea>
                             @if($errors->has('description'))
                                 <span class="help-block" role="alert">{{ $errors->first('description') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.activity.fields.description_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('link') ? 'has-error' : '' }}">
-                            <label for="link">{{ trans('cruds.activity.fields.link') }}</label>
-                            <input class="form-control" type="text" name="link" id="link" value="{{ old('link', $activity->link) }}">
-                            @if($errors->has('link'))
-                                <span class="help-block" role="alert">{{ $errors->first('link') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.activity.fields.link_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('icon') ? 'has-error' : '' }}">
-                            <label>{{ trans('cruds.activity.fields.icon') }}</label>
-                            <select class="form-control" name="icon" id="icon">
-                                <option value disabled {{ old('icon', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Models\Activity::ICON_SELECT as $key => $label)
-                                    <option value="{{ $label }}" {{ old('icon', $activity->icon) === (string) $key ? 'selected' : '' }}>{{ $key }}</option>
-                                @endforeach
-                            </select>
+                            <label for="icon">{{ trans('cruds.activity.fields.icon') }}</label>
+                            <input class="form-control" type="text" name="icon" id="icon" value="{{ old('icon', $activity->icon) }}">
                             @if($errors->has('icon'))
                                 <span class="help-block" role="alert">{{ $errors->first('icon') }}</span>
                             @endif
@@ -75,6 +62,70 @@
 @endsection
 
 @section('scripts')
+<script>
+    $(document).ready(function () {
+  function SimpleUploadAdapter(editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
+      return {
+        upload: function() {
+          return loader.file
+            .then(function (file) {
+              return new Promise(function(resolve, reject) {
+                // Init request
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{{ route('admin.activities.storeCKEditorImages') }}', true);
+                xhr.setRequestHeader('x-csrf-token', window._token);
+                xhr.setRequestHeader('Accept', 'application/json');
+                xhr.responseType = 'json';
+
+                // Init listeners
+                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
+                xhr.addEventListener('error', function() { reject(genericErrorText) });
+                xhr.addEventListener('abort', function() { reject() });
+                xhr.addEventListener('load', function() {
+                  var response = xhr.response;
+
+                  if (!response || xhr.status !== 201) {
+                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
+                  }
+
+                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
+
+                  resolve({ default: response.url });
+                });
+
+                if (xhr.upload) {
+                  xhr.upload.addEventListener('progress', function(e) {
+                    if (e.lengthComputable) {
+                      loader.uploadTotal = e.total;
+                      loader.uploaded = e.loaded;
+                    }
+                  });
+                }
+
+                // Send request
+                var data = new FormData();
+                data.append('upload', file);
+                data.append('crud_id', '{{ $activity->id ?? 0 }}');
+                xhr.send(data);
+              });
+            })
+        }
+      };
+    }
+  }
+
+  var allEditors = document.querySelectorAll('.ckeditor');
+  for (var i = 0; i < allEditors.length; ++i) {
+    ClassicEditor.create(
+      allEditors[i], {
+        extraPlugins: [SimpleUploadAdapter]
+      }
+    );
+  }
+});
+</script>
+
 <script>
     Dropzone.options.imageDropzone = {
     url: '{{ route('admin.activities.storeMedia') }}',

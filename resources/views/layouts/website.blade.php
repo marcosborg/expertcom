@@ -41,7 +41,7 @@
     <header id="header" class="fixed-top ">
         <div class="container d-flex align-items-center justify-content-between">
 
-            <a href="index.html" class="logo"><img src="/assets/website/img/logo-white.png" alt=""
+            <a href="\" class="logo"><img src="/assets/website/img/logo-white.png" alt=""
                     class="img-fluid"></a>
 
             <x-navbar />
@@ -65,7 +65,7 @@
 
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-info">
-                            <h3>Dewi</h3>
+                            <img src="/assets/website/img/logo-white.png" width="200">
                             <p>
                                 A108 Adam Street <br>
                                 NY 535022, USA<br><br>
@@ -104,25 +104,16 @@
                         </ul>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 footer-newsletter">
-                        <h4>Our Newsletter</h4>
-                        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-                        <form action="" method="post">
-                            <input type="email" name="email"><input type="submit" value="Subscribe">
-                        </form>
-
-                    </div>
-
                 </div>
             </div>
         </div>
 
         <div class="container">
             <div class="copyright">
-                &copy; Copyright <strong><span>Dewi</span></strong>. All Rights Reserved
+                &copy; Copyright <strong><span>gesTVDE</span></strong>. All Rights Reserved
             </div>
             <div class="credits">
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                Designed by <a href="https://gestvde.pt/">gesTVDE</a>
             </div>
         </div>
     </footer><!-- End Footer -->

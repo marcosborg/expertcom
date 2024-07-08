@@ -59,7 +59,7 @@
                                         <td>
                                             @if($activity->image)
                                                 <a href="{{ $activity->image->getUrl() }}" target="_blank" style="display: inline-block">
-                                                    <img src="{{ $activity->image->getUrl() }}">
+                                                    <img src="{{ $activity->image->getUrl() }}" width="100">
                                                 </a>
                                             @endif
                                         </td>

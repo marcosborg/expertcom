@@ -592,6 +592,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('service_access')
+                            <li class="{{ request()->is("admin/services") || request()->is("admin/services/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.services.index") }}">
+                                    <i class="fa-fw fas fa-list">
+
+                                    </i>
+                                    <span>{{ trans('cruds.service.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                         </ul>
                     </li>
                     @endcan

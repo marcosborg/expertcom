@@ -54,7 +54,7 @@
                                             {{ $activity->title ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $activity->icon ?? '' }}
+                                            {!! $activity->icon ?? '' !!}
                                         </td>
                                         <td>
                                             @if($activity->image)

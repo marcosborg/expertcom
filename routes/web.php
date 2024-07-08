@@ -354,6 +354,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('tvde-activities', 'TvdeActivityController');
     Route::post('tvde-activities/delete-filter', 'TvdeActivityController@deleteFilter');
 
+    // Activities
+    Route::delete('activities/destroy', 'ActivitiesController@massDestroy')->name('activities.massDestroy');
+    Route::post('activities/media', 'ActivitiesController@storeMedia')->name('activities.storeMedia');
+    Route::post('activities/ckmedia', 'ActivitiesController@storeCKEditorImages')->name('activities.storeCKEditorImages');
+    Route::resource('activities', 'ActivitiesController');
+
     // Contract Type
     Route::delete('contract-types/destroy', 'ContractTypeController@massDestroy')->name('contract-types.massDestroy');
     Route::resource('contract-types', 'ContractTypeController');

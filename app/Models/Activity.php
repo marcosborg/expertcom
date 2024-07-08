@@ -66,10 +66,9 @@ class Activity extends Model implements HasMedia
         $file = $this->getMedia('image')->last();
         if ($file) {
             $file->url       = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
         }
 
         return $file;
     }
+
 }

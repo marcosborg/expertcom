@@ -66,12 +66,12 @@
                                             {{ $activity->link ?? '' }}
                                         </td>
                                         <td>
-                                            {{ App\Models\Activity::ICON_SELECT[$activity->icon] ?? '' }}
+                                            <i class="{{ App\Models\Activity::ICON_SELECT[$activity->icon] ?? '' }}"></i>
                                         </td>
                                         <td>
                                             @if($activity->image)
-                                                <a href="{{ $activity->image->getUrl() }}" target="_blank" style="display: inline-block">
-                                                    <img src="{{ $activity->image->getUrl() }}">
+                                                <a href="#" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $activity->image->getUrl() }}" width="100">
                                                 </a>
                                             @endif
                                         </td>
@@ -162,3 +162,4 @@
 
 </script>
 @endsection
+<script>console.log({!! $activities !!})</script>

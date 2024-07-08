@@ -41,7 +41,7 @@
                             <select class="form-control" name="icon" id="icon">
                                 <option value disabled {{ old('icon', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                 @foreach(App\Models\Activity::ICON_SELECT as $key => $label)
-                                    <option value="{{ $label }}" {{ old('icon', $activity->icon) === (string) $key ? 'selected' : '' }}>{{ $key }}</option>
+                                    <option value="{{ $key }}" {{ old('icon', $activity->icon) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('icon'))
@@ -105,7 +105,7 @@
 @if(isset($activity) && $activity->image)
       var file = {!! json_encode($activity->image) !!}
           this.options.addedfile.call(this, file)
-      this.options.image.call(this, file, file.preview ?? file.preview_url)
+      this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
       file.previewElement.classList.add('dz-complete')
       $('form').append('<input type="hidden" name="image" value="' + file.file_name + '">')
       this.options.maxFiles = this.options.maxFiles - 1

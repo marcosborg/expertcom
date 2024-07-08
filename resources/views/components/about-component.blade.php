@@ -8,7 +8,7 @@
                 <div class="card">
                     <img src="{{ $item->image->getUrl() }}" class="card-img-top" alt="...">
                     <div class="card-icon">
-                        <i class="ri-brush-4-line"></i>
+                        <i class="{{ \App\Models\Activity::ICON_SELECT[$item->icon] ?? '' }}"></i>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title"><a href="{{ $item->link }}">{{ $item->title }}</a></h5>

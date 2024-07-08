@@ -37,13 +37,13 @@ class Activity extends Model implements HasMedia
     ];
 
     public const ICON_SELECT = [
-        'Aluguer de viaturas'           => 'fas fa-car-alt icon',
+        'Aluguer de viaturas' => 'fas fa-car-alt icon',
         'Trabalhar com viatura própria' => 'fas fa-user-tag icon',
-        'Stand de viaturas'             => 'fas fa-search-dollar icon',
-        'Estafetas'                     => 'fas fa-parachute-box icon',
-        'Formação'                      => 'fas fa-chalkboard-teacher icon',
-        'Acessórios'                    => 'fas fa-shopping-cart icon',
-        'Transfers e Tours'             => 'fas fa-bus icon',
+        'Stand de viaturas' => 'fas fa-search-dollar icon',
+        'Estafetas' => 'fas fa-parachute-box icon',
+        'Formação' => 'fas fa-chalkboard-teacher icon',
+        'Acessórios' => 'fas fa-shopping-cart icon',
+        'Transfers e Tours' => 'fas fa-bus icon',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -65,7 +65,7 @@ class Activity extends Model implements HasMedia
     {
         $file = $this->getMedia('image')->last();
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
         }
 
         return $file;

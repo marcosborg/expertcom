@@ -19,12 +19,14 @@
 
     <!-- Vendor CSS Files -->
     <link href="/assets/website/vendor/aos/aos.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
     <link href="/assets/website/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/website/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="/assets/website/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
     <link href="/assets/website/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="/assets/website/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="/assets/website/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
 
     <!-- Template Main CSS File -->
     <link href="/assets/website/css/style.css" rel="stylesheet">

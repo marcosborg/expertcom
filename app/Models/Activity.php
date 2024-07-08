@@ -59,8 +59,6 @@ class Activity extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    */
-
     public function getImageAttribute()
     {
         $file = $this->getMedia('image')->last();
@@ -72,4 +70,6 @@ class Activity extends Model implements HasMedia
 
         return $file;
     }
+
+    */
 }

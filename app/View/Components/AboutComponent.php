@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use App\Models\Activity;
 
 class AboutComponent extends Component
 {
@@ -11,9 +12,12 @@ class AboutComponent extends Component
      *
      * @return void
      */
+
+    private $activities;
+
     public function __construct()
     {
-        //
+        $this->activities = Activity::all();
     }
 
     /**
@@ -23,6 +27,6 @@ class AboutComponent extends Component
      */
     public function render()
     {
-        return view('components.about-component');
+        return view('components.about-component')->with('activities', $this->activities);
     }
 }

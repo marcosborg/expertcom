@@ -41,7 +41,7 @@
                             <select class="form-control" name="icon" id="icon">
                                 <option value disabled {{ old('icon', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                 @foreach(App\Models\Activity::ICON_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('icon', $activity->icon) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                    <option value="{{ $label }}" {{ old('icon', $activity->icon) === (string) $key ? 'selected' : '' }}>{{ $key }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('icon'))

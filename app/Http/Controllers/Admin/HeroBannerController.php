@@ -70,7 +70,7 @@ class HeroBannerController extends Controller
             $heroBanner->image->delete();
         }
 
-        return redirect("admin/hero-banners/1/edit")->with('status', 'Atualizado com sucesso');
+        return redirect("admin/hero-banners/2/edit")->with('status', 'Atualizado com sucesso');
     }
 
     public function show(HeroBanner $heroBanner)

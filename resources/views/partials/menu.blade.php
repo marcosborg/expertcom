@@ -560,7 +560,7 @@
                             @can('hero_banner_access')
                             <li class="{{ request()->is("admin/hero-banners") || request()->is("admin/hero-banners/*")
                                 ? "active" : "" }}">
-                                <a href="{{ route("admin.hero-banners.index") }}">
+                                <a href="/admin/hero-banners/2/edit">
                                     <i class="fa-fw fas fa-image">
 
                                     </i>

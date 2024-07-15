@@ -1,5 +1,5 @@
 <!-- ======= Clients Section ======= -->
-<section id="clients" class="clients">
+<section id="clients" class="clients pb-5">
     <div class="container" data-aos="zoom-in">
 
         <div class="row">

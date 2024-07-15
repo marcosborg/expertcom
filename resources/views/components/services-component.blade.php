@@ -3,8 +3,8 @@
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-            <h2>Services</h2>
-            <p>Check our Services</p>
+            <h2>Expertcom</h2>
+            <p>Venha trabalhar connosco</p>
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="200">
@@ -21,4 +21,3 @@
 
     </div>
 </section><!-- End Services Section -->
-<script>console.log({!! $services !!})</script>

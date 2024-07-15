@@ -501,6 +501,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('services/destroy', 'ServiceController@massDestroy')->name('services.massDestroy');
     Route::resource('services', 'ServiceController');
 
+    // Testimonial
+    Route::delete('testimonials/destroy', 'TestimonialController@massDestroy')->name('testimonials.massDestroy');
+    Route::post('testimonials/media', 'TestimonialController@storeMedia')->name('testimonials.storeMedia');
+    Route::post('testimonials/ckmedia', 'TestimonialController@storeCKEditorImages')->name('testimonials.storeCKEditorImages');
+    Route::resource('testimonials', 'TestimonialController');
+
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

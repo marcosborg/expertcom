@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('text') ? 'has-error' : '' }}">
                             <label for="text">{{ trans('cruds.service.fields.text') }}</label>
-                            <input class="form-control" type="text" name="text" id="text" value="{{ old('text', '') }}">
+                            <textarea class="form-control" name="text" id="text">{{ old('text', '') }}</textarea>
                             @if($errors->has('text'))
                                 <span class="help-block" role="alert">{{ $errors->first('text') }}</span>
                             @endif

@@ -603,6 +603,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('testimonial_access')
+                            <li class="{{ request()->is("admin/testimonials") || request()->is("admin/testimonials/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.testimonials.index") }}">
+                                    <i class="fa-fw far fa-comments">
+
+                                    </i>
+                                    <span>{{ trans('cruds.testimonial.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                         </ul>
                     </li>
                     @endcan

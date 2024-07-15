@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use App\Models\Testimonial;
 
 class TestimonialComponent extends Component
 {
@@ -11,9 +12,12 @@ class TestimonialComponent extends Component
      *
      * @return void
      */
+
+    private $testimonials;
+
     public function __construct()
     {
-        //
+        $this->testimonials = Testimonial::all();
     }
 
     /**
@@ -23,6 +27,6 @@ class TestimonialComponent extends Component
      */
     public function render()
     {
-        return view('components.testimonial-component');
+        return view('components.testimonial-component')->with('testimonials', $this->testimonials);
     }
 }

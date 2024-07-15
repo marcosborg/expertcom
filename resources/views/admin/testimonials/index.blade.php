@@ -65,7 +65,7 @@
                                         <td>
                                             @if($testimonial->photo)
                                                 <a href="{{ $testimonial->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                                    <img src="{{ $testimonial->photo->getUrl('thumb') }}">
+                                                    <img src="{{ $testimonial->photo->getUrl() }}" width="100">
                                                 </a>
                                             @endif
                                         </td>

@@ -14,6 +14,10 @@
 
 <x-testimonial-component />
 
+<x-cta-component />
+
+<x-faqs-component />
+
 <!-- ======= Contact Section ======= -->
 <section id="contact" class="contact">
     <div class="container" data-aos="fade-up"">

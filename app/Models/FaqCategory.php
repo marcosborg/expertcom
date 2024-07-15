@@ -31,4 +31,5 @@ class FaqCategory extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+    
 }

@@ -21,4 +21,3 @@
 
     </div>
 </section><!-- End About Boxes Section -->
-<script>console.log({!! $activities !!})</script>

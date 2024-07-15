@@ -21,6 +21,10 @@ class UpdateTestimonialRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'title' => [
+                'string',
+                'nullable',
+            ],
             'text' => [
                 'required',
             ],

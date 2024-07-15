@@ -30,6 +30,12 @@
                                     <th>
                                         {{ trans('cruds.testimonial.fields.name') }}
                                     </th>
+                                    <td>
+                                        {{ $testimonial->title ?? '' }}
+                                    </td>
+                                    <th>
+                                        {{ trans('cruds.testimonial.fields.title') }}
+                                    </th>
                                     <th>
                                         {{ trans('cruds.testimonial.fields.text') }}
                                     </th>

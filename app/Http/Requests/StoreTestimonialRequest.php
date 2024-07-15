@@ -21,6 +21,10 @@ class StoreTestimonialRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'title' => [
+                'string',
+                'nullable',
+            ],
             'text' => [
                 'required',
             ],

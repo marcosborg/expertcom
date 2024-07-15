@@ -19,6 +19,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.testimonial.fields.name_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
+                            <label for="title">{{ trans('cruds.testimonial.fields.title') }}</label>
+                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}">
+                            @if($errors->has('title'))
+                                <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.testimonial.fields.title_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('text') ? 'has-error' : '' }}">
                             <label class="required" for="text">{{ trans('cruds.testimonial.fields.text') }}</label>
                             <textarea class="form-control" name="text" id="text" required>{{ old('text') }}</textarea>

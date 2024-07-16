@@ -9,8 +9,7 @@
     <meta content="@yield('description')" name="description">
 
     <!-- Favicons -->
-    <link href="/assets/website/img/favicon.png" rel="icon">
-    <link href="/assets/website/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="/assets/website/img/favicon.ico" rel="icon">
 
     <!-- Google Fonts -->
     <link

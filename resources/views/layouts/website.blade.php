@@ -9,7 +9,7 @@
     <meta content="@yield('description')" name="description">
 
     <!-- Favicons -->
-    <link href="/assets/website/img/favicon.ico" rel="icon">
+    <link href="/assets/favicon.ico" rel="icon">
 
     <!-- Google Fonts -->
     <link

@@ -37,19 +37,11 @@ class Page extends Model implements HasMedia
         'deleted_at',
     ];
 
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
-        $this->addMediaConversion('preview')->fit('crop', 120, 120);
-    }
-
     public function getImageAttribute()
     {
         $file = $this->getMedia('image')->last();
         if ($file) {
             $file->url       = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
         }
 
         return $file;

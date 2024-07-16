@@ -69,7 +69,7 @@
                 </div>
                 @foreach ($form->form_inputs as $form_input)
                 <div class="form-group m-2">
-                    <input type="text" value="qualquer coisa" name="{{ $form_input->name }}" class="form-control"
+                    <input type="text" name="{{ $form_input->name }}" class="form-control"
                         id="{{ $form_input->name }}" placeholder="{{ $form_input->label }}" {{ $form_input->required ?
                     'required' : '' }}>
                 </div>

@@ -66,12 +66,12 @@
 
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-info">
-                            <img src="/assets/website/img/logo-white.png" width="200">
+                            <img src="/assets/website/img/logo-white.png" width="200" class="mb-4">
                             <p>
-                                A108 Adam Street <br>
-                                NY 535022, USA<br><br>
-                                <strong>Phone:</strong> +351 915 422 233<br>
-                                <strong>Email:</strong> info@example.com<br>
+                                Rua Faria Guimarães 654 4200-201 Porto<br>
+                                Rua Godinho Faria 468 4465-150 São Mamede Infesta<br><br>
+                                <strong>Telefone:</strong> +351 915 422 233<br>
+                                <strong>Email:</strong> info@expertcom.pt<br>
                             </p>
                             <div class="social-links mt-3">
                                 <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="col-lg-2 col-md-6 footer-links">
-                        <h4>Useful Links</h4>
+                        <h4>Links</h4>
                         <ul>
                             <li><i class="bx bx-chevron-right"></i> <a href="/">Início</a></li>
                             <li><i class="bx bx-chevron-right"></i> <a href="/#about">Sobre nós</a></li>
@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="col-lg-3 col-md-6 footer-links">
-                        <h4>Our Services</h4>
+                        <h4>Outros links</h4>
                         <ul>
                             <li><i class="bx bx-chevron-right"></i> <a href="#">Outros links</a></li>
                         </ul>

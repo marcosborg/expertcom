@@ -8,18 +8,25 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="info-box">
                 <i class="bx bx-map"></i>
-                <h3>Onde estamos</h3>
-                <p>A108 Adam Street, New York, NY 535022</p>
+                <h3>Departamento Admnistrativo</h3>
+                <p>Rua Faria Guimarães 654 4200-201, Porto</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="info-box">
+                <i class="bx bx-map"></i>
+                <h3>Departamento Operacional</h3>
+                <p>Rua Godinho Faria 468 4465-150 São Mamede Infesta</p>
             </div>
         </div>
         <div class="col-md-6">
             <div class="info-box mt-4">
                 <i class="bx bx-envelope"></i>
                 <h3>Email</h3>
-                <p>info@example.com<br>contact@example.com</p>
+                <p>info@expertcom.pt </p>
             </div>
         </div>
         <div class="col-md-6">
@@ -73,6 +80,3 @@
         @endforeach
     </div>
 </section><!-- End Contact Section -->
-<script>
-    console.log({!! $forms !!})
-</script>

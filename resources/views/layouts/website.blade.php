@@ -38,7 +38,7 @@
 <body>
 
     <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top ">
+    <header id="header" class="fixed-top @yield('fixed')">
         <div class="container d-flex align-items-center justify-content-between">
 
             <a href="\" class="logo"><img src="/assets/website/img/logo-white.png" alt=""

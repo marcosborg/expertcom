@@ -17,6 +17,6 @@ class WebsiteController extends Controller
     {
         $page = Page::find($page_id);
 
-        return $page;
+        return view('website.cms', compact('page'));
     }
 }

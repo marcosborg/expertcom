@@ -3,7 +3,9 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use Illuminate\Support\Str;
 use App\Models\FaqQuestion;
+use App\Models\Page;
 
 class FaqsComponent extends Component
 {
@@ -14,10 +16,14 @@ class FaqsComponent extends Component
      */
 
     private $faq_questions;
+    private $page;
 
     public function __construct()
     {
-        $this->faq_questions = FaqQuestion::all()->load('category');
+        $this->faq_questions = FaqQuestion::all();
+        $this->page = Page::find(2);
+        $slug = Str::slug($this->page->title);
+        $this->page->slug = $slug;
     }
 
     /**
@@ -27,6 +33,9 @@ class FaqsComponent extends Component
      */
     public function render()
     {
-        return view('components.faqs-component')->with('faq_questions', $this->faq_questions);
+        return view('components.faqs-component')->with([
+            'faq_questions' => $this->faq_questions,
+            'page' => $this->page
+        ]);
     }
 }

@@ -8,7 +8,9 @@
                 @foreach ($testimonials as $testimonial)
                 <div class="swiper-slide">
                     <div class="testimonial-item">
+                        @if ($testimonial->photo)
                         <img src="{{ $testimonial->photo->getUrl() }}" class="testimonial-img" alt="">
+                        @endif
                         <h3>{{ $testimonial->name }}</h3>
                         <h4>{{ $testimonial->title }}</h4>
                         <p>

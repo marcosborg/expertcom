@@ -4,6 +4,8 @@
 
 Route::get('/', 'WebsiteController@index');
 
+Route::get('cms/{page_id}/{slug}', 'WebsiteController@cms');
+
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {

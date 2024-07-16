@@ -1,4 +1,4 @@
-<section style="background: #eeeeee">
+<section>
     <div class="container">
         <div class=" section-title">
             <h2>Dúvidas?</h2>

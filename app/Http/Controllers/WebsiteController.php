@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Page;
+use App\Models\FormName;
+use App\Models\FormData;
 
 class WebsiteController extends Controller
 {
@@ -18,5 +20,35 @@ class WebsiteController extends Controller
         $page = Page::find($page_id);
 
         return view('website.cms', compact('page'));
+    }
+
+    public function formData(Request $request)
+    {
+        $form_name = FormName::find($request->form_name_id);
+        $processedData = [];
+
+        foreach ($request->all() as $key => $value) {
+            $processedData[$key] = $value;
+        }
+
+        $data = [];
+
+        foreach ($processedData as $label => $value) {
+            if ($label != '_token' && $label != 'form_name_id' && $label != 'driver_id' && $label != 'vehicle_item_id') {
+                $data[$label] = $value;
+            }
+        }
+
+        $data = json_encode($data);
+
+        $form_data = new FormData;
+        $form_data->form_name_id = $request->form_name_id;
+        $form_data->driver_id = $request->driver_id ?? null;
+        $form_data->vehicle_item_id = $request->vehicle_item_id ?? null;
+        $form_data->user_id = $request->user_id ?? null;
+        $form_data->data = $data;
+        $form_data->save();
+
+        return redirect('/#contact')->with('message', 'Enviado com sucesso');
     }
 }

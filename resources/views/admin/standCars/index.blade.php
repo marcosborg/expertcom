@@ -33,36 +33,6 @@
                                     {{ trans('cruds.standCar.fields.car_model') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.standCar.fields.fuel') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.standCar.fields.transmision') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.standCar.fields.cylinder_capacity') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.standCar.fields.battery_capacity') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.standCar.fields.year') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.standCar.fields.month') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.standCar.fields.kilometers') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.standCar.fields.power') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.standCar.fields.origin') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.standCar.fields.distance') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.standCar.fields.price') }}
                                 </th>
                                 <th>
@@ -133,15 +103,6 @@
 { data: 'id', name: 'id' },
 { data: 'brand_name', name: 'brand.name' },
 { data: 'car_model_name', name: 'car_model.name' },
-{ data: 'fuel_name', name: 'fuel.name' },
-{ data: 'transmision', name: 'transmision' },
-{ data: 'cylinder_capacity', name: 'cylinder_capacity' },
-{ data: 'battery_capacity', name: 'battery_capacity' },
-{ data: 'year', name: 'year' },
-{ data: 'month_name', name: 'month.name' },
-{ data: 'kilometers', name: 'kilometers' },
-{ data: 'power', name: 'power' },
-{ data: 'origin_name', name: 'origin.name' },
 { data: 'distance', name: 'distance' },
 { data: 'price', name: 'price' },
 { data: 'status_name', name: 'status.name' },

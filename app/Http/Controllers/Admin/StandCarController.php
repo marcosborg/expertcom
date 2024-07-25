@@ -61,36 +61,6 @@ class StandCarController extends Controller
                 return $row->car_model ? $row->car_model->name : '';
             });
 
-            $table->addColumn('fuel_name', function ($row) {
-                return $row->fuel ? $row->fuel->name : '';
-            });
-
-            $table->editColumn('transmision', function ($row) {
-                return $row->transmision ? StandCar::TRANSMISION_RADIO[$row->transmision] : '';
-            });
-            $table->editColumn('cylinder_capacity', function ($row) {
-                return $row->cylinder_capacity ? $row->cylinder_capacity : '';
-            });
-            $table->editColumn('battery_capacity', function ($row) {
-                return $row->battery_capacity ? $row->battery_capacity : '';
-            });
-            $table->editColumn('year', function ($row) {
-                return $row->year ? $row->year : '';
-            });
-            $table->addColumn('month_name', function ($row) {
-                return $row->month ? $row->month->name : '';
-            });
-
-            $table->editColumn('kilometers', function ($row) {
-                return $row->kilometers ? $row->kilometers : '';
-            });
-            $table->editColumn('power', function ($row) {
-                return $row->power ? $row->power : '';
-            });
-            $table->addColumn('origin_name', function ($row) {
-                return $row->origin ? $row->origin->name : '';
-            });
-
             $table->editColumn('distance', function ($row) {
                 return $row->distance ? $row->distance : '';
             });
@@ -113,7 +83,7 @@ class StandCarController extends Controller
                 return implode(' ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'brand', 'car_model', 'fuel', 'month', 'origin', 'status', 'images']);
+            $table->rawColumns(['actions', 'placeholder', 'brand', 'car_model', 'status', 'images']);
 
             return $table->make(true);
         }

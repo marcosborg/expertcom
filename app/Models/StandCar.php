@@ -53,12 +53,6 @@ class StandCar extends Model implements HasMedia
         'deleted_at',
     ];
 
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
-        $this->addMediaConversion('preview')->fit('crop', 120, 120);
-    }
-
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
@@ -94,8 +88,6 @@ class StandCar extends Model implements HasMedia
         $files = $this->getMedia('images');
         $files->each(function ($item) {
             $item->url = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview = $item->getUrl('preview');
         });
 
         return $files;

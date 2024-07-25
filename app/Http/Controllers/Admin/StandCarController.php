@@ -107,7 +107,7 @@ class StandCarController extends Controller
                 }
                 $links = [];
                 foreach ($row->images as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl() . '" width="50px" height="50px"></a>';
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl() . '" height="50px"></a>';
                 }
 
                 return implode(' ', $links);

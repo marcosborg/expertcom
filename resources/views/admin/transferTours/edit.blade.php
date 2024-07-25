@@ -172,7 +172,7 @@ Dropzone.options.photoDropzone = {
           for (var i in files) {
           var file = files[i]
           this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file)
+          this.options.url.call(this, file)
           file.previewElement.classList.add('dz-complete')
           $('form').append('<input type="hidden" name="photo[]" value="' + file.file_name + '">')
         }

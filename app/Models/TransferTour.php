@@ -43,7 +43,6 @@ class TransferTour extends Model implements HasMedia
         $files = $this->getMedia('photo');
         $files->each(function ($item) {
             $item->url = $item->getUrl();
-            $item->thumbnail = $item->getUrl();
         });
 
         return $files;

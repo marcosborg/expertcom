@@ -38,19 +38,12 @@ class TransferTour extends Model implements HasMedia
         'deleted_at',
     ];
 
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
-        $this->addMediaConversion('preview')->fit('crop', 120, 120);
-    }
-
     public function getPhotoAttribute()
     {
         $files = $this->getMedia('photo');
         $files->each(function ($item) {
             $item->url = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview = $item->getUrl('preview');
+            $item->thumbnail = $item->getUrl();
         });
 
         return $files;

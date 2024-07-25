@@ -64,7 +64,7 @@
                                     <td>
                                         @foreach($transferTour->photo as $key => $media)
                                             <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
-                                                <img src="{{ $media->getUrl('thumb') }}">
+                                                <img src="{{ $media->getUrl() }}" width="300">
                                             </a>
                                         @endforeach
                                     </td>

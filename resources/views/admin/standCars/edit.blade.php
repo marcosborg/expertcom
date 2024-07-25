@@ -211,10 +211,11 @@ Dropzone.options.imagesDropzone = {
     init: function () {
 @if(isset($standCar) && $standCar->images)
       var files = {!! json_encode($standCar->images) !!}
+      console.log(files);
           for (var i in files) {
           var file = files[i]
           this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+          this.options.url.call(this, file)
           file.previewElement.classList.add('dz-complete')
           $('form').append('<input type="hidden" name="images[]" value="' + file.file_name + '">')
         }

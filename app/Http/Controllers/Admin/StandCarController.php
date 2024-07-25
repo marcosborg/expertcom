@@ -18,77 +18,18 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class StandCarController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('stand_car_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = StandCar::with(['brand', 'car_model', 'fuel', 'month', 'origin', 'status'])->select(sprintf('%s.*', (new StandCar())->table));
-            $table = Datatables::of($query);
+        $standCars = StandCar::with(['brand', 'car_model', 'fuel', 'month', 'origin', 'status', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'stand_car_show';
-                $editGate = 'stand_car_edit';
-                $deleteGate = 'stand_car_delete';
-                $crudRoutePart = 'stand-cars';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('brand_name', function ($row) {
-                return $row->brand ? $row->brand->name : '';
-            });
-
-            $table->addColumn('car_model_name', function ($row) {
-                return $row->car_model ? $row->car_model->name : '';
-            });
-
-            $table->editColumn('distance', function ($row) {
-                return $row->distance ? $row->distance : '';
-            });
-            $table->editColumn('price', function ($row) {
-                return $row->price ? $row->price : '';
-            });
-            $table->addColumn('status_name', function ($row) {
-                return $row->status ? $row->status->name : '';
-            });
-
-            $table->editColumn('images', function ($row) {
-                if (!$row->images) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->images as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl() . '" height="50px"></a>';
-                }
-
-                return implode(' ', $links);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'brand', 'car_model', 'status', 'images']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.standCars.index');
+        return view('admin.standCars.index', compact('standCars'));
     }
 
     public function create()
@@ -152,14 +93,14 @@ class StandCarController extends Controller
 
         if (count($standCar->images) > 0) {
             foreach ($standCar->images as $media) {
-                if (!in_array($media->file_name, $request->input('images', []))) {
+                if (! in_array($media->file_name, $request->input('images', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $standCar->images->pluck('file_name')->toArray();
         foreach ($request->input('images', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
                 $standCar->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('images');
             }
         }
@@ -187,7 +128,11 @@ class StandCarController extends Controller
 
     public function massDestroy(MassDestroyStandCarRequest $request)
     {
-        StandCar::whereIn('id', request('ids'))->delete();
+        $standCars = StandCar::find(request('ids'));
+
+        foreach ($standCars as $standCar) {
+            $standCar->delete();
+        }
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

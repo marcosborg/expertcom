@@ -481,7 +481,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     });
 
     // Form Communication
-    Route::prefix('form-communications')->group(function(){
+    Route::prefix('form-communications')->group(function () {
         Route::get('/', 'FormCommunicationController@index')->name('form-communications.index');
         Route::get('form/{form_id}', 'FormCommunicationController@form');
     });

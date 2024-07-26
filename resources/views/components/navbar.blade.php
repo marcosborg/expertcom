@@ -17,11 +17,12 @@
                 <li><a href="/cms/11/programa-de-apoio-aos-motoristas">Programa de Apoio Motoristas</a></li>
                 <li><a href="/cms/12/consultoria-a-emtresa-tvde">Consultoria a Empresa TVDE</a></li>
                 <li><a href="/cms/13/aluguer-viaturas">Aluguer Viaturas</a></li>
-                <li><a href="/cms/14/formacao">Formação </a></li>
+                <li><a href="/cms/14/formacao">Formação</a></li>
             </ul>
         </li>
         <li><a class="nav-link" href="/stand">Stand</a></li>
         <li><a class="nav-link" href="">Transfers e Tours</a></li>
+        <li><a class="nav-link" href="https://linktr.ee/expertcom.pt" target="_new">Fale connosco</a></li>
         @auth
         <li><a class="getstarted" href="/admin">Dashboard</a></li>
         @else

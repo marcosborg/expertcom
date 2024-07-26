@@ -33,6 +33,3 @@ header-inner-pages
     </div>
 </section>
 @endsection
-<script>
-    console.log({!! $page !!})
-</script>

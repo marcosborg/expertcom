@@ -6,18 +6,18 @@
                 <li><a href="/cms/4/quem-somos">Quem somos</a></li>
                 <li><a href="/cms/5/o-nosso-compromisso">O nosso compromisso</a></li>
                 <li><a href="/cms/6/carreiras"">Carreiras</a></li>
-                <li><a href="#">Parceiros</a></li>
-                <li><a href="#">Contatos</a></li>
+                <li><a href="/cms/7/parceiros">Parceiros</a></li>
+                <li><a href="/cms/8/contatos">Contatos</a></li>
             </ul>
         </li>
         <li class="dropdown"><a href="#"><span>TVDE</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-                <li><a href="#">Trabalhar com Viatura Própria</a></li>
-                <li><a href="#">Motorista TVDE</a></li>
-                <li><a href="#">Programa de Apoio Motoristas</a></li>
-                <li><a href="#">Consultoria a Empresa TVDE</a></li>
-                <li><a href="#">Aluguer Viaturas</a></li>
-                <li><a href="#">Formação </a></li>
+                <li><a href="/cms/9/trabalhar-com-viatura-propria">Trabalhar com Viatura Própria</a></li>
+                <li><a href="/cms/10/motorista-tvde">Motorista TVDE</a></li>
+                <li><a href="/cms/11/programa-de-apoio-aos-motoristas">Programa de Apoio Motoristas</a></li>
+                <li><a href="/cms/12/consultoria-a-emtresa-tvde">Consultoria a Empresa TVDE</a></li>
+                <li><a href="/cms/13/aluguer-viaturas">Aluguer Viaturas</a></li>
+                <li><a href="/cms/14/formacao">Formação </a></li>
             </ul>
         </li>
         <li><a class="nav-link" href="">Stand</a></li>

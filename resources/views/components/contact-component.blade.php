@@ -37,46 +37,4 @@
             </div>
         </div>
     </div>
-    @if(session('message'))
-    <div class="row" style='padding:20px 20px 0 20px;'>
-        <div class="col-lg-12">
-            <div class="alert alert-success" role="alert">{{ session('message') }}</div>
-        </div>
-    </div>
-    @endif
-    @if($errors->count() > 0)
-    <div class="row" style='padding:20px 20px 0 20px;'>
-        <div class="col-lg-12">
-            <div class="alert alert-danger">
-                <ul class="list-unstyled">
-                    @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    </div>
-    @endif
-    <div class="row">
-        @foreach ($forms as $form)
-        <div class="col-6">
-            <form action="/form-data" method="post" role="form" class="php-email-form">
-                <input type="hidden" name="form_name_id" value="{{ $form->id }}">
-                @csrf
-                <div class="mb-4">
-                    <h4>{{ $form->name }}</h4>
-                    <strong>{{ $form->description }}</strong>
-                </div>
-                @foreach ($form->form_inputs as $form_input)
-                <div class="form-group m-2">
-                    <input type="text" name="{{ $form_input->name }}" class="form-control"
-                        id="{{ $form_input->name }}" placeholder="{{ $form_input->label }}" {{ $form_input->required ?
-                    'required' : '' }}>
-                </div>
-                @endforeach
-                <div class="text-center mt-5"><button type="submit">Enviar</button></div>
-            </form>
-        </div>
-        @endforeach
-    </div>
 </section><!-- End Contact Section -->

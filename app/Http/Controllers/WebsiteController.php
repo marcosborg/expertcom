@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Models\FormName;
 use App\Models\FormData;
+use Illuminate\Support\Facades\Blade;
 
 class WebsiteController extends Controller
 {
@@ -19,7 +20,22 @@ class WebsiteController extends Controller
     {
         $page = Page::find($page_id);
 
+        if ($page) {
+            $page->text = $this->replaceFormPlaceholders($page->text);
+        }
+
         return view('website.cms', compact('page'));
+    }
+
+    private function replaceFormPlaceholders($text)
+    {
+        // Utiliza uma expressão regular para encontrar e substituir todos os placeholders {{ form_X }}
+        return preg_replace_callback('/\{\{\s*form_(\d+)\s*\}\}/', function ($matches) {
+            $formId = $matches[1];
+            // Gera a string do componente Blade
+            $componentString = view('components.form-component', ['form_name_id' => $formId])->render();
+            return $componentString;
+        }, $text);
     }
 
     public function formData(Request $request)
@@ -49,6 +65,6 @@ class WebsiteController extends Controller
         $form_data->data = $data;
         $form_data->save();
 
-        return redirect('/#contact')->with('message', 'Enviado com sucesso');
+        return redirect()->back()->with('message', 'Enviado com sucesso');
     }
 }

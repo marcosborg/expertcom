@@ -3,8 +3,9 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use App\Models\FormName;
 
-class ContactComponent extends Component
+class FormComponent extends Component
 {
     /**
      * Create a new component instance.
@@ -12,11 +13,11 @@ class ContactComponent extends Component
      * @return void
      */
 
-    private $forms;
+    public $form_name_id;
 
-    public function __construct()
+    public function __construct($form_name_id)
     {
-
+        $this->form_name_id = $form_name_id;
     }
 
     /**
@@ -26,6 +27,7 @@ class ContactComponent extends Component
      */
     public function render()
     {
-        return view('components.contact-component');
+
+        return view('components.form-component');
     }
 }

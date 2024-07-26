@@ -9,6 +9,9 @@ Route::post('form-data', 'WebsiteController@formData');
 Route::prefix('stand')->group(function () {
     Route::get('/', 'StandController@index');
 });
+Route::prefix('transfers-tours')->group(function () {
+    Route::get('/', 'TransferToursController@index');
+});
 
 Auth::routes(['register' => false]);
 

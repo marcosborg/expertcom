@@ -6,6 +6,9 @@ Route::get('/', 'WebsiteController@index');
 
 Route::get('cms/{page_id}/{slug}', 'WebsiteController@cms');
 Route::post('form-data', 'WebsiteController@formData');
+Route::prefix('stand')->group(function () {
+    Route::get('/', 'StandController@index');
+});
 
 Auth::routes(['register' => false]);
 

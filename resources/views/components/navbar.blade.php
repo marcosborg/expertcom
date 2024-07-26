@@ -20,7 +20,7 @@
                 <li><a href="/cms/14/formacao">Formação </a></li>
             </ul>
         </li>
-        <li><a class="nav-link" href="">Stand</a></li>
+        <li><a class="nav-link" href="/stand">Stand</a></li>
         <li><a class="nav-link" href="">Transfers e Tours</a></li>
         @auth
         <li><a class="getstarted" href="/admin">Dashboard</a></li>

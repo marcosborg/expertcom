@@ -11,7 +11,7 @@ class StoreTransferFormRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('transfer_form_create');
+        return true;
     }
 
     public function rules()

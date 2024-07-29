@@ -29,7 +29,7 @@ header-inner-pages
                         <div style="height: 120px;">
                             {!! Str::limit($transfer_tour->description, 100) !!}
                         </div>
-                        <a href="#" class="btn btn-theme">Ver tour</a>
+                        <a href="/transfers-tours/tour/{{ $transfer_tour->id }}" class="btn btn-theme">Ver tour</a>
                     </div>
                 </div>
             </div>

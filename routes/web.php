@@ -11,6 +11,8 @@ Route::prefix('stand')->group(function () {
 });
 Route::prefix('transfers-tours')->group(function () {
     Route::get('/', 'TransferToursController@index');
+    Route::get('tour/{transfer_tour_id}', 'TransferToursController@tour');
+    Route::post('send-request', 'TransferToursController@sendRequest');
 });
 
 Auth::routes(['register' => false]);

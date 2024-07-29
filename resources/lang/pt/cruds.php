@@ -2165,6 +2165,8 @@ return [
             'comentarios_helper'                                     => ' ',
             'reparado'                                               => 'Reparado',
             'reparado_helper'                                        => ' ',
+            'cinzeiro_minutos'                                       => 'Atraso em Minutos',
+            'cinzeiro_minutos_helper'                                => ' ',
         ],
     ],
     'recruitmentForm' => [

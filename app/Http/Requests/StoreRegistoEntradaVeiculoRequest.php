@@ -117,6 +117,12 @@ class StoreRegistoEntradaVeiculoRequest extends FormRequest
             'lateral_direita_paralama_diant_photos' => [
                 'array',
             ],
+            'cinzeiro_minutos' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
             'cinzeiro_photos' => [
                 'array',
             ],

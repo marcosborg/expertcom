@@ -120,6 +120,12 @@ class UpdateRegistoEntradaVeiculoRequest extends FormRequest
             'cinzeiro_photos' => [
                 'array',
             ],
+            'cinzeiro_minutos' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
             'copia_de_licenca_de_tvde_data' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',

@@ -96,6 +96,7 @@ class RegistoEntradaVeiculo extends Model implements HasMedia
         'lateral_direita_nada_consta',
         'lateral_direita_obs',
         'cinzeiro_sim',
+        'cinzeiro_minutos',
         'cinzeiro_nada_consta',
         'aspiracao_bancos_frente',
         'aspiracao_bancos_tras',

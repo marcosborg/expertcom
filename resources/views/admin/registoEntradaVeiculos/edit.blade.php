@@ -1313,7 +1313,7 @@
                                         <a class="collapsed" role="button" data-toggle="collapse"
                                             data-parent="#accordion" href="#collapseFive" aria-expanded="false"
                                             aria-controls="collapseFive">
-                                            Cinzeiro (vestígios de cinza)
+                                            Cinzeiro / atraso (vestígios de cinza)
                                         </a>
                                     </h4>
                                 </div>
@@ -1321,27 +1321,7 @@
                                     aria-labelledby="headingFive">
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div
-                                                    class="form-group {{ $errors->has('cinzeiro_sim') ? 'has-error' : '' }}">
-                                                    <div>
-                                                        <input type="hidden" name="cinzeiro_sim" value="0">
-                                                        <input type="checkbox" name="cinzeiro_sim" id="cinzeiro_sim"
-                                                            value="1" {{ $registoEntradaVeiculo->cinzeiro_sim ||
-                                                        old('cinzeiro_sim', 0) === 1 ? 'checked' :
-                                                        '' }}>
-                                                        <label for="cinzeiro_sim" style="font-weight: 400">{{
-                                                            trans('cruds.registoEntradaVeiculo.fields.cinzeiro_sim')
-                                                            }}</label>
-                                                    </div>
-                                                    @if($errors->has('cinzeiro_sim'))
-                                                    <span class="help-block" role="alert">{{
-                                                        $errors->first('cinzeiro_sim') }}</span>
-                                                    @endif
-                                                    <span class="help-block">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.cinzeiro_sim_helper')
-                                                        }}</span>
-                                                </div>
+                                            <div class="col-md-4">
                                                 <div
                                                     class="form-group {{ $errors->has('cinzeiro_nada_consta') ? 'has-error' : '' }}">
                                                     <div>
@@ -1364,7 +1344,37 @@
                                                         }}</span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
+                                                <div
+                                                class="form-group {{ $errors->has('cinzeiro_sim') ? 'has-error' : '' }}">
+                                                <div>
+                                                    <input type="hidden" name="cinzeiro_sim" value="0">
+                                                    <input type="checkbox" name="cinzeiro_sim" id="cinzeiro_sim"
+                                                        value="1" {{ $registoEntradaVeiculo->cinzeiro_sim ||
+                                                    old('cinzeiro_sim', 0) === 1 ? 'checked' :
+                                                    '' }}>
+                                                    <label for="cinzeiro_sim" style="font-weight: 400">{{
+                                                        trans('cruds.registoEntradaVeiculo.fields.cinzeiro_sim')
+                                                        }}</label>
+                                                </div>
+                                                @if($errors->has('cinzeiro_sim'))
+                                                <span class="help-block" role="alert">{{
+                                                    $errors->first('cinzeiro_sim') }}</span>
+                                                @endif
+                                                <span class="help-block">{{
+                                                    trans('cruds.registoEntradaVeiculo.fields.cinzeiro_sim_helper')
+                                                    }}</span>
+                                            </div>
+                                            <div class="form-group {{ $errors->has('cinzeiro_minutos') ? 'has-error' : '' }}">
+                                                <label for="cinzeiro_minutos">{{ trans('cruds.registoEntradaVeiculo.fields.cinzeiro_minutos') }}</label>
+                                                <input class="form-control" type="number" name="cinzeiro_minutos" id="cinzeiro_minutos" value="{{ old('cinzeiro_minutos', $registoEntradaVeiculo->cinzeiro_minutos) }}" step="1">
+                                                @if($errors->has('cinzeiro_minutos'))
+                                                    <span class="help-block" role="alert">{{ $errors->first('cinzeiro_minutos') }}</span>
+                                                @endif
+                                                <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.cinzeiro_minutos_helper') }}</span>
+                                            </div>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <div
                                                     class="form-group {{ $errors->has('cinzeiro_photos') ? 'has-error' : '' }}">
                                                     <label for="cinzeiro_photos">{{

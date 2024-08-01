@@ -22,67 +22,69 @@ header-inner-pages
             <!-- Conteúdo principal -->
             <div class="col-md-9">
                 @foreach ($stand_cars as $stand_car)
-                <div class="card mb-4">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <div class="car-image"
-                                style="background-image: url('{{ $stand_car->images->isNotEmpty() ? $stand_car->images[0]->getUrl() : 'https://via.placeholder.com/400?text=IMAGEM' }}');">
+                <a href="/stand/viatura/{{ $stand_car->id }}">
+                    <div class="card mb-4">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <div class="car-image"
+                                    style="background-image: url('{{ $stand_car->images->isNotEmpty() ? $stand_car->images[0]->getUrl() : 'https://via.placeholder.com/400?text=IMAGEM' }}');">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="fw-bold text-uppercase">{{ $stand_car->brand->name }} {{
-                                            $stand_car->car_model->name }}</p>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="fw-bold text-uppercase">{{ $stand_car->brand->name }} {{
+                                                $stand_car->car_model->name }}</p>
+                                        </div>
+                                        <div class="col text-end">
+                                            <span
+                                                class="badge bg-{{ $stand_car->status->id == 1 ? 'danger' : 'success' }}">{{
+                                                $stand_car->status->name }}</span>
+                                        </div>
                                     </div>
-                                    <div class="col text-end">
-                                        <span
-                                            class="badge bg-{{ $stand_car->status->id == 1 ? 'danger' : 'success' }}">{{
-                                            $stand_car->status->name }}</span>
+                                    <h3><small>€</small> {{ number_format($stand_car->price, 2, '.', ' ') }}</h3>
+                                    <div class="row">
+                                        <div class="col" style="font-size: 12px">
+                                            <span class="text-uppercase fw-bold">Combustivel</span><br>
+                                            <span>{{ $stand_car->fuel->name }}</span>
+                                        </div>
+                                        <div class="col" style="font-size: 12px">
+                                            <span class="text-uppercase fw-bold">Mês | Ano</span><br>
+                                            <span>{{ $stand_car->month->name }} | {{ $stand_car->year }}</span>
+                                        </div>
+                                        <div class="col" style="font-size: 12px">
+                                            <span class="text-uppercase fw-bold">Caixa</span><br>
+                                            <span>{{ $stand_car->transmision }}</span>
+                                        </div>
+                                        <div class="col" style="font-size: 12px">
+                                            <span class="text-uppercase fw-bold">Quilómetros</span><br>
+                                            <span>{{ number_format($stand_car->kilometers, 0, '', ' ') }} km</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <h3><small>€</small> {{ number_format($stand_car->price, 2, '.', ' ') }}</h3>
-                                <div class="row">
-                                    <div class="col" style="font-size: 12px">
-                                        <span class="text-uppercase fw-bold">Combustivel</span><br>
-                                        <span>{{ $stand_car->fuel->name }}</span>
-                                    </div>
-                                    <div class="col" style="font-size: 12px">
-                                        <span class="text-uppercase fw-bold">Mês | Ano</span><br>
-                                        <span>{{ $stand_car->month->name }} | {{ $stand_car->year }}</span>
-                                    </div>
-                                    <div class="col" style="font-size: 12px">
-                                        <span class="text-uppercase fw-bold">Caixa</span><br>
-                                        <span>{{ $stand_car->transmision }}</span>
-                                    </div>
-                                    <div class="col" style="font-size: 12px">
-                                        <span class="text-uppercase fw-bold">Quilómetros</span><br>
-                                        <span>{{ number_format($stand_car->kilometers, 0, '', ' ') }} km</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col" style="font-size: 12px">
-                                        <span class="text-uppercase fw-bold">Cilindrada</span><br>
-                                        <span>{{ $stand_car->cylinder_capacity }} cm3</span>
-                                    </div>
-                                    <div class="col" style="font-size: 12px">
-                                        <span class="text-uppercase fw-bold">Potência</span><br>
-                                        <span>{{ $stand_car->power }} CV</span>
-                                    </div>
-                                    <div class="col" style="font-size: 12px">
-                                        <span class="text-uppercase fw-bold">Origem</span><br>
-                                        <span>{{ $stand_car->origin->name }}</span>
-                                    </div>
-                                    <div class="col" style="font-size: 12px">
-                                        <span class="text-uppercase fw-bold">Localidade</span><br>
-                                        <span>{{ $stand_car->distance }}</span>
+                                    <div class="row">
+                                        <div class="col" style="font-size: 12px">
+                                            <span class="text-uppercase fw-bold">Cilindrada</span><br>
+                                            <span>{{ $stand_car->cylinder_capacity }} cm3</span>
+                                        </div>
+                                        <div class="col" style="font-size: 12px">
+                                            <span class="text-uppercase fw-bold">Potência</span><br>
+                                            <span>{{ $stand_car->power }} CV</span>
+                                        </div>
+                                        <div class="col" style="font-size: 12px">
+                                            <span class="text-uppercase fw-bold">Origem</span><br>
+                                            <span>{{ $stand_car->origin->name }}</span>
+                                        </div>
+                                        <div class="col" style="font-size: 12px">
+                                            <span class="text-uppercase fw-bold">Localidade</span><br>
+                                            <span>{{ $stand_car->distance }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 @endforeach
                 <!-- Adicionar mais viaturas conforme necessário -->
             </div>
@@ -97,7 +99,7 @@ header-inner-pages
                             <select name="brand_id" class="form-control select2">
                                 <option selected disabled>Marca</option>
                                 @foreach ($brands as $brand)
-                                <option value="{{ $brand['id'] }}">{{ $brand['name'] }}</option>
+                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -106,7 +108,7 @@ header-inner-pages
                             <select name="model_id" class="form-control select2">
                                 <option selected disabled>Modelo</option>
                                 @foreach ($models as $model)
-                                <option value="{{ $model['id'] }}">{{ $model['name'] }}</option>
+                                <option value="{{ $model->id }}">{{ $model->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -115,7 +117,7 @@ header-inner-pages
                             <select name="fuel_id" class="form-control select2">
                                 <option selected disabled>Combustivel</option>
                                 @foreach ($fuels as $fuel)
-                                <option value="{{ $fuel['id'] }}">{{ $fuel['name'] }}</option>
+                                <option value="{{ $fuel->id }}">{{ $fuel->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -132,7 +134,7 @@ header-inner-pages
                             <select name="origin_id" class="form-control select2">
                                 <option selected disabled>Origem</option>
                                 @foreach ($origins as $origin)
-                                <option value="{{ $origin['id'] }}">{{ $origin['name'] }}</option>
+                                <option value="{{ $origin->id }}">{{ $origin->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -170,6 +172,3 @@ header-inner-pages
     }
 </style>
 @endsection
-<script>
-    console.log({!! $stand_cars !!})
-</script>

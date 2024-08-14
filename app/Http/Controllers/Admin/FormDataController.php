@@ -159,8 +159,8 @@ class FormDataController extends Controller
         }
 
         $form_names = FormName::get();
-        $drivers = Driver::get();
-        $vehicle_items = VehicleItem::get();
+        $drivers = Driver::where('company_id', $company_id)->get();
+        $vehicle_items = VehicleItem::where('company_id', $company_id)->get();
         $users = User::whereHas('roles', function ($role) {
             $role->where('title', 'Técnico');
         })->get();

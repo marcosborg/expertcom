@@ -26,11 +26,7 @@ class FormDataController extends Controller
             return redirect('/admin/form-datas?status=unsolved');
         }
 
-        if (!auth()->user()->hasRole('Admin')) {
-            $company_id = auth()->user()->company->id;
-        } else {
-            $company_id = 0;
-        }
+        $company_id = session()->get('company_id');
 
         if ($request->ajax()) {
             switch (request()->query('status')) {
@@ -162,13 +158,8 @@ class FormDataController extends Controller
 
         $form_names = FormName::get();
 
-        if ($company_id != 0) {
-            $drivers = Driver::where('company_id', $company_id)->get();
-            $vehicle_items = VehicleItem::where('company_id', $company_id)->get();
-        } else {
-            $drivers = Driver::all();
-            $vehicle_items = VehicleItem::all();
-        }
+        $drivers = Driver::where('company_id', $company_id)->get();
+        $vehicle_items = VehicleItem::where('company_id', $company_id)->get();
 
         
         $users = User::whereHas('roles', function ($role) {

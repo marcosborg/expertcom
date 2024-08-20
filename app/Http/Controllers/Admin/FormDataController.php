@@ -28,6 +28,8 @@ class FormDataController extends Controller
 
         if (!auth()->user()->hasRole('Admin')) {
             $company_id = auth()->user()->company->id;
+        } else {
+            $company_id = 0;
         }
 
         if ($request->ajax()) {
@@ -159,8 +161,16 @@ class FormDataController extends Controller
         }
 
         $form_names = FormName::get();
-        $drivers = Driver::where('company_id', $company_id)->get();
-        $vehicle_items = VehicleItem::where('company_id', $company_id)->get();
+
+        if ($company_id != 0) {
+            $drivers = Driver::where('company_id', $company_id)->get();
+            $vehicle_items = VehicleItem::where('company_id', $company_id)->get();
+        } else {
+            $drivers = Driver::all();
+            $vehicle_items = VehicleItem::all();
+        }
+
+        
         $users = User::whereHas('roles', function ($role) {
             $role->where('title', 'Técnico');
         })->get();

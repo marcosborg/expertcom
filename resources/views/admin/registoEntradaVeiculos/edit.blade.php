@@ -2316,47 +2316,73 @@
 
 @section('scripts')
 <script>
-    function initCanvas(canvasId) {
+    // Inicializa o canvas para eventos de mouse e toque
+function initCanvas(canvasId) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext("2d");
     let drawing = false;
+    let lastX = 0;
+    let lastY = 0;
 
-    canvas.addEventListener("mousedown", (e) => {
+    // Função para iniciar o desenho com mouse ou toque
+    function startDrawing(x, y) {
         drawing = true;
         ctx.beginPath();
-        ctx.moveTo(e.offsetX, e.offsetY);
+        ctx.moveTo(x, y);
+    }
+
+    // Função para desenhar com mouse ou toque
+    function draw(x, y) {
+        if (!drawing) return;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    }
+
+    // Função para parar o desenho
+    function stopDrawing() {
+        drawing = false;
+    }
+
+    // Eventos de mouse
+    canvas.addEventListener("mousedown", (e) => {
+        startDrawing(e.offsetX, e.offsetY);
     });
 
     canvas.addEventListener("mousemove", (e) => {
-        if (drawing) {
-            ctx.lineTo(e.offsetX, e.offsetY);
-            ctx.stroke();
-        }
+        draw(e.offsetX, e.offsetY);
     });
 
-    canvas.addEventListener("mouseup", () => {
-        drawing = false;
+    canvas.addEventListener("mouseup", stopDrawing);
+    canvas.addEventListener("mouseout", stopDrawing);
+
+    // Eventos de toque
+    canvas.addEventListener("touchstart", (e) => {
+        e.preventDefault(); // Impedir o comportamento padrão de rolagem
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        startDrawing(touch.clientX - rect.left, touch.clientY - rect.top);
     });
 
-    canvas.addEventListener("mouseout", () => {
-        drawing = false;
+    canvas.addEventListener("touchmove", (e) => {
+        e.preventDefault(); // Impedir o comportamento padrão de rolagem
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        draw(touch.clientX - rect.left, touch.clientY - rect.top);
     });
+
+    canvas.addEventListener("touchend", stopDrawing);
 }
 
+// Função para limpar o canvas
 function clearCanvas(canvasId) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-function clearCanvas(canvasId) {
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas
 }
 
+// Função para verificar se o canvas está vazio
 function isCanvasEmpty(canvas) {
-    const blank = document.createElement('canvas'); // cria um canvas temporário
+    const blank = document.createElement('canvas'); // Cria um canvas temporário
     blank.width = canvas.width;
     blank.height = canvas.height;
 
@@ -2364,6 +2390,7 @@ function isCanvasEmpty(canvas) {
     return canvas.toDataURL() === blank.toDataURL();
 }
 
+// Função para salvar as assinaturas dos canvases
 function saveSignatures() {
     const collectorCanvas = document.getElementById('signature-collector');
     const driverCanvas = document.getElementById('signature-driver');
@@ -2390,12 +2417,12 @@ function saveSignatures() {
     return true; // Permite que o formulário seja submetido
 }
 
-
 // Inicializar os canvases ao carregar a página
 window.onload = function() {
     initCanvas('signature-collector');
     initCanvas('signature-driver');
 };
+
 
 </script>
 <script>

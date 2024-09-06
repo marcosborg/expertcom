@@ -2316,8 +2316,7 @@
 
 @section('scripts')
 <script>
-    // Inicializa o canvas para eventos de mouse e toque
-function initCanvas(canvasId) {
+    function initCanvas(canvasId) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext("2d");
     let drawing = false;
@@ -2327,8 +2326,10 @@ function initCanvas(canvasId) {
     // Função para iniciar o desenho com mouse ou toque
     function startDrawing(x, y) {
         drawing = true;
+        lastX = x;
+        lastY = y;
         ctx.beginPath();
-        ctx.moveTo(x, y);
+        ctx.moveTo(lastX, lastY);
     }
 
     // Função para desenhar com mouse ou toque
@@ -2336,6 +2337,8 @@ function initCanvas(canvasId) {
         if (!drawing) return;
         ctx.lineTo(x, y);
         ctx.stroke();
+        lastX = x;
+        lastY = y;
     }
 
     // Função para parar o desenho
@@ -2371,6 +2374,7 @@ function initCanvas(canvasId) {
     });
 
     canvas.addEventListener("touchend", stopDrawing);
+    canvas.addEventListener("touchcancel", stopDrawing); // Android às vezes cancela o toque
 }
 
 // Função para limpar o canvas
@@ -2422,6 +2426,7 @@ window.onload = function() {
     initCanvas('signature-collector');
     initCanvas('signature-driver');
 };
+
 
 
 </script>

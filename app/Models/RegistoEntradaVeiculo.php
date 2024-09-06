@@ -144,6 +144,8 @@ class RegistoEntradaVeiculo extends Model implements HasMedia
         'tratado',
         'comentarios',
         'reparado',
+        'signature_collector_data',
+        'signature_driver_data',
         'created_at',
         'updated_at',
         'deleted_at',

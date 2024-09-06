@@ -3,7 +3,8 @@
 <div class="content">
     <div class="row" style="margin-bottom: 20px;">
         <div class="col-md-12">
-            <a class="btn btn-primary btn-sm pull-right" href="{{ route('admin.registo-entrada-veiculos.photos', [$registoEntradaVeiculo->vehicle_item->id]) }}">
+            <a class="btn btn-primary btn-sm pull-right"
+                href="{{ route('admin.registo-entrada-veiculos.photos', [$registoEntradaVeiculo->vehicle_item->id]) }}">
                 Todas as fotografias da viatura
             </a>
         </div>
@@ -210,6 +211,8 @@
                             Documentação</a></li>
                     <li role="presentation" {{ request()->query('step') == 4 ? 'class=active' : '' }}><a>4.º Checkagem
                             de lavagem</a></li>
+                    <li role="presentation" {{ request()->query('step') == 5 ? 'class=active' : '' }}><a>5.º
+                            Assinaturas</a></li>
                 </ul>
                 @if (request()->query('step') == 1)
                 <input type="hidden" name="has_photos" value="true">
@@ -1346,33 +1349,42 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div
-                                                class="form-group {{ $errors->has('cinzeiro_sim') ? 'has-error' : '' }}">
-                                                <div>
-                                                    <input type="hidden" name="cinzeiro_sim" value="0">
-                                                    <input type="checkbox" name="cinzeiro_sim" id="cinzeiro_sim"
-                                                        value="1" {{ $registoEntradaVeiculo->cinzeiro_sim ||
-                                                    old('cinzeiro_sim', 0) === 1 ? 'checked' :
-                                                    '' }}>
-                                                    <label for="cinzeiro_sim" style="font-weight: 400">{{
-                                                        trans('cruds.registoEntradaVeiculo.fields.cinzeiro_sim')
-                                                        }}</label>
+                                                    class="form-group {{ $errors->has('cinzeiro_sim') ? 'has-error' : '' }}">
+                                                    <div>
+                                                        <input type="hidden" name="cinzeiro_sim" value="0">
+                                                        <input type="checkbox" name="cinzeiro_sim" id="cinzeiro_sim"
+                                                            value="1" {{ $registoEntradaVeiculo->cinzeiro_sim ||
+                                                        old('cinzeiro_sim', 0) === 1 ? 'checked' :
+                                                        '' }}>
+                                                        <label for="cinzeiro_sim" style="font-weight: 400">{{
+                                                            trans('cruds.registoEntradaVeiculo.fields.cinzeiro_sim')
+                                                            }}</label>
+                                                    </div>
+                                                    @if($errors->has('cinzeiro_sim'))
+                                                    <span class="help-block" role="alert">{{
+                                                        $errors->first('cinzeiro_sim') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{
+                                                        trans('cruds.registoEntradaVeiculo.fields.cinzeiro_sim_helper')
+                                                        }}</span>
                                                 </div>
-                                                @if($errors->has('cinzeiro_sim'))
-                                                <span class="help-block" role="alert">{{
-                                                    $errors->first('cinzeiro_sim') }}</span>
-                                                @endif
-                                                <span class="help-block">{{
-                                                    trans('cruds.registoEntradaVeiculo.fields.cinzeiro_sim_helper')
-                                                    }}</span>
-                                            </div>
-                                            <div class="form-group {{ $errors->has('cinzeiro_minutos') ? 'has-error' : '' }}">
-                                                <label for="cinzeiro_minutos">{{ trans('cruds.registoEntradaVeiculo.fields.cinzeiro_minutos') }}</label>
-                                                <input class="form-control" type="number" name="cinzeiro_minutos" id="cinzeiro_minutos" value="{{ old('cinzeiro_minutos', $registoEntradaVeiculo->cinzeiro_minutos) }}" step="1">
-                                                @if($errors->has('cinzeiro_minutos'))
-                                                    <span class="help-block" role="alert">{{ $errors->first('cinzeiro_minutos') }}</span>
-                                                @endif
-                                                <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.cinzeiro_minutos_helper') }}</span>
-                                            </div>
+                                                <div
+                                                    class="form-group {{ $errors->has('cinzeiro_minutos') ? 'has-error' : '' }}">
+                                                    <label for="cinzeiro_minutos">{{
+                                                        trans('cruds.registoEntradaVeiculo.fields.cinzeiro_minutos')
+                                                        }}</label>
+                                                    <input class="form-control" type="number" name="cinzeiro_minutos"
+                                                        id="cinzeiro_minutos"
+                                                        value="{{ old('cinzeiro_minutos', $registoEntradaVeiculo->cinzeiro_minutos) }}"
+                                                        step="1">
+                                                    @if($errors->has('cinzeiro_minutos'))
+                                                    <span class="help-block" role="alert">{{
+                                                        $errors->first('cinzeiro_minutos') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{
+                                                        trans('cruds.registoEntradaVeiculo.fields.cinzeiro_minutos_helper')
+                                                        }}</span>
+                                                </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div
@@ -2232,9 +2244,67 @@
                         <button class="btn btn-danger" type="submit" name="step" value="3">
                             Recuar
                         </button>
+                        <button class="btn btn-danger" type="submit" name="step" value="5">
+                            Avançar
+                        </button>
+                    </div>
+                </div>
+                @endif
+                @if (request()->query('step') == 5)
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            @if ($registoEntradaVeiculo->signature_driver_data &&
+                            $registoEntradaVeiculo->signature_collector_data)
+                            <div class="col-md-12">
+                                <div class="alert alert-success" role="alert">As assinaturas já foram recolhidas</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="signature-collector">Recolha da viatura:</label><br>
+                                <img src="{{ $registoEntradaVeiculo->signature_collector_data }}"
+                                    alt="Assinatura de quem recolhe a viatura"
+                                    style="border:1px solid #000; width: 400px; height: 150px;">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="signature-driver">Motorista:</label><br>
+                                <img src="{{ $registoEntradaVeiculo->signature_driver_data }}"
+                                    alt="Assinatura do motorista"
+                                    style="border:1px solid #000; width: 400px; height: 150px;">
+                            </div>
+                            @else
+                            <div class="col-md-6">
+                                <label for="signature-collector">Recolha da viatura:</label><br>
+                                <canvas id="signature-collector" width="400" height="150"
+                                    style="border:1px solid #000;"></canvas><br>
+                                <button type="button" class="btn btn-primary btn-sm"
+                                    onclick="clearCanvas('signature-collector')">Limpar</button>
+                                <input type="hidden" name="signature_collector_data" id="signature-collector-data">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="signature-driver">Motorista:</label><br>
+                                <canvas id="signature-driver" width="400" height="150"
+                                    style="border:1px solid #000;"></canvas><br>
+                                <button type="button" class="btn btn-primary btn-sm"
+                                    onclick="clearCanvas('signature-driver')">Limpar</button>
+                                <input type="hidden" name="signature_driver_data" id="signature-driver-data">
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-danger" type="submit" name="step" value="3">
+                            Recuar
+                        </button>
+                        @if ($registoEntradaVeiculo->signature_driver_data &&
+                        $registoEntradaVeiculo->signature_collector_data)
                         <button class="btn btn-success" type="submit">
                             Concluir
                         </button>
+                        @else
+                        <button class="btn btn-success" type="submit" onclick="return saveSignatures();">
+                            Gravar assinaturas e concluir
+                        </button>
+                        @endif
                     </div>
                 </div>
                 @endif
@@ -2245,6 +2315,89 @@
 @endsection
 
 @section('scripts')
+<script>
+    function initCanvas(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
+
+    canvas.addEventListener("mousedown", (e) => {
+        drawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+        if (drawing) {
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+    });
+
+    canvas.addEventListener("mouseup", () => {
+        drawing = false;
+    });
+
+    canvas.addEventListener("mouseout", () => {
+        drawing = false;
+    });
+}
+
+function clearCanvas(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function clearCanvas(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas
+}
+
+function isCanvasEmpty(canvas) {
+    const blank = document.createElement('canvas'); // cria um canvas temporário
+    blank.width = canvas.width;
+    blank.height = canvas.height;
+
+    // Compara o conteúdo do canvas com o canvas em branco
+    return canvas.toDataURL() === blank.toDataURL();
+}
+
+function saveSignatures() {
+    const collectorCanvas = document.getElementById('signature-collector');
+    const driverCanvas = document.getElementById('signature-driver');
+
+    // Verifica se os canvas estão vazios
+    if (isCanvasEmpty(collectorCanvas)) {
+        alert("A assinatura de quem recolhe a viatura está vazia.");
+        return false;
+    }
+
+    if (isCanvasEmpty(driverCanvas)) {
+        alert("A assinatura do motorista está vazia.");
+        return false;
+    }
+
+    // Se os dois canvas não estiverem vazios, salva as assinaturas
+    const collectorDataURL = collectorCanvas.toDataURL();
+    const driverDataURL = driverCanvas.toDataURL();
+
+    // Salva a assinatura convertida nos campos hidden
+    document.getElementById('signature-collector-data').value = collectorDataURL;
+    document.getElementById('signature-driver-data').value = driverDataURL;
+
+    return true; // Permite que o formulário seja submetido
+}
+
+
+// Inicializar os canvases ao carregar a página
+window.onload = function() {
+    initCanvas('signature-collector');
+    initCanvas('signature-driver');
+};
+
+</script>
 <script>
     var uploadedFrenteDoVeiculoTetoPhotosMap = {}
 Dropzone.options.frenteDoVeiculoTetoPhotosDropzone = {
@@ -3533,4 +3686,5 @@ Dropzone.options.cinzeiroPhotosDropzone = {
      }
 }
 </script>
+
 @endsection

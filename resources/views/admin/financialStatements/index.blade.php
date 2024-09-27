@@ -62,6 +62,14 @@
                                 @endif
                             </tr>
                             <tr>
+                                <th>PRIVATE</th>
+                                <td>{{ $total_earnings_private }}€</td>
+                                @if ($driver || $team_results)
+                                <td>{{ $contract_type_rank ? $contract_type_rank->percent : '0' }}%</td>
+                                <td>{{ $total_private }}€</td>
+                                @endif
+                            </tr>
+                            <tr>
                                 <th>Gorjeta UBER</th>
                                 <td>{{ $total_tips_uber }}€</td>
                                 @if ($driver || $team_results)
@@ -75,6 +83,14 @@
                                 @if ($driver || $team_results)
                                 <td>{{ number_format($bolt_tip_percent, 2) }}%</td>
                                 <td>{{ number_format($bolt_tip_after_vat, 2) }}€</td>
+                                @endif
+                            </tr>
+                            <tr>
+                                <th>Gorjeta PRIVATE</th>
+                                <td>{{ $total_tips_private }}€</td>
+                                @if ($driver || $team_results)
+                                <td>{{ number_format($private_tip_percent, 2) }}%</td>
+                                <td>{{ number_format($private_tip_after_vat, 2) }}€</td>
                                 @endif
                             </tr>
                             @if ($team_results)

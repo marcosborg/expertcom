@@ -185,6 +185,7 @@
                         <th>Condutor</th>
                         <th style="text-align: right;">Uber</th>
                         <th style="text-align: right;">Bolt</th>
+                        <th style="text-align: right;">Private</th>
                         <th style="text-align: right;">Operadores</th>
                         <th style="text-align: right;">Ganhos</th>
                         <th style="text-align: right;">Gorjetas</th>
@@ -205,6 +206,8 @@
                         <td style="text-align: right;">{{ number_format($driver->earnings['uber']['total_earnings'] ??
                             0, 2) }} <small>€</small></td>
                         <td style="text-align: right;">{{ number_format($driver->earnings['bolt']['total_earnings'] ??
+                            0, 2) }} <small>€</small></td>
+                        <td style="text-align: right;">{{ number_format($driver->earnings['private']['total_earnings'] ??
                             0, 2) }} <small>€</small></td>
                         <td style="text-align: right;">{{ number_format($driver->earnings['total'] ?? 0, 2) }}
                             <small>€</small>
@@ -248,6 +251,8 @@
                         <th style="text-align: right;">{{ number_format($totals['total_uber'], 2) }} <small>€</small>
                         </th>
                         <th style="text-align: right;">{{ number_format($totals['total_bolt'], 2) }} <small>€</small>
+                        </th>
+                        <th style="text-align: right;">{{ number_format($totals['total_private'], 2) }} <small>€</small>
                         </th>
                         <th style="text-align: right;">{{ number_format($totals['total_operators'], 2) }}
                             <small>€</small>

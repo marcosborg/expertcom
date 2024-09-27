@@ -75,6 +75,18 @@ trait Reports
             $bolt_tips = $bolt_activities->sum('earnings_one');
             $bolt_earnings = $bolt_total_earnings - $bolt_tips;
 
+            $private_activities = TvdeActivity::where([
+                'company_id' => $company_id,
+                'tvde_operator_id' => 3,
+                'tvde_week_id' => $tvde_week_id,
+                'driver_code' => $driver->bolt_name
+            ])
+                ->get();
+
+            $private_total_earnings = $private_activities->sum('earnings_two');
+            $private_tips = $private_activities->sum('earnings_one');
+            $private_earnings = $private_total_earnings - $private_tips;
+
             //EARNINGS
 
             $uber = collect([
@@ -89,9 +101,15 @@ trait Reports
                 'earnings' => $bolt_earnings
             ]);
 
-            $total_earnings = $bolt_total_earnings + $uber_total_earnings;
-            $total_earnings_no_tips = $uber_earnings + $bolt_earnings;
-            $total_tips = $uber_tips + $bolt_tips;
+            $private = collect([
+                'total_earnings' => $private_total_earnings,
+                'tips' => $private_tips,
+                'earnings' => $private_earnings
+            ]);
+
+            $total_earnings = $bolt_total_earnings + $uber_total_earnings + $private_earnings;
+            $total_earnings_no_tips = $uber_earnings + $bolt_earnings + $private_tips;
+            $total_tips = $uber_tips + $bolt_tips + $private_tips;
 
             //CONTRACT
 
@@ -202,6 +220,7 @@ trait Reports
             $earnings = collect([
                 'uber' => $uber,
                 'bolt' => $bolt,
+                'private' => $private,
                 'total' => $total_earnings,
                 'total_tips' => $total_tips,
                 'percent' => $contract_type_rank->percent ?? 0,
@@ -224,6 +243,7 @@ trait Reports
 
             $total_uber[] = $uber_total_earnings;
             $total_bolt[] = $bolt_total_earnings;
+            $total_private[] = $private_total_earnings;
             $total_operators[] = $total_earnings;
             $total_earnings_after_discount[] = $earnings_after_discount;
             $total_tips_after_discount[] = $tips_after_discount;
@@ -240,13 +260,12 @@ trait Reports
                 $driver->current_account = false;
             }
 
-
-
         }
 
         $totals = collect([
             'total_uber' => array_sum($total_uber),
             'total_bolt' => array_sum($total_bolt),
+            'total_private' => array_sum($total_private),
             'total_operators' => array_sum($total_operators),
             'total_earnings_after_discount' => array_sum($total_earnings_after_discount),
             'total_tips_after_discount' => array_sum($total_tips_after_discount),

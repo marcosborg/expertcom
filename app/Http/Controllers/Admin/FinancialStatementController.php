@@ -69,8 +69,10 @@ class FinancialStatementController extends Controller
             } else {
                 $total_earnings_uber = 0;
                 $total_earnings_bolt = 0;
+                $total_earnings_private = 0;
                 $total_tips_uber = 0;
                 $total_tips_bolt = 0;
+                $total_tips_private = 0;
                 $total_earnings = 0;
                 $total_earnings_no_tip = 0;
                 $total_tips = 0;
@@ -82,8 +84,10 @@ class FinancialStatementController extends Controller
             //COLLECT ALL DRIVER RESULTS
             $total_earnings_uber = [];
             $total_earnings_bolt = [];
+            $total_earnings_private = [];
             $total_tips_uber = [];
             $total_tips_bolt = [];
+            $total_tips_private = [];
             $total_earnings = [];
             $total_earnings_no_tip = [];
             $total_tips = [];
@@ -99,8 +103,10 @@ class FinancialStatementController extends Controller
                     $data = json_decode($current->data);
                     $total_earnings_uber[] = $data->total_earnings_uber;
                     $total_earnings_bolt[] = $data->total_earnings_bolt;
+                    $total_earnings_private[] = $data->total_earnings_private;
                     $total_tips_uber[] = $data->total_tips_uber;
                     $total_tips_bolt[] = $data->total_tips_bolt;
+                    $total_tips_private[] = $data->total_tips_private;
                     $total_earnings[] = $data->total_earnings;
                     $total_earnings_no_tip[] = $data->total_earnings_no_tip;
                     $total_tips[] = $data->total_tips;
@@ -110,8 +116,10 @@ class FinancialStatementController extends Controller
 
             $total_earnings_uber = array_sum($total_earnings_uber);
             $total_earnings_bolt = array_sum($total_earnings_bolt);
+            $total_earnings_private = array_sum($total_earnings_private);
             $total_tips_uber = array_sum($total_tips_uber);
             $total_tips_bolt = array_sum($total_tips_bolt);
+            $total_tips_private = array_sum($total_tips_private);
             $total_earnings = array_sum($total_earnings);
             $total_earnings_no_tip = array_sum($total_earnings_no_tip);
             $total_tips = array_sum($total_tips);
@@ -184,17 +192,22 @@ class FinancialStatementController extends Controller
             'tvde_week_id' => $tvde_week_id,
             'drivers' => $drivers,
             'driver_id' => $driver_id,
-            'total_earnings_uber' => isset($results) ? $results->total_earnings_uber : $total_earnings_uber ?? 0,
             'contract_type_rank' => isset($results) ? $results->contract_type_rank : 0,
-            'total_uber' => isset($results) ? $results->total_uber : 0,
-            'total_earnings_bolt' => isset($results) ? $results->total_earnings_bolt : $total_earnings_bolt ?? 0,
-            'total_bolt' => isset($results) ? $results->total_bolt : 0,
+            'total_earnings_uber' => isset($results) ? $results->total_earnings_uber : $total_earnings_uber ?? 0,
             'total_tips_uber' => isset($results) ? $results->total_tips_uber : $total_tips_uber ?? 0,
+            'total_uber' => isset($results) ? $results->total_uber : 0,
             'uber_tip_percent' => isset($results) ? $results->uber_tip_percent : 0,
             'uber_tip_after_vat' => isset($results) ? $results->uber_tip_after_vat : 0,
+            'total_earnings_bolt' => isset($results) ? $results->total_earnings_bolt : $total_earnings_bolt ?? 0,
+            'total_bolt' => isset($results) ? $results->total_bolt : 0,
             'total_tips_bolt' => isset($results) ? $results->total_tips_bolt : $total_tips_bolt ?? 0,
             'bolt_tip_percent' => isset($results) ? $results->bolt_tip_percent : 0,
             'bolt_tip_after_vat' => isset($results) ? $results->bolt_tip_after_vat : 0,
+            'total_earnings_private' => isset($results) && isset($results->total_earnings_private) ? $results->total_earnings_private : $total_earnings_private ?? 0,
+            'total_private' => isset($results) && isset($results->total_private) ? $results->total_private : 0,
+            'total_tips_private' => isset($results) && isset($results->total_tips_private) ? $results->total_tips_private : $total_tips_private ?? 0,
+            'private_tip_percent' => isset($results) && isset($results->private_tip_percent) ? $results->private_tip_percent : 0,
+            'private_tip_after_vat' => isset($results) && isset($results->private_tip_after_vat) ? $results->private_tip_after_vat : 0,
             'total_tips' => isset($results) ? $results->total_tips : $total_tips ?? 0,
             'total_tip_after_vat' => isset($results) ? $results->total_tip_after_vat : 0,
             'adjustments' => isset($results) ? $results->adjustments : null,

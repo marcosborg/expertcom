@@ -26,7 +26,7 @@ class RegistoEntradaVeiculoController extends Controller
 
         $company_id = session()->get('company_id');
 
-        if (auth()->user()->hasRole('admin')) {
+        if (auth()->user()->hasRole('admin') || !auth()->user()->hasRole('driver')) {
             $driver_id = 0;
         } else {
             $driver_id = Driver::where('user_id', auth()->user()->id)->first()->id;

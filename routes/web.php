@@ -531,6 +531,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('notification-system-messages/ckmedia', 'NotificationSystemMessageController@storeCKEditorImages')->name('notification-system-messages.storeCKEditorImages');
     Route::resource('notification-system-messages', 'NotificationSystemMessageController');
 
+    // Notification System Scripts
+    Route::get('notification-system-template/{notification_system_template_id}', 'NotificationSystemMessageController@notificationSystemTemplate');
+
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

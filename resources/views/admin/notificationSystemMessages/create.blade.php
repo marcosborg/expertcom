@@ -19,11 +19,11 @@
                             </div>
                             <select class="form-control select2" name="roles[]" id="roles" multiple>
                                 @foreach($roles as $id => $role)
-                                    <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>{{ $role }}</option>
+                                <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>{{ $role }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('roles'))
-                                <span class="help-block" role="alert">{{ $errors->first('roles') }}</span>
+                            <span class="help-block" role="alert">{{ $errors->first('roles') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.notificationSystemMessage.fields.roles_helper') }}</span>
                         </div>
@@ -35,11 +35,11 @@
                             </div>
                             <select class="form-control select2" name="drivers[]" id="drivers" multiple>
                                 @foreach($drivers as $id => $driver)
-                                    <option value="{{ $id }}" {{ in_array($id, old('drivers', [])) ? 'selected' : '' }}>{{ $driver }}</option>
+                                <option value="{{ $id }}" {{ in_array($id, old('drivers', [])) ? 'selected' : '' }}>{{ $driver }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('drivers'))
-                                <span class="help-block" role="alert">{{ $errors->first('drivers') }}</span>
+                            <span class="help-block" role="alert">{{ $errors->first('drivers') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.notificationSystemMessage.fields.drivers_helper') }}</span>
                         </div>
@@ -51,11 +51,11 @@
                             </div>
                             <select class="form-control select2" name="companies[]" id="companies" multiple>
                                 @foreach($companies as $id => $company)
-                                    <option value="{{ $id }}" {{ in_array($id, old('companies', [])) ? 'selected' : '' }}>{{ $company }}</option>
+                                <option value="{{ $id }}" {{ in_array($id, old('companies', [])) ? 'selected' : '' }}>{{ $company }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('companies'))
-                                <span class="help-block" role="alert">{{ $errors->first('companies') }}</span>
+                            <span class="help-block" role="alert">{{ $errors->first('companies') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.notificationSystemMessage.fields.companies_helper') }}</span>
                         </div>
@@ -63,11 +63,11 @@
                             <label for="notification_system_template_id">{{ trans('cruds.notificationSystemMessage.fields.notification_system_template') }}</label>
                             <select class="form-control select2" name="notification_system_template_id" id="notification_system_template_id">
                                 @foreach($notification_system_templates as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('notification_system_template_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                <option value="{{ $id }}" {{ old('notification_system_template_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('notification_system_template'))
-                                <span class="help-block" role="alert">{{ $errors->first('notification_system_template') }}</span>
+                            <span class="help-block" role="alert">{{ $errors->first('notification_system_template') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.notificationSystemMessage.fields.notification_system_template_helper') }}</span>
                         </div>
@@ -75,7 +75,7 @@
                             <label class="required" for="custom_subject">{{ trans('cruds.notificationSystemMessage.fields.custom_subject') }}</label>
                             <input class="form-control" type="text" name="custom_subject" id="custom_subject" value="{{ old('custom_subject', '') }}" required>
                             @if($errors->has('custom_subject'))
-                                <span class="help-block" role="alert">{{ $errors->first('custom_subject') }}</span>
+                            <span class="help-block" role="alert">{{ $errors->first('custom_subject') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.notificationSystemMessage.fields.custom_subject_helper') }}</span>
                         </div>
@@ -83,7 +83,7 @@
                             <label for="message">{{ trans('cruds.notificationSystemMessage.fields.message') }}</label>
                             <textarea class="form-control ckeditor" name="message" id="message">{!! old('message') !!}</textarea>
                             @if($errors->has('message'))
-                                <span class="help-block" role="alert">{{ $errors->first('message') }}</span>
+                            <span class="help-block" role="alert">{{ $errors->first('message') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.notificationSystemMessage.fields.message_helper') }}</span>
                         </div>
@@ -95,9 +95,6 @@
                     </form>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </div>
@@ -105,67 +102,29 @@
 
 @section('scripts')
 <script>
-    $(document).ready(function () {
-  function SimpleUploadAdapter(editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
-      return {
-        upload: function() {
-          return loader.file
-            .then(function (file) {
-              return new Promise(function(resolve, reject) {
-                // Init request
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '{{ route('admin.notification-system-messages.storeCKEditorImages') }}', true);
-                xhr.setRequestHeader('x-csrf-token', window._token);
-                xhr.setRequestHeader('Accept', 'application/json');
-                xhr.responseType = 'json';
+    $(() => {
+        // Inicializar CKEditor para o campo #message uma vez
+        let editorInstance;
+        
+        ClassicEditor.create(document.querySelector('#message'), {
+        }).then(editor => {
+            editorInstance = editor; // Salva a instância do editor
+        }).catch(error => {
+            console.error('Erro ao inicializar o CKEditor:', error);
+        });
 
-                // Init listeners
-                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
-                xhr.addEventListener('error', function() { reject(genericErrorText) });
-                xhr.addEventListener('abort', function() { reject() });
-                xhr.addEventListener('load', function() {
-                  var response = xhr.response;
+        // Atualizar o conteúdo do CKEditor quando o template for alterado
+        $('#notification_system_template_id').change(() => {
+            let notification_system_template_id = $('#notification_system_template_id').val();
+            $.get('/admin/notification-system-template/' + notification_system_template_id).then((resp) => {
+                $('#custom_subject').val(resp.subject); // Atualiza o campo de assunto
 
-                  if (!response || xhr.status !== 201) {
-                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
-                  }
-
-                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
-
-                  resolve({ default: response.url });
-                });
-
-                if (xhr.upload) {
-                  xhr.upload.addEventListener('progress', function(e) {
-                    if (e.lengthComputable) {
-                      loader.uploadTotal = e.total;
-                      loader.uploaded = e.loaded;
-                    }
-                  });
+                if (editorInstance) {
+                    editorInstance.setData(resp.message); // Atualiza o conteúdo do CKEditor com o novo template
                 }
-
-                // Send request
-                var data = new FormData();
-                data.append('upload', file);
-                data.append('crud_id', '{{ $notificationSystemMessage->id ?? 0 }}');
-                xhr.send(data);
-              });
-            })
-        }
-      };
-    }
-  }
-
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: [SimpleUploadAdapter]
-      }
-    );
-  }
-});
+            });
+        });
+    });
 </script>
 
 @endsection

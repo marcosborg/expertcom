@@ -14,6 +14,9 @@
                             <a class="btn btn-default" href="{{ route('admin.notification-system-messages.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
+                            <button class="btn btn-success" onclick="printMessage()">
+                                Enviar email
+                            </button>
                         </div>
                         <table class="table table-bordered table-striped">
                             <tbody>
@@ -95,4 +98,11 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+    <script>
+        printMessage = () => {
+            
+        }
+    </script>
 @endsection

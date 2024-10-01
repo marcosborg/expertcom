@@ -186,4 +186,9 @@ class NotificationSystemMessageController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
+
+    public function notificationSystemTemplate($notification_system_template_id)
+    {
+        return NotificationSystemTemplate::find($notification_system_template_id);
+    }
 }

@@ -26,6 +26,12 @@ class RegistoEntradaVeiculoController extends Controller
 
         $company_id = session()->get('company_id');
 
+        if (auth()->user()->hasRole('admin')) {
+            $driver_id = 0;
+        } else {
+            $driver_id = Driver::where('user_id', auth()->user()->id)->first()->id;
+        }
+
         if (!request()->query('status')) {
             $status = 'damage-unfixed';
         } else {
@@ -33,21 +39,30 @@ class RegistoEntradaVeiculoController extends Controller
         }
 
         if ($status == 'damage-unfixed') {
-            $registoEntradaVeiculos = RegistoEntradaVeiculo::whereHas('media')->where('reparado', 0)->whereHas('vehicle_item', function ($vehicle_item) use ($company_id) {
+            $registoEntradaVeiculos = RegistoEntradaVeiculo::whereHas('media')->where('reparado', 0)->whereHas('vehicle_item', function ($vehicle_item) use ($company_id, $driver_id) {
                 if ($company_id > 0) {
                     $vehicle_item->where('company_id', $company_id);
+                    if ($driver_id > 0) {
+                        $vehicle_item->where('driver_id', $driver_id);
+                    }
                 }
             })->with(['user', 'driver', 'vehicle_item', 'media'])->get();
         } elseif ($status == 'damage-fixed') {
-            $registoEntradaVeiculos = RegistoEntradaVeiculo::whereHas('media')->where('reparado', 1)->whereHas('vehicle_item', function ($vehicle_item) use ($company_id) {
+            $registoEntradaVeiculos = RegistoEntradaVeiculo::whereHas('media')->where('reparado', 1)->whereHas('vehicle_item', function ($vehicle_item) use ($company_id, $driver_id) {
                 if ($company_id > 0) {
                     $vehicle_item->where('company_id', $company_id);
+                    if ($driver_id > 0) {
+                        $vehicle_item->where('driver_id', $driver_id);
+                    }
                 }
             })->with(['user', 'driver', 'vehicle_item', 'media'])->get();
         } else {
-            $registoEntradaVeiculos = RegistoEntradaVeiculo::whereHas('vehicle_item', function ($vehicle_item) use ($company_id) {
+            $registoEntradaVeiculos = RegistoEntradaVeiculo::whereHas('vehicle_item', function ($vehicle_item) use ($company_id, $driver_id) {
                 if ($company_id > 0) {
                     $vehicle_item->where('company_id', $company_id);
+                    if ($driver_id > 0) {
+                        $vehicle_item->where('driver_id', $driver_id);
+                    }
                 }
             })->with(['user', 'driver', 'vehicle_item', 'media'])->get();
         }
@@ -416,7 +431,6 @@ class RegistoEntradaVeiculoController extends Controller
                     $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('cinzeiro_photos');
                 }
             }
-
         }
 
         if (isset($request->step)) {
@@ -424,8 +438,6 @@ class RegistoEntradaVeiculoController extends Controller
         } else {
             return redirect('/admin/registo-entrada-veiculos');
         }
-
-
     }
 
     public function show(RegistoEntradaVeiculo $registoEntradaVeiculo)
@@ -491,6 +503,5 @@ class RegistoEntradaVeiculoController extends Controller
     {
         Media::find($media_id)->delete();
         return redirect()->back();
-
     }
 }

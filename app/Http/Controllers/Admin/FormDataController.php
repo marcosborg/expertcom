@@ -26,6 +26,12 @@ class FormDataController extends Controller
             return redirect('/admin/form-datas?status=unsolved');
         }
 
+        if (auth()->user()->hasRole('admin')) {
+            $driver_id = 0;
+        } else {
+            $driver_id = Driver::where('user_id', auth()->user()->id)->first()->id;
+        }
+
         $company_id = session()->get('company_id');
 
         if ($request->ajax()) {
@@ -34,8 +40,11 @@ class FormDataController extends Controller
                     if (isset($company_id)) {
                         $query = FormData::where('solved', false)
                             ->with(['form_name', 'driver', 'vehicle_item', 'user'])
-                            ->whereHas('driver', function ($driver) use ($company_id) {
+                            ->whereHas('driver', function ($driver) use ($company_id, $driver_id) {
                                 $driver->where('company_id', $company_id);
+                                if ($driver_id > 0) {
+                                    $driver->where('id', $driver_id);
+                                }
                             })
                             ->select(sprintf('%s.*', (new FormData)
                                 ->table));
@@ -50,8 +59,11 @@ class FormDataController extends Controller
                     if (isset($company_id)) {
                         $query = FormData::where('solved', true)
                             ->with(['form_name', 'driver', 'vehicle_item', 'user'])
-                            ->whereHas('driver', function ($driver) use ($company_id) {
+                            ->whereHas('driver', function ($driver) use ($company_id, $driver_id) {
                                 $driver->where('company_id', $company_id);
+                                if ($driver_id > 0) {
+                                    $driver->where('id', $driver_id);
+                                }
                             })
                             ->select(sprintf('%s.*', (new FormData)
                                 ->table));
@@ -65,8 +77,11 @@ class FormDataController extends Controller
                 case 'all':
                     if (isset($company_id)) {
                         $query = FormData::with(['form_name', 'driver', 'vehicle_item', 'user'])
-                            ->whereHas('driver', function ($driver) use ($company_id) {
+                            ->whereHas('driver', function ($driver) use ($company_id, $driver_id) {
                                 $driver->where('company_id', $company_id);
+                                if ($driver_id > 0) {
+                                    $driver->where('id', $driver_id);
+                                }
                             })
                             ->select(sprintf('%s.*', (new FormData)
                                 ->table));
@@ -158,10 +173,19 @@ class FormDataController extends Controller
 
         $form_names = FormName::get();
 
-        $drivers = Driver::where('company_id', $company_id)->get();
+        if ($driver_id > 0) {
+            $drivers = Driver::where([
+                'company_id' => $company_id,
+                'id' => $driver_id
+            ])->get();
+        } else {
+            $drivers = Driver::where('company_id', $company_id)->get();
+        }
+
+
         $vehicle_items = VehicleItem::where('company_id', $company_id)->get();
 
-        
+
         $users = User::whereHas('roles', function ($role) {
             $role->where('title', 'Técnico');
         })->get();

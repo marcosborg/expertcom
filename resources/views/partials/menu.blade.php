@@ -1416,6 +1416,41 @@
 
                 </a>
             </li>
+            @can('notification_system_menu_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw far fa-envelope-open">
+
+                        </i>
+                        <span>{{ trans('cruds.notificationSystemMenu.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('notification_system_template_access')
+                            <li class="{{ request()->is("admin/notification-system-templates") || request()->is("admin/notification-system-templates/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.notification-system-templates.index") }}">
+                                    <i class="fa-fw fas fa-envelope-square">
+
+                                    </i>
+                                    <span>{{ trans('cruds.notificationSystemTemplate.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('notification_system_message_access')
+                            <li class="{{ request()->is("admin/notification-system-messages") || request()->is("admin/notification-system-messages/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.notification-system-messages.index") }}">
+                                    <i class="fa-fw fas fa-envelope">
+
+                                    </i>
+                                    <span>{{ trans('cruds.notificationSystemMessage.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
             @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
             <li class="{{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}">

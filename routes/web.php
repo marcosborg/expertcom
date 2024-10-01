@@ -519,6 +519,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('testimonials/ckmedia', 'TestimonialController@storeCKEditorImages')->name('testimonials.storeCKEditorImages');
     Route::resource('testimonials', 'TestimonialController');
 
+    // Notification System Templates
+    Route::delete('notification-system-templates/destroy', 'NotificationSystemTemplatesController@massDestroy')->name('notification-system-templates.massDestroy');
+    Route::post('notification-system-templates/media', 'NotificationSystemTemplatesController@storeMedia')->name('notification-system-templates.storeMedia');
+    Route::post('notification-system-templates/ckmedia', 'NotificationSystemTemplatesController@storeCKEditorImages')->name('notification-system-templates.storeCKEditorImages');
+    Route::resource('notification-system-templates', 'NotificationSystemTemplatesController');
+
+    // Notification System Message
+    Route::delete('notification-system-messages/destroy', 'NotificationSystemMessageController@massDestroy')->name('notification-system-messages.massDestroy');
+    Route::post('notification-system-messages/media', 'NotificationSystemMessageController@storeMedia')->name('notification-system-messages.storeMedia');
+    Route::post('notification-system-messages/ckmedia', 'NotificationSystemMessageController@storeCKEditorImages')->name('notification-system-messages.storeCKEditorImages');
+    Route::resource('notification-system-messages', 'NotificationSystemMessageController');
+
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

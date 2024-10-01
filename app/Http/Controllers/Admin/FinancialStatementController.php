@@ -103,10 +103,10 @@ class FinancialStatementController extends Controller
                     $data = json_decode($current->data);
                     $total_earnings_uber[] = $data->total_earnings_uber;
                     $total_earnings_bolt[] = $data->total_earnings_bolt;
-                    $total_earnings_private[] = $data->total_earnings_private;
+                    $total_earnings_private[] = isset($data->total_earnings_private) ? $data->total_earnings_private : 0;
                     $total_tips_uber[] = $data->total_tips_uber;
                     $total_tips_bolt[] = $data->total_tips_bolt;
-                    $total_tips_private[] = $data->total_tips_private;
+                    $total_tips_private[] = isset($data->total_tips_private) ? $data->total_tips_private : 0;
                     $total_earnings[] = $data->total_earnings;
                     $total_earnings_no_tip[] = $data->total_earnings_no_tip;
                     $total_tips[] = $data->total_tips;

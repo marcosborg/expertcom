@@ -78,4 +78,9 @@ class Company extends Model implements HasMedia
     {
         return $this->hasMany(CompanyInvoice::class)->orderBy('id', 'desc');
     }
+
+    public function drivers()
+    {
+        return $this->hasMany(Driver::class);
+    }
 }

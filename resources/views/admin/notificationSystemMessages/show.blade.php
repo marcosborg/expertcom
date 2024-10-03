@@ -14,7 +14,7 @@
                             <a class="btn btn-default" href="{{ route('admin.notification-system-messages.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
-                            <button class="btn btn-success" onclick="printMessage()">
+                            <button class="btn btn-success" onclick="printMessage()" id="send-email-button">
                                 Enviar email
                             </button>
                         </div>
@@ -100,9 +100,20 @@
 </div>
 @endsection
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         printMessage = () => {
-            
+            let send_email_button = $('#send-email-button');
+            send_email_button.LoadingOverlay('show');
+            $.get('/admin/notification-system-send-email/{{ $notificationSystemMessage->id }}').then((resp) => {
+                Swal.fire("Enviado com sucesso!");
+                send_email_button.LoadingOverlay('hide');
+                console.log(resp);
+            }, (err) => {
+                Swal.fire(err);
+                send_email_button.LoadingOverlay('hide');
+            });
         }
     </script>
 @endsection

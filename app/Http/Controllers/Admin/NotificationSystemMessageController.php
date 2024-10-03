@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Notifications\NotificationSystemMessageNotification;
+use Illuminate\Support\Facades\Notification;
 
 class NotificationSystemMessageController extends Controller
 {
@@ -190,5 +192,40 @@ class NotificationSystemMessageController extends Controller
     public function notificationSystemTemplate($notification_system_template_id)
     {
         return NotificationSystemTemplate::find($notification_system_template_id);
+    }
+
+    public function notificationSystemSendEmail($notification_system_message_id)
+    {
+
+        $notification_system_message = NotificationSystemMessage::find($notification_system_message_id)
+            ->load('roles.users', 'drivers.user', 'companies.drivers.user');
+
+        $users = collect();
+
+        if ($notification_system_message->drivers) {
+            $drivers = $notification_system_message->drivers->map(function ($driver) {
+                return $driver->user;
+            });
+            $users = $users->merge($drivers);
+        }
+
+        if ($notification_system_message->roles) {
+            foreach ($notification_system_message->roles as $role) {
+                $users = $users->merge($role->users);
+            }
+        }
+
+        if ($notification_system_message->companies) {
+            foreach ($notification_system_message->companies as $company) {
+                $companyDrivers = $company->drivers->map(function ($driver) {
+                    return $driver->user;
+                });
+                $users = $users->merge($companyDrivers);
+            }
+        }
+
+        $users = $users->unique('id');
+
+        Notification::send($users, new NotificationSystemMessageNotification($notification_system_message));
     }
 }

@@ -533,7 +533,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Notification System Scripts
     Route::get('notification-system-template/{notification_system_template_id}', 'NotificationSystemMessageController@notificationSystemTemplate');
-
+    Route::get('notification-system-send-email/{notification_system_message_id}', 'NotificationSystemMessageController@notificationSystemSendEmail');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

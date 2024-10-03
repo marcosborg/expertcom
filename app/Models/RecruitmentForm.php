@@ -28,6 +28,23 @@ class RecruitmentForm extends Model implements HasMedia
         'deleted_at',
     ];
 
+    public const CHANEL_RADIO = [
+        'Frotas'        => 'Frotas',
+        'Redes sociais' => 'Redes sociais',
+    ];
+
+    public const STATUS_RADIO = [
+        'Fechado'     => 'Fechado',
+        'Tratamento'  => 'Tratamento',
+        'Sem sucesso' => 'Sem sucesso',
+    ];
+
+    public const TYPE_RADIO = [
+        'TVDE Frota'        => 'TVDE Frota',
+        'Motorista Próprio' => 'Motorista Próprio',
+        'Formação'          => 'Formação',
+    ];
+
     protected $fillable = [
         'company_id',
         'name',
@@ -38,6 +55,9 @@ class RecruitmentForm extends Model implements HasMedia
         'appointment',
         'done',
         'comments',
+        'status',
+        'type',
+        'chanel',
         'created_at',
         'updated_at',
         'deleted_at',

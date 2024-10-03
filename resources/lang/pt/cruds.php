@@ -2201,6 +2201,12 @@ return [
             'updated_at_helper'           => ' ',
             'deleted_at'                  => 'Deleted at',
             'deleted_at_helper'           => ' ',
+            'status'                      => 'Estado da lead',
+            'status_helper'               => ' ',
+            'type'                        => 'Tipo de lead',
+            'type_helper'                 => ' ',
+            'chanel'                      => 'Canal',
+            'chanel_helper'               => ' ',
         ],
     ],
     'service' => [

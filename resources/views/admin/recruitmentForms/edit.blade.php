@@ -168,6 +168,53 @@
                                             <span class="help-block">{{
                                                 trans('cruds.recruitmentForm.fields.done_helper') }}</span>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                                                    <label>{{ trans('cruds.recruitmentForm.fields.status') }}</label>
+                                                    @foreach(App\Models\RecruitmentForm::STATUS_RADIO as $key => $label)
+                                                        <div>
+                                                            <input type="radio" id="status_{{ $key }}" name="status" value="{{ $key }}" {{ old('status', $recruitmentForm->status) === (string) $key ? 'checked' : '' }}>
+                                                            <label for="status_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                                        </div>
+                                                    @endforeach
+                                                    @if($errors->has('status'))
+                                                        <span class="help-block" role="alert">{{ $errors->first('status') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.recruitmentForm.fields.status_helper') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
+                                                    <label>{{ trans('cruds.recruitmentForm.fields.type') }}</label>
+                                                    @foreach(App\Models\RecruitmentForm::TYPE_RADIO as $key => $label)
+                                                        <div>
+                                                            <input type="radio" id="type_{{ $key }}" name="type" value="{{ $key }}" {{ old('type', $recruitmentForm->type) === (string) $key ? 'checked' : '' }}>
+                                                            <label for="type_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                                        </div>
+                                                    @endforeach
+                                                    @if($errors->has('type'))
+                                                        <span class="help-block" role="alert">{{ $errors->first('type') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.recruitmentForm.fields.type_helper') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group {{ $errors->has('chanel') ? 'has-error' : '' }}">
+                                                    <label>{{ trans('cruds.recruitmentForm.fields.chanel') }}</label>
+                                                    @foreach(App\Models\RecruitmentForm::CHANEL_RADIO as $key => $label)
+                                                        <div>
+                                                            <input type="radio" id="chanel_{{ $key }}" name="chanel" value="{{ $key }}" {{ old('chanel', $recruitmentForm->chanel) === (string) $key ? 'checked' : '' }}>
+                                                            <label for="chanel_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                                        </div>
+                                                    @endforeach
+                                                    @if($errors->has('chanel'))
+                                                        <span class="help-block" role="alert">{{ $errors->first('chanel') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.recruitmentForm.fields.chanel_helper') }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

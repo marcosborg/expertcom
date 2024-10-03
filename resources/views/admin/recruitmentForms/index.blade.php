@@ -46,6 +46,9 @@
                                         {{ trans('cruds.recruitmentForm.fields.done') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.recruitmentForm.fields.status') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -77,6 +80,9 @@
                                         <td>
                                             <span style="display:none">{{ $recruitmentForm->done ?? '' }}</span>
                                             <input type="checkbox" disabled="disabled" {{ $recruitmentForm->done ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            {{ App\Models\RecruitmentForm::STATUS_RADIO[$recruitmentForm->status] ?? '' }}
                                         </td>
                                         <td>
                                             @can('recruitment_form_show')

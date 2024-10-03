@@ -109,6 +109,30 @@
                                         {!! $recruitmentForm->comments !!}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.recruitmentForm.fields.status') }}
+                                    </th>
+                                    <td>
+                                        {{ App\Models\RecruitmentForm::STATUS_RADIO[$recruitmentForm->status] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.recruitmentForm.fields.type') }}
+                                    </th>
+                                    <td>
+                                        {{ App\Models\RecruitmentForm::TYPE_RADIO[$recruitmentForm->type] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.recruitmentForm.fields.chanel') }}
+                                    </th>
+                                    <td>
+                                        {{ App\Models\RecruitmentForm::CHANEL_RADIO[$recruitmentForm->chanel] ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

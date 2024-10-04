@@ -96,7 +96,7 @@
                         <div class="checkbox item" data-position="{{ $form_input->position }}"
                             data-form_input_id="{{ $form_input->id }}">
                             <label>
-                                <input type="checkbox" name="{{ $form_input->name }}" {{ $form_input->required ?
+                                <input type="checkbox" name="{{ $form_input->label }}" {{ $form_input->required ?
                                 'required' : '' }}> {{ $form_input->label }}{{ $form_input->required ? ' *' : '' }}
                             </label>
                         </div>

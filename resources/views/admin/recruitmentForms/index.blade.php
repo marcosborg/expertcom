@@ -49,6 +49,12 @@
                                         {{ trans('cruds.recruitmentForm.fields.status') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.recruitmentForm.fields.type') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.recruitmentForm.fields.chanel') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -83,6 +89,12 @@
                                         </td>
                                         <td>
                                             {{ App\Models\RecruitmentForm::STATUS_RADIO[$recruitmentForm->status] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ App\Models\RecruitmentForm::TYPE_RADIO[$recruitmentForm->type] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ App\Models\RecruitmentForm::CHANEL_RADIO[$recruitmentForm->chanel] ?? '' }}
                                         </td>
                                         <td>
                                             @can('recruitment_form_show')

@@ -82,7 +82,11 @@ class ReceiptController extends Controller
                 return $row->file ? '<a href="' . $row->file->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
             $table->editColumn('receipt_value', function ($row) {
-                return '<input id="receipt_value-' . $row->id . '" type="number" value="' . $row->verified_value . '" ' . ($row->verified ? 'disabled' : '') . '>';
+                if (!$row->verified) {
+                    return '<input id="receipt_value-' . $row->id . '" type="number" value="' . $row->verified_value . '" ' . ($row->verified ? 'disabled' : '') . '>';
+                } else {
+                    return $row->verified_value;
+                }
             });
             $table->editColumn('verified', function ($row) {
                 return '<input id="verified-' . $row->id . '" onclick="checkVerified(' . $row->id . ')" type="checkbox" ' . ($row->verified ? 'disabled' : '') . ' ' . ($row->verified ? 'checked' : null) . '>';
@@ -92,7 +96,11 @@ class ReceiptController extends Controller
             });
 
             $table->editColumn('amount_transferred', function ($row) {
-                return '<input id="amount_transferred-' . $row->id . '" type="number" value="' . $row->amount_transferred . '" ' . ($row->verified ? 'disabled' : '') . '>';
+                if (!$row->verified) {
+                    return '<input id="amount_transferred-' . $row->id . '" type="number" value="' . $row->amount_transferred . '" ' . ($row->verified ? 'disabled' : '') . '>';
+                } else {
+                    return $row->amount_transferred;
+                }
             });
 
             $table->rawColumns(['actions', 'placeholder', 'driver', 'file', 'receipt_value', 'amount_transferred', 'paid', 'verified']);
@@ -218,7 +226,6 @@ class ReceiptController extends Controller
         $receipt = Receipt::find($receipt_id);
         $receipt->paid = true;
         $receipt->save();
-
     }
 
     public function checkVerified($receipt_id, $receipt_value, $amount_transferred)
@@ -238,6 +245,5 @@ class ReceiptController extends Controller
         $drivers_balance->balance = $balance;
         $drivers_balance->drivers_balance = $balance;
         $drivers_balance->save();
-
     }
 }

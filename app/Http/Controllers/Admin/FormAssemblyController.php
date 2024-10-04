@@ -74,8 +74,6 @@ class FormAssemblyController extends Controller
     public function sendFormData(Request $request)
     {
 
-        return $request;
-
         $form_name = FormName::find($request->form_name_id);
 
         if ($form_name->has_driver) {

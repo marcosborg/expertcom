@@ -55,6 +55,12 @@
                                         {{ trans('cruds.recruitmentForm.fields.chanel') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.recruitmentForm.fields.responsible_for_the_lead') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.recruitmentForm.fields.created_at') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -95,6 +101,12 @@
                                         </td>
                                         <td>
                                             {{ App\Models\RecruitmentForm::CHANEL_RADIO[$recruitmentForm->chanel] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $recruitmentForm->responsible_for_the_lead }}
+                                        </td>
+                                        <td>
+                                            {{ $recruitmentForm->created_at ?? '' }}
                                         </td>
                                         <td>
                                             @can('recruitment_form_show')

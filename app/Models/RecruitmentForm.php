@@ -31,12 +31,14 @@ class RecruitmentForm extends Model implements HasMedia
     public const CHANEL_RADIO = [
         'Frotas'        => 'Frotas',
         'Redes sociais' => 'Redes sociais',
+        'Promotor'      => 'Promotor'
     ];
 
     public const STATUS_RADIO = [
         'Fechado'     => 'Fechado',
         'Tratamento'  => 'Tratamento',
         'Sem sucesso' => 'Sem sucesso',
+        'Em aberto'   => 'Em aberto'
     ];
 
     public const TYPE_RADIO = [
@@ -58,6 +60,7 @@ class RecruitmentForm extends Model implements HasMedia
         'status',
         'type',
         'chanel',
+        'responsible_for_the_lead',
         'created_at',
         'updated_at',
         'deleted_at',

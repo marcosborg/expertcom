@@ -32,6 +32,10 @@ class UpdateRecruitmentFormRequest extends FormRequest
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
+            'responsible_for_the_lead' => [
+                'string',
+                'nullable'
+            ],
         ];
     }
 }

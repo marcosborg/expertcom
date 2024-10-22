@@ -212,6 +212,19 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group {{ $errors->has('responsible_for_the_lead') ? 'has-error' : '' }}">
+                                            <label for="responsible_for_the_lead">{{
+                                                trans('cruds.recruitmentForm.fields.responsible_for_the_lead')
+                                                }}</label>
+                                            <input class="form-control" type="text" name="responsible_for_the_lead" id="responsible_for_the_lead"
+                                                value="{{ old('responsible_for_the_lead', '') }}">
+                                            @if($errors->has('responsible_for_the_lead'))
+                                            <span class="help-block" role="alert">{{ $errors->first('responsible_for_the_lead') }}</span>
+                                            @endif
+                                            <span class="help-block">{{
+                                                trans('cruds.recruitmentForm.fields.responsible_for_the_lead_helper')
+                                                }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

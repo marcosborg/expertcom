@@ -2207,6 +2207,8 @@ return [
             'type_helper'                 => ' ',
             'chanel'                      => 'Canal',
             'chanel_helper'               => ' ',
+            'responsible_for_the_lead'    => 'Responsável pela lead',
+            'responsible_for_the_lead_helper' => ''
         ],
     ],
     'service' => [

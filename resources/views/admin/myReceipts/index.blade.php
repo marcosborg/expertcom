@@ -31,6 +31,9 @@
                                     {{ trans('cruds.receipt.fields.driver') }}
                                 </th>
                                 <th>
+                                    IBAN
+                                </th>
+                                <th>
                                     {{ trans('cruds.driver.fields.code') }}
                                 </th>
                                 <th>
@@ -94,6 +97,8 @@
                                 </td>
                                 <td>
                                 </td>
+                                <td>
+                                </td>
                             </tr>
                         </thead>
                     </table>
@@ -122,6 +127,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'driver_name', name: 'driver.name' },
+{ data: 'iban', name: 'driver.iban' },
 { data: 'driver.code', name: 'driver.code' },
 { data: 'value', name: 'value' },
 { data: 'balance', name: 'balance' },

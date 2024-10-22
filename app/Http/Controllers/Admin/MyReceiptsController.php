@@ -81,6 +81,10 @@ class MyReceiptsController extends Controller
                 return $row->driver ? $row->driver->name : '';
             });
 
+            $table->addColumn('iban', function ($row) {
+                return $row->driver ? $row->driver->iban : '';
+            });
+
             $table->editColumn('driver.code', function ($row) {
                 return $row->driver ? (is_string($row->driver) ? $row->driver : $row->driver->code) : '';
             });

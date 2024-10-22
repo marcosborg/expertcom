@@ -56,7 +56,7 @@
                         <div class="form-group item" data-position="{{ $form_input->position }}"
                             data-form_input_id="{{ $form_input->id }}">
                             <label>{{ $form_input->label }}{{ $form_input->required ? ' *' : '' }}</label>
-                            <input type="text" class="form-control" name="{{ $form_input->name }}" {{
+                            <input type="text" class="form-control" name="{{ $form_input->label }}" {{
                                 $form_input->required
                             ?
                             'required' : ''
@@ -67,7 +67,7 @@
                         <div class="form-group item" data-position="{{ $form_input->position }}"
                             data-form_input_id="{{ $form_input->id }}">
                             <label>{{ $form_input->label }}{{ $form_input->required ? ' *' : '' }}</label>
-                            <input type="number" class="form-control" name="{{ $form_input->name }}" {{
+                            <input type="number" class="form-control" name="{{ $form_input->label }}" {{
                                 $form_input->required ?
                             'required' : ''
                             }}>
@@ -77,7 +77,7 @@
                         <div class="form-group item" data-position="{{ $form_input->position }}"
                             data-form_input_id="{{ $form_input->id }}">
                             <label>{{ $form_input->label }}{{ $form_input->required ? ' *' : '' }}</label>
-                            <input type="date" class="form-control" name="{{ $form_input->name }}" {{
+                            <input type="date" class="form-control" name="{{ $form_input->label }}" {{
                                 $form_input->required
                             ?
                             'required' : ''
@@ -88,7 +88,7 @@
                         <div class="form-group item" data-position="{{ $form_input->position }}"
                             data-form_input_id="{{ $form_input->id }}">
                             <label>{{ $form_input->label }}{{ $form_input->required ? ' *' : '' }}</label>
-                            <textarea class="form-control" name="{{ $form_input->name }}" {{
+                            <textarea class="form-control" name="{{ $form_input->label }}" {{
                                 $form_input->required ? 'required' : '' }}></textarea>
                         </div>
                         @break
@@ -110,14 +110,14 @@
                             <div class="col-md-12">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="{{ $form_input->name }}"
+                                        <input type="radio" name="{{ $form_input->label }}"
                                             id="{{ $form_input->name }}_1" value="Sim" checked>
                                         Sim
                                     </label>
                                 </div>
                                 <div class="radio disabled">
                                     <label>
-                                        <input type="radio" name="{{ $form_input->name }}"
+                                        <input type="radio" name="{{ $form_input->label }}"
                                             id="{{ $form_input->name }}_2" value="Não">
                                         Não
                                     </label>

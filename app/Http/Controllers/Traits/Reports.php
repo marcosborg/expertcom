@@ -48,6 +48,7 @@ trait Reports
         $total_fleet_management = [];
         $total_drivers = [];
         $total_company_adjustments = [];
+        $total_average = [];
 
         foreach ($drivers as $driver) {
 
@@ -217,6 +218,32 @@ trait Reports
 
             $total_company_adjustments[] = array_sum($company_expense);
 
+            $lastWeeks = TvdeWeek::orderBy('id', 'desc')->limit(4)->get();
+            $average_sum = [];
+            $count = 0;
+            foreach ($lastWeeks as $lastWeek) {
+                $averageUber = TvdeActivity::where([
+                    'company_id' => $company_id,
+                    'tvde_operator_id' => 1,
+                    'tvde_week_id' => $lastWeek->id,
+                    'driver_code' => $driver->uber_uuid
+                ])->sum('earnings_two');
+                $averageBolt = TvdeActivity::where([
+                    'company_id' => $company_id,
+                    'tvde_operator_id' => 2,
+                    'tvde_week_id' => $lastWeek->id,
+                    'driver_code' => $driver->bolt_name
+                ])->sum('earnings_two');
+                $average_sum[] = $averageUber + $averageBolt;
+                if ($averageUber + $averageBolt != 0) {
+                    $count++;
+                }
+            }
+
+            $count = $count !== 0 ? $count : 1;
+
+            $average = array_sum($average_sum) / $count;
+
             $earnings = collect([
                 'uber' => $uber,
                 'bolt' => $bolt,
@@ -228,6 +255,7 @@ trait Reports
                 'total_no_tips' => $total_earnings_no_tips,
                 'earnings_after_discount' => $earnings_after_discount,
                 'tips_after_discount' => $tips_after_discount,
+                'average' => $average
             ]);
 
             $driver->earnings = $earnings;
@@ -248,6 +276,7 @@ trait Reports
             $total_earnings_after_discount[] = $earnings_after_discount;
             $total_tips_after_discount[] = $tips_after_discount;
             $total_drivers[] = $driver->total;
+            $total_average[] = $average;
 
             $current_account = CurrentAccount::where([
                 'tvde_week_id' => $tvde_week_id,
@@ -259,7 +288,6 @@ trait Reports
             } else {
                 $driver->current_account = false;
             }
-
         }
 
         $totals = collect([
@@ -274,6 +302,7 @@ trait Reports
             'total_fleet_management' => array_sum($total_fleet_management),
             'total_drivers' => array_sum($total_drivers),
             'total_company_adjustments' => array_sum($total_company_adjustments),
+            'total_average' => array_sum($total_average)
         ]);
 
         return [
@@ -652,7 +681,6 @@ trait Reports
         if ($consultancy && !$company->main) {
 
             $total_consultancy = ($totals['total_operators'] * $consultancy->value) / 100;
-
         }
 
         //GET EARNINGS FROM OTHER COMPANIES
@@ -755,6 +783,5 @@ trait Reports
         $company_data->tvde_week_id = $tvde_week_id;
         $company_data->data = json_encode($data);
         $company_data->save();
-
     }
 }

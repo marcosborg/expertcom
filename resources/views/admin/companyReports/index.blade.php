@@ -187,6 +187,7 @@
                         <th style="text-align: right;">Bolt</th>
                         <th style="text-align: right;">Private</th>
                         <th style="text-align: right;">Operadores</th>
+                        <th style="text-align: right;">Média (4 semanas)</th>
                         <th style="text-align: right;">Ganhos</th>
                         <th style="text-align: right;">Gorjetas</th>
                         <th style="text-align: right;">Abastecimento</th>
@@ -210,6 +211,9 @@
                         <td style="text-align: right;">{{ number_format($driver->earnings['private']['total_earnings'] ??
                             0, 2) }} <small>€</small></td>
                         <td style="text-align: right;">{{ number_format($driver->earnings['total'] ?? 0, 2) }}
+                            <small>€</small>
+                        </td>
+                        <td style="text-align: right; {{ $driver->earnings['average'] < 400 ? 'color: red;' : '' }}  {{ $driver->earnings['average'] > 400 ? 'color: darkgreen;' : '' }}">{{ number_format($driver->earnings['average'] ?? 0, 2) }}
                             <small>€</small>
                         </td>
                         <td style="text-align: right;"><small>({{ $driver->earnings['percent'] ?? 0 }}%)</small> {{
@@ -255,6 +259,9 @@
                         <th style="text-align: right;">{{ number_format($totals['total_private'], 2) }} <small>€</small>
                         </th>
                         <th style="text-align: right;">{{ number_format($totals['total_operators'], 2) }}
+                            <small>€</small>
+                        </th>
+                        <th style="text-align: right;">{{ number_format($totals['total_average'], 2) }}
                             <small>€</small>
                         </th>
                         <th style="text-align: right;">{{ number_format($totals['total_earnings_after_discount'], 2) }}

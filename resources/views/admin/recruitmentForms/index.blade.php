@@ -55,6 +55,18 @@
                                         {{ trans('cruds.recruitmentForm.fields.chanel') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.recruitmentForm.fields.daytime') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.recruitmentForm.fields.user') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.recruitmentForm.fields.to_company') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.recruitmentForm.fields.amount_to_pay') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.recruitmentForm.fields.responsible_for_the_lead') }}
                                     </th>
                                     <th>
@@ -101,6 +113,18 @@
                                         </td>
                                         <td>
                                             {{ App\Models\RecruitmentForm::CHANEL_RADIO[$recruitmentForm->chanel] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ App\Models\RecruitmentForm::DAYTIME_RADIO[$recruitmentForm->daytime] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $recruitmentForm->user->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $recruitmentForm->to_company->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $recruitmentForm->amount_to_pay ?? '' }}
                                         </td>
                                         <td>
                                             {{ $recruitmentForm->responsible_for_the_lead }}
@@ -195,3 +219,4 @@
 
 </script>
 @endsection
+<script>console.log({!! $recruitmentForms[260] !!})</script>

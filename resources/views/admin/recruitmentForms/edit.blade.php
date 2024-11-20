@@ -15,6 +15,22 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('user') ? 'has-error' : '' }}">
+                                    <label for="user_id">{{ trans('cruds.recruitmentForm.fields.user') }}</label>
+                                    <select class="form-control select2" name="user_id" id="user_id">
+                                        @foreach($users as $id => $entry)
+                                        <option value="{{ $id }}" {{ (old('user_id') ? old('user_id') :
+                                            $recruitmentForm->user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('user'))
+                                    <span class="help-block" role="alert">{{ $errors->first('user_id') }}</span>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.recruitmentForm.fields.user_helper')
+                                        }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group {{ $errors->has('company') ? 'has-error' : '' }}">
                                     <label for="company_id">{{ trans('cruds.recruitmentForm.fields.company') }}</label>
                                     <select class="form-control select2" name="company_id" id="company_id">
@@ -57,6 +73,22 @@
                                         }}</span>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('to_company') ? 'has-error' : '' }}">
+                                    <label for="to_company_id">{{ trans('cruds.recruitmentForm.fields.to_company') }}</label>
+                                    <select class="form-control select2" name="to_company_id" id="to_company_id">
+                                        @foreach($companies as $id => $entry)
+                                        <option value="{{ $id }}" {{ (old('to_company_id') ? old('to_company_id') :
+                                            $recruitmentForm->to_company->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('to_company'))
+                                    <span class="help-block" role="alert">{{ $errors->first('to_company') }}</span>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.recruitmentForm.fields.to_company_helper')
+                                        }}</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -79,6 +111,43 @@
                                     @endif
                                     <span class="help-block">{{ trans('cruds.recruitmentForm.fields.comments_helper')
                                         }}</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group {{ $errors->has('start_time') ? 'has-error' : '' }}">
+                                            <label for="start_time">{{ trans('cruds.recruitmentForm.fields.start_time') }}</label>
+                                            <input class="form-control timepicker" type="text" name="start_time" id="start_time" value="{{ old('start_time', $recruitmentForm->start_time) }}">
+                                            @if($errors->has('start_time'))
+                                                <span class="help-block" role="alert">{{ $errors->first('start_time') }}</span>
+                                            @endif
+                                            <span class="help-block">{{ trans('cruds.recruitmentForm.fields.start_time_helper') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group {{ $errors->has('end_time') ? 'has-error' : '' }}">
+                                            <label for="end_time">{{ trans('cruds.recruitmentForm.fields.end_time') }}</label>
+                                            <input class="form-control timepicker" type="text" name="end_time" id="end_time" value="{{ old('end_time', $recruitmentForm->end_time) }}">
+                                            @if($errors->has('end_time'))
+                                                <span class="help-block" role="alert">{{ $errors->first('end_time') }}</span>
+                                            @endif
+                                            <span class="help-block">{{ trans('cruds.recruitmentForm.fields.end_time_helper') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group {{ $errors->has('day_off') ? 'has-error' : '' }}">
+                                            <label>{{ trans('cruds.recruitmentForm.fields.day_off') }}</label>
+                                            @foreach(App\Models\RecruitmentForm::DAY_OFF_RADIO as $key => $label)
+                                                <div>
+                                                    <input type="radio" id="day_off_{{ $key }}" name="day_off" value="{{ $key }}" {{ old('day_off', $recruitmentForm->day_off) === (string) $key ? 'checked' : '' }}>
+                                                    <label for="day_off_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                                </div>
+                                            @endforeach
+                                            @if($errors->has('day_off'))
+                                                <span class="help-block" role="alert">{{ $errors->first('day_off') }}</span>
+                                            @endif
+                                            <span class="help-block">{{ trans('cruds.recruitmentForm.fields.day_off_helper') }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -169,7 +238,7 @@
                                                 trans('cruds.recruitmentForm.fields.done_helper') }}</span>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                                                     <label>{{ trans('cruds.recruitmentForm.fields.status') }}</label>
                                                     @foreach(App\Models\RecruitmentForm::STATUS_RADIO as $key => $label)
@@ -184,7 +253,7 @@
                                                     <span class="help-block">{{ trans('cruds.recruitmentForm.fields.status_helper') }}</span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                                                     <label>{{ trans('cruds.recruitmentForm.fields.type') }}</label>
                                                     @foreach(App\Models\RecruitmentForm::TYPE_RADIO as $key => $label)
@@ -199,7 +268,7 @@
                                                     <span class="help-block">{{ trans('cruds.recruitmentForm.fields.type_helper') }}</span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group {{ $errors->has('chanel') ? 'has-error' : '' }}">
                                                     <label>{{ trans('cruds.recruitmentForm.fields.chanel') }}</label>
                                                     @foreach(App\Models\RecruitmentForm::CHANEL_RADIO as $key => $label)
@@ -212,6 +281,21 @@
                                                         <span class="help-block" role="alert">{{ $errors->first('chanel') }}</span>
                                                     @endif
                                                     <span class="help-block">{{ trans('cruds.recruitmentForm.fields.chanel_helper') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group {{ $errors->has('daytime') ? 'has-error' : '' }}">
+                                                    <label>{{ trans('cruds.recruitmentForm.fields.daytime') }}</label>
+                                                    @foreach(App\Models\RecruitmentForm::DAYTIME_RADIO as $key => $label)
+                                                        <div>
+                                                            <input type="radio" id="daytime_{{ $key }}" name="daytime" value="{{ $key }}" {{ old('daytime', $recruitmentForm->daytime) === (string) $key ? 'checked' : '' }}>
+                                                            <label for="daytime_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                                        </div>
+                                                    @endforeach
+                                                    @if($errors->has('chanel'))
+                                                        <span class="help-block" role="alert">{{ $errors->first('daytime') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.recruitmentForm.fields.daytime_helper') }}</span>
                                                 </div>
                                             </div>
                                         </div>

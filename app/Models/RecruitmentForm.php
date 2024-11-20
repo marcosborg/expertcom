@@ -38,13 +38,29 @@ class RecruitmentForm extends Model implements HasMedia
         'Fechado'     => 'Fechado',
         'Tratamento'  => 'Tratamento',
         'Sem sucesso' => 'Sem sucesso',
-        'Em aberto'   => 'Em aberto'
+        'Em aberto'   => 'Em aberto',
+        'Formação TVDE' => 'Formação TVDE'
     ];
 
     public const TYPE_RADIO = [
         'TVDE Frota'        => 'TVDE Frota',
         'Motorista Próprio' => 'Motorista Próprio',
         'Formação'          => 'Formação',
+    ];
+
+    public const DAYTIME_RADIO = [
+        'day' => 'Diurno',
+        'night' => 'Noturno',
+    ];
+
+    public const DAY_OFF_RADIO = [
+        'segunda' => 'Segunda',
+        'terça'   => 'Terça',
+        'quarta'  => 'Quarta',
+        'quinta'  => 'Quinta',
+        'sexta'   => 'Sexta',
+        'sabado'  => 'Sábado',
+        'domingo' => 'Domingo',
     ];
 
     protected $fillable = [
@@ -59,8 +75,15 @@ class RecruitmentForm extends Model implements HasMedia
         'comments',
         'status',
         'type',
+        'daytime',
         'chanel',
+        'start_time',
+        'end_time',
+        'day_off',
         'responsible_for_the_lead',
+        'start_time',
+        'amount_to_pay',
+        'user_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -80,6 +103,16 @@ class RecruitmentForm extends Model implements HasMedia
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function to_company()
+    {
+        return $this->belongsTo(Company::class, 'to_company_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function getCvAttribute()

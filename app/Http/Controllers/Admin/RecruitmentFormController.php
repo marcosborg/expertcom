@@ -9,6 +9,7 @@ use App\Http\Requests\StoreRecruitmentFormRequest;
 use App\Http\Requests\UpdateRecruitmentFormRequest;
 use App\Models\Company;
 use App\Models\RecruitmentForm;
+use App\Models\User;
 use App\Notifications\RecruitmentFormNotification;
 use Gate;
 use Illuminate\Http\Request;
@@ -27,11 +28,14 @@ class RecruitmentFormController extends Controller
         $company_id = session()->get('company_id');
 
         if ($company_id > 0) {
-            $recruitmentForms = RecruitmentForm::where('company_id', $company_id)->with(['company', 'media'])->get();
+            $recruitmentForms = RecruitmentForm::where('company_id', $company_id)->with(['company', 'user', 'to_company', 'media'])->get();
         } else {
-            $recruitmentForms = RecruitmentForm::with(['company', 'media'])->get();
+            if (auth()->user()->hasRole('promotor')) {
+                $recruitmentForms = RecruitmentForm::where('user_id', auth()->user()->id)->with(['company', 'user', 'to_company', 'media'])->get();
+            } else {
+                $recruitmentForms = RecruitmentForm::with(['company', 'user', 'to_company', 'media'])->get();
+            }
         }
-
 
         return view('admin.recruitmentForms.index', compact('recruitmentForms'));
     }
@@ -68,10 +72,11 @@ class RecruitmentFormController extends Controller
         abort_if(Gate::denies('recruitment_form_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $companies = Company::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $recruitmentForm->load('company');
+        $recruitmentForm->load('company', 'user', 'to_company');
 
-        return view('admin.recruitmentForms.edit', compact('companies', 'recruitmentForm'));
+        return view('admin.recruitmentForms.edit', compact('companies', 'users', 'recruitmentForm'));
     }
 
     public function update(UpdateRecruitmentFormRequest $request, RecruitmentForm $recruitmentForm)

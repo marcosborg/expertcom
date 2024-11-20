@@ -36,6 +36,14 @@ class StoreRecruitmentFormRequest extends FormRequest
                 'string',
                 'nullable'
             ],
+            'start_time' => [
+                'date_format:' . config('panel.time_format'),
+                'nullable',
+            ],
+            'end_time' => [
+                'date_format:' . config('panel.time_format'),
+                'nullable',
+            ],
         ];
     }
 }

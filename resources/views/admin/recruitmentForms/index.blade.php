@@ -127,7 +127,7 @@
                                             {{ $recruitmentForm->amount_to_pay ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $recruitmentForm->responsible_for_the_lead }}
+                                            {{ $recruitmentForm->responsible_for_the_lead ?? '' }}
                                         </td>
                                         <td>
                                             {{ $recruitmentForm->created_at ?? '' }}
@@ -219,4 +219,3 @@
 
 </script>
 @endsection
-<script>console.log({!! $recruitmentForms[260] !!})</script>

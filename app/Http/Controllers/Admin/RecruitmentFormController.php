@@ -62,7 +62,7 @@ class RecruitmentFormController extends Controller
         }
 
         Notification::route('mail', $recruitmentForm->company->email)
-            ->notify(new RecruitmentFormNotification($recruitmentForm));
+            ->notify(new RecruitmentFormNotification($recruitmentForm, 'Formulário de recrutamento'));
 
         return redirect()->route('admin.recruitment-forms.index');
     }
@@ -81,6 +81,12 @@ class RecruitmentFormController extends Controller
 
     public function update(UpdateRecruitmentFormRequest $request, RecruitmentForm $recruitmentForm)
     {
+        $sendEmail = false;
+
+        if ($recruitmentForm->status !== $request->status) {
+            $sendEmail = true;
+        }
+
         $recruitmentForm->update($request->all());
 
         if ($request->input('cv', false)) {
@@ -92,6 +98,11 @@ class RecruitmentFormController extends Controller
             }
         } elseif ($recruitmentForm->cv) {
             $recruitmentForm->cv->delete();
+        }
+
+        if ($sendEmail == true) {
+            Notification::route('mail', 'marcosborges@netlook.pt'/*$recruitmentForm->company->email ?? 'info@expertcom.pt'*/)
+                ->notify(new RecruitmentFormNotification($recruitmentForm, 'Alteração ao estado do recrutamento'));
         }
 
         return redirect()->route('admin.recruitment-forms.index');

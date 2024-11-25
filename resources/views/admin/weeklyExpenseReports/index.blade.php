@@ -234,6 +234,28 @@
                     </table>
                 </div>
             </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Médias de rentabilidade
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="start_date">Data de início</label>
+                                <input type="date" name="start_date" id="start_date" class="form-control" onchange="getData()">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="end_date">Data de início</label>
+                                <input type="date" name="end_date" id="end_date" class="form-control" onchange="getData()">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="get-data"></div>
+                </div>
+            </div>
         </div>
     </div>
     @endif
@@ -335,5 +357,30 @@
             }
         }
     });
+</script>
+<script>
+    getData = () => {
+        let start_date = $('#start_date').val();
+        let end_date = $('#end_date').val();
+        if (start_date && end_date) {
+            let data = {
+                start_date: start_date,
+                end_date: end_date
+            };
+            var settings = {
+                "url": "/admin/weekly-expense-reports/get-data",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json",
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                "data": JSON.stringify(data),
+            };
+            $.ajax(settings).done(function (response) {
+                $('#get-data').html(response);
+            });
+        }
+    }
 </script>
 @endsection

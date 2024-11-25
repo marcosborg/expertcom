@@ -4,13 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\Reports;
-use App\Models\CompanyExpense;
-use App\Models\Driver;
 use App\Models\TvdeWeek;
-use App\Models\CompanyPark;
 use App\Models\Company;
-use App\Models\Consultancy;
-use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +30,6 @@ class WeeklyExpenseReportController extends Controller
         $filter = $this->filter();
         $company_id = $filter['company_id'];
         $tvde_week_id = $filter['tvde_week_id'];
-        $tvde_week = $filter['tvde_week'];
         $tvde_years = $filter['tvde_years'];
         $tvde_year_id = $filter['tvde_year_id'];
         $tvde_months = $filter['tvde_months'];
@@ -157,8 +151,8 @@ class WeeklyExpenseReportController extends Controller
             'fleet_earnings' => $data->fleet_earnings,
             'total_company_adjustments' => $data->totals->total_company_adjustments,
         ])->setOption([
-                    'isRemoteEnabled' => true,
-                ]);
+            'isRemoteEnabled' => true,
+        ]);
 
 
         if ($request->download) {
@@ -169,7 +163,6 @@ class WeeklyExpenseReportController extends Controller
         } else {
             return $pdf->stream();
         }
-
     }
 
     public function update()
@@ -182,4 +175,66 @@ class WeeklyExpenseReportController extends Controller
         return redirect()->back()->with('message', 'Atualizado com sucesso');
     }
 
+    public function getData(Request $request)
+    {
+        $tvde_weeks = TvdeWeek::where(function ($query) use ($request) {
+            $query->where('start_date', '<=', $request->end_date)
+                ->where('end_date', '>=', $request->start_date);
+        })
+            ->get();
+
+        $total_operators = [];
+        $final_total = [];
+        $profit = [];
+        $roi = [];
+
+        foreach ($tvde_weeks as $tvde_week) {
+            $company_data = CompanyData::where([
+                'company_id' => session()->get('company_id'),
+                'tvde_week_id' => $tvde_week->id
+            ])->first();
+            if ($company_data) {
+                $data = json_decode($company_data->data);
+                $total_operators[] = $data->totals->total_operators;
+                $final_total[] = $data->final_total;
+                $profit[] = $data->profit;
+                $roi[] = $data->roi;
+            }
+        }
+
+        $html = '<table style="width: 100%">';
+        $html .= '<tbody>';
+        $html .= '<tr>';
+        $html .= '<th>Ganhos</th>';
+        $html .= '<td style="text-align: right">';
+        $html .= number_format(array_sum($total_operators) / $tvde_weeks->count(), 2, '.');
+        $html .= '<small>€</small>';
+        $html .= '</td>';
+        $html .= '</tr>';
+        $html .= '<tr>';
+        $html .= '<th>Total de despesas</th>';
+        $html .= '<td style="text-align: right">';
+        $html .= number_format(array_sum($final_total) / $tvde_weeks->count(), 2, '.');
+        $html .= '<small>€</small></td>';
+        $html .= '</tr>';
+        $html .= '<tr>';
+        $html .= '<th>Rentabilidade</th>';
+        $html .= '<td style="text-align: right">';
+        $html .= number_format(array_sum($profit) / $tvde_weeks->count(), 2, '.');
+        $html .= '<small>€</small></td>';
+        $html .= '</tr>';
+        $html .= '<tr>';
+        $html .= '<th>ROI (Return of investment)</th>';
+        $html .= '<td style="text-align: right">';
+        $html .= '<h1>';
+        $html .= round(array_sum($roi) / $tvde_weeks->count());
+        $html .= '<small>%</small></h1>';
+        $html .= '</td>';
+        $html .= '</tr>';
+        $html .= '</tbody>';
+        $html .= '</table>';
+
+        return $html;
+
+    }
 }

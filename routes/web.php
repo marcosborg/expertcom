@@ -413,6 +413,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('/', 'WeeklyExpenseReportController@index');
         Route::get('pdf/{download?}', 'WeeklyExpenseReportController@pdf');
         Route::get('update', 'WeeklyExpenseReportController@update');
+        Route::post('get-data', 'WeeklyExpenseReportController@getData');
     });
 
     // Company Report

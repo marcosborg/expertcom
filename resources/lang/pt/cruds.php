@@ -1194,8 +1194,8 @@ return [
         'title_singular' => 'Os meus recibo',
     ],
     'companyDocument' => [
-        'title'          => 'Documentos da empresa',
-        'title_singular' => 'Documentos da empresa',
+        'title'          => 'Gestão documental',
+        'title_singular' => 'Gestão documental',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',
@@ -1427,6 +1427,10 @@ return [
             'user_helper'       => ' ',
             'suspended'         => 'Suspended',
             'suspended_helper'  => ' ',
+            'phone'             => 'Telefone',
+            'phone_helper'      => ' ',
+            'lead'              => 'Pessoa de contacto',
+            'lead_helper'       => ' '
         ],
     ],
     'electric' => [

@@ -43,6 +43,12 @@
                                     {{ trans('cruds.company.fields.email') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.company.fields.phone') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.company.fields.lead') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.company.fields.main') }}
                                 </th>
                                 <th>
@@ -115,6 +121,8 @@
 { data: 'vat', name: 'vat' },
 { data: 'location', name: 'location' },
 { data: 'email', name: 'email' },
+{ data: 'phone', name: 'phone' },
+{ data: 'lead', name: 'lead' },
 { data: 'main', name: 'main' },
 { data: 'user_name', name: 'user.name' },
 { data: 'suspended', name: 'suspended' },

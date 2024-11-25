@@ -62,6 +62,12 @@ class CompanyController extends Controller
             $table->editColumn('email', function ($row) {
                 return $row->email ? $row->email : '';
             });
+            $table->editColumn('phone', function ($row) {
+                return $row->phone ? $row->phone : '';
+            });
+            $table->editColumn('lead', function ($row) {
+                return $row->lead ? $row->lead : '';
+            });
             $table->addColumn('user_name', function ($row) {
                 return $row->user ? $row->user->name : '';
             });

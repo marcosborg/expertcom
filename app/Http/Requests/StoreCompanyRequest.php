@@ -40,6 +40,14 @@ class StoreCompanyRequest extends FormRequest
             'email' => [
                 'required',
             ],
+            'phone' => [
+                'string',
+                'nullable'
+            ],
+            'lead' => [
+                'string',
+                'nullable'
+            ]
         ];
     }
 }

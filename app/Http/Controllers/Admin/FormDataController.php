@@ -34,6 +34,10 @@ class FormDataController extends Controller
 
         $company_id = session()->get('company_id');
 
+        if($company_id == 0) {
+            session()->remove('company_id');
+        }
+
         if ($request->ajax()) {
             switch (request()->query('status')) {
                 case 'unsolved':

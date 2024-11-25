@@ -33,6 +33,8 @@ class Company extends Model implements HasMedia
         'zip',
         'location',
         'email',
+        'phone',
+        'lead',
         'user_id',
         'suspended',
         'main',

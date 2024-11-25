@@ -59,6 +59,22 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.company.fields.email_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('phone') ? 'has-error' : '' }}">
+                            <label for="phone">{{ trans('cruds.company.fields.phone') }}</label>
+                            <input class="form-control" type="text" name="phone" id="phone" value="{{ old('phone') }}">
+                            @if($errors->has('phone'))
+                                <span class="help-block" role="alert">{{ $errors->first('phone') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.company.fields.phone_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('lead') ? 'has-error' : '' }}">
+                            <label for="lead">{{ trans('cruds.company.fields.lead') }}</label>
+                            <input class="form-control" type="text" name="lead" id="lead" value="{{ old('lead') }}">
+                            @if($errors->has('lead'))
+                                <span class="help-block" role="alert">{{ $errors->first('lead') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.company.fields.lead_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('logo') ? 'has-error' : '' }}">
                             <label for="logo">{{ trans('cruds.company.fields.logo') }}</label>
                             <div class="needsclick dropzone" id="logo-dropzone">

@@ -207,3 +207,4 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
 </script>
 @endsection
+<script>console.log({!! json_encode(session()->all()) !!})</script>

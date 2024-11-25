@@ -89,6 +89,16 @@
                                         }}</span>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('amount_to_pay') ? 'has-error' : '' }}">
+                                    <label for="amount_to_pay">{{ trans('cruds.recruitmentForm.fields.amount_to_pay') }}</label>
+                                    <input class="form-control" type="text" name="amount_to_pay" id="amount_to_pay" value="{{ old('amount_to_pay', $recruitmentForm->amount_to_pay) }}">
+                                    @if($errors->has('amount_to_pay'))
+                                        <span class="help-block" role="alert">{{ $errors->first('amount_to_pay') }}</span>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.recruitmentForm.fields.amount_to_pay_helper') }}</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">

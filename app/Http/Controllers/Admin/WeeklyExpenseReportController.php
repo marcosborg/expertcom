@@ -202,7 +202,32 @@ class WeeklyExpenseReportController extends Controller
             }
         }
 
-        $html = '<table style="width: 100%">';
+        $html = '<h3>Totais</h3>';
+        $html .= '<table style="width: 100%">';
+        $html .= '<tbody>';
+        $html .= '<tr>';
+        $html .= '<th>Ganhos</th>';
+        $html .= '<td style="text-align: right">';
+        $html .= number_format(array_sum($total_operators), 2, '.');
+        $html .= '<small>€</small>';
+        $html .= '</td>';
+        $html .= '</tr>';
+        $html .= '<tr>';
+        $html .= '<th>Total de despesas</th>';
+        $html .= '<td style="text-align: right">';
+        $html .= number_format(array_sum($final_total), 2, '.');
+        $html .= '<small>€</small></td>';
+        $html .= '</tr>';
+        $html .= '<tr>';
+        $html .= '<th>Rentabilidade</th>';
+        $html .= '<td style="text-align: right">';
+        $html .= number_format(array_sum($profit), 2, '.');
+        $html .= '<small>€</small></td>';
+        $html .= '</tr>';
+        $html .= '</tbody>';
+        $html .= '</table>';
+        $html .= '<h3>Médias</h3>';
+        $html .= '<table style="width: 100%">';
         $html .= '<tbody>';
         $html .= '<tr>';
         $html .= '<th>Ganhos</th>';

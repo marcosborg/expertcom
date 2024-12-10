@@ -206,5 +206,22 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 });
 
 </script>
+<script>
+    solve = (form_data_id) => {
+        let checkbox = $('#solved-' + form_data_id);
+        let solved = checkbox.is(':checked');
+        console.log(solved);
+        let value = 0;
+        if (solved == true) {
+            value = 1;
+        } else {
+            value = 0;
+        }
+        let url = '/admin/form-datas/update-status/' + form_data_id + '/' + value;
+        $.get(url).then((resp) => {
+            console.log(resp);
+        });
+    }
+
+</script>
 @endsection
-<script>console.log({!! json_encode(session()->all()) !!})</script>

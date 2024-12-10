@@ -167,7 +167,7 @@ class FormDataController extends Controller
                 return $row->created_at ? $row->created_at : '';
             });
             $table->editColumn('solved', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->solved ? 'checked' : null) . '>';
+                return '<input id="solved-' . $row->id . '" type="checkbox" ' . ($row->solved ? 'checked' : null) . ' onclick="solve(' . $row->id . ')">';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'form_name', 'driver', 'vehicle_item', 'user', 'solved', 'data']);
@@ -274,5 +274,13 @@ class FormDataController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function updateStatus($form_data_id, $value)
+    {
+        $form_data = FormData::find($form_data_id);
+        $form_data->solved = $value;
+        $form_data->save();
+        return $form_data;
     }
 }

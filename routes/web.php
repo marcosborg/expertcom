@@ -476,6 +476,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Form Data
     Route::delete('form-datas/destroy', 'FormDataController@massDestroy')->name('form-datas.massDestroy');
     Route::resource('form-datas', 'FormDataController');
+    Route::get('form-datas/update-status/{form_data_id}/{value}', 'FormDataController@updateStatus');
 
     // Form Assembly
     Route::prefix('form-assemblies')->group(function () {

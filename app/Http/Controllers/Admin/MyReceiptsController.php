@@ -98,17 +98,33 @@ class MyReceiptsController extends Controller
                 return $row->file ? '<a href="' . $row->file->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
             $table->editColumn('receipt_value', function ($row) {
-                return '<input id="receipt_value-' . $row->id . '" disabled type="number" value="' . $row->verified_value . '" ' . ($row->verified ? 'disabled' : '') . '>';
+                if (auth()->user()->hasRole('Empresas Associadas')) {
+                    return '<input id="receipt_value-' . $row->id . '" type="number" value="' . $row->verified_value . '" ' . ($row->verified ? 'disabled' : '') . '>';
+                } else {
+                    return '<input id="receipt_value-' . $row->id . '" disabled type="number" value="' . $row->verified_value . '" ' . ($row->verified ? 'disabled' : '') . '>';
+                }
             });
             $table->editColumn('verified', function ($row) {
-                return '<input id="verified-' . $row->id . '" disabled onclick="checkVerified(' . $row->id . ')" type="checkbox" ' . ($row->verified ? 'disabled' : '') . ' ' . ($row->verified ? 'checked' : null) . '>';
+                if (auth()->user()->hasRole('Empresas Associadas')) {
+                    return '<input id="verified-' . $row->id . '" onclick="checkVerified(' . $row->id . ')" type="checkbox" ' . ($row->verified ? 'disabled' : '') . ' ' . ($row->verified ? 'checked' : null) . '>';
+                } else {
+                    return '<input id="verified-' . $row->id . '" disabled onclick="checkVerified(' . $row->id . ')" type="checkbox" ' . ($row->verified ? 'disabled' : '') . ' ' . ($row->verified ? 'checked' : null) . '>';
+                }
             });
             $table->editColumn('paid', function ($row) {
-                return '<input id="check-' . $row->id . '" disabled onclick="checkPay(' . $row->id . ')" type="checkbox" ' . ($row->paid ? 'disabled' : '') . ' ' . ($row->paid ? 'checked' : null) . '>';
+                if (auth()->user()->hasRole('Empresas Associadas')) {
+                    return '<input id="check-' . $row->id . '" onclick="checkPay(' . $row->id . ')" type="checkbox" ' . ($row->paid ? 'disabled' : '') . ' ' . ($row->paid ? 'checked' : null) . '>';
+                } else {
+                    return '<input id="check-' . $row->id . '" disabled onclick="checkPay(' . $row->id . ')" type="checkbox" ' . ($row->paid ? 'disabled' : '') . ' ' . ($row->paid ? 'checked' : null) . '>';
+                }
             });
 
             $table->editColumn('amount_transferred', function ($row) {
-                return '<input disabled id="amount_transferred-' . $row->id . '" type="number" value="' . $row->amount_transferred . '" ' . ($row->verified ? 'disabled' : '') . '>';
+                if (auth()->user()->hasRole('Empresas Associadas')) {
+                    return '<input id="amount_transferred-' . $row->id . '" type="number" value="' . $row->amount_transferred . '" ' . ($row->verified ? 'disabled' : '') . '>';
+                } else {
+                    return '<input disabled id="amount_transferred-' . $row->id . '" type="number" value="' . $row->amount_transferred . '" ' . ($row->verified ? 'disabled' : '') . '>';
+                }
             });
 
             $table->rawColumns(['actions', 'placeholder', 'driver', 'file', 'receipt_value', 'amount_transferred', 'paid', 'verified']);
@@ -167,7 +183,6 @@ class MyReceiptsController extends Controller
         $receipt = Receipt::find($receipt_id);
         $receipt->paid = true;
         $receipt->save();
-
     }
 
     public function checkVerified($receipt_id, $receipt_value, $amount_transferred)
@@ -187,7 +202,5 @@ class MyReceiptsController extends Controller
         $drivers_balance->balance = $balance;
         $drivers_balance->drivers_balance = $balance;
         $drivers_balance->save();
-
     }
-
 }

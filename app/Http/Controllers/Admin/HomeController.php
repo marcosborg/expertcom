@@ -27,6 +27,10 @@ class HomeController
             return redirect('/admin/company-invoice-dashboard');
         }
 
+        if (auth()->user()->hasRole('Admin') && !auth()->user()->hasRole('Driver')) {
+            return redirect('/admin/financial-statements');
+        }
+
         if (auth()->user()->hasRole('Driver') && auth()->user()->driver->count() > 0) {
             $user = auth()->user()->load('driver');
             session()->put('driver_id', $user->driver[0]->id);

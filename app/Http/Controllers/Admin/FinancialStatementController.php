@@ -44,6 +44,13 @@ class FinancialStatementController extends Controller
         $tvde_weeks = $filter['tvde_weeks'];
         $drivers = $filter['drivers'];
 
+        if (session()->has('company_id')) {
+            $company_id = session()->get('company_id');
+        } else {
+            $company = Company::first();
+            $company_id = $company->id;
+            session()->put('company_id', $company_id);
+        }
         $driver_id = session()->get('driver_id') ? session()->get('driver_id') : $driver_id = 0;
 
         if (!session()->has('company_id')) {
@@ -78,7 +85,6 @@ class FinancialStatementController extends Controller
                 $total_tips = 0;
                 $gross_credits = 0;
             }
-
         } else {
             $driver = null;
             //COLLECT ALL DRIVER RESULTS
@@ -467,7 +473,6 @@ class FinancialStatementController extends Controller
                     $backgrounds[] = '#00a65a94';
                 }
             }
-
         }
 
         $chart1 = "https://quickchart.io/chart?c={type:'bar',data:{labels:" . json_encode($labels) . ",datasets:[{borderWidth: 1, label:'Valor faturado',data:" . json_encode($earnings) . "}]}}";
@@ -558,8 +563,8 @@ class FinancialStatementController extends Controller
             'chart1' => $chart1,
             'chart2' => $chart2,
         ])->setOption([
-                    'isRemoteEnabled' => true,
-                ]);
+            'isRemoteEnabled' => true,
+        ]);
 
 
         if ($request->download) {
@@ -570,7 +575,6 @@ class FinancialStatementController extends Controller
         } else {
             return $pdf->stream();
         }
-
     }
 
     public function updateBalance(Request $request)
@@ -586,5 +590,4 @@ class FinancialStatementController extends Controller
         $drivers_balance->drivers_balance = $request->balance;
         $drivers_balance->save();
     }
-
 }

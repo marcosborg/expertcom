@@ -13,7 +13,7 @@
             }}</a>
         @endforeach
     </div>
-    <div class="btn-group btn-group-justified" role="group" style="margin-top: 5px;">
+    <div class="btn-group btn-group-{{ $isMobile ? 'vertical' : 'justified' }}" role="group" style="margin-top: 5px;">
         @foreach ($tvde_months as $tvde_month)
         <a href="/admin/financial-statements/month/{{ $tvde_month->id }}"
             class="btn btn-default {{ $tvde_month->id == $tvde_month_id ? 'disabled selected' : '' }}">{{

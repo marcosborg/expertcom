@@ -145,7 +145,7 @@ class FinancialStatementController extends Controller
         $team_results = $results->team_results ?? [];
 
         if ($team_gross_credits > 0) {
-            $total_earnings = $total_earnings + $team_gross_credits;
+            $total_earnings = $total_earnings + $results->team_earnings;
             $total_after_vat = $total_after_vat + $team_liquid_credits;
             $gross_debts = $gross_debts + $team_final_total;
             $gross_credits = $gross_credits + $team_liquid_credits;

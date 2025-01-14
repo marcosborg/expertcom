@@ -496,6 +496,7 @@ trait Reports
         $team_gross_credits = [];
         $team_liquid_credits = [];
         $team_final_total = [];
+        $team_earnings = [];
 
         if ($driver_id != 0 && $driver->team->count() > 0) {
             foreach ($driver->team as $team) {
@@ -511,6 +512,7 @@ trait Reports
                         $team_gross_credits[] = $d->gross_credits;
                         $team_liquid_credits[] = $d->total_after_vat;
                         $team_final_total[] = $d->final_total;
+                        $team_earnings[] = $d->total_earnings;
                     }
                 }
             }
@@ -520,6 +522,7 @@ trait Reports
         $team_liquid_credits = array_sum($team_liquid_credits);
         $team_final_total = array_sum($team_final_total);
         $team_final_result = 0;
+        $team_earnings = array_sum($team_earnings);
 
         return compact([
             'company_id',
@@ -557,7 +560,8 @@ trait Reports
             'team_liquid_credits',
             'team_final_total',
             'team_final_result',
-            'team_results'
+            'team_results',
+            'team_earnings',
         ]);
     }
 

@@ -95,9 +95,10 @@
                             </tr>
                             @if ($team_results)
                             @foreach ($team_results as $team_result)
+                            <script>console.log({!! json_encode($team_result) !!})</script>
                             <tr>
                                 <th>{{ $team_result->driver->name }}</th>
-                                <td>{{ number_format($team_result->gross_credits, 2) }}€</td>
+                                <td>{{ number_format($team_result->total_earnings, 2) }}€</td>
                                 @if ($driver || $team_results)
                                 <td>{{ number_format($driver->contract_type->contract_type_ranks[0]->percent, 2) }}%</td>
                                 <td>{{ $team_result->total_after_vat }}€</td>

@@ -34,16 +34,22 @@
                                         {{ trans('cruds.driver.fields.email') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.document.fields.notify_driver') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.document.fields.notify_text') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.document.fields.citizen_card') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.document.fields.profile_picture') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.document.fields.tvde_driver_certificate') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.document.fields.criminal_record') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.document.fields.profile_picture') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.document.fields.driving_license') }}
@@ -78,11 +84,25 @@
                                             {{ $document->driver->email ?? '' }}
                                         </td>
                                         <td>
+                                            <span style="display:none">{{ $document->notify_driver ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $document->notify_driver ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            {{ $document->notify_text ?? '' }}
+                                        </td>
+                                        <td>
                                             @foreach($document->citizen_card as $key => $media)
                                                 <a href="{{ $media->getUrl() }}" target="_blank">
                                                     {{ trans('global.view_file') }}
                                                 </a>
                                             @endforeach
+                                        </td>
+                                        <td>
+                                            @if($document->profile_picture)
+                                                <a href="{{ $document->profile_picture->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             @foreach($document->tvde_driver_certificate as $key => $media)
@@ -97,13 +117,6 @@
                                                     {{ trans('global.view_file') }}
                                                 </a>
                                             @endforeach
-                                        </td>
-                                        <td>
-                                            @if($document->profile_picture)
-                                                <a href="{{ $document->profile_picture->getUrl() }}" target="_blank" style="display: inline-block">
-                                                    <img src="{{ $document->profile_picture->getUrl('thumb') }}">
-                                                </a>
-                                            @endif
                                         </td>
                                         <td>
                                             @foreach($document->driving_license as $key => $media)

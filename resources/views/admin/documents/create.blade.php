@@ -32,6 +32,15 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.document.fields.citizen_card_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('profile_picture') ? 'has-error' : '' }}">
+                            <label for="profile_picture">{{ trans('cruds.document.fields.profile_picture') }}</label>
+                            <div class="needsclick dropzone" id="profile_picture-dropzone">
+                            </div>
+                            @if($errors->has('profile_picture'))
+                                <span class="help-block" role="alert">{{ $errors->first('profile_picture') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.document.fields.profile_picture_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('tvde_driver_certificate') ? 'has-error' : '' }}">
                             <label for="tvde_driver_certificate">{{ trans('cruds.document.fields.tvde_driver_certificate') }}</label>
                             <div class="needsclick dropzone" id="tvde_driver_certificate-dropzone">
@@ -49,15 +58,6 @@
                                 <span class="help-block" role="alert">{{ $errors->first('criminal_record') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.document.fields.criminal_record_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('profile_picture') ? 'has-error' : '' }}">
-                            <label for="profile_picture">{{ trans('cruds.document.fields.profile_picture') }}</label>
-                            <div class="needsclick dropzone" id="profile_picture-dropzone">
-                            </div>
-                            @if($errors->has('profile_picture'))
-                                <span class="help-block" role="alert">{{ $errors->first('profile_picture') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.document.fields.profile_picture_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('driving_license') ? 'has-error' : '' }}">
                             <label for="driving_license">{{ trans('cruds.document.fields.driving_license') }}</label>
@@ -85,6 +85,24 @@
                                 <span class="help-block" role="alert">{{ $errors->first('address') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.document.fields.address_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('car_insurance') ? 'has-error' : '' }}">
+                            <label for="car_insurance">{{ trans('cruds.document.fields.car_insurance') }}</label>
+                            <div class="needsclick dropzone" id="car_insurance-dropzone">
+                            </div>
+                            @if($errors->has('car_insurance'))
+                                <span class="help-block" role="alert">{{ $errors->first('car_insurance') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.document.fields.car_insurance_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('ipo_vehicle') ? 'has-error' : '' }}">
+                            <label for="ipo_vehicle">{{ trans('cruds.document.fields.ipo_vehicle') }}</label>
+                            <div class="needsclick dropzone" id="ipo_vehicle-dropzone">
+                            </div>
+                            @if($errors->has('ipo_vehicle'))
+                                <span class="help-block" role="alert">{{ $errors->first('ipo_vehicle') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.document.fields.ipo_vehicle_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('notes') ? 'has-error' : '' }}">
                             <label for="notes">{{ trans('cruds.document.fields.notes') }}</label>
@@ -147,6 +165,56 @@ Dropzone.options.citizenCardDropzone = {
               file.previewElement.classList.add('dz-complete')
               $('form').append('<input type="hidden" name="citizen_card[]" value="' + file.file_name + '">')
             }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+<script>
+    Dropzone.options.profilePictureDropzone = {
+    url: '{{ route('admin.documents.storeMedia') }}',
+    maxFilesize: 5, // MB
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 5
+    },
+    success: function (file, response) {
+      $('form').find('input[name="profile_picture"]').remove()
+      $('form').append('<input type="hidden" name="profile_picture" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="profile_picture"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($document) && $document->profile_picture)
+      var file = {!! json_encode($document->profile_picture) !!}
+          this.options.addedfile.call(this, file)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="profile_picture" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
 @endif
     },
      error: function (file, response) {
@@ -278,61 +346,6 @@ Dropzone.options.criminalRecordDropzone = {
          return _results
      }
 }
-</script>
-<script>
-    Dropzone.options.profilePictureDropzone = {
-    url: '{{ route('admin.documents.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
-    maxFiles: 1,
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 2,
-      width: 4096,
-      height: 4096
-    },
-    success: function (file, response) {
-      $('form').find('input[name="profile_picture"]').remove()
-      $('form').append('<input type="hidden" name="profile_picture" value="' + response.name + '">')
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      if (file.status !== 'error') {
-        $('form').find('input[name="profile_picture"]').remove()
-        this.options.maxFiles = this.options.maxFiles + 1
-      }
-    },
-    init: function () {
-@if(isset($document) && $document->profile_picture)
-      var file = {!! json_encode($document->profile_picture) !!}
-          this.options.addedfile.call(this, file)
-      this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-      file.previewElement.classList.add('dz-complete')
-      $('form').append('<input type="hidden" name="profile_picture" value="' + file.file_name + '">')
-      this.options.maxFiles = this.options.maxFiles - 1
-@endif
-    },
-    error: function (file, response) {
-        if ($.type(response) === 'string') {
-            var message = response //dropzone sends it's own error messages in string
-        } else {
-            var message = response.errors.file
-        }
-        file.previewElement.classList.add('dz-error')
-        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-        _results = []
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            node = _ref[_i]
-            _results.push(node.textContent = message)
-        }
-
-        return _results
-    }
-}
-
 </script>
 <script>
     var uploadedDrivingLicenseMap = {}
@@ -481,6 +494,174 @@ Dropzone.options.addressDropzone = {
               this.options.addedfile.call(this, file)
               file.previewElement.classList.add('dz-complete')
               $('form').append('<input type="hidden" name="address[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+<script>
+    var uploadedDuaVehicleMap = {}
+Dropzone.options.duaVehicleDropzone = {
+    url: '{{ route('admin.documents.storeMedia') }}',
+    maxFilesize: 2, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 2
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="dua_vehicle[]" value="' + response.name + '">')
+      uploadedDuaVehicleMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedDuaVehicleMap[file.name]
+      }
+      $('form').find('input[name="dua_vehicle[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($document) && $document->dua_vehicle)
+          var files =
+            {!! json_encode($document->dua_vehicle) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="dua_vehicle[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+<script>
+    var uploadedCarInsuranceMap = {}
+Dropzone.options.carInsuranceDropzone = {
+    url: '{{ route('admin.documents.storeMedia') }}',
+    maxFilesize: 2, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 2
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="car_insurance[]" value="' + response.name + '">')
+      uploadedCarInsuranceMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedCarInsuranceMap[file.name]
+      }
+      $('form').find('input[name="car_insurance[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($document) && $document->car_insurance)
+          var files =
+            {!! json_encode($document->car_insurance) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="car_insurance[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+<script>
+    var uploadedIpoVehicleMap = {}
+Dropzone.options.ipoVehicleDropzone = {
+    url: '{{ route('admin.documents.storeMedia') }}',
+    maxFilesize: 2, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 2
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="ipo_vehicle[]" value="' + response.name + '">')
+      uploadedIpoVehicleMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedIpoVehicleMap[file.name]
+      }
+      $('form').find('input[name="ipo_vehicle[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($document) && $document->ipo_vehicle)
+          var files =
+            {!! json_encode($document->ipo_vehicle) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="ipo_vehicle[]" value="' + file.file_name + '">')
             }
 @endif
     },

@@ -35,6 +35,22 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.document.fields.notify_driver') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $document->notify_driver ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.document.fields.notify_text') }}
+                                    </th>
+                                    <td>
+                                        {{ $document->notify_text }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.document.fields.citizen_card') }}
                                     </th>
                                     <td>
@@ -43,6 +59,18 @@
                                                 {{ trans('global.view_file') }}
                                             </a>
                                         @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.document.fields.profile_picture') }}
+                                    </th>
+                                    <td>
+                                        @if($document->profile_picture)
+                                            <a href="{{ $document->profile_picture->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -67,18 +95,6 @@
                                                 {{ trans('global.view_file') }}
                                             </a>
                                         @endforeach
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.document.fields.profile_picture') }}
-                                    </th>
-                                    <td>
-                                        @if($document->profile_picture)
-                                            <a href="{{ $document->profile_picture->getUrl() }}" target="_blank" style="display: inline-block">
-                                                <img src="{{ $document->profile_picture->getUrl('thumb') }}">
-                                            </a>
-                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -111,6 +127,42 @@
                                     </th>
                                     <td>
                                         @foreach($document->address as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.document.fields.dua_vehicle') }}
+                                    </th>
+                                    <td>
+                                        @foreach($document->dua_vehicle as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.document.fields.car_insurance') }}
+                                    </th>
+                                    <td>
+                                        @foreach($document->car_insurance as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.document.fields.ipo_vehicle') }}
+                                    </th>
+                                    <td>
+                                        @foreach($document->ipo_vehicle as $key => $media)
                                             <a href="{{ $media->getUrl() }}" target="_blank">
                                                 {{ trans('global.view_file') }}
                                             </a>

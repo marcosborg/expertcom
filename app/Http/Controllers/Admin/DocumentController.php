@@ -88,6 +88,7 @@ class DocumentController extends Controller
 
     public function update(UpdateDocumentRequest $request, Document $document)
     {
+
         $document->update($request->all());
 
         if (count($document->citizen_card) > 0) {

@@ -100,7 +100,7 @@
                                         <td>
                                             @if($document->profile_picture)
                                                 <a href="{{ $document->profile_picture->getUrl() }}" target="_blank">
-                                                    {{ trans('global.view_file') }}
+                                                    <img src="{{ $document->profile_picture->getUrl() }}" width="50">
                                                 </a>
                                             @endif
                                         </td>

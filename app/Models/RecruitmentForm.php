@@ -65,6 +65,7 @@ class RecruitmentForm extends Model implements HasMedia
 
     protected $fillable = [
         'company_id',
+        'to_company_id',
         'name',
         'email',
         'contact_successfully',

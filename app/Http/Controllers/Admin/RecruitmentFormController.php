@@ -81,6 +81,7 @@ class RecruitmentFormController extends Controller
 
     public function update(UpdateRecruitmentFormRequest $request, RecruitmentForm $recruitmentForm)
     {
+
         $sendEmail = false;
 
         if ($recruitmentForm->status !== $request->status) {

@@ -193,6 +193,7 @@
                         <th style="text-align: right;">Abastecimento</th>
                         <th style="text-align: right;">Ajustes</th>
                         <th style="text-align: right;">P. frota</th>
+                        <th style="text-align: right;">Team</th>
                         <th style="text-align: right;">Saldo</th>
                         <th style="text-align: right">A pagar</th>
                         <th style="text-align: right">Validar</th>
@@ -226,6 +227,8 @@
                         </td>
                         <td style="text-align: right">{{ number_format($driver->adjustments, 2) }} <small>€</small></td>
                         <td style="text-align: right">{{ number_format($driver->fleet_management, 2) }} <small>€</small>
+                        </td>
+                        <td style="text-align: right">{{ number_format($driver->team_final_result, 2) }} <small>€</small>
                         </td>
                         <td style="text-align: right">{{ number_format($driver->balance, 2) }} <small>€</small></td>
                         <td style="text-align: right">{{ number_format($driver->total, 2) }} <small>€</small></td>
@@ -277,6 +280,9 @@
                             <small>€</small>
                         </th>
                         <th style="text-align: right;">{{ number_format($totals['total_fleet_management'], 2) }}
+                            <small>€</small>
+                        </th>
+                        <th style="text-align: right;">{{ number_format($totals['total_teams'], 2) }}
                             <small>€</small>
                         </th>
                         <th style="text-align: right;">{{ number_format($totals['total_drivers'], 2) }} <small>€</small>

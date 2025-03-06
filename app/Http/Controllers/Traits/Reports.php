@@ -36,6 +36,7 @@ trait Reports
                 'contract_vat',
                 'card',
                 'electric',
+                'team'
             ]);
 
         $total_uber = [];
@@ -49,6 +50,7 @@ trait Reports
         $total_drivers = [];
         $total_company_adjustments = [];
         $total_average = [];
+        $total_teams = [];
 
         foreach ($drivers as $driver) {
 
@@ -269,6 +271,40 @@ trait Reports
 
             $driver->total = $earnings_after_discount + $tips_after_discount - $fuel_transactions + $adjustments - $fleet_management;
 
+            $team_results = [];
+            $team_gross_credits = [];
+            $team_liquid_credits = [];
+            $team_final_total = [];
+            $team_earnings = [];
+
+            foreach ($driver->team as $team) {
+                foreach ($team->drivers as $team_driver) {
+                    $r = CurrentAccount::where([
+                        'tvde_week_id' => $tvde_week_id,
+                        'driver_id' => $team_driver->id
+                    ])->first();
+                    if ($r) {
+                        $d = json_decode($r->data);
+                        $d->total_after_vat = round((($driver->contract_type->contract_type_ranks[0]->percent * $d->total_earnings) / 100), 2);
+                        $team_results[] = $d;
+                        $team_gross_credits[] = $d->gross_credits;
+                        $team_liquid_credits[] = $d->total_after_vat;
+                        $team_final_total[] = $d->final_total;
+                        $team_earnings[] = $d->total_earnings;
+                    }
+                }
+            }
+
+            $team_gross_credits = array_sum($team_gross_credits);
+            $team_liquid_credits = array_sum($team_liquid_credits);
+            $team_final_total = array_sum($team_final_total);
+            $team_final_result = $team_liquid_credits - $team_final_total;
+            $team_earnings = array_sum($team_earnings);
+
+            $driver->team_final_result = $team_final_result;
+
+            $driver->total = $driver->total + $team_final_result;
+
             $total_uber[] = $uber_total_earnings;
             $total_bolt[] = $bolt_total_earnings;
             $total_private[] = $private_total_earnings;
@@ -277,6 +313,7 @@ trait Reports
             $total_tips_after_discount[] = $tips_after_discount;
             $total_drivers[] = $driver->total;
             $total_average[] = $average;
+            $total_teams[] = $team_final_result;
 
             $current_account = CurrentAccount::where([
                 'tvde_week_id' => $tvde_week_id,
@@ -302,7 +339,8 @@ trait Reports
             'total_fleet_management' => array_sum($total_fleet_management),
             'total_drivers' => array_sum($total_drivers),
             'total_company_adjustments' => array_sum($total_company_adjustments),
-            'total_average' => array_sum($total_average)
+            'total_average' => array_sum($total_average),
+            'total_teams' => array_sum($total_teams)
         ]);
 
         return [

@@ -263,7 +263,7 @@
                     </table>
                 </div>
             </div>
-            @if ($driver)
+            @if ($driver_id != 0)
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3 class="pull-left">Valor a pagar: <span style="font-weight: 800;">{{

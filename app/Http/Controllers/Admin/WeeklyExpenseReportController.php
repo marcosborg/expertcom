@@ -26,13 +26,15 @@ class WeeklyExpenseReportController extends Controller
             $company_id = $user->company->id;
             session()->put('company_id', $company_id);
         } else {
-            $user = auth()->user()->load('company');
-            if ($user->company) {
-                $company_id = $user->company->id;
-                session()->put('company_id', $company_id);
-            } else {
-                $company = Company::where('main', true)->first();
-                session()->put('company_id', $company->id);
+            if (!session()->has('company_id')) {
+                $user = auth()->user()->load('company');
+                if ($user->company) {
+                    $company_id = $user->company->id;
+                    session()->put('company_id', $company_id);
+                } else {
+                    $company = Company::where('main', true)->first();
+                    session()->put('company_id', $company->id);
+                }
             }
         }
 

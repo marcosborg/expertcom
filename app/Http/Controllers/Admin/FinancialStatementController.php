@@ -477,7 +477,8 @@ class FinancialStatementController extends Controller
             }
         }
 
-        $chartData = [
+        // CHART 1 - Gráfico de barras (valores por motorista)
+        $chart1Data = [
             "type" => "bar",
             "data" => [
                 "labels" => $labels,
@@ -489,22 +490,44 @@ class FinancialStatementController extends Controller
             ]
         ];
 
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-        ])->post('https://quickchart.io/chart', [
-            'chart' => $chartData,
+        $response1 = Http::post('https://quickchart.io/chart', [
+            'chart' => $chart1Data,
         ]);
 
-        if ($response->ok()) {
-            Storage::put('public/chart1.png', $response->body());
-            return response($response->body())->header('Content-Type', 'image/png');
+        if ($response1->ok()) {
+            Storage::put('public/chart1.png', $response1->body());
+            $chart1 = asset('storage/chart1.png');
         } else {
-            return response("Erro ao gerar gráfico: " . $response->status(), 500);
+            $chart1 = null; // ou um caminho para imagem de erro
         }
 
+        // CHART 2 - Gráfico circular (UBER, BOLT, GORJETAS)
+        $chart2Data = [
+            "type" => "doughnut",
+            "data" => [
+                "labels" => ['UBER', 'BOLT', 'GORJETAS'],
+                "datasets" => [[
+                    "label" => "Valor faturado",
+                    "data" => [$total_earnings_uber, $total_earnings_bolt, $total_tips]
+                ]]
+            ]
+        ];
 
+        $response2 = Http::post('https://quickchart.io/chart', [
+            'chart' => $chart2Data,
+        ]);
 
-        $chart2 = "https://quickchart.io/chart?c={type:'doughnut',data:{labels:['UBER', 'BOLT', 'GORJETAS'],datasets:[{label: 'Valor faturado', data: [" . $total_earnings_uber . ", " . $total_earnings_bolt . ", " . $total_tips . "]}]}}";
+        if ($response2->ok()) {
+            Storage::put('public/chart2.png', $response2->body());
+            $chart2 = asset('storage/chart2.png');
+        } else {
+            $chart2 = null;
+        }
+
+        return [
+            'chart1' => $chart1,
+            'chart2' => $chart2,
+        ];
 
         /*
 

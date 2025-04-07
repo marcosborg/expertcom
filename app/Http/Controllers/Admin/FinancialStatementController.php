@@ -22,6 +22,8 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Traits\Reports;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 class FinancialStatementController extends Controller
 {
@@ -475,10 +477,34 @@ class FinancialStatementController extends Controller
             }
         }
 
-        $chart1 = "https://quickchart.io/chart?c={type:'bar',data:{labels:" . json_encode($labels) . ",datasets:[{borderWidth: 1, label:'Valor faturado',data:" . json_encode($earnings) . "}]}}";
-        sleep(1);
+        $chartData = [
+            "type" => "bar",
+            "data" => [
+                "labels" => $labels,
+                "datasets" => [[
+                    "borderWidth" => 1,
+                    "label" => "Valor faturado",
+                    "data" => $earnings
+                ]]
+            ]
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+        ])->post('https://quickchart.io/chart', [
+            'chart' => $chartData,
+        ]);
+
+        if ($response->ok()) {
+            Storage::put('public/chart1.png', $response->body());
+            return response($response->body())->header('Content-Type', 'image/png');
+        } else {
+            return response("Erro ao gerar gráfico: " . $response->status(), 500);
+        }
+
+
+
         $chart2 = "https://quickchart.io/chart?c={type:'doughnut',data:{labels:['UBER', 'BOLT', 'GORJETAS'],datasets:[{label: 'Valor faturado', data: [" . $total_earnings_uber . ", " . $total_earnings_bolt . ", " . $total_tips . "]}]}}";
-        sleep(1);
 
         /*
 

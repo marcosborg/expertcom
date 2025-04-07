@@ -41,6 +41,7 @@ trait Reports
 
         $total_uber = [];
         $total_bolt = [];
+        $total_private = [];
         $total_operators = [];
         $total_earnings_after_discount = [];
         $total_tips_after_discount = [];

@@ -524,11 +524,6 @@ class FinancialStatementController extends Controller
             $chart2 = null;
         }
 
-        return [
-            'chart1' => $chart1,
-            'chart2' => $chart2,
-        ];
-
         /*
 
         return view('admin.financialStatements.pdf', compact([

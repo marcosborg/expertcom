@@ -28,7 +28,7 @@ class HomeController
         }
 
         if (auth()->user()->hasRole('Admin') && !auth()->user()->hasRole('Driver')) {
-            return redirect('/admin/financial-statements');
+            return redirect('/admin/weekly-expense-reports');
         }
 
         if (auth()->user()->hasRole('Driver') && auth()->user()->driver->count() > 0) {

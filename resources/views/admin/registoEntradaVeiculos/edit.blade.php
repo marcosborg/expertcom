@@ -1840,6 +1840,60 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('inspecao_do_veiculo_validade') ? 'has-error' : '' }}">
+                                    <div>
+                                        <input type="hidden" name="inspecao_do_veiculo_validade" value="0">
+                                        <input type="checkbox" name="inspecao_do_veiculo_validade" id="inspecao_do_veiculo_validade" value="1" {{
+                                            $registoEntradaVeiculo->inspecao_do_veiculo_validade || old('inspecao_do_veiculo_validade', 0) === 1 ?
+                                        'checked'
+                                        : '' }}>
+                                        <label for="inspecao_do_veiculo_validade" style="font-weight: 400">{{
+                                            trans('cruds.registoEntradaVeiculo.fields.inspecao_do_veiculo_validade') }}</label>
+                                    </div>
+                                    @if($errors->has('inspecao_do_veiculo_validade'))
+                                    <span class="help-block" role="alert">{{ $errors->first('inspecao_do_veiculo_validade') }}</span>
+                                    @endif
+                                    <span class="help-block">{{
+                                        trans('cruds.registoEntradaVeiculo.fields.inspecao_do_veiculo_validade_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group {{ $errors->has('inspecao_do_veiculo_validade_data') ? 'has-error' : '' }}">
+                                    <label for="inspecao_do_veiculo_validade_data">{{
+                                        trans('cruds.registoEntradaVeiculo.fields.inspecao_do_veiculo_validade_data') }}</label>
+                                    <input class="form-control date" type="text" name="inspecao_do_veiculo_validade_data"
+                                        id="inspecao_do_veiculo_validade_data"
+                                        value="{{ old('inspecao_do_veiculo_validade_data', $registoEntradaVeiculo->inspecao_do_veiculo_validade_data) }}">
+                                    @if($errors->has('inspecao_do_veiculo_validade_data'))
+                                    <span class="help-block" role="alert">{{ $errors->first('inspecao_do_veiculo_validade_data')
+                                        }}</span>
+                                    @endif
+                                    <span class="help-block">{{
+                                        trans('cruds.registoEntradaVeiculo.fields.inspecao_do_veiculo_validade_data_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div
+                                    class="form-group {{ $errors->has('inspecao_do_veiculo_validade_comentarios') ? 'has-error' : '' }}">
+                                    <label for="inspecao_do_veiculo_validade_comentarios">{{
+                                        trans('cruds.registoEntradaVeiculo.fields.inspecao_do_veiculo_validade_comentarios')
+                                        }}</label>
+                                    <input class="form-control" type="text" name="inspecao_do_veiculo_validade_comentarios"
+                                        id="inspecao_do_veiculo_validade_comentarios"
+                                        value="{{ old('inspecao_do_veiculo_validade_comentarios', $registoEntradaVeiculo->inspecao_do_veiculo_validade_comentarios) }}">
+                                    @if($errors->has('inspecao_do_veiculo_validade_comentarios'))
+                                    <span class="help-block" role="alert">{{
+                                        $errors->first('inspecao_do_veiculo_validade_comentarios')
+                                        }}</span>
+                                    @endif
+                                    <span class="help-block">{{
+                                        trans('cruds.registoEntradaVeiculo.fields.inspecao_do_veiculo_validade_comentarios_helper')
+                                        }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
                                 <div
                                     class="form-group {{ $errors->has('contratro_de_prestacao_de_servicos') ? 'has-error' : '' }}">
                                     <div>

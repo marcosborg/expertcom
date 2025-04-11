@@ -57,7 +57,7 @@ class WeeklyExpenseReportController extends Controller
         if ($company_data) {
             $data = json_decode($company_data->data);
         } else {
-            $this->saveCompanyExpenses($company_id, $tvde_week_id);
+            $this->saveCompanyExpenses($company_id, $tvde_week_id);            
             return redirect(url()->current());
         }
 

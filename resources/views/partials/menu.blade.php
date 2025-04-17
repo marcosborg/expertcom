@@ -1392,6 +1392,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('vehicle_entry_record_access')
+                            <li class="{{ request()->is("admin/vehicle-entry-records") || request()->is("admin/vehicle-entry-records/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.vehicle-entry-records.index") }}">
+                                    <i class="fa-fw fas fa-sign-in-alt">
+
+                                    </i>
+                                    <span>{{ trans('cruds.vehicleEntryRecord.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

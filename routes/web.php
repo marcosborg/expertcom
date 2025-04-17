@@ -536,6 +536,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Notification System Scripts
     Route::get('notification-system-template/{notification_system_template_id}', 'NotificationSystemMessageController@notificationSystemTemplate');
     Route::get('notification-system-send-email/{notification_system_message_id}', 'NotificationSystemMessageController@notificationSystemSendEmail');
+
+    // Vehicle Entry Record
+    Route::delete('vehicle-entry-records/destroy', 'VehicleEntryRecordController@massDestroy')->name('vehicle-entry-records.massDestroy');
+    Route::post('vehicle-entry-records/parse-csv-import', 'VehicleEntryRecordController@parseCsvImport')->name('vehicle-entry-records.parseCsvImport');
+    Route::post('vehicle-entry-records/process-csv-import', 'VehicleEntryRecordController@processCsvImport')->name('vehicle-entry-records.processCsvImport');
+    Route::resource('vehicle-entry-records', 'VehicleEntryRecordController');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

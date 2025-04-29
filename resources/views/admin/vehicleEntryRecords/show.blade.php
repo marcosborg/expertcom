@@ -43,14 +43,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.vehicleEntryRecord.fields.driver') }}
-                                    </th>
-                                    <td>
-                                        {{ $vehicleEntryRecord->driver->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.vehicleEntryRecord.fields.vehicle') }}
                                     </th>
                                     <td>
@@ -67,18 +59,22 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.vehicleEntryRecord.fields.battery_exit') }}
-                                    </th>
-                                    <td>
-                                        {{ $vehicleEntryRecord->battery_exit }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.vehicleEntryRecord.fields.quilometers') }}
                                     </th>
                                     <td>
                                         {{ $vehicleEntryRecord->quilometers }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.vehicleEntryRecord.fields.photos') }}
+                                    </th>
+                                    <td>
+                                        @foreach($vehicleEntryRecord->photos as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $media->getUrl('thumb') }}">
+                                            </a>
+                                        @endforeach
                                     </td>
                                 </tr>
                             </tbody>

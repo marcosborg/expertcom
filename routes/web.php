@@ -541,6 +541,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('vehicle-entry-records/destroy', 'VehicleEntryRecordController@massDestroy')->name('vehicle-entry-records.massDestroy');
     Route::post('vehicle-entry-records/parse-csv-import', 'VehicleEntryRecordController@parseCsvImport')->name('vehicle-entry-records.parseCsvImport');
     Route::post('vehicle-entry-records/process-csv-import', 'VehicleEntryRecordController@processCsvImport')->name('vehicle-entry-records.processCsvImport');
+    Route::post('vehicle-entry-records/media', 'VehicleEntryRecordController@storeMedia')->name('vehicle-entry-records.storeMedia');
+    Route::post('vehicle-entry-records/ckmedia', 'VehicleEntryRecordController@storeCKEditorImages')->name('vehicle-entry-records.storeCKEditorImages');
     Route::resource('vehicle-entry-records', 'VehicleEntryRecordController');
 });
 

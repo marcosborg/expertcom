@@ -37,19 +37,16 @@
                                     {{ trans('cruds.vehicleEntryRecord.fields.user') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.vehicleEntryRecord.fields.driver') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.vehicleEntryRecord.fields.vehicle') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.vehicleEntryRecord.fields.battery_enter') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.vehicleEntryRecord.fields.battery_exit') }}
+                                    {{ trans('cruds.vehicleEntryRecord.fields.quilometers') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.vehicleEntryRecord.fields.quilometers') }}
+                                    {{ trans('cruds.vehicleEntryRecord.fields.photos') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -113,11 +110,10 @@
 { data: 'id', name: 'id' },
 { data: 'date_time', name: 'date_time' },
 { data: 'user_name', name: 'user.name' },
-{ data: 'driver_name', name: 'driver.name' },
 { data: 'vehicle_license_plate', name: 'vehicle.license_plate' },
 { data: 'battery_enter', name: 'battery_enter' },
-{ data: 'battery_exit', name: 'battery_exit' },
 { data: 'quilometers', name: 'quilometers' },
+{ data: 'photos', name: 'photos', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

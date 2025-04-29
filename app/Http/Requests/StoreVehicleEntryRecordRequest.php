@@ -25,10 +25,6 @@ class StoreVehicleEntryRecordRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'driver_id' => [
-                'required',
-                'integer',
-            ],
             'vehicle_id' => [
                 'required',
                 'integer',
@@ -39,17 +35,14 @@ class StoreVehicleEntryRecordRequest extends FormRequest
                 'min:-2147483648',
                 'max:2147483647',
             ],
-            'battery_exit' => [
-                'required',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
-            ],
             'quilometers' => [
                 'required',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
+            ],
+            'photos' => [
+                'array',
             ],
         ];
     }

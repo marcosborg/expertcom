@@ -4,28 +4,29 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyVehicleEntryRecordRequest;
 use App\Http\Requests\StoreVehicleEntryRecordRequest;
 use App\Http\Requests\UpdateVehicleEntryRecordRequest;
-use App\Models\Driver;
 use App\Models\User;
 use App\Models\VehicleEntryRecord;
 use App\Models\VehicleItem;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class VehicleEntryRecordController extends Controller
 {
-    use CsvImportTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index(Request $request)
     {
         abort_if(Gate::denies('vehicle_entry_record_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = VehicleEntryRecord::with(['user', 'driver', 'vehicle'])->select(sprintf('%s.*', (new VehicleEntryRecord)->table));
+            $query = VehicleEntryRecord::with(['user', 'vehicle'])->select(sprintf('%s.*', (new VehicleEntryRecord)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -54,10 +55,6 @@ class VehicleEntryRecordController extends Controller
                 return $row->user ? $row->user->name : '';
             });
 
-            $table->addColumn('driver_name', function ($row) {
-                return $row->driver ? $row->driver->name : '';
-            });
-
             $table->addColumn('vehicle_license_plate', function ($row) {
                 return $row->vehicle ? $row->vehicle->license_plate : '';
             });
@@ -65,14 +62,22 @@ class VehicleEntryRecordController extends Controller
             $table->editColumn('battery_enter', function ($row) {
                 return $row->battery_enter ? $row->battery_enter : '';
             });
-            $table->editColumn('battery_exit', function ($row) {
-                return $row->battery_exit ? $row->battery_exit : '';
-            });
             $table->editColumn('quilometers', function ($row) {
                 return $row->quilometers ? $row->quilometers : '';
             });
+            $table->editColumn('photos', function ($row) {
+                if (! $row->photos) {
+                    return '';
+                }
+                $links = [];
+                foreach ($row->photos as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
+                }
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'driver', 'vehicle']);
+                return implode(' ', $links);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'user', 'vehicle', 'photos']);
 
             return $table->make(true);
         }
@@ -86,16 +91,22 @@ class VehicleEntryRecordController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $vehicles = VehicleItem::pluck('license_plate', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.vehicleEntryRecords.create', compact('drivers', 'users', 'vehicles'));
+        return view('admin.vehicleEntryRecords.create', compact('users', 'vehicles'));
     }
 
     public function store(StoreVehicleEntryRecordRequest $request)
     {
         $vehicleEntryRecord = VehicleEntryRecord::create($request->all());
+
+        foreach ($request->input('photos', []) as $file) {
+            $vehicleEntryRecord->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $vehicleEntryRecord->id]);
+        }
 
         return redirect()->route('admin.vehicle-entry-records.index');
     }
@@ -106,18 +117,30 @@ class VehicleEntryRecordController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $drivers = Driver::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $vehicles = VehicleItem::pluck('license_plate', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $vehicleEntryRecord->load('user', 'driver', 'vehicle');
+        $vehicleEntryRecord->load('user', 'vehicle');
 
-        return view('admin.vehicleEntryRecords.edit', compact('drivers', 'users', 'vehicleEntryRecord', 'vehicles'));
+        return view('admin.vehicleEntryRecords.edit', compact('users', 'vehicleEntryRecord', 'vehicles'));
     }
 
     public function update(UpdateVehicleEntryRecordRequest $request, VehicleEntryRecord $vehicleEntryRecord)
     {
         $vehicleEntryRecord->update($request->all());
+
+        if (count($vehicleEntryRecord->photos) > 0) {
+            foreach ($vehicleEntryRecord->photos as $media) {
+                if (! in_array($media->file_name, $request->input('photos', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $vehicleEntryRecord->photos->pluck('file_name')->toArray();
+        foreach ($request->input('photos', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $vehicleEntryRecord->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+            }
+        }
 
         return redirect()->route('admin.vehicle-entry-records.index');
     }
@@ -126,7 +149,7 @@ class VehicleEntryRecordController extends Controller
     {
         abort_if(Gate::denies('vehicle_entry_record_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $vehicleEntryRecord->load('user', 'driver', 'vehicle');
+        $vehicleEntryRecord->load('user', 'vehicle');
 
         return view('admin.vehicleEntryRecords.show', compact('vehicleEntryRecord'));
     }
@@ -149,5 +172,17 @@ class VehicleEntryRecordController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('vehicle_entry_record_create') && Gate::denies('vehicle_entry_record_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new VehicleEntryRecord();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

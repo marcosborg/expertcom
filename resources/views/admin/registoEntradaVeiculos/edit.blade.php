@@ -203,16 +203,19 @@
             </div>
             <div class="col-lg-9">
                 <ul class="nav nav-tabs">
+                    @if (request()->query('step') == 1 || request()->query('step') == 2 || request()->query('step') == 3)
                     <li role="presentation" {{ request()->query('step') == 1 ? 'class=active' : '' }}><a>1.º Check de
-                            Danos Visiveis do Carro</a></li>
-                    <li role="presentation" {{ request()->query('step') == 2 ? 'class=active' : '' }}><a>2.º Checkagem
-                            de aspiração(10 minutos)</a></li>
-                    <li role="presentation" {{ request()->query('step') == 3 ? 'class=active' : '' }}><a>3.º
-                            Documentação</a></li>
+                        Danos Visiveis do Carro</a></li>
+                <li role="presentation" {{ request()->query('step') == 2 ? 'class=active' : '' }}><a>2.º Checkagem
+                        de aspiração(10 minutos)</a></li>
+                <li role="presentation" {{ request()->query('step') == 3 ? 'class=active' : '' }}><a>3.º
+                        Documentação</a></li>
+                    @else
                     <li role="presentation" {{ request()->query('step') == 4 ? 'class=active' : '' }}><a>4.º Checkagem
-                            de lavagem</a></li>
-                    <li role="presentation" {{ request()->query('step') == 5 ? 'class=active' : '' }}><a>5.º
-                            Assinaturas</a></li>
+                        de lavagem</a></li>
+                <li role="presentation" {{ request()->query('step') == 5 ? 'class=active' : '' }}><a>5.º
+                        Assinaturas</a></li>
+                    @endif
                 </ul>
                 @if (request()->query('step') == 1)
                 <input type="hidden" name="has_photos" value="true">
@@ -2076,8 +2079,8 @@
                         <button class="btn btn-danger" type="submit" name="step" value="2">
                             Recuar
                         </button>
-                        <button class="btn btn-danger" type="submit" name="step" value="4">
-                            Avançar
+                        <button class="btn btn-success" type="submit">
+                            Gravar
                         </button>
                     </div>
                 </div>

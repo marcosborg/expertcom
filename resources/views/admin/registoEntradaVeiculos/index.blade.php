@@ -113,7 +113,13 @@
 
                                             @can('registo_entrada_veiculo_edit')
                                                 <a class="btn btn-xs btn-info" href="/admin/registo-entrada-veiculos/{{ $registoEntradaVeiculo->id }}/edit?step=1">
-                                                    {{ trans('global.edit') }}
+                                                    Entrada
+                                                </a>
+                                            @endcan
+
+                                            @can('registo_entrada_veiculo_edit')
+                                                <a class="btn btn-xs btn-success" href="/admin/registo-entrada-veiculos/{{ $registoEntradaVeiculo->id }}/edit?step=4">
+                                                    Saída
                                                 </a>
                                             @endcan
 

@@ -739,12 +739,14 @@ trait Reports
                 'tvde_week_id' => $tvde_week_id
             ])->get();
 
+            //return json_decode($current_accounts[0]->data)->adjustments;
+
             $fleet_adjustments = [];
 
             foreach ($current_accounts as $current_account) {
                 $data = json_decode($current_account->data);
                 foreach ($data->adjustments as $fleet_adjustment) {
-                    if ($fleet_adjustment->fleet_management == true) {
+                    if ($fleet_adjustment->fleet_management == 1 && $fleet_adjustment->company_expense == 1) {
                         if ($fleet_adjustment->type == 'refund') {
                             $fleet_adjustments[] = (-$fleet_adjustment->amount);
                         } else {

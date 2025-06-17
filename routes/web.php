@@ -1,9 +1,5 @@
 <?php
 
-Route::get('down', function() {
-    Artisan::call('down');
-});
-
 //Route::redirect('/', '/admin');
 
 Route::get('/', 'WebsiteController@index');

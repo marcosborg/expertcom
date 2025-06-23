@@ -2385,3 +2385,4 @@ window.onload = function() {
 
 </script>
 @endsection
+<script>console.log({!! $vehicleManageEntry !!})</script>

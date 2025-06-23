@@ -16,28 +16,102 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Notification;
+use Yajra\DataTables\Facades\DataTables;
 
 class RecruitmentFormController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('recruitment_form_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $company_id = session()->get('company_id');
+        if ($request->ajax()) {
+            $query = RecruitmentForm::with(['user', 'company'])->select(sprintf('%s.*', (new RecruitmentForm)->table));
+            $table = Datatables::of($query);
 
-        if ($company_id > 0) {
-            $recruitmentForms = RecruitmentForm::where('company_id', $company_id)->with(['company', 'user', 'to_company', 'media'])->get();
-        } else {
-            if (auth()->user()->hasRole('promotor')) {
-                $recruitmentForms = RecruitmentForm::where('user_id', auth()->user()->id)->with(['company', 'user', 'to_company', 'media'])->get();
-            } else {
-                $recruitmentForms = RecruitmentForm::with(['company', 'user', 'to_company', 'media'])->get();
-            }
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = 'recruitment_form_show';
+                $editGate      = 'recruitment_form_edit';
+                $deleteGate    = 'recruitment_form_delete';
+                $crudRoutePart = 'recruitment-forms';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->addColumn('user_name', function ($row) {
+                return $row->user ? $row->user->name : '';
+            });
+
+            $table->addColumn('company_name', function ($row) {
+                return $row->company ? $row->company->name : '';
+            });
+
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
+            $table->editColumn('email', function ($row) {
+                return $row->email ? $row->email : '';
+            });
+            $table->editColumn('cv', function ($row) {
+                return $row->cv ? '<a href="' . $row->cv->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
+            $table->editColumn('contact_successfully', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->contact_successfully ? 'checked' : null) . '>';
+            });
+            $table->editColumn('phone', function ($row) {
+                return $row->phone ? $row->phone : '';
+            });
+            $table->editColumn('scheduled_interview', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->scheduled_interview ? 'checked' : null) . '>';
+            });
+
+            $table->editColumn('done', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->done ? 'checked' : null) . '>';
+            });
+            $table->editColumn('status', function ($row) {
+                return $row->status ? RecruitmentForm::STATUS_RADIO[$row->status] : '';
+            });
+            $table->editColumn('type', function ($row) {
+                return $row->type ? RecruitmentForm::TYPE_RADIO[$row->type] : '';
+            });
+            $table->editColumn('chanel', function ($row) {
+                return $row->chanel ? RecruitmentForm::CHANEL_RADIO[$row->chanel] : '';
+            });
+            $table->editColumn('start_time', function ($row) {
+                return $row->start_time ? $row->start_time : '';
+            });
+            $table->editColumn('end_time', function ($row) {
+                return $row->end_time ? $row->end_time : '';
+            });
+            $table->editColumn('day_off', function ($row) {
+                return $row->day_off ? RecruitmentForm::DAY_OFF_RADIO[$row->day_off] : '';
+            });
+            $table->editColumn('amount_to_pay', function ($row) {
+                return $row->amount_to_pay ? $row->amount_to_pay : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'user', 'company', 'cv', 'contact_successfully', 'scheduled_interview', 'done']);
+
+            return $table->make(true);
         }
 
-        return view('admin.recruitmentForms.index', compact('recruitmentForms'));
+        $users     = User::get();
+        $companies = Company::get();
+
+        return view('admin.recruitmentForms.index', compact('users', 'companies'));
     }
 
     public function create()

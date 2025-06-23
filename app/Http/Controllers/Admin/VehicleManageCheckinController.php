@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\VehicleManageEntry;
 
 class VehicleManageCheckinController extends Controller
 {
@@ -75,10 +76,10 @@ class VehicleManageCheckinController extends Controller
                 return '<input type="checkbox" disabled ' . ($row->reparado ? 'checked' : null) . '>';
             });
             $table->editColumn('signature_collector_data', function ($row) {
-                return $row->signature_collector_data ? $row->signature_collector_data : '';
+                return $row->signature_collector_data ? 'Sim' : '';
             });
             $table->editColumn('signature_driver_data', function ($row) {
-                return $row->signature_driver_data ? $row->signature_driver_data : '';
+                return $row->signature_driver_data ? 'Sim' : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'user', 'vehicle_item', 'driver', 'tratado', 'reparado']);
@@ -125,7 +126,9 @@ class VehicleManageCheckinController extends Controller
 
         $vehicleManageCheckin->load('user', 'vehicle_item', 'driver');
 
-        return view('admin.vehicleManageCheckins.edit', compact('drivers', 'users', 'vehicleManageCheckin', 'vehicle_items'));
+        $vehicleManageEntry = VehicleManageEntry::where('vehicle_item_id', $vehicleManageCheckin->vehicle_item_id)->orderBy('id', 'desc')->first();
+
+        return view('admin.vehicleManageCheckins.edit', compact('drivers', 'users', 'vehicleManageCheckin', 'vehicle_items', 'vehicleManageEntry'));
     }
 
     public function update(UpdateVehicleManageCheckinRequest $request, VehicleManageCheckin $vehicleManageCheckin)

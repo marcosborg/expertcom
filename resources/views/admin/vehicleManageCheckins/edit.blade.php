@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 @section('content')
+@section('styles')
+    @parent
+    <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css" rel="stylesheet" />
+@endsection
 <form method="POST" action="{{ route("admin.vehicle-manage-checkins.update", [$vehicleManageCheckin->id]) }}" enctype="multipart/form-data">
     <div class="content">
 
@@ -209,7 +213,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('frente_do_veiculo_teto_photos') ? 'has-error' : '' }}">
                                                 <label for="frente_do_veiculo_teto_photos">{{ trans('cruds.vehicleManageCheckin.fields.frente_do_veiculo_teto_photos') }}</label>
                                                 <div class="needsclick dropzone" id="frente_do_veiculo_teto_photos-dropzone">
@@ -220,7 +224,27 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.frente_do_veiculo_teto_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Foto anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->frente_do_veiculo_teto_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->frente_do_veiculo_teto_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Diversos">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->frente_do_veiculo_teto_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Diversos">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('frente_do_veiculo_parabrisa_photos') ? 'has-error' : '' }}">
                                                 <label for="frente_do_veiculo_parabrisa_photos">{{ trans('cruds.vehicleManageCheckin.fields.frente_do_veiculo_parabrisa_photos') }}</label>
                                                 <div class="needsclick dropzone" id="frente_do_veiculo_parabrisa_photos-dropzone">
@@ -231,7 +255,21 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.frente_do_veiculo_parabrisa_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Foto anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @foreach ($vehicleManageEntry->frente_do_veiculo_parabrisa_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Diversos">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('frente_do_veiculo_capo_photos') ? 'has-error' : '' }}">
                                                 <label for="frente_do_veiculo_capo_photos">{{ trans('cruds.vehicleManageCheckin.fields.frente_do_veiculo_capo_photos') }}</label>
                                                 <div class="needsclick dropzone" id="frente_do_veiculo_capo_photos-dropzone">
@@ -242,7 +280,19 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.frente_do_veiculo_capo_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Foto anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @foreach ($vehicleManageEntry->frente_do_veiculo_capo_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Diversos">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('frente_do_veiculo_parachoque_photos') ? 'has-error' : '' }}">
                                                 <label for="frente_do_veiculo_parachoque_photos">{{ trans('cruds.vehicleManageCheckin.fields.frente_do_veiculo_parachoque_photos') }}</label>
                                                 <div class="needsclick dropzone" id="frente_do_veiculo_parachoque_photos-dropzone">
@@ -251,6 +301,18 @@
                                                 <span class="help-block" role="alert">{{ $errors->first('frente_do_veiculo_parachoque_photos') }}</span>
                                                 @endif
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.frente_do_veiculo_parachoque_photos_helper') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Foto anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @foreach ($vehicleManageEntry->frente_do_veiculo_parachoque_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Diversos">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -897,6 +959,7 @@
 </form>
 @endsection
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js"></script>
 <script>
     var uploadedFrenteDoVeiculoTetoPhotosMap = {}
 Dropzone.options.frenteDoVeiculoTetoPhotosDropzone = {

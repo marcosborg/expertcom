@@ -225,18 +225,18 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label>Foto anterior</label>
+                                            <label>Anterior</label>
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     @if ($vehicleManageCheckin->frente_do_veiculo_teto_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->frente_do_veiculo_teto_photos as $media)
-                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Diversos">
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->frente_do_veiculo_teto_photos as $media)
-                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Diversos">
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -256,14 +256,22 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label>Foto anterior</label>
+                                            <label>Anterior</label>
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-                                                    @foreach ($vehicleManageEntry->frente_do_veiculo_parabrisa_photos as $media)
-                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Diversos">
+                                                    @if ($vehicleManageCheckin->frente_do_veiculo_parabrisa_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->frente_do_veiculo_parabrisa_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->frente_do_veiculo_parabrisa_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -281,14 +289,22 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label>Foto anterior</label>
+                                            <label>Anterior</label>
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-                                                    @foreach ($vehicleManageEntry->frente_do_veiculo_capo_photos as $media)
-                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Diversos">
+                                                    @if ($vehicleManageCheckin->frente_do_veiculo_capo_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->frente_do_veiculo_capo_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->frente_do_veiculo_capo_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -304,14 +320,22 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label>Foto anterior</label>
+                                            <label>Anterior</label>
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-                                                    @foreach ($vehicleManageEntry->frente_do_veiculo_parachoque_photos as $media)
-                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Diversos">
+                                                    @if ($vehicleManageCheckin->frente_do_veiculo_parachoque_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->frente_do_veiculo_parachoque_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->frente_do_veiculo_parachoque_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -403,7 +427,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('lateral_esquerda_paralama_diant_photos') ? 'has-error' : '' }}">
                                                 <label for="lateral_esquerda_paralama_diant_photos">{{ trans('cruds.vehicleManageCheckin.fields.lateral_esquerda_paralama_diant_photos') }}</label>
                                                 <div class="needsclick dropzone" id="lateral_esquerda_paralama_diant_photos-dropzone">
@@ -414,7 +438,27 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.lateral_esquerda_paralama_diant_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_esquerda_paralama_diant_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_esquerda_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_esquerda_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('lateral_esquerda_retrovisor_photos') ? 'has-error' : '' }}">
                                                 <label for="lateral_esquerda_retrovisor_photos">{{ trans('cruds.vehicleManageCheckin.fields.lateral_esquerda_retrovisor_photos') }}</label>
                                                 <div class="needsclick dropzone" id="lateral_esquerda_retrovisor_photos-dropzone">
@@ -425,7 +469,29 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.lateral_esquerda_retrovisor_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_esquerda_retrovisor_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_esquerda_retrovisor_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_esquerda_retrovisor_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('lateral_esquerda_porta_diant_photos') ? 'has-error' : '' }}">
                                                 <label for="lateral_esquerda_porta_diant_photos">{{ trans('cruds.vehicleManageCheckin.fields.lateral_esquerda_porta_diant_photos') }}</label>
                                                 <div class="needsclick dropzone" id="lateral_esquerda_porta_diant_photos-dropzone">
@@ -436,7 +502,27 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.lateral_esquerda_porta_diant_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_esquerda_porta_diant_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_esquerda_porta_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_esquerda_porta_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('lateral_esquerda_porta_tras_photos') ? 'has-error' : '' }}">
                                                 <label for="lateral_esquerda_porta_tras_photos">{{ trans('cruds.vehicleManageCheckin.fields.lateral_esquerda_porta_tras_photos') }}</label>
                                                 <div class="needsclick dropzone" id="lateral_esquerda_porta_tras_photos-dropzone">
@@ -447,7 +533,29 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.lateral_esquerda_porta_tras_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_esquerda_porta_tras_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_esquerda_porta_tras_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_esquerda_porta_tras_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('lateral_esquerda_lateral_photos') ? 'has-error' : '' }}">
                                                 <label for="lateral_esquerda_lateral_photos">{{ trans('cruds.vehicleManageCheckin.fields.lateral_esquerda_lateral_photos') }}</label>
                                                 <div class="needsclick dropzone" id="lateral_esquerda_lateral_photos-dropzone">
@@ -456,6 +564,26 @@
                                                 <span class="help-block" role="alert">{{ $errors->first('lateral_esquerda_lateral_photos') }}</span>
                                                 @endif
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.lateral_esquerda_lateral_photos_helper') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_esquerda_lateral_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_esquerda_lateral_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_esquerda_lateral_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -579,7 +707,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('traseira_tampa_traseira_photos') ? 'has-error' : '' }}">
                                                 <label for="traseira_tampa_traseira_photos">{{ trans('cruds.vehicleManageCheckin.fields.traseira_tampa_traseira_photos') }}</label>
                                                 <div class="needsclick dropzone" id="traseira_tampa_traseira_photos-dropzone">
@@ -590,7 +718,27 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.traseira_tampa_traseira_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->traseira_tampa_traseira_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->traseira_tampa_traseira_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->traseira_tampa_traseira_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('traseira_lanternas_dir_photos') ? 'has-error' : '' }}">
                                                 <label for="traseira_lanternas_dir_photos">{{ trans('cruds.vehicleManageCheckin.fields.traseira_lanternas_dir_photos') }}</label>
                                                 <div class="needsclick dropzone" id="traseira_lanternas_dir_photos-dropzone">
@@ -601,7 +749,29 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.traseira_lanternas_dir_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->traseira_lanternas_dir_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->traseira_lanternas_dir_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->traseira_lanternas_dir_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('traseira_lanterna_esq_photos') ? 'has-error' : '' }}">
                                                 <label for="traseira_lanterna_esq_photos">{{ trans('cruds.vehicleManageCheckin.fields.traseira_lanterna_esq_photos') }}</label>
                                                 <div class="needsclick dropzone" id="traseira_lanterna_esq_photos-dropzone">
@@ -612,7 +782,27 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.traseira_lanterna_esq_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->traseira_lanterna_esq_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->traseira_lanterna_esq_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->traseira_lanterna_esq_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('traseira_parachoque_tras_photos') ? 'has-error' : '' }}">
                                                 <label for="traseira_parachoque_tras_photos">{{ trans('cruds.vehicleManageCheckin.fields.traseira_parachoque_tras_photos') }}</label>
                                                 <div class="needsclick dropzone" id="traseira_parachoque_tras_photos-dropzone">
@@ -623,7 +813,29 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.traseira_parachoque_tras_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->traseira_parachoque_tras_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->traseira_parachoque_tras_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->traseira_parachoque_tras_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('traseira_estepe_photos') ? 'has-error' : '' }}">
                                                 <label for="traseira_estepe_photos">{{ trans('cruds.vehicleManageCheckin.fields.traseira_estepe_photos') }}</label>
                                                 <div class="needsclick dropzone" id="traseira_estepe_photos-dropzone">
@@ -634,7 +846,27 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.traseira_estepe_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->traseira_estepe_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->traseira_estepe_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->traseira_estepe_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('traseira_macaco_photos') ? 'has-error' : '' }}">
                                                 <label for="traseira_macaco_photos">{{ trans('cruds.vehicleManageCheckin.fields.traseira_macaco_photos') }}</label>
                                                 <div class="needsclick dropzone" id="traseira_macaco_photos-dropzone">
@@ -645,7 +877,29 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.traseira_macaco_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->traseira_macaco_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->traseira_macaco_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->traseira_macaco_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('traseira_chave_de_roda_photos') ? 'has-error' : '' }}">
                                                 <label for="traseira_chave_de_roda_photos">{{ trans('cruds.vehicleManageCheckin.fields.traseira_chave_de_roda_photos') }}</label>
                                                 <div class="needsclick dropzone" id="traseira_chave_de_roda_photos-dropzone">
@@ -656,7 +910,27 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.traseira_chave_de_roda_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_esquerda_paralama_diant_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_esquerda_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_esquerda_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('traseira_triangulo_photos') ? 'has-error' : '' }}">
                                                 <label for="traseira_triangulo_photos">{{ trans('cruds.vehicleManageCheckin.fields.traseira_triangulo_photos') }}</label>
                                                 <div class="needsclick dropzone" id="traseira_triangulo_photos-dropzone">
@@ -665,6 +939,26 @@
                                                 <span class="help-block" role="alert">{{ $errors->first('traseira_triangulo_photos') }}</span>
                                                 @endif
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.traseira_triangulo_photos_helper') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_esquerda_paralama_diant_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_esquerda_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_esquerda_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -755,7 +1049,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('lateral_direita_lateral_photos') ? 'has-error' : '' }}">
                                                 <label for="lateral_direita_lateral_photos">{{ trans('cruds.vehicleManageCheckin.fields.lateral_direita_lateral_photos') }}</label>
                                                 <div class="needsclick dropzone" id="lateral_direita_lateral_photos-dropzone">
@@ -766,7 +1060,27 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.lateral_direita_lateral_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_direita_lateral_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_direita_lateral_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_direita_lateral_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('lateral_direita_porta_tras_photos') ? 'has-error' : '' }}">
                                                 <label for="lateral_direita_porta_tras_photos">{{ trans('cruds.vehicleManageCheckin.fields.lateral_direita_porta_tras_photos') }}</label>
                                                 <div class="needsclick dropzone" id="lateral_direita_porta_tras_photos-dropzone">
@@ -777,7 +1091,29 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.lateral_direita_porta_tras_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_direita_porta_tras_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_direita_porta_tras_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_direita_porta_tras_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('lateral_direita_porta_diant_photos') ? 'has-error' : '' }}">
                                                 <label for="lateral_direita_porta_diant_photos">{{ trans('cruds.vehicleManageCheckin.fields.lateral_direita_porta_diant_photos') }}</label>
                                                 <div class="needsclick dropzone" id="lateral_direita_porta_diant_photos-dropzone">
@@ -788,7 +1124,27 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.lateral_direita_porta_diant_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_direita_porta_diant_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_direita_porta_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_direita_porta_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('lateral_direita_retrovisor_photos') ? 'has-error' : '' }}">
                                                 <label for="lateral_direita_retrovisor_photos">{{ trans('cruds.vehicleManageCheckin.fields.lateral_direita_retrovisor_photos') }}</label>
                                                 <div class="needsclick dropzone" id="lateral_direita_retrovisor_photos-dropzone">
@@ -799,7 +1155,29 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.lateral_direita_retrovisor_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_direita_retrovisor_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_direita_retrovisor_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_direita_retrovisor_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('lateral_direita_paralama_diant_photos') ? 'has-error' : '' }}">
                                                 <label for="lateral_direita_paralama_diant_photos">{{ trans('cruds.vehicleManageCheckin.fields.lateral_direita_paralama_diant_photos') }}</label>
                                                 <div class="needsclick dropzone" id="lateral_direita_paralama_diant_photos-dropzone">
@@ -808,6 +1186,26 @@
                                                 <span class="help-block" role="alert">{{ $errors->first('lateral_direita_paralama_diant_photos') }}</span>
                                                 @endif
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.lateral_direita_paralama_diant_photos_helper') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->lateral_direita_paralama_diant_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->lateral_direita_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->lateral_direita_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -878,7 +1276,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('cinzeiro_photos') ? 'has-error' : '' }}">
                                                 <label for="cinzeiro_photos">{{ trans('cruds.vehicleManageCheckin.fields.cinzeiro_photos') }}</label>
                                                 <div class="needsclick dropzone" id="cinzeiro_photos-dropzone">
@@ -889,7 +1287,27 @@
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.cinzeiro_photos_helper') }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->cinzeiro_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->cinzeiro_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Telemóvel">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->cinzeiro_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Telemóvel">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group {{ $errors->has('telemovel_photos') ? 'has-error' : '' }}">
                                                 <label for="telemovel_photos">{{ trans('cruds.vehicleManageCheckin.fields.telemovel_photos') }}</label>
                                                 <div class="needsclick dropzone" id="telemovel_photos-dropzone">
@@ -898,6 +1316,26 @@
                                                 <span class="help-block" role="alert">{{ $errors->first('telemovel_photos') }}</span>
                                                 @endif
                                                 <span class="help-block">{{ trans('cruds.vehicleManageCheckin.fields.telemovel_photos_helper') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Anterior</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @if ($vehicleManageCheckin->telemovel_photos->count() > 0)
+                                                    @foreach ($vehicleManageCheckin->telemovel_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Telemóvel">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    @foreach ($vehicleManageEntry->telemovel_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Telemóvel">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

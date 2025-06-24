@@ -553,6 +553,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('vehicle-manage-deliveries/destroy', 'VehicleManageDeliveryController@massDestroy')->name('vehicle-manage-deliveries.massDestroy');
     Route::resource('vehicle-manage-deliveries', 'VehicleManageDeliveryController');
 
+    // Vehicle Damage Checkin
+    Route::delete('vehicle-damage-checkins/destroy', 'VehicleDamageCheckinController@massDestroy')->name('vehicle-damage-checkins.massDestroy');
+    Route::resource('vehicle-damage-checkins', 'VehicleDamageCheckinController');
+
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

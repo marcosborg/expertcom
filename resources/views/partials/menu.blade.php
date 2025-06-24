@@ -1438,6 +1438,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('vehicle_damage_checkin_access')
+                            <li class="{{ request()->is("admin/vehicle-damage-checkins") || request()->is("admin/vehicle-damage-checkins/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.vehicle-damage-checkins.index") }}">
+                                    <i class="fa-fw fas fa-wrench">
+
+                                    </i>
+                                    <span>{{ trans('cruds.vehicleDamageCheckin.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

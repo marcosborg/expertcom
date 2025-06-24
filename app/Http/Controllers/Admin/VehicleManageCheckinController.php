@@ -131,7 +131,16 @@ class VehicleManageCheckinController extends Controller
 
         $vehicleManageEntry = VehicleManageEntry::where('vehicle_item_id', $vehicleManageCheckin->vehicle_item_id)->orderBy('id', 'desc')->first();
 
-        return view('admin.vehicleManageCheckins.edit', compact('drivers', 'users', 'vehicleManageCheckin', 'vehicle_items', 'vehicleManageEntry'));
+        //PROCURA O ÚLTIMO VEHICLE DAMAGE CHECKIN
+        $vehicle_damage_checkin = VehicleDamageCheckin::whereHas('vehicle_manage_checkin', function ($query) use ($vehicleManageCheckin) {
+            $query->where('vehicle_item_id', $vehicleManageCheckin->vehicle_item_id);
+        })->orderBy('id', 'desc')->first();
+
+        if($vehicle_damage_checkin) {
+            $vehicle_damage_checkin->load('vehicle_manage_checkin');
+        }
+
+        return view('admin.vehicleManageCheckins.edit', compact('drivers', 'users', 'vehicleManageCheckin', 'vehicle_items', 'vehicleManageEntry', 'vehicle_damage_checkin'));
     }
 
     public function update(UpdateVehicleManageCheckinRequest $request, VehicleManageCheckin $vehicleManageCheckin)

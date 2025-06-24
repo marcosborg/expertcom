@@ -234,6 +234,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->frente_do_veiculo_teto_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->frente_do_veiculo_teto_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->frente_do_veiculo_teto_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
@@ -261,6 +271,16 @@
                                                 <div class="panel-body">
                                                     @if ($vehicleManageCheckin->frente_do_veiculo_parabrisa_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->frente_do_veiculo_parabrisa_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->frente_do_veiculo_parabrisa_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->frente_do_veiculo_parabrisa_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
@@ -298,6 +318,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->frente_do_veiculo_capo_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->frente_do_veiculo_capo_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->frente_do_veiculo_capo_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
@@ -325,6 +355,16 @@
                                                 <div class="panel-body">
                                                     @if ($vehicleManageCheckin->frente_do_veiculo_parachoque_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->frente_do_veiculo_parachoque_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->frente_do_veiculo_parachoque_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->frente_do_veiculo_parachoque_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
@@ -448,6 +488,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_paralama_diant_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->lateral_esquerda_paralama_diant_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
@@ -476,6 +526,16 @@
                                                     @if ($vehicleManageCheckin->lateral_esquerda_retrovisor_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->lateral_esquerda_retrovisor_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_retrovisor_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_retrovisor_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -512,6 +572,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_porta_diant_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_porta_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->lateral_esquerda_porta_diant_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
@@ -540,6 +610,16 @@
                                                     @if ($vehicleManageCheckin->lateral_esquerda_porta_tras_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->lateral_esquerda_porta_tras_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_porta_tras_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_porta_tras_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -573,6 +653,16 @@
                                                     @if ($vehicleManageCheckin->lateral_esquerda_lateral_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->lateral_esquerda_lateral_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral esquerda">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_lateral_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_lateral_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -728,6 +818,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->traseira_tampa_traseira_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->traseira_tampa_traseira_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->traseira_tampa_traseira_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
@@ -756,6 +856,16 @@
                                                     @if ($vehicleManageCheckin->traseira_lanternas_dir_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->traseira_lanternas_dir_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->traseira_lanternas_dir_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->traseira_lanternas_dir_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -792,6 +902,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->traseira_lanterna_esq_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->traseira_lanterna_esq_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->traseira_lanterna_esq_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
@@ -820,6 +940,16 @@
                                                     @if ($vehicleManageCheckin->traseira_parachoque_tras_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->traseira_parachoque_tras_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->traseira_parachoque_tras_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->traseira_parachoque_tras_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -856,6 +986,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->traseira_estepe_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->traseira_estepe_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->traseira_estepe_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
@@ -884,6 +1024,16 @@
                                                     @if ($vehicleManageCheckin->traseira_macaco_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->traseira_macaco_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->traseira_macaco_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->traseira_macaco_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -920,6 +1070,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_paralama_diant_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->lateral_esquerda_paralama_diant_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
@@ -948,6 +1108,16 @@
                                                     @if ($vehicleManageCheckin->lateral_esquerda_paralama_diant_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->lateral_esquerda_paralama_diant_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Traseira">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_paralama_diant_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_esquerda_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -1070,6 +1240,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_direita_lateral_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_direita_lateral_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->lateral_direita_lateral_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
@@ -1098,6 +1278,16 @@
                                                     @if ($vehicleManageCheckin->lateral_direita_porta_tras_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->lateral_direita_porta_tras_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_direita_porta_tras_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_direita_porta_tras_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -1134,6 +1324,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_direita_porta_diant_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_direita_porta_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->lateral_direita_porta_diant_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
@@ -1162,6 +1362,16 @@
                                                     @if ($vehicleManageCheckin->lateral_direita_retrovisor_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->lateral_direita_retrovisor_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_direita_retrovisor_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_direita_retrovisor_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -1195,6 +1405,16 @@
                                                     @if ($vehicleManageCheckin->lateral_direita_paralama_diant_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->lateral_direita_paralama_diant_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Lateral direita">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->lateral_direita_paralama_diant_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->lateral_direita_paralama_diant_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
@@ -1297,6 +1517,16 @@
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->cinzeiro_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->cinzeiro_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                     @else
                                                     @foreach ($vehicleManageEntry->cinzeiro_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Telemóvel">
@@ -1325,6 +1555,16 @@
                                                     @if ($vehicleManageCheckin->telemovel_photos->count() > 0)
                                                     @foreach ($vehicleManageCheckin->telemovel_photos as $media)
                                                     <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Cinzeiro | Telemóvel">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
+                                                    @elseif (
+                                                    $vehicle_damage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin &&
+                                                    $vehicle_damage_checkin->vehicle_manage_checkin->telemovel_photos->count() > 0
+                                                    )
+                                                    @foreach ($vehicle_damage_checkin->vehicle_manage_checkin->telemovel_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="Frente">
                                                         <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
                                                     </a>
                                                     @endforeach

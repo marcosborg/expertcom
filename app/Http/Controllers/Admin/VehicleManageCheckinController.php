@@ -31,6 +31,19 @@ class VehicleManageCheckinController extends Controller
 
         if ($request->ajax()) {
             $query = VehicleManageCheckin::with(['user', 'vehicle_item', 'driver'])->select(sprintf('%s.*', (new VehicleManageCheckin)->table));
+
+            // Filtro condicional para o campo 'reparado'
+            if ($request->has('reparado')) {
+                if ($request->reparado == '1') {
+                    $query->where('reparado', 1);
+                } elseif ($request->reparado == '0') {
+                    $query->where(function ($q) {
+                        $q->where('reparado', 0)
+                            ->orWhereNull('reparado');
+                    });
+                }
+            }
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -136,7 +149,7 @@ class VehicleManageCheckinController extends Controller
             $query->where('vehicle_item_id', $vehicleManageCheckin->vehicle_item_id);
         })->orderBy('id', 'desc')->first();
 
-        if($vehicle_damage_checkin) {
+        if ($vehicle_damage_checkin) {
             $vehicle_damage_checkin->load('vehicle_manage_checkin');
         }
 

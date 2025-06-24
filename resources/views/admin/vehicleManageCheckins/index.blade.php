@@ -7,6 +7,17 @@
                 <a class="btn btn-success" href="{{ route('admin.vehicle-manage-checkins.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.vehicleManageCheckin.title_singular') }}
                 </a>
+                <div class="pull-right">
+                    <a class="btn btn-sm btn-primary" href="/admin/vehicle-manage-checkins">
+                        Ver todos
+                    </a>
+                    <a class="btn btn-sm btn-info" href="/admin/vehicle-manage-checkins?reparado=0">
+                        Não reparados
+                    </a>
+                    <a class="btn btn-sm btn-warning" href="/admin/vehicle-manage-checkins?reparado=1">
+                        Reparados
+                    </a>
+                </div>
             </div>
         </div>
     @endcan
@@ -164,7 +175,12 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.vehicle-manage-checkins.index') }}",
+    ajax: {
+        url: "{{ route('admin.vehicle-manage-checkins.index') }}",
+        data: function (d) {
+            d.reparado = getQueryParam('reparado'); // aqui é o truque
+        }
+    },
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
@@ -212,6 +228,12 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       });
   })
 });
+
+function getQueryParam(param) {
+    let params = new URLSearchParams(window.location.search);
+    return params.get(param);
+}
+
 
 </script>
 @endsection

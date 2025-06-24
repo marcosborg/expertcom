@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyVehicleManageCheckinRequest;
 use App\Http\Requests\StoreVehicleManageCheckinRequest;
 use App\Http\Requests\UpdateVehicleManageCheckinRequest;
+use App\Models\Company;
 use App\Models\Driver;
 use App\Models\User;
 use App\Models\VehicleItem;
@@ -17,6 +18,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\VehicleManageEntry;
+use App\Models\VehicleDamageCheckin;
+use App\Notifications\DamageNotification;
 
 class VehicleManageCheckinController extends Controller
 {
@@ -135,6 +138,8 @@ class VehicleManageCheckinController extends Controller
     {
         $vehicleManageCheckin->update($request->all());
 
+        $damage = false;
+
         if (count($vehicleManageCheckin->frente_do_veiculo_teto_photos) > 0) {
             foreach ($vehicleManageCheckin->frente_do_veiculo_teto_photos as $media) {
                 if (! in_array($media->file_name, $request->input('frente_do_veiculo_teto_photos', []))) {
@@ -147,6 +152,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_teto_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->frente_do_veiculo_parabrisa_photos) > 0) {
@@ -161,6 +167,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_parabrisa_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->frente_do_veiculo_capo_photos) > 0) {
@@ -175,6 +182,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_capo_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->frente_do_veiculo_parachoque_photos) > 0) {
@@ -189,6 +197,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('frente_do_veiculo_parachoque_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->lateral_esquerda_paralama_diant_photos) > 0) {
@@ -203,6 +212,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_paralama_diant_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->lateral_esquerda_retrovisor_photos) > 0) {
@@ -217,6 +227,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_retrovisor_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->lateral_esquerda_porta_diant_photos) > 0) {
@@ -231,6 +242,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_porta_diant_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->lateral_esquerda_porta_tras_photos) > 0) {
@@ -245,6 +257,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_porta_tras_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->lateral_esquerda_lateral_photos) > 0) {
@@ -259,6 +272,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_esquerda_lateral_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->traseira_tampa_traseira_photos) > 0) {
@@ -273,6 +287,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_tampa_traseira_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->traseira_lanternas_dir_photos) > 0) {
@@ -287,6 +302,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_lanternas_dir_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->traseira_lanterna_esq_photos) > 0) {
@@ -301,6 +317,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_lanterna_esq_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->traseira_parachoque_tras_photos) > 0) {
@@ -315,6 +332,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_parachoque_tras_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->traseira_estepe_photos) > 0) {
@@ -329,6 +347,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_estepe_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->traseira_macaco_photos) > 0) {
@@ -343,6 +362,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_macaco_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->traseira_chave_de_roda_photos) > 0) {
@@ -357,6 +377,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_chave_de_roda_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->traseira_triangulo_photos) > 0) {
@@ -371,6 +392,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('traseira_triangulo_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->lateral_direita_lateral_photos) > 0) {
@@ -385,6 +407,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_lateral_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->lateral_direita_porta_tras_photos) > 0) {
@@ -399,6 +422,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_porta_tras_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->lateral_direita_porta_diant_photos) > 0) {
@@ -413,6 +437,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_porta_diant_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->lateral_direita_retrovisor_photos) > 0) {
@@ -427,6 +452,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_retrovisor_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->lateral_direita_paralama_diant_photos) > 0) {
@@ -441,6 +467,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('lateral_direita_paralama_diant_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->cinzeiro_photos) > 0) {
@@ -455,6 +482,7 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('cinzeiro_photos');
             }
+            $damage = true;
         }
 
         if (count($vehicleManageCheckin->telemovel_photos) > 0) {
@@ -469,9 +497,38 @@ class VehicleManageCheckinController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $vehicleManageCheckin->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('telemovel_photos');
             }
+            $damage = true;
+        }
+
+        if ($damage == true) {
+            $vehicle_damage_checkin = VehicleDamageCheckin::where('vehicle_manage_checkin_id', $vehicleManageCheckin->id)->first();
+            if (!$vehicle_damage_checkin) {
+                //AVISAR
+                $this->notifyOfDamage($vehicleManageCheckin->driver_id, $vehicleManageCheckin->vehicle_item_id);
+                $vehicle_damage_checkin = new VehicleDamageCheckin();
+                $vehicle_damage_checkin->vehicle_manage_checkin_id = $vehicleManageCheckin->id;
+                $vehicle_damage_checkin->driver_warning = 1;
+                $vehicle_damage_checkin->company_warning = 1;
+                $vehicle_damage_checkin->admin_warning = 1;
+                $vehicle_damage_checkin->save();
+            }
         }
 
         return redirect()->route('admin.vehicle-manage-checkins.index');
+    }
+
+    private function notifyOfDamage($driver_id, $vehicle_item_id)
+    {
+        $admin = User::find(799);
+        $driver = User::find(Driver::find($driver_id)->user_id);
+        $vehicle_item = VehicleItem::find($vehicle_item_id);
+        $company = Company::find($vehicle_item->company_id)->load('user')->user;
+
+        $message = "O veículo com a matrícula " . $vehicle_item->license_plate . " tem danos que precisam ser verificados.";
+
+        $admin->notify(new DamageNotification($message));
+        $company->notify(new DamageNotification($message));
+        $driver->notify(new DamageNotification($message));
     }
 
     public function show(VehicleManageCheckin $vehicleManageCheckin)

@@ -8,14 +8,14 @@
                     {{ trans('global.add') }} {{ trans('cruds.vehicleManageCheckin.title_singular') }}
                 </a>
                 <div class="pull-right">
-                    <a class="btn btn-sm btn-primary" href="/admin/vehicle-manage-checkins">
-                        Ver todos
-                    </a>
                     <a class="btn btn-sm btn-info" href="/admin/vehicle-manage-checkins?reparado=0">
-                        Não reparados
+                        Com danos
                     </a>
                     <a class="btn btn-sm btn-warning" href="/admin/vehicle-manage-checkins?reparado=1">
                         Reparados
+                    </a>
+                    <a class="btn btn-sm btn-primary" href="/admin/vehicle-manage-checkins">
+                        Todos
                     </a>
                 </div>
             </div>

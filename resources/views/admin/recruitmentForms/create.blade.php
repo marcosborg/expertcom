@@ -238,7 +238,7 @@
                                                     <label>{{ trans('cruds.recruitmentForm.fields.status') }}</label>
                                                     @foreach(App\Models\RecruitmentForm::STATUS_RADIO as $key => $label)
                                                         <div>
-                                                            <input type="radio" id="status_{{ $key }}" name="status" value="{{ $key }}" {{ old('status', 'Tratamento') === (string) $key ? 'checked' : '' }}>
+                                                            <input type="radio" id="status_{{ $key }}" name="status" value="{{ $key }}" {{ old('status', 'Em aberto') === (string) $key ? 'checked' : '' }}>
                                                             <label for="status_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
                                                         </div>
                                                     @endforeach

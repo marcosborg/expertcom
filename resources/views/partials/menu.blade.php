@@ -1418,7 +1418,7 @@
                         @endcan
                         @can('vehicle_manage_checkin_access')
                             <li class="{{ request()->is("admin/vehicle-manage-checkins") || request()->is("admin/vehicle-manage-checkins/*") ? "active" : "" }}">
-                                <a href="{{ route("admin.vehicle-manage-checkins.index") }}">
+                                <a href="{{ route("admin.vehicle-manage-checkins.index", 'reparado=0') }}">
                                     <i class="fa-fw fas fa-sign-in-alt">
 
                                     </i>

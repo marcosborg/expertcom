@@ -63,21 +63,6 @@
                                     {{ trans('cruds.recruitmentForm.fields.type') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.recruitmentForm.fields.chanel') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.recruitmentForm.fields.start_time') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.recruitmentForm.fields.end_time') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.recruitmentForm.fields.day_off') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.recruitmentForm.fields.amount_to_pay') }}
-                                </th>
-                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -138,29 +123,6 @@
                                             <option value="{{ $key }}">{{ $item }}</option>
                                         @endforeach
                                     </select>
-                                </td>
-                                <td>
-                                    <select class="search" strict="true">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach(App\Models\RecruitmentForm::CHANEL_RADIO as $key => $item)
-                                            <option value="{{ $key }}">{{ $item }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <select class="search" strict="true">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach(App\Models\RecruitmentForm::DAY_OFF_RADIO as $key => $item)
-                                            <option value="{{ $key }}">{{ $item }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -233,11 +195,6 @@
 { data: 'done', name: 'done' },
 { data: 'status', name: 'status' },
 { data: 'type', name: 'type' },
-{ data: 'chanel', name: 'chanel' },
-{ data: 'start_time', name: 'start_time' },
-{ data: 'end_time', name: 'end_time' },
-{ data: 'day_off', name: 'day_off' },
-{ data: 'amount_to_pay', name: 'amount_to_pay' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -17,6 +17,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class RecruitmentFormController extends Controller
 {
@@ -26,8 +27,20 @@ class RecruitmentFormController extends Controller
     {
         abort_if(Gate::denies('recruitment_form_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $user = Auth::user();
+
         if ($request->ajax()) {
-            $query = RecruitmentForm::with(['user', 'company'])->select(sprintf('%s.*', (new RecruitmentForm)->table));
+
+            $user = Auth::user();
+
+            $query = RecruitmentForm::with(['user', 'company'])
+                ->select(sprintf('%s.*', (new RecruitmentForm)->getTable()));
+
+            if (! $user->hasRole('admin') && session()->has('company_id')) {
+                $companyId = session('company_id');
+                $query->where('company_id', $companyId);
+            }
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -108,10 +121,7 @@ class RecruitmentFormController extends Controller
             return $table->make(true);
         }
 
-        $users     = User::get();
-        $companies = Company::get();
-
-        return view('admin.recruitmentForms.index', compact('users', 'companies'));
+        return view('admin.recruitmentForms.index');
     }
 
     public function create()

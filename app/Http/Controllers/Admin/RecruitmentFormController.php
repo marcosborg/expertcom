@@ -31,14 +31,18 @@ class RecruitmentFormController extends Controller
 
         if ($request->ajax()) {
 
-            $user = Auth::user();
-
             $query = RecruitmentForm::with(['user', 'company'])
                 ->select(sprintf('%s.*', (new RecruitmentForm)->getTable()));
 
-            if (! $user->hasRole('admin') && session()->has('company_id')) {
+            // Filtro de empresa para utilizadores que não são admin
+            if (!$user->hasRole('admin') && session()->has('company_id')) {
                 $companyId = session('company_id');
                 $query->where('company_id', $companyId);
+            }
+
+            // Filtro por status vindo do DataTables (via botão de filtro)
+            if ($request->has('status') && $request->status !== '') {
+                $query->where('status', $request->status);
             }
 
             $table = Datatables::of($query);
@@ -61,68 +65,36 @@ class RecruitmentFormController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
+            $table->editColumn('id', fn($row) => $row->id ?? '');
+            $table->addColumn('user_name', fn($row) => $row->user?->name ?? '');
+            $table->addColumn('company_name', fn($row) => $row->company?->name ?? '');
+            $table->editColumn('name', fn($row) => $row->name ?? '');
+            $table->editColumn('email', fn($row) => $row->email ?? '');
+            $table->editColumn('cv', fn($row) => $row->cv ? '<a href="' . $row->cv->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '');
+            $table->editColumn('contact_successfully', fn($row) => '<input type="checkbox" disabled ' . ($row->contact_successfully ? 'checked' : '') . '>');
+            $table->editColumn('phone', fn($row) => $row->phone ?? '');
+            $table->editColumn('scheduled_interview', fn($row) => '<input type="checkbox" disabled ' . ($row->scheduled_interview ? 'checked' : '') . '>');
+            $table->editColumn('done', fn($row) => '<input type="checkbox" disabled ' . ($row->done ? 'checked' : '') . '>');
+            $table->editColumn('status', fn($row) => $row->status ? RecruitmentForm::STATUS_RADIO[$row->status] : '');
+            $table->editColumn('type', fn($row) => $row->type ? RecruitmentForm::TYPE_RADIO[$row->type] : '');
+            $table->editColumn('chanel', fn($row) => $row->chanel ? RecruitmentForm::CHANEL_RADIO[$row->chanel] : '');
+            $table->editColumn('start_time', fn($row) => $row->start_time ?? '');
+            $table->editColumn('end_time', fn($row) => $row->end_time ?? '');
+            $table->editColumn('day_off', fn($row) => $row->day_off ? RecruitmentForm::DAY_OFF_RADIO[$row->day_off] : '');
+            $table->editColumn('amount_to_pay', fn($row) => $row->amount_to_pay ?? '');
+            $table->editColumn('created_at', fn($row) => $row->created_at ?? '');
+            $table->editColumn('updated_at', fn($row) => $row->updated_at ?? '');
 
-            $table->addColumn('company_name', function ($row) {
-                return $row->company ? $row->company->name : '';
-            });
-
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
-            });
-            $table->editColumn('cv', function ($row) {
-                return $row->cv ? '<a href="' . $row->cv->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->editColumn('contact_successfully', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->contact_successfully ? 'checked' : null) . '>';
-            });
-            $table->editColumn('phone', function ($row) {
-                return $row->phone ? $row->phone : '';
-            });
-            $table->editColumn('scheduled_interview', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->scheduled_interview ? 'checked' : null) . '>';
-            });
-
-            $table->editColumn('done', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->done ? 'checked' : null) . '>';
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? RecruitmentForm::STATUS_RADIO[$row->status] : '';
-            });
-            $table->editColumn('type', function ($row) {
-                return $row->type ? RecruitmentForm::TYPE_RADIO[$row->type] : '';
-            });
-            $table->editColumn('chanel', function ($row) {
-                return $row->chanel ? RecruitmentForm::CHANEL_RADIO[$row->chanel] : '';
-            });
-            $table->editColumn('start_time', function ($row) {
-                return $row->start_time ? $row->start_time : '';
-            });
-            $table->editColumn('end_time', function ($row) {
-                return $row->end_time ? $row->end_time : '';
-            });
-            $table->editColumn('day_off', function ($row) {
-                return $row->day_off ? RecruitmentForm::DAY_OFF_RADIO[$row->day_off] : '';
-            });
-            $table->editColumn('amount_to_pay', function ($row) {
-                return $row->amount_to_pay ? $row->amount_to_pay : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user', 'company', 'cv', 'contact_successfully', 'scheduled_interview', 'done']);
+            $table->rawColumns(['actions', 'placeholder', 'cv', 'contact_successfully', 'scheduled_interview', 'done']);
 
             return $table->make(true);
         }
 
-        return view('admin.recruitmentForms.index');
+        $status = RecruitmentForm::STATUS_RADIO;
+
+        return view('admin.recruitmentForms.index', compact('status'));
     }
+
 
     public function create()
     {

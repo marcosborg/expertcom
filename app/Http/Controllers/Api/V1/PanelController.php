@@ -9,6 +9,7 @@ use App\Models\DriversBalance;
 use App\Models\TvdeYear;
 use App\Models\TvdeMonth;
 use App\Models\TvdeWeek;
+use App\Models\Receipt;
 
 class PanelController extends Controller
 {
@@ -170,6 +171,35 @@ class PanelController extends Controller
             'tvde_months' => $tvde_months,
             'tvde_month_id' => $tvde_month_id,
             'tvde_weeks' => $tvde_weeks,
+        ];
+    }
+
+    public function receipts()
+    {
+        $user = auth()->user()->load([
+            'driver.contract_type',
+            'driver.contract_vat'
+        ]);
+
+        $driver = $user->driver[0] ?? null;
+
+        if (!$driver) {
+            return response()->json(['error' => 'Driver not found'], 404);
+        }
+
+        $paid = Receipt::where('paid', 1)
+            ->whereHas('driver', function ($query) use ($driver) {
+                $query->where('id', $driver->id);
+            })->get();
+
+        $unpaid = Receipt::where('paid', 0)
+            ->whereHas('driver', function ($query) use ($driver) {
+                $query->where('id', $driver->id);
+            })->get();
+
+        return [
+            'paid' => $paid,
+            'unpaid' => $unpaid
         ];
     }
 }

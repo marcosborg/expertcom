@@ -37,10 +37,8 @@ class VehicleManageCheckinController extends Controller
                 if ($request->reparado == '1') {
                     $query->where('reparado', 1);
                 } elseif ($request->reparado == '0') {
-                    $query->where(function ($q) {
-                        $q->where('reparado', 0)
-                            ->orWhereNull('reparado');
-                    });
+                    $query->where('reparado', 0)
+                        ->whereHas('media');
                 }
             }
 

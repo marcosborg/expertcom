@@ -257,4 +257,5 @@ class VehicleManageCheckin extends Model implements HasMedia
     {
         return $this->getMedia('telemovel_photos');
     }
+
 }

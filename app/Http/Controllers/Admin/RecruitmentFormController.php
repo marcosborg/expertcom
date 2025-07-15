@@ -70,7 +70,7 @@ class RecruitmentFormController extends Controller
             $table->addColumn('company_name', fn($row) => $row->company?->name ?? '');
             $table->editColumn('name', fn($row) => $row->name ?? '');
             $table->editColumn('email', fn($row) => $row->email ?? '');
-            $table->editColumn('cv', fn($row) => $row->cv ? '<a href="' . $row->cv->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '');
+            $table->editColumn('responsible_for_the_lead', fn($row) => $row->responsible_for_the_lead ?? '');
             $table->editColumn('contact_successfully', fn($row) => '<input type="checkbox" disabled ' . ($row->contact_successfully ? 'checked' : '') . '>');
             $table->editColumn('phone', fn($row) => $row->phone ?? '');
             $table->editColumn('scheduled_interview', fn($row) => '<input type="checkbox" disabled ' . ($row->scheduled_interview ? 'checked' : '') . '>');

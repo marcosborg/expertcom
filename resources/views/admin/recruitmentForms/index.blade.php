@@ -48,7 +48,7 @@
                                     {{ trans('cruds.recruitmentForm.fields.email') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.recruitmentForm.fields.cv') }}
+                                    {{ trans('cruds.recruitmentForm.fields.responsible_for_the_lead') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.recruitmentForm.fields.contact_successfully') }}
@@ -146,7 +146,7 @@
                 { data: 'company_name', name: 'company.name' },
                 { data: 'name', name: 'name' },
                 { data: 'email', name: 'email' },
-                { data: 'cv', name: 'cv', sortable: false, searchable: false },
+                { data: 'responsible_for_the_lead', name: 'responsible_for_the_lead' },
                 { data: 'contact_successfully', name: 'contact_successfully' },
                 { data: 'phone', name: 'phone' },
                 { data: 'scheduled_interview', name: 'scheduled_interview' },

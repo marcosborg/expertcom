@@ -36,7 +36,8 @@ trait Reports
                 'contract_vat',
                 'card',
                 'electric',
-                'team'
+                'team',
+                'driver_class'
             ]);
 
         $total_uber = [];
@@ -124,14 +125,18 @@ trait Reports
                 ->where('to', '>=', $total_earnings)
                 ->first();
 
-            if ($contract_type_rank) {
-                $percent = $contract_type_rank->percent;
-            } else {
-                $percent = 0;
-            }
+            $base_percent = $contract_type_rank->percent ?? 0;
 
-            $earnings_after_discount = ($total_earnings_no_tips * $percent) / 100;
+            // Acréscimo do escalão (da tabela driver_classes)
+            $class_additional = $driver->driver_class->additional_commission ?? 0;
 
+            // Percentagem final (base + acréscimo do escalão)
+            $final_percent = $base_percent + $class_additional;
+
+            // Aplicar à base tributável (sem tips)
+            $earnings_after_discount = ($total_earnings_no_tips * $final_percent) / 100;
+
+            // Tips com a regra do contrato (mantém)
             $tips_after_discount = ($total_tips * (100 - $driver->contract_vat->tips)) / 100;
 
             //FUEL
@@ -253,7 +258,7 @@ trait Reports
                 'private' => $private,
                 'total' => $total_earnings,
                 'total_tips' => $total_tips,
-                'percent' => $contract_type_rank->percent ?? 0,
+                'percent' => $final_percent ?? 0,
                 'tips_percent' => $driver->contract_vat->tips,
                 'total_no_tips' => $total_earnings_no_tips,
                 'earnings_after_discount' => $earnings_after_discount,

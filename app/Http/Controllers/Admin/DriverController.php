@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\DriverClassResolver;
+use Illuminate\Support\Str;
 
 class DriverController extends Controller
 {
@@ -168,9 +169,46 @@ class DriverController extends Controller
                 return $row->company ? $row->company->name : '';
             });
 
-            $table->editColumn('driver_class_name', function ($row) {
-                return $row->driver_class_name ?? '';
+            $table->addColumn('driver_class_display', function ($row) {
+                $label = $row->driver_class_name ?? '';
+                if ($label === '') return '';
+
+                $k = Str::lower($label);
+                if (str_contains($k, 'bronze')) {
+                    $file = 'bronze.svg';
+                } elseif (str_contains($k, 'prata') || str_contains($k, 'silver')) {
+                    $file = 'prata.svg';
+                } elseif (str_contains($k, 'ouro') || str_contains($k, 'gold')) {
+                    $file = 'ouro.svg';
+                } elseif (str_contains($k, 'platina') || str_contains($k, 'platinum')) {
+                    $file = 'platina.svg';
+                } else {
+                    $file = 'default.svg'; // opcional, se tiveres um default
+                }
+
+                $full = public_path("assets/medals/{$file}");
+                $src  = asset("assets/medals/{$file}") . (file_exists($full) ? ('?v=' . filemtime($full)) : '');
+
+                return '<span class="d-flex align-items-center">'
+                    . '<img src="' . $src . '" alt="' . e($label) . '" width="18" height="18" style="margin-right:6px;vertical-align:middle;">'
+                    . e($label)
+                    . '</span>';
             });
+
+            $table->rawColumns([
+                'actions',
+                'placeholder',
+                'user',
+                'card',
+                'electric',
+                'local',
+                'contract_type',
+                'contract_vat',
+                'state',
+                'company',
+                'time_to_next_class',
+                'driver_class_display'
+            ]);
 
             // Tempo para o próximo escalão (campo calculado – sem search/sort no SQL)
             $table->addColumn('time_to_next_class', function ($row) use ($resolver) {
@@ -178,7 +216,7 @@ class DriverController extends Controller
                 return $info['remaining_human'] ?? '—';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'card', 'electric', 'local', 'contract_type', 'contract_vat', 'state', 'company', 'time_to_next_class']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'card', 'electric', 'local', 'contract_type', 'contract_vat', 'state', 'company', 'driver_class_display', 'time_to_next_class']);
 
             return $table->make(true);
         }

@@ -132,7 +132,7 @@
 { data: 'user_name', name: 'user.name' },
 { data: 'user.email', name: 'user.email' },
 { data: 'code', name: 'code' },
-{ data: 'driver_class_name', name: 'driver_class.name' },
+{ data: 'driver_class_display', name: 'driver_classes.name' },
 { data: 'time_to_next_class', name: 'time_to_next_class', searchable: false, orderable: false },
 { data: 'driver_vat', name: 'driver_vat' },
 { data: 'contract_type_name', name: 'contract_type.name' },

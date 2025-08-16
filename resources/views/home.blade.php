@@ -30,7 +30,14 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Atividades por operador
+                    <div class="row">
+                        <div class="col-md-6">
+                            Atividades por operador
+                        </div>
+                        <div class="col-md-6" style="text-align: right !important;">
+                            {!! $medal !!}
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped">

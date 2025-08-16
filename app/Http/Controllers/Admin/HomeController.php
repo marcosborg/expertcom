@@ -13,6 +13,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use Illuminate\Http\Request;
 use App\Models\CompanyInvoice;
 use App\Models\CompanyData;
+use Illuminate\Support\Str;
 
 class HomeController
 {
@@ -29,7 +30,6 @@ class HomeController
 
         if (auth()->user()->hasRole('Admin') && !auth()->user()->hasRole('Driver')) {
             return redirect('/admin/weekly-expense-reports');
-            
         }
 
         if (auth()->user()->hasRole('Driver') && auth()->user()->driver->count() > 0) {
@@ -125,6 +125,33 @@ class HomeController
             'tvde_week_id' => $tvde_week_id
         ])->first();
 
+        $medal = '';
+
+        $driver->load('driver_class');
+
+        $label = $driver->driver_class ? $driver->driver_class->name : null;
+
+        if ($label) {
+            $k = Str::lower($label);
+            if (str_contains($k, 'bronze')) {
+                $file = 'bronze.svg';
+            } elseif (str_contains($k, 'prata') || str_contains($k, 'silver')) {
+                $file = 'prata.svg';
+            } elseif (str_contains($k, 'ouro') || str_contains($k, 'gold')) {
+                $file = 'ouro.svg';
+            } elseif (str_contains($k, 'platina') || str_contains($k, 'platinum')) {
+                $file = 'platina.svg';
+            } else {
+                $file = 'default.svg'; // opcional, se tiveres um default
+            }
+
+            $full = public_path("assets/medals/{$file}");
+            $src  = asset("assets/medals/{$file}") . (file_exists($full) ? ('?v=' . filemtime($full)) : '');
+
+            $medal = e($label) . ' <span class="d-flex align-items-center">'
+                . '<img src="' . $src . '" alt="' . e($label) . '" width="18" height="18" style="margin-right:6px;vertical-align:middle;"></span>';
+        }
+
         return view('home')->with([
             'company_id' => $company_id,
             'tvde_year_id' => $tvde_year_id,
@@ -166,6 +193,7 @@ class HomeController
             'txt_admin' => $results ? $results->txt_admin : 0,
             'driver_balance' => $driver_balance,
             'team_drivers' => $results ? $team_drivers : [],
+            'medal' => $medal,
         ]);
     }
 
@@ -262,5 +290,4 @@ class HomeController
         $company_invoice->addMedia(storage_path('tmp/uploads/' . $fileName))->toMediaCollection('payment_receipt');
         return redirect()->back();
     }
-
 }

@@ -7,6 +7,13 @@
                 <a class="btn btn-success" href="{{ route('admin.drivers.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.driver.title_singular') }}
                 </a>
+                {{-- resources/views/admin/drivers/index.blade.php --}}
+                @can('driver_edit')
+                    <form action="{{ route('admin.drivers.recalculate-classes') }}" method="POST" style="display:inline-block;margin-left:8px">
+                        @csrf
+                        <button type="submit" class="btn btn-info">Recalcular escalões</button>
+                    </form>
+                @endcan
                 <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                     {{ trans('global.app_csvImport') }}
                 </button>
@@ -39,6 +46,8 @@
                                 <th>
                                     {{ trans('cruds.driver.fields.code') }}
                                 </th>
+                                <th>{{ __('Driver Class') }}</th>
+                                <th>{{ __('Time to next class') }}</th>
                                 <th>
                                     {{ trans('cruds.driver.fields.driver_vat') }}
                                 </th>
@@ -123,6 +132,8 @@
 { data: 'user_name', name: 'user.name' },
 { data: 'user.email', name: 'user.email' },
 { data: 'code', name: 'code' },
+{ data: 'driver_class_name', name: 'driver_class.name' },
+{ data: 'time_to_next_class', name: 'time_to_next_class', searchable: false, orderable: false },
 { data: 'driver_vat', name: 'driver_vat' },
 { data: 'contract_type_name', name: 'contract_type.name' },
 { data: 'contract_vat_name', name: 'contract_vat.name' },

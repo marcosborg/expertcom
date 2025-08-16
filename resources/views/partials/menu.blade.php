@@ -215,6 +215,17 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('driver_class_access')
+                                <li class="{{ request()->is("admin/driver-classes") || request()->is("admin/driver-classes/*") ? "active" : "" }}">
+                                    <a href="{{ route("admin.driver-classes.index") }}">
+                                        <i class="fa-fw fas fa-award">
+
+                                        </i>
+                                        <span>{{ trans('cruds.driverClass.title') }}</span>
+
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                     @endcan

@@ -21,6 +21,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Services\DriverClassResolver;
 
 class DriverController extends Controller
 {
@@ -28,10 +29,30 @@ class DriverController extends Controller
 
     public function index(Request $request)
     {
+
         abort_if(Gate::denies('driver_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Driver::with(['user', 'card', 'electric', 'tool_card', 'local', 'contract_type', 'contract_vat', 'state', 'company'])->select(sprintf('%s.*', (new Driver)->table));
+
+            $resolver = app(\App\Services\DriverClassResolver::class); // <— ADICIONA ISTO
+
+            $query = Driver::with([
+                'user',
+                'card',
+                'electric',
+                'tool_card',
+                'local',
+                'contract_type',
+                'contract_vat',
+                'state',
+                'company',
+                'driver_class'
+            ])
+                ->leftJoin('driver_classes', function ($join) {
+                    $join->on('driver_classes.id', '=', 'drivers.driver_class_id')
+                        ->whereNull('driver_classes.deleted_at'); // SoftDeletes
+                })
+                ->select('drivers.*', 'driver_classes.name as driver_class_name');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -68,7 +89,7 @@ class DriverController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
-            
+
             $table->addColumn('local_name', function ($row) {
                 return $row->local ? $row->local->name : '';
             });
@@ -147,7 +168,17 @@ class DriverController extends Controller
                 return $row->company ? $row->company->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'card', 'electric', 'local', 'contract_type', 'contract_vat', 'state', 'company']);
+            $table->editColumn('driver_class_name', function ($row) {
+                return $row->driver_class_name ?? '';
+            });
+
+            // Tempo para o próximo escalão (campo calculado – sem search/sort no SQL)
+            $table->addColumn('time_to_next_class', function ($row) use ($resolver) {
+                $info = $resolver->nextClassInfo($row);
+                return $info['remaining_human'] ?? '—';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'user', 'card', 'electric', 'local', 'contract_type', 'contract_vat', 'state', 'company', 'time_to_next_class']);
 
             return $table->make(true);
         }
@@ -180,9 +211,13 @@ class DriverController extends Controller
         return view('admin.drivers.create', compact('cards', 'companies', 'contract_types', 'contract_vats', 'electrics', 'tool_cards', 'locals', 'states', 'users'));
     }
 
-    public function store(StoreDriverRequest $request)
+    public function store(StoreDriverRequest $request, DriverClassResolver $resolver)
     {
         $driver = Driver::create($request->all());
+
+        $driver->update([
+            'driver_class_id' => $resolver->forDriver($driver),
+        ]);
 
         return redirect()->route('admin.drivers.index');
     }
@@ -214,9 +249,13 @@ class DriverController extends Controller
         return view('admin.drivers.edit', compact('cards', 'companies', 'contract_types', 'contract_vats', 'driver', 'electrics', 'tool_cards', 'locals', 'states', 'users'));
     }
 
-    public function update(UpdateDriverRequest $request, Driver $driver)
+    public function update(UpdateDriverRequest $request, Driver $driver, DriverClassResolver $resolver)
     {
         $driver->update($request->all());
+
+        $driver->update([
+            'driver_class_id' => $resolver->forDriver($driver),
+        ]);
 
         return redirect()->route('admin.drivers.index');
     }
@@ -248,5 +287,20 @@ class DriverController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function recalculateClasses(DriverClassResolver $resolver)
+    {
+        abort_if(Gate::denies('driver_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        Driver::chunkById(300, function ($drivers) use ($resolver) {
+            foreach ($drivers as $driver) {
+                $driver->update([
+                    'driver_class_id' => $resolver->forDriver($driver),
+                ]);
+            }
+        });
+
+        return back()->with('status', 'Escalões dos motoristas atualizados com sucesso.');
     }
 }

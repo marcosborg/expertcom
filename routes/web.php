@@ -213,6 +213,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('drivers/parse-csv-import', 'DriverController@parseCsvImport')->name('drivers.parseCsvImport');
     Route::post('drivers/process-csv-import', 'DriverController@processCsvImport')->name('drivers.processCsvImport');
     Route::resource('drivers', 'DriverController');
+    Route::post('drivers/recalculate-classes', [\App\Http\Controllers\Admin\DriverController::class, 'recalculateClasses'])
+        ->name('drivers.recalculate-classes')
+        ->middleware('can:driver_edit');
 
     // Card
     Route::delete('cards/destroy', 'CardController@massDestroy')->name('cards.massDestroy');
@@ -557,6 +560,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('vehicle-damage-checkins/destroy', 'VehicleDamageCheckinController@massDestroy')->name('vehicle-damage-checkins.massDestroy');
     Route::resource('vehicle-damage-checkins', 'VehicleDamageCheckinController');
 
+    // Driver Class
+    Route::delete('driver-classes/destroy', 'DriverClassController@massDestroy')->name('driver-classes.massDestroy');
+    Route::resource('driver-classes', 'DriverClassController');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

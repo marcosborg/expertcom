@@ -33,6 +33,7 @@ class Driver extends Model
         'contract_type_id',
         'contract_vat_id',
         'start_date',
+        'driver_class_id',
         'end_date',
         'reason',
         'phone',
@@ -56,6 +57,10 @@ class Driver extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+    ];
+
+    protected $casts = [
+        'driver_class_id' => 'integer',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -143,4 +148,8 @@ class Driver extends Model
         return $this->hasMany(Team::class);
     }
 
+    public function driver_class()
+    {
+        return $this->belongsTo(\App\Models\DriverClass::class, 'driver_class_id');
+    }
 }

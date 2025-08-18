@@ -127,11 +127,12 @@ class HomeController
 
         $medal = '';
 
-        $driver->load('driver_class');
+        if ($driver) {
+            $driver->load('driver_class');
+            $label = $driver->driver_class ? $driver->driver_class->name : null;
+        }
 
-        $label = $driver->driver_class ? $driver->driver_class->name : null;
-
-        if ($label) {
+        if (isset($label)) {
             $k = Str::lower($label);
             if (str_contains($k, 'bronze')) {
                 $file = 'bronze.svg';

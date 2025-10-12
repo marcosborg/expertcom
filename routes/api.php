@@ -21,4 +21,15 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Drv Timesheets
     Route::apiResource('drv-timesheets', 'DrvTimesheetsApiController');
+
+    // Cronómetro de condução (custom endpoints)
+    Route::post('drive/start',  'DrvDriveController@start');   // inicia sessão + 1º segmento drive
+    Route::post('drive/pause',  'DrvDriveController@pause');   // fecha drive aberto e abre pause
+    Route::post('drive/resume', 'DrvDriveController@resume');  // fecha pause aberto e abre drive
+    Route::post('drive/finish', 'DrvDriveController@finish');  // fecha segmento aberto e encerra sessão
+
+    // Vista diária (para autoridade): ?date=YYYY-MM-DD (fuso Europe/Lisbon)
+    Route::get('drive/logs', 'DrvDriveController@dailyLogs');
+
+    Route::get('drive/status', 'DrvDriveController@status');
 });

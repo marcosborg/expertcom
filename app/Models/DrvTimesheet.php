@@ -19,19 +19,22 @@ class DrvTimesheet extends Model
         'closed' => 'closed',
     ];
 
-    protected $dates = [
-        'date',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     protected $fillable = [
         'driver_id',
         'date',
         'total_drive_seconds',
         'total_pause_seconds',
         'status',
+    ];
+
+    protected $casts = [
+        'driver_id'            => 'integer',
+        'date'                 => 'date',     // dia civil (Europe/Lisbon)
+        'total_drive_seconds'  => 'integer',
+        'total_pause_seconds'  => 'integer',
+    ];
+
+    protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -47,13 +50,26 @@ class DrvTimesheet extends Model
         return $this->belongsTo(Driver::class, 'driver_id');
     }
 
-    public function getDateAttribute($value)
+    // Scopes
+    public function scopeOfDriver($q, int $driverId)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $q->where('driver_id', $driverId);
     }
 
-    public function setDateAttribute($value)
+    public function scopeOnDate($q, string|\DateTimeInterface $date)
     {
-        $this->attributes['date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $d = $date instanceof \DateTimeInterface ? Carbon::instance($date) : Carbon::parse($date);
+        return $q->whereDate('date', $d->toDateString());
+    }
+
+    // Helpers de acumulação
+    public function addDriveSeconds(int $seconds): void
+    {
+        $this->increment('total_drive_seconds', max(0, $seconds));
+    }
+
+    public function addPauseSeconds(int $seconds): void
+    {
+        $this->increment('total_pause_seconds', max(0, $seconds));
     }
 }

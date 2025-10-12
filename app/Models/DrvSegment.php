@@ -19,14 +19,6 @@ class DrvSegment extends Model
         'pause' => 'pause',
     ];
 
-    protected $dates = [
-        'started_at',
-        'ended_at',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     protected $fillable = [
         'session_id',
         'kind',
@@ -34,10 +26,22 @@ class DrvSegment extends Model
         'ended_at',
         'duration_seconds',
         'notes',
+    ];
+
+    protected $casts = [
+        'started_at'       => 'datetime', // UTC
+        'ended_at'         => 'datetime', // UTC
+        'duration_seconds' => 'integer',
+    ];
+
+    protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
     ];
+
+    // importante: tocar a sessão quando o segmento muda
+    protected $touches = ['session'];
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -49,23 +53,28 @@ class DrvSegment extends Model
         return $this->belongsTo(DrvSession::class, 'session_id');
     }
 
-    public function getStartedAtAttribute($value)
+    /**
+     * Fecha o segmento e devolve duração (segundos).
+     */
+    public function closeAt(Carbon $endedAt): int
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        if ($this->ended_at) {
+            return $this->duration_seconds ?? 0; // já fechado
+        }
+
+        $this->ended_at = $endedAt;
+        $seconds = max(0, $endedAt->diffInSeconds($this->started_at));
+        $this->duration_seconds = $seconds;
+        $this->save();
+
+        return $seconds;
     }
 
-    public function setStartedAtAttribute($value)
+    /**
+     * True se o segmento ainda estiver aberto.
+     */
+    public function getIsOpenAttribute(): bool
     {
-        $this->attributes['started_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
-
-    public function getEndedAtAttribute($value)
-    {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
-    }
-
-    public function setEndedAtAttribute($value)
-    {
-        $this->attributes['ended_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        return is_null($this->ended_at);
     }
 }

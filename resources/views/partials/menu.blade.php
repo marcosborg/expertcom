@@ -1519,6 +1519,52 @@
                     </ul>
                 </li>
             @endcan
+            @can('drv_sessions_menu_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw far fa-clock">
+
+                        </i>
+                        <span>{{ trans('cruds.drvSessionsMenu.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('drv_session_access')
+                            <li class="{{ request()->is("admin/drv-sessions") || request()->is("admin/drv-sessions/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.drv-sessions.index") }}">
+                                    <i class="fa-fw far fa-clock">
+
+                                    </i>
+                                    <span>{{ trans('cruds.drvSession.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('drv_segment_access')
+                            <li class="{{ request()->is("admin/drv-segments") || request()->is("admin/drv-segments/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.drv-segments.index") }}">
+                                    <i class="fa-fw fas fa-list">
+
+                                    </i>
+                                    <span>{{ trans('cruds.drvSegment.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('drv_timesheet_access')
+                            <li class="{{ request()->is("admin/drv-timesheets") || request()->is("admin/drv-timesheets/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.drv-timesheets.index") }}">
+                                    <i class="fa-fw fas fa-stopwatch">
+
+                                    </i>
+                                    <span>{{ trans('cruds.drvTimesheet.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
             @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
             <li class="{{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}">

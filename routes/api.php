@@ -12,4 +12,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::get('forms/{id}', [FormCommunicationController::class, 'show']);
     Route::post('forms/media', [FormCommunicationController::class, 'storeMedia']);
     Route::post('forms/submit', [FormCommunicationController::class, 'submit']);
+
+    // Drv Sessions
+    Route::apiResource('drv-sessions', 'DrvSessionsApiController');
+
+    // Drv Segments
+    Route::apiResource('drv-segments', 'DrvSegmentsApiController');
+
+    // Drv Timesheets
+    Route::apiResource('drv-timesheets', 'DrvTimesheetsApiController');
 });

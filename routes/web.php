@@ -563,6 +563,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Driver Class
     Route::delete('driver-classes/destroy', 'DriverClassController@massDestroy')->name('driver-classes.massDestroy');
     Route::resource('driver-classes', 'DriverClassController');
+
+    // Drv Sessions
+    Route::delete('drv-sessions/destroy', 'DrvSessionsController@massDestroy')->name('drv-sessions.massDestroy');
+    Route::resource('drv-sessions', 'DrvSessionsController');
+
+    // Drv Segments
+    Route::delete('drv-segments/destroy', 'DrvSegmentsController@massDestroy')->name('drv-segments.massDestroy');
+    Route::resource('drv-segments', 'DrvSegmentsController');
+
+    // Drv Timesheets
+    Route::delete('drv-timesheets/destroy', 'DrvTimesheetsController@massDestroy')->name('drv-timesheets.massDestroy');
+    Route::resource('drv-timesheets', 'DrvTimesheetsController');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

@@ -513,8 +513,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('recruitment-forms/media', 'RecruitmentFormController@storeMedia')->name('recruitment-forms.storeMedia');
     Route::post('recruitment-forms/ckmedia', 'RecruitmentFormController@storeCKEditorImages')->name('recruitment-forms.storeCKEditorImages');
     Route::get('recruitment-forms/report/pdf', 'RecruitmentFormController@report')->name('recruitment-forms.report');
-    Route::match(['GET', 'POST'], 'recruitment-forms', 'RecruitmentFormController@index')->name('recruitment-forms.index');
-    Route::resource('recruitment-forms', 'RecruitmentFormController')->except(['index']);
+    Route::resource('recruitment-forms', 'RecruitmentFormController');
 
     // Service
     Route::delete('services/destroy', 'ServiceController@massDestroy')->name('services.massDestroy');

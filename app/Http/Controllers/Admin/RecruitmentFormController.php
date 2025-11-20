@@ -43,11 +43,27 @@ class RecruitmentFormController extends Controller
             }
 
             // Filtro por status vindo do DataTables (via botão de filtro)
-            if ($request->has('status') && $request->status !== '') {
-                $query->where('status', $request->status);
-            }
-
             $table = Datatables::of($query);
+
+            $table->filter(function ($query) use ($request) {
+                if ($request->filled('status')) {
+                    $query->where('status', $request->status);
+                }
+
+                if ($searchValue = $request->input('search.value')) {
+                    $query->where(function ($q) use ($searchValue) {
+                        $q->where('name', 'like', "%{$searchValue}%")
+                            ->orWhere('email', 'like', "%{$searchValue}%")
+                            ->orWhere('phone', 'like', "%{$searchValue}%")
+                            ->orWhere('status', 'like', "%{$searchValue}%")
+                            ->orWhere('type', 'like', "%{$searchValue}%")
+                            ->orWhere('chanel', 'like', "%{$searchValue}%")
+                            ->orWhere('responsible_for_the_lead', 'like', "%{$searchValue}%")
+                            ->orWhereHas('company', fn ($company) => $company->where('name', 'like', "%{$searchValue}%"))
+                            ->orWhereHas('user', fn ($user) => $user->where('name', 'like', "%{$searchValue}%"));
+                    });
+                }
+            });
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');

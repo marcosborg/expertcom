@@ -31,7 +31,7 @@
                         {{ trans('cruds.recruitmentForm.title_singular') }} {{ trans('global.list') }}
                     </div>
                     <div class="btn-group" role="group" aria-label="Status filter">
-                        <button type="button" class="btn btn-secondary filter-status" data-status="">Todos</button>
+                        <button type="button" class="btn btn-secondary filter-status active" data-status="">Todos</button>
                         @foreach($status as $key => $label)
                             <button type="button" class="btn btn-secondary filter-status" data-status="{{ $key }}">{{ $label }}</button>
                         @endforeach
@@ -152,7 +152,7 @@
                 type: 'POST',
                 headers: { 'X-CSRF-TOKEN': _token },
                 data: function (d) {
-                    d.status = $('.filter-status.active').data('status');
+                    d.status = $('.filter-status.active').data('status') || '';
                 }
             },
             columns: [
@@ -183,11 +183,10 @@
         const groupColumn = 12;
 
         table.on('draw', function () {
-            const api = table.api();
-            const rows = api.rows({ page: 'current' }).nodes();
+            const rows = table.rows({ page: 'current' }).nodes();
             let last = null;
 
-            api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+            table.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
                 if (last !== group) {
                     $(rows).eq(i).before(
                         '<tr class="group-row"><td colspan="17">' + (group || 'Sem status') + '</td></tr>'

@@ -110,6 +110,7 @@
 <script>
     $(function () {
         let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
+        const _token = $('meta[name="csrf-token"]').attr('content');
 
         @can('recruitment_form_delete')
         let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
@@ -147,7 +148,9 @@
             retrieve: true,
             aaSorting: [],
             ajax: {
-                url: "{{ route('admin.recruitment-forms.index') }}",
+                url: "{{ route('admin.recruitment-forms.datatable') }}",
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': _token },
                 data: function (d) {
                     d.status = $('.filter-status.active').data('status');
                 }

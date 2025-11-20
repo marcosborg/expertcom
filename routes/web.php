@@ -513,6 +513,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('recruitment-forms/media', 'RecruitmentFormController@storeMedia')->name('recruitment-forms.storeMedia');
     Route::post('recruitment-forms/ckmedia', 'RecruitmentFormController@storeCKEditorImages')->name('recruitment-forms.storeCKEditorImages');
     Route::get('recruitment-forms/report/pdf', 'RecruitmentFormController@report')->name('recruitment-forms.report');
+    Route::post('recruitment-forms/datatable', 'RecruitmentFormController@index')->name('recruitment-forms.datatable');
     Route::resource('recruitment-forms', 'RecruitmentFormController');
 
     // Service

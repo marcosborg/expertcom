@@ -110,6 +110,7 @@
 <script>
     $(function () {
         let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
+        const _token = $('meta[name="csrf-token"]').attr('content');
 
         @can('recruitment_form_delete')
         let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
@@ -148,8 +149,16 @@
             aaSorting: [],
             ajax: {
                 url: "{{ route('admin.recruitment-forms.index') }}",
+                type: 'POST',
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRF-TOKEN': _token,
+                    'Accept': 'application/json'
+                },
+                processData: false,
                 data: function (d) {
                     d.status = $('.filter-status.active').data('status');
+                    return JSON.stringify(d);
                 }
             },
             columns: [
@@ -219,6 +228,14 @@
             table.columns(":visible").every(function (colIdx) {
                 visibleColumnsIndexes.push(colIdx);
             });
+        });
+
+        table.on('error.dt', function (e, settings, techNote, message) {
+            console.error('DataTables error:', message);
+        }).on('xhr.dt', function (e, settings, json, xhr) {
+            if (xhr && xhr.status >= 400) {
+                console.error('DataTables AJAX response:', xhr.responseText);
+            }
         });
 
         $('.filter-status').on('click', function () {

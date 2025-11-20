@@ -1,12 +1,25 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content">
+    <style>
+        tr.group-row td {
+            background: #f7f7f7;
+            font-weight: 600;
+        }
+    </style>
     @can('recruitment_form_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ route('admin.recruitment-forms.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.recruitmentForm.title_singular') }}
                 </a>
+                <div class="btn-group" style="margin-left: 6px;">
+                    <input type="date" id="start_date_filter" class="form-control input-sm" style="width: 140px; display:inline-block;" placeholder="Data início">
+                    <input type="date" id="end_date_filter" class="form-control input-sm" style="width: 140px; display:inline-block;" placeholder="Data fim">
+                    <a class="btn btn-default" id="btn-recruitment-report" target="_blank" href="{{ route('admin.recruitment-forms.report') }}">
+                        Gerar PDF
+                    </a>
+                </div>
             </div>
         </div>
     @endcan
@@ -159,11 +172,29 @@
                 { data: 'actions', name: '{{ trans('global.actions') }}' }
             ],
             orderCellsTop: true,
-            order: [[1, 'desc']],
+            order: [[12, 'asc'], [1, 'desc']],
             pageLength: 100,
         };
 
         let table = $('.datatable-RecruitmentForm').DataTable(dtOverrideGlobals);
+        const groupColumn = 12;
+
+        table.on('draw', function () {
+            const api = table.api();
+            const rows = api.rows({ page: 'current' }).nodes();
+            let last = null;
+
+            api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+                if (last !== group) {
+                    $(rows).eq(i).before(
+                        '<tr class="group-row"><td colspan="17">' + (group || 'Sem status') + '</td></tr>'
+                    );
+                    last = group;
+                }
+            });
+        });
+
+        table.draw();
 
         $('a[data-toggle="tab"]').on('shown.bs.tab click', function (e) {
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
@@ -194,6 +225,36 @@
             $('.filter-status').removeClass('active');
             $(this).addClass('active');
             table.ajax.reload();
+        });
+
+        $('#btn-recruitment-report').on('click', function (e) {
+            e.preventDefault();
+            const baseUrl = $(this).attr('href');
+            const status = $('.filter-status.active').data('status') || '';
+            const startDate = $('#start_date_filter').val();
+            const endDate = $('#end_date_filter').val();
+
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                if (start > end) {
+                    alert('A data inicial n\u00e3o pode ser superior \u00e0 data final.');
+                    return;
+                }
+                const diffDays = (end - start) / (1000 * 60 * 60 * 24);
+                if (diffDays > 93) {
+                    alert('O per\u00edodo m\u00e1ximo \u00e9 de 3 meses.');
+                    return;
+                }
+            }
+
+            const params = [];
+            if (status) params.push(`status=${encodeURIComponent(status)}`);
+            if (startDate) params.push(`start_date=${encodeURIComponent(startDate)}`);
+            if (endDate) params.push(`end_date=${encodeURIComponent(endDate)}`);
+
+            const url = params.length ? `${baseUrl}?${params.join('&')}` : baseUrl;
+            window.open(url, '_blank');
         });
     });
 </script>

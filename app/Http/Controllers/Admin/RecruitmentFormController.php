@@ -11,13 +11,15 @@ use App\Models\Company;
 use App\Models\RecruitmentForm;
 use App\Models\User;
 use App\Notifications\RecruitmentFormNotification;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Auth;
 
 class RecruitmentFormController extends Controller
 {
@@ -93,6 +95,88 @@ class RecruitmentFormController extends Controller
         $status = RecruitmentForm::STATUS_RADIO;
 
         return view('admin.recruitmentForms.index', compact('status'));
+    }
+
+    public function report(Request $request)
+    {
+        abort_if(Gate::denies('recruitment_form_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $user = Auth::user();
+        $dateFormat = config('panel.date_format');
+
+        $startDateInput = $request->input('start_date');
+        $endDateInput = $request->input('end_date');
+
+        $startDate = $startDateInput
+            ? Carbon::createFromFormat($dateFormat, $startDateInput)
+            : Carbon::today()->subMonths(3);
+        $endDate = $endDateInput
+            ? Carbon::createFromFormat($dateFormat, $endDateInput)
+            : Carbon::today();
+
+        if ($startDate->gt($endDate)) {
+            [$startDate, $endDate] = [$endDate, $startDate];
+        }
+
+        if ($startDate->floatDiffInMonths($endDate) > 3.0) {
+            abort(Response::HTTP_UNPROCESSABLE_ENTITY, 'O per\u00edodo m\u00e1ximo \u00e9 de 3 meses.');
+        }
+
+        $baseQuery = RecruitmentForm::with(['company', 'user']);
+
+        if (!$user->hasRole('admin') && session()->has('company_id')) {
+            $baseQuery->where('company_id', session('company_id'));
+        }
+
+        if ($request->filled('status')) {
+            $baseQuery->where('status', $request->status);
+        }
+
+        $baseQuery->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()]);
+
+        $recruitmentForms = (clone $baseQuery)
+            ->orderByDesc('created_at')
+            ->get();
+
+        $summary = [
+            'total'                 => $recruitmentForms->count(),
+            'contact_successfully'  => $recruitmentForms->where('contact_successfully', 1)->count(),
+            'scheduled_interview'   => $recruitmentForms->where('scheduled_interview', 1)->count(),
+            'done'                  => $recruitmentForms->where('done', 1)->count(),
+        ];
+
+        $grouped = [
+            'status' => $recruitmentForms->groupBy('status')->map->count()->sortDesc(),
+            'type'   => $recruitmentForms->groupBy('type')->map->count()->sortDesc(),
+            'chanel' => $recruitmentForms->groupBy('chanel')->map->count()->sortDesc(),
+        ];
+
+        $closedForms = $recruitmentForms
+            ->where('done', 1)
+            ->sortByDesc('created_at');
+
+        $period = [
+            'first'        => $startDate->format($dateFormat),
+            'last'         => $endDate->format($dateFormat),
+            'generated_at' => Carbon::now()->format($dateFormat . ' ' . config('panel.time_format')),
+        ];
+
+        $groupedForms = $recruitmentForms
+            ->sortByDesc('created_at')
+            ->groupBy('status');
+
+        $pdf = Pdf::loadView('admin.recruitmentForms.report', [
+            'summary' => $summary,
+            'grouped' => $grouped,
+            'groupedForms' => $groupedForms,
+            'closedForms' => $closedForms,
+            'period'  => $period,
+        ])->setOption([
+            'isRemoteEnabled'     => true,
+            'enable_html5_parser' => true,
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->stream('recruitment-forms-report.pdf');
     }
 
 

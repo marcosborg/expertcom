@@ -145,11 +145,71 @@ class RecruitmentFormController extends Controller
             'done'                  => $recruitmentForms->where('done', 1)->count(),
         ];
 
+        $funnel = [
+            'leads_total'     => $summary['total'],
+            'interviews'      => $summary['scheduled_interview'],
+            'closed'          => $summary['done'],
+        ];
+
         $grouped = [
             'status' => $recruitmentForms->groupBy('status')->map->count()->sortDesc(),
             'type'   => $recruitmentForms->groupBy('type')->map->count()->sortDesc(),
             'chanel' => $recruitmentForms->groupBy('chanel')->map->count()->sortDesc(),
         ];
+
+        $responsibles = $recruitmentForms
+            ->groupBy('responsible_for_the_lead')
+            ->map->count()
+            ->sortDesc();
+
+        $chanelConversion = $recruitmentForms
+            ->groupBy('chanel')
+            ->map(function ($items) {
+                $total = $items->count();
+                $interviews = $items->where('scheduled_interview', 1)->count();
+                $closed = $items->where('done', 1)->count();
+
+                return [
+                    'total'       => $total,
+                    'interviews'  => $interviews,
+                    'closed'      => $closed,
+                    'rate_lead_to_interview' => $total > 0 ? round(($interviews / $total) * 100, 1) : 0,
+                    'rate_interview_to_closed' => $interviews > 0 ? round(($closed / max($interviews, 1)) * 100, 1) : 0,
+                    'rate_lead_to_closed' => $total > 0 ? round(($closed / $total) * 100, 1) : 0,
+                ];
+            })
+            ->sortByDesc('rate_lead_to_closed');
+
+        $responsibleSuccess = $recruitmentForms
+            ->groupBy('responsible_for_the_lead')
+            ->map(function ($items) {
+                $total = $items->count();
+                $closed = $items->where('done', 1)->count();
+                $rate = $total > 0 ? round(($closed / $total) * 100, 1) : 0;
+                return [
+                    'total'  => $total,
+                    'closed' => $closed,
+                    'rate'   => $rate,
+                ];
+            })
+            ->sortByDesc('rate');
+
+        $responsibleConversion = $recruitmentForms
+            ->groupBy('responsible_for_the_lead')
+            ->map(function ($items) {
+                $total = $items->count();
+                $interviews = $items->where('scheduled_interview', 1)->count();
+                $closed = $items->where('done', 1)->count();
+                return [
+                    'total'       => $total,
+                    'interviews'  => $interviews,
+                    'closed'      => $closed,
+                    'rate_lead_to_interview' => $total > 0 ? round(($interviews / $total) * 100, 1) : 0,
+                    'rate_interview_to_closed' => $interviews > 0 ? round(($closed / max($interviews, 1)) * 100, 1) : 0,
+                    'rate_lead_to_closed' => $total > 0 ? round(($closed / $total) * 100, 1) : 0,
+                ];
+            })
+            ->sortByDesc('rate_lead_to_closed');
 
         $closedForms = $recruitmentForms
             ->where('done', 1)
@@ -167,7 +227,12 @@ class RecruitmentFormController extends Controller
 
         $pdf = Pdf::loadView('admin.recruitmentForms.report', [
             'summary' => $summary,
+            'funnel' => $funnel,
             'grouped' => $grouped,
+            'responsibles' => $responsibles,
+            'responsibleSuccess' => $responsibleSuccess,
+            'chanelConversion' => $chanelConversion,
+            'responsibleConversion' => $responsibleConversion,
             'groupedForms' => $groupedForms,
             'closedForms' => $closedForms,
             'period'  => $period,

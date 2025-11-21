@@ -126,6 +126,17 @@ class StoreRegistoEntradaVeiculoRequest extends FormRequest
             'cinzeiro_photos' => [
                 'array',
             ],
+            'chaves_1' => [
+                'nullable',
+                'in:0,1',
+            ],
+            'chaves_2' => [
+                'nullable',
+                'in:0,1',
+            ],
+            'chaves_photos' => [
+                'array',
+            ],
             'copia_de_licenca_de_tvde_data' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',

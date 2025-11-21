@@ -431,6 +431,20 @@ class RegistoEntradaVeiculoController extends Controller
                     $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('cinzeiro_photos');
                 }
             }
+
+            if (count($registoEntradaVeiculo->chaves_photos) > 0) {
+                foreach ($registoEntradaVeiculo->chaves_photos as $media) {
+                    if (!in_array($media->file_name, $request->input('chaves_photos', []))) {
+                        $media->delete();
+                    }
+                }
+            }
+            $media = $registoEntradaVeiculo->chaves_photos->pluck('file_name')->toArray();
+            foreach ($request->input('chaves_photos', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $registoEntradaVeiculo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('chaves_photos');
+                }
+            }
         }
 
         if (isset($request->step)) {

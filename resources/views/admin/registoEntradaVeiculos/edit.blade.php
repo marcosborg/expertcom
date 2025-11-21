@@ -435,6 +435,45 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group {{ $errors->has('chaves_1') ? 'has-error' : '' }}">
+                                                    <div>
+                                                        <input type="hidden" name="chaves_1" value="0">
+                                                        <input type="checkbox" name="chaves_1" id="chaves_1" value="1" {{ $registoEntradaVeiculo->chaves_1 || old('chaves_1', 0) == 1 ? 'checked' : '' }}>
+                                                        <label for="chaves_1" style="font-weight: 400">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_1') }}</label>
+                                                    </div>
+                                                    @if($errors->has('chaves_1'))
+                                                        <span class="help-block" role="alert">{{ $errors->first('chaves_1') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_1_helper') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group {{ $errors->has('chaves_2') ? 'has-error' : '' }}">
+                                                    <div>
+                                                        <input type="hidden" name="chaves_2" value="0">
+                                                        <input type="checkbox" name="chaves_2" id="chaves_2" value="1" {{ $registoEntradaVeiculo->chaves_2 || old('chaves_2', 0) == 1 ? 'checked' : '' }}>
+                                                        <label for="chaves_2" style="font-weight: 400">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_2') }}</label>
+                                                    </div>
+                                                    @if($errors->has('chaves_2'))
+                                                        <span class="help-block" role="alert">{{ $errors->first('chaves_2') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_2_helper') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group {{ $errors->has('chaves_photos') ? 'has-error' : '' }}">
+                                                    <label for="chaves_photos">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="chaves_photos-dropzone">
+                                                    </div>
+                                                    @if($errors->has('chaves_photos'))
+                                                        <span class="help-block" role="alert">{{ $errors->first('chaves_photos') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_photos_helper') }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1404,6 +1443,61 @@
                                                     <span class="help-block">{{
                                                         trans('cruds.registoEntradaVeiculo.fields.cinzeiro_photos_helper')
                                                         }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingKeys">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapseKeys" aria-expanded="false"
+                                            aria-controls="collapseKeys">
+                                            Chaves do carro
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseKeys" class="panel-collapse collapse" role="tabpanel"
+                                    aria-labelledby="headingKeys">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group {{ $errors->has('chaves_1') ? 'has-error' : '' }}">
+                                                    <div>
+                                                        <input type="hidden" name="chaves_1" value="0">
+                                                        <input type="checkbox" name="chaves_1" id="chaves_1" value="1" {{ $registoEntradaVeiculo->chaves_1 || old('chaves_1', 0) == 1 ? 'checked' : '' }}>
+                                                        <label for="chaves_1" style="font-weight: 400">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_1') }}</label>
+                                                    </div>
+                                                    @if($errors->has('chaves_1'))
+                                                    <span class="help-block" role="alert">{{ $errors->first('chaves_1') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_1_helper') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group {{ $errors->has('chaves_2') ? 'has-error' : '' }}">
+                                                    <div>
+                                                        <input type="hidden" name="chaves_2" value="0">
+                                                        <input type="checkbox" name="chaves_2" id="chaves_2" value="1" {{ $registoEntradaVeiculo->chaves_2 || old('chaves_2', 0) == 1 ? 'checked' : '' }}>
+                                                        <label for="chaves_2" style="font-weight: 400">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_2') }}</label>
+                                                    </div>
+                                                    @if($errors->has('chaves_2'))
+                                                    <span class="help-block" role="alert">{{ $errors->first('chaves_2') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_2_helper') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group {{ $errors->has('chaves_photos') ? 'has-error' : '' }}">
+                                                    <label for="chaves_photos">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_photos') }}</label>
+                                                    <div class="needsclick dropzone" id="chaves_photos-dropzone">
+                                                    </div>
+                                                    @if($errors->has('chaves_photos'))
+                                                    <span class="help-block" role="alert">{{ $errors->first('chaves_photos') }}</span>
+                                                    @endif
+                                                    <span class="help-block">{{ trans('cruds.registoEntradaVeiculo.fields.chaves_photos_helper') }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -2522,6 +2616,62 @@ Dropzone.options.frenteDoVeiculoTetoPhotosDropzone = {
               this.options.addedfile.call(this, file)
               file.previewElement.classList.add('dz-complete')
               $('form').append('<input type="hidden" name="frente_do_veiculo_teto_photos[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+<script>
+    var uploadedChavesPhotosMap = {}
+Dropzone.options.chavesPhotosDropzone = {
+    url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
+    maxFilesize: 5, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 5
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="chaves_photos[]" value="' + response.name + '">')
+      uploadedChavesPhotosMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedChavesPhotosMap[file.name]
+      }
+      $('form').find('input[name="chaves_photos[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->chaves_photos)
+          var files =
+            {!! json_encode($registoEntradaVeiculo->chaves_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="chaves_photos[]" value="' + file.file_name + '">')
             }
 @endif
     },

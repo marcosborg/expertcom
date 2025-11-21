@@ -55,6 +55,7 @@ class RegistoEntradaVeiculo extends Model implements HasMedia
         'lateral_direita_retrovisor_photos',
         'lateral_direita_paralama_diant_photos',
         'cinzeiro_photos',
+        'chaves_photos',
     ];
 
     protected $fillable = [
@@ -98,6 +99,8 @@ class RegistoEntradaVeiculo extends Model implements HasMedia
         'cinzeiro_sim',
         'cinzeiro_minutos',
         'cinzeiro_nada_consta',
+        'chaves_1',
+        'chaves_2',
         'aspiracao_bancos_frente',
         'aspiracao_bancos_tras',
         'aspiracao_tapetes_e_chao_frente',
@@ -304,6 +307,11 @@ class RegistoEntradaVeiculo extends Model implements HasMedia
     public function getCinzeiroPhotosAttribute()
     {
         return $this->getMedia('cinzeiro_photos');
+    }
+
+    public function getChavesPhotosAttribute()
+    {
+        return $this->getMedia('chaves_photos');
     }
 
     public function getCopiaDeLicencaDeTvdeDataAttribute($value)

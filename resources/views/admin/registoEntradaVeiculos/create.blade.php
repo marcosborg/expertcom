@@ -1405,4 +1405,60 @@ Dropzone.options.cinzeiroPhotosDropzone = {
      }
 }
 </script>
+<script>
+  var uploadedChavesPhotosMap = {}
+Dropzone.options.chavesPhotosDropzone = {
+    url: '{{ route('admin.registo-entrada-veiculos.storeMedia') }}',
+    maxFilesize: 5, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 5
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="chaves_photos[]" value="' + response.name + '">')
+      uploadedChavesPhotosMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedChavesPhotosMap[file.name]
+      }
+      $('form').find('input[name="chaves_photos[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($registoEntradaVeiculo) && $registoEntradaVeiculo->chaves_photos)
+          var files =
+            {!! json_encode($registoEntradaVeiculo->chaves_photos) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="chaves_photos[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
 @endsection

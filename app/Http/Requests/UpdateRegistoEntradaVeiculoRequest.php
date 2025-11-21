@@ -126,6 +126,17 @@ class UpdateRegistoEntradaVeiculoRequest extends FormRequest
                 'min:-2147483648',
                 'max:2147483647',
             ],
+            'chaves_1' => [
+                'nullable',
+                'in:0,1',
+            ],
+            'chaves_2' => [
+                'nullable',
+                'in:0,1',
+            ],
+            'chaves_photos' => [
+                'array',
+            ],
             'copia_de_licenca_de_tvde_data' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',

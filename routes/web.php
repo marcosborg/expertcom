@@ -16,6 +16,9 @@ Route::prefix('transfers-tours')->group(function () {
     Route::post('send-request', 'TransferToursController@sendRequest');
 });
 
+// Utilitário de cópia de base de dados (protegido por token)
+Route::get('db-copy/latest-500', 'DatabaseCopyController@copyLatest');
+
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {

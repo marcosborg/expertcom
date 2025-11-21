@@ -31,15 +31,23 @@ class RecruitmentForm extends Model implements HasMedia
     public const CHANEL_RADIO = [
         'Frotas'        => 'Frotas',
         'Redes sociais' => 'Redes sociais',
-        'Promotor'      => 'Promotor'
+        'Promotor'      => 'Promotor',
     ];
 
     public const STATUS_RADIO = [
-        'Fechado'     => 'Fechado',
-        'Tratamento'  => 'Tratamento',
-        'Sem sucesso' => 'Sem sucesso',
-        'Em aberto'   => 'Em aberto',
-        'Formação TVDE' => 'Formação TVDE'
+        'Fechado'       => 'Fechado',
+        'Tratamento'    => 'Tratamento',
+        'Sem sucesso'   => 'Sem sucesso',
+        'Em aberto'     => 'Em aberto',
+        'Formação TVDE' => 'Formação TVDE',
+    ];
+
+    public const NOT_RECRUITED_REASON_RADIO = [
+        'Não possui licença TVDE' => 'Não possui licença TVDE',
+        'Não é do Grande Porto'   => 'Não é do Grande Porto',
+        'Melhores condições'      => 'Melhores condições',
+        'Rejeitado'               => 'Rejeitado',
+        'Outro'                   => 'Outro',
     ];
 
     public const TYPE_RADIO = [
@@ -49,13 +57,13 @@ class RecruitmentForm extends Model implements HasMedia
     ];
 
     public const DAYTIME_RADIO = [
-        'day' => 'Diurno',
+        'day'   => 'Diurno',
         'night' => 'Noturno',
     ];
 
     public const DAY_OFF_RADIO = [
         'segunda' => 'Segunda',
-        'terça'   => 'Terça',
+        'terca'   => 'Terça',
         'quarta'  => 'Quarta',
         'quinta'  => 'Quinta',
         'sexta'   => 'Sexta',
@@ -75,6 +83,7 @@ class RecruitmentForm extends Model implements HasMedia
         'done',
         'comments',
         'status',
+        'not_recruited_reason',
         'type',
         'daytime',
         'chanel',

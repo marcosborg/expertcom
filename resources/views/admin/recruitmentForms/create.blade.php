@@ -289,10 +289,23 @@
                                                     @endforeach
                                                     @if($errors->has('daytime'))
                                                         <span class="help-block" role="alert">{{ $errors->first('daytime') }}</span>
-                                                    @endif
-                                                    <span class="help-block">{{ trans('cruds.recruitmentForm.fields.daytime_helper') }}</span>
-                                                </div>
+                                                @endif
+                                                <span class="help-block">{{ trans('cruds.recruitmentForm.fields.daytime_helper') }}</span>
                                             </div>
+                                        </div>
+                                    </div>
+                                        <div class="form-group {{ $errors->has('not_recruited_reason') ? 'has-error' : '' }}">
+                                            <label for="not_recruited_reason">{{ trans('cruds.recruitmentForm.fields.not_recruited_reason') }}</label>
+                                            <select class="form-control" name="not_recruited_reason" id="not_recruited_reason">
+                                                <option value="" {{ old('not_recruited_reason', '') === '' ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                                @foreach(App\Models\RecruitmentForm::NOT_RECRUITED_REASON_RADIO as $key => $label)
+                                                    <option value="{{ $key }}" {{ old('not_recruited_reason', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                                @endforeach
+                                            </select>
+                                            @if($errors->has('not_recruited_reason'))
+                                                <span class="help-block" role="alert">{{ $errors->first('not_recruited_reason') }}</span>
+                                            @endif
+                                            <span class="help-block">{{ trans('cruds.recruitmentForm.fields.not_recruited_reason_helper') }}</span>
                                         </div>
                                         <div class="form-group {{ $errors->has('responsible_for_the_lead') ? 'has-error' : '' }}">
                                             <label for="responsible_for_the_lead">{{

@@ -2217,6 +2217,8 @@ return [
             'deleted_at_helper'           => ' ',
             'status'                      => 'Estado da lead',
             'status_helper'               => ' ',
+            'not_recruited_reason'        => 'Motivo de nao recrutamento',
+            'not_recruited_reason_helper' => ' ',
             'type'                        => 'Tipo de lead',
             'type_helper'                 => ' ',
             'chanel'                      => 'Canal',

@@ -82,6 +82,9 @@
                                     {{ trans('cruds.recruitmentForm.fields.status') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.recruitmentForm.fields.not_recruited_reason') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.recruitmentForm.fields.type') }}
                                 </th>
                                 <th>
@@ -169,6 +172,7 @@
                 { data: 'appointment', name: 'appointment' },
                 { data: 'done', name: 'done' },
                 { data: 'status', name: 'status' },
+                { data: 'not_recruited_reason', name: 'not_recruited_reason' },
                 { data: 'type', name: 'type' },
                 { data: 'created_at', name: 'created_at' },
                 { data: 'updated_at', name: 'updated_at' },
@@ -189,7 +193,7 @@
             table.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
                 if (last !== group) {
                     $(rows).eq(i).before(
-                        '<tr class="group-row"><td colspan="17">' + (group || 'Sem status') + '</td></tr>'
+                        '<tr class="group-row"><td colspan="18">' + (group || 'Sem status') + '</td></tr>'
                     );
                     last = group;
                 }

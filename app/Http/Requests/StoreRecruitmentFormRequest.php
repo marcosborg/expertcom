@@ -32,6 +32,10 @@ class StoreRecruitmentFormRequest extends FormRequest
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
+            'not_recruited_reason' => [
+                'nullable',
+                'in:Não possui licença TVDE,Não é do Grande Porto,Melhores condições,Rejeitado,Outro',
+            ],
             'responsible_for_the_lead' => [
                 'string',
                 'nullable'

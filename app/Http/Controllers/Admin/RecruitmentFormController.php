@@ -56,6 +56,7 @@ class RecruitmentFormController extends Controller
                             ->orWhere('email', 'like', "%{$searchValue}%")
                             ->orWhere('phone', 'like', "%{$searchValue}%")
                             ->orWhere('status', 'like', "%{$searchValue}%")
+                            ->orWhere('not_recruited_reason', 'like', "%{$searchValue}%")
                             ->orWhere('type', 'like', "%{$searchValue}%")
                             ->orWhere('chanel', 'like', "%{$searchValue}%")
                             ->orWhere('responsible_for_the_lead', 'like', "%{$searchValue}%")
@@ -93,7 +94,8 @@ class RecruitmentFormController extends Controller
             $table->editColumn('phone', fn($row) => $row->phone ?? '');
             $table->editColumn('scheduled_interview', fn($row) => '<input type="checkbox" disabled ' . ($row->scheduled_interview ? 'checked' : '') . '>');
             $table->editColumn('done', fn($row) => '<input type="checkbox" disabled ' . ($row->done ? 'checked' : '') . '>');
-            $table->editColumn('status', fn($row) => $row->status ? RecruitmentForm::STATUS_RADIO[$row->status] : '');
+            $table->editColumn('status', fn($row) => $row->status ? (RecruitmentForm::STATUS_RADIO[$row->status] ?? $row->status) : '');
+            $table->editColumn('not_recruited_reason', fn($row) => $row->not_recruited_reason ? (RecruitmentForm::NOT_RECRUITED_REASON_RADIO[$row->not_recruited_reason] ?? $row->not_recruited_reason) : '');
             $table->editColumn('type', fn($row) => $row->type ? RecruitmentForm::TYPE_RADIO[$row->type] : '');
             $table->editColumn('chanel', fn($row) => $row->chanel ? RecruitmentForm::CHANEL_RADIO[$row->chanel] : '');
             $table->editColumn('start_time', fn($row) => $row->start_time ?? '');
@@ -272,7 +274,10 @@ class RecruitmentFormController extends Controller
 
     public function store(StoreRecruitmentFormRequest $request)
     {
-        $recruitmentForm = RecruitmentForm::create($request->all())->load('company');
+        $data = $request->all();
+        $data['not_recruited_reason'] = $request->input('not_recruited_reason') ?: null;
+
+        $recruitmentForm = RecruitmentForm::create($data)->load('company');
 
         if ($request->input('cv', false)) {
             $recruitmentForm->addMedia(storage_path('tmp/uploads/' . basename($request->input('cv'))))->toMediaCollection('cv');
@@ -309,7 +314,10 @@ class RecruitmentFormController extends Controller
             $sendEmail = true;
         }
 
-        $recruitmentForm->update($request->all());
+        $data = $request->all();
+        $data['not_recruited_reason'] = $request->input('not_recruited_reason') ?: null;
+
+        $recruitmentForm->update($data);
 
         if ($request->input('cv', false)) {
             if (!$recruitmentForm->cv || $request->input('cv') !== $recruitmentForm->cv->file_name) {

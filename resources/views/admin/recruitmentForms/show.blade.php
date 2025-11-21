@@ -119,6 +119,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.recruitmentForm.fields.not_recruited_reason') }}
+                                    </th>
+                                    <td>
+                                        {{ $recruitmentForm->not_recruited_reason ? App\Models\RecruitmentForm::NOT_RECRUITED_REASON_RADIO[$recruitmentForm->not_recruited_reason] ?? $recruitmentForm->not_recruited_reason : '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.recruitmentForm.fields.type') }}
                                     </th>
                                     <td>

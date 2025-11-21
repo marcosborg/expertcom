@@ -48,7 +48,10 @@
             'Em aberto'   => $grouped['status']['Em aberto'] ?? 0,
         ];
         $maxStatus = max($statusTotals ?: [0]);
-        $maxChanel = ($grouped['chanel']->max() ?? 0) ?: 0;
+        $origins = $grouped['chanel'] ?? collect();
+        $originsTotal = $origins->sum();
+        $originsCount = $origins->count();
+        $maxOrigin = ($origins->max() ?? 0) ?: 0;
         $maxResponsible = ($responsibles->max() ?? 0) ?: 0;
         $maxSuccessRate = ($responsibleSuccess->pluck('rate')->max() ?? 0);
         $maxChanelLeadToClosed = ($chanelConversion->pluck('rate_lead_to_closed')->max() ?? 0);
@@ -120,10 +123,13 @@
     </div>
 
     <div class="section">
-        <h2>Leads por Origem</h2>
+        <h2>Por Origem</h2>
+        <div class="meta">
+            Total de leads: {{ $originsTotal }} | Origens distintas: {{ $originsCount }}
+        </div>
         <div class="chart">
-            @foreach($grouped['chanel'] as $chanel => $total)
-                @php $width = $maxChanel > 0 ? round($total / $maxChanel * 100, 1) : 0; @endphp
+            @foreach($origins as $chanel => $total)
+                @php $width = $maxOrigin > 0 ? round($total / $maxOrigin * 100, 1) : 0; @endphp
                 <div class="bar-row">
                     <div class="bar-label">{{ $chanelLabels[$chanel] ?? $chanel ?? 'Indefinido' }}</div>
                     <div class="bar-track"><div class="bar-fill" style="width: {{ $width }}%;"></div></div>

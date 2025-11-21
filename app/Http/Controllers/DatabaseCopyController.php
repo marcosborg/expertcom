@@ -78,7 +78,7 @@ class DatabaseCopyController extends Controller
                     $query->orderByDesc($orderColumn);
                 }
 
-                $data = $query->limit(500)->get();
+                $data = $query->limit(200)->get();
                 $rows = $data->reverse()->map(fn($row) => (array) $row);
 
                 foreach ($rows->chunk(100) as $chunk) {

@@ -268,57 +268,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <div class="form-group {{ $errors->has('chaves_1') ? 'has-error' : '' }}">
-                                                <div>
-                                                    <input type="hidden" name="chaves_1" value="0">
-                                                    <input type="checkbox" name="chaves_1" id="chaves_1" value="1" {{ $vehicleManageEntry->chaves_1 || old('chaves_1', 0) === 1 ? 'checked' : '' }}>
-                                                    <label for="chaves_1" style="font-weight: 400">{{ trans('cruds.vehicleManageEntry.fields.chaves_1') }}</label>
-                                                </div>
-                                                @if($errors->has('chaves_1'))
-                                                <span class="help-block" role="alert">{{ $errors->first('chaves_1') }}</span>
-                                                @endif
-                                                <span class="help-block">{{ trans('cruds.vehicleManageEntry.fields.chaves_1_helper') }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group {{ $errors->has('chaves_2') ? 'has-error' : '' }}">
-                                                <div>
-                                                    <input type="hidden" name="chaves_2" value="0">
-                                                    <input type="checkbox" name="chaves_2" id="chaves_2" value="1" {{ $vehicleManageEntry->chaves_2 || old('chaves_2', 0) === 1 ? 'checked' : '' }}>
-                                                    <label for="chaves_2" style="font-weight: 400">{{ trans('cruds.vehicleManageEntry.fields.chaves_2') }}</label>
-                                                </div>
-                                                @if($errors->has('chaves_2'))
-                                                <span class="help-block" role="alert">{{ $errors->first('chaves_2') }}</span>
-                                                @endif
-                                                <span class="help-block">{{ trans('cruds.vehicleManageEntry.fields.chaves_2_helper') }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group {{ $errors->has('chaves_photos') ? 'has-error' : '' }}">
-                                                <label for="chaves_photos">{{ trans('cruds.vehicleManageEntry.fields.chaves_photos') }}</label>
-                                                <div class="needsclick dropzone" id="chaves_photos-dropzone">
-                                                </div>
-                                                @if($errors->has('chaves_photos'))
-                                                <span class="help-block" role="alert">{{ $errors->first('chaves_photos') }}</span>
-                                                @endif
-                                                <span class="help-block">{{ trans('cruds.vehicleManageEntry.fields.chaves_photos_helper') }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label>&nbsp;</label>
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    @foreach ($vehicleManageEntry->chaves_photos as $media)
-                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="{{ trans('cruds.vehicleManageEntry.fields.chaves_photos') }}">
-                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
-                                                    </a>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="entries-2">
                                     <div class="row">
@@ -1176,6 +1125,57 @@
                                                         @endif
                                                         <span class="help-block">{{ trans('cruds.vehicleManageEntry.fields.via_verde_helper') }}</span>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group {{ $errors->has('chaves_1') ? 'has-error' : '' }}">
+                                                <div>
+                                                    <input type="hidden" name="chaves_1" value="0">
+                                                    <input type="checkbox" name="chaves_1" id="chaves_1" value="1" {{ $vehicleManageEntry->chaves_1 || old('chaves_1', 0) === 1 ? 'checked' : '' }}>
+                                                    <label for="chaves_1" style="font-weight: 400">{{ trans('cruds.vehicleManageEntry.fields.chaves_1') }}</label>
+                                                </div>
+                                                @if($errors->has('chaves_1'))
+                                                <span class="help-block" role="alert">{{ $errors->first('chaves_1') }}</span>
+                                                @endif
+                                                <span class="help-block">{{ trans('cruds.vehicleManageEntry.fields.chaves_1_helper') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group {{ $errors->has('chaves_2') ? 'has-error' : '' }}">
+                                                <div>
+                                                    <input type="hidden" name="chaves_2" value="0">
+                                                    <input type="checkbox" name="chaves_2" id="chaves_2" value="1" {{ $vehicleManageEntry->chaves_2 || old('chaves_2', 0) === 1 ? 'checked' : '' }}>
+                                                    <label for="chaves_2" style="font-weight: 400">{{ trans('cruds.vehicleManageEntry.fields.chaves_2') }}</label>
+                                                </div>
+                                                @if($errors->has('chaves_2'))
+                                                <span class="help-block" role="alert">{{ $errors->first('chaves_2') }}</span>
+                                                @endif
+                                                <span class="help-block">{{ trans('cruds.vehicleManageEntry.fields.chaves_2_helper') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group {{ $errors->has('chaves_photos') ? 'has-error' : '' }}">
+                                                <label for="chaves_photos">{{ trans('cruds.vehicleManageEntry.fields.chaves_photos') }}</label>
+                                                <div class="needsclick dropzone" id="chaves_photos-dropzone">
+                                                </div>
+                                                @if($errors->has('chaves_photos'))
+                                                <span class="help-block" role="alert">{{ $errors->first('chaves_photos') }}</span>
+                                                @endif
+                                                <span class="help-block">{{ trans('cruds.vehicleManageEntry.fields.chaves_photos_helper') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>&nbsp;</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @foreach ($vehicleManageEntry->chaves_photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" data-lightbox="galeria" data-title="{{ trans('cruds.vehicleManageEntry.fields.chaves_photos') }}">
+                                                        <img src="{{ $media->getUrl('preview') }}" class="img-thumbnail">
+                                                    </a>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>

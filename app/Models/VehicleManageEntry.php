@@ -47,6 +47,7 @@ class VehicleManageEntry extends Model implements HasMedia
         'lateral_direita_porta_diant_photos',
         'lateral_direita_retrovisor_photos',
         'lateral_direita_paralama_diant_photos',
+        'chaves_photos',
         'cinzeiro_photos',
         'telemovel_photos',
     ];
@@ -90,6 +91,8 @@ class VehicleManageEntry extends Model implements HasMedia
         'cinzeiro_sim',
         'cinzeiro_nada_consta',
         'cinzeiro_minutos',
+        'chaves_1',
+        'chaves_2',
         'telemovel_sim',
         'telemovel_nada_consta',
         'possui_triangulo',
@@ -243,6 +246,11 @@ class VehicleManageEntry extends Model implements HasMedia
     public function getLateralDireitaParalamaDiantPhotosAttribute()
     {
         return $this->getMedia('lateral_direita_paralama_diant_photos');
+    }
+
+    public function getChavesPhotosAttribute()
+    {
+        return $this->getMedia('chaves_photos');
     }
 
     public function getCinzeiroPhotosAttribute()

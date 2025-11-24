@@ -424,6 +424,20 @@ class VehicleManageEntryController extends Controller
             }
         }
 
+        if (count($vehicleManageEntry->chaves_photos) > 0) {
+            foreach ($vehicleManageEntry->chaves_photos as $media) {
+                if (! in_array($media->file_name, $request->input('chaves_photos', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $vehicleManageEntry->chaves_photos->pluck('file_name')->toArray();
+        foreach ($request->input('chaves_photos', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $vehicleManageEntry->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('chaves_photos');
+            }
+        }
+
         if (count($vehicleManageEntry->cinzeiro_photos) > 0) {
             foreach ($vehicleManageEntry->cinzeiro_photos as $media) {
                 if (! in_array($media->file_name, $request->input('cinzeiro_photos', []))) {

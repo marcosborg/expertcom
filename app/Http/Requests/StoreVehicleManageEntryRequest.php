@@ -113,6 +113,17 @@ class StoreVehicleManageEntryRequest extends FormRequest
                 'min:-2147483648',
                 'max:2147483647',
             ],
+            'chaves_1' => [
+                'nullable',
+                'in:0,1',
+            ],
+            'chaves_2' => [
+                'nullable',
+                'in:0,1',
+            ],
+            'chaves_photos' => [
+                'array',
+            ],
             'cinzeiro_photos' => [
                 'array',
             ],

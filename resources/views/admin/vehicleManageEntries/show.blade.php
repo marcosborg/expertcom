@@ -163,6 +163,34 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.vehicleManageEntry.fields.chaves_1') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $vehicleManageEntry->chaves_1 ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.vehicleManageEntry.fields.chaves_2') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $vehicleManageEntry->chaves_2 ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.vehicleManageEntry.fields.chaves_photos') }}
+                                    </th>
+                                    <td>
+                                        @foreach($vehicleManageEntry->chaves_photos as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.vehicleManageEntry.fields.lateral_esquerda_paralama_diant') }}
                                     </th>
                                     <td>
